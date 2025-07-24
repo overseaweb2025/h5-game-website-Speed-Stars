@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://speed-stars.net/sitemap.xml</loc>
+    <lastmod>2025-06-05T15:30:00.000Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://speed-stars.net/sitemap-games.xml</loc>
+    <lastmod>2025-06-05T15:30:00.000Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://speed-stars.net/sitemap-blog.xml</loc>
+    <lastmod>2025-06-05T15:30:00.000Z</lastmod>
+  </sitemap>
+</sitemapindex>

@@ -1,0 +1,12 @@
+# Speed Stars - Robots.txt Configuration
+# Website: https://speed-stars.net
+# Last Updated: May 30, 2025
+
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+
+Sitemap: https://speed-stars.net/sitemap.xml
