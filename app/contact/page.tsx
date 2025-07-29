@@ -66,7 +66,7 @@ export default function ContactPage() {
     <main className="bg-background">
       <Header />
 
-      <section className="py-12 md:py-16 bg-white relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-gray-900 relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-10 left-10 text-6xl opacity-10 pop-in">📧</div>
         <div className="absolute bottom-20 right-10 text-6xl opacity-10 pop-in" style={{ animationDelay: "0.3s" }}>
@@ -89,10 +89,10 @@ export default function ContactPage() {
           </div>
 
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-black text-text mb-4 pop-in">
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-4 pop-in">
               Contact <span className="gradient-text">GameHub Central</span>
             </h1>
-            <p className="text-xl md:text-2xl text-text/80 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto">
               We'd love to hear from you! Get in touch with our team
             </p>
           </div>
@@ -104,7 +104,7 @@ export default function ContactPage() {
                 <div className="text-center">
                   <div className="text-5xl mb-4">📧</div>
                   <h3 className="text-2xl font-black text-primary mb-3">Email Us</h3>
-                  <p className="text-text/80 mb-4">
+                  <p className="text-gray-200 mb-4">
                     Send us an email and we'll get back to you within 24 hours
                   </p>
                   <a 
@@ -120,7 +120,7 @@ export default function ContactPage() {
                 <div className="text-center">
                   <div className="text-5xl mb-4">📞</div>
                   <h3 className="text-2xl font-black text-secondary mb-3">Call Us</h3>
-                  <p className="text-text/80 mb-4">
+                  <p className="text-gray-200 mb-4">
                     Available Monday to Friday, 9 AM - 6 PM PST
                   </p>
                   <a 
@@ -136,7 +136,7 @@ export default function ContactPage() {
                 <div className="text-center">
                   <div className="text-5xl mb-4">📍</div>
                   <h3 className="text-2xl font-black text-accent mb-3">Visit Us</h3>
-                  <p className="text-text/80">
+                  <p className="text-gray-200">
                     36 Central Avenue<br />
                     California, USA
                   </p>
@@ -150,7 +150,7 @@ export default function ContactPage() {
                 <div className="text-center mb-8">
                   <div className="text-5xl mb-4">💬</div>
                   <h2 className="text-3xl md:text-4xl font-black text-accent-3 text-stroke">Send Us a Message</h2>
-                  <p className="text-text/80 mt-2">Fill out the form below and we'll respond as soon as possible</p>
+                  <p className="text-gray-200 mt-2">Fill out the form below and we'll respond as soon as possible</p>
                 </div>
 
                 {submitStatus === "success" && (
@@ -163,7 +163,7 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-black text-text mb-2">
+                      <label htmlFor="name" className="block text-sm font-black text-white mb-2">
                         Your Name *
                       </label>
                       <input
@@ -173,12 +173,12 @@ export default function ContactPage() {
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 rounded-xl border-4 border-primary/30 focus:border-primary focus:outline-none text-text font-medium transition-colors"
+                        className="w-full px-4 py-3 rounded-xl border-4 border-primary/30 focus:border-primary focus:outline-none text-white font-medium transition-colors"
                         placeholder="Enter your full name"
                       />
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-sm font-black text-text mb-2">
+                      <label htmlFor="email" className="block text-sm font-black text-white mb-2">
                         Email Address *
                       </label>
                       <input
@@ -188,14 +188,14 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 rounded-xl border-4 border-primary/30 focus:border-primary focus:outline-none text-text font-medium transition-colors"
+                        className="w-full px-4 py-3 rounded-xl border-4 border-primary/30 focus:border-primary focus:outline-none text-white font-medium transition-colors"
                         placeholder="Enter your email address"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-black text-text mb-2">
+                    <label htmlFor="subject" className="block text-sm font-black text-white mb-2">
                       Subject *
                     </label>
                     <select
@@ -204,7 +204,7 @@ export default function ContactPage() {
                       value={formData.subject}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 rounded-xl border-4 border-primary/30 focus:border-primary focus:outline-none text-text font-medium transition-colors"
+                      className="w-full px-4 py-3 rounded-xl border-4 border-primary/30 focus:border-primary focus:outline-none text-white font-medium transition-colors"
                     >
                       <option value="">Select a subject</option>
                       <option value="general">General Inquiry</option>
@@ -217,7 +217,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-black text-text mb-2">
+                    <label htmlFor="message" className="block text-sm font-black text-white mb-2">
                       Message *
                     </label>
                     <textarea
@@ -227,7 +227,7 @@ export default function ContactPage() {
                       onChange={handleInputChange}
                       required
                       rows={6}
-                      className="w-full px-4 py-3 rounded-xl border-4 border-primary/30 focus:border-primary focus:outline-none text-text font-medium transition-colors resize-vertical"
+                      className="w-full px-4 py-3 rounded-xl border-4 border-primary/30 focus:border-primary focus:outline-none text-white font-medium transition-colors resize-vertical"
                       placeholder="Tell us how we can help you..."
                     />
                   </div>
@@ -259,10 +259,10 @@ export default function ContactPage() {
           {/* FAQ Section */}
           <div className="mb-16">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-text mb-4 pop-in">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-4 pop-in">
                 Frequently Asked <span className="gradient-text">Questions</span>
               </h2>
-              <p className="text-xl text-text/80 max-w-2xl mx-auto">
+              <p className="text-xl text-gray-200 max-w-2xl mx-auto">
                 Quick answers to common questions
               </p>
             </div>
@@ -272,7 +272,7 @@ export default function ContactPage() {
                 <div className="text-center">
                   <div className="text-4xl mb-3">🎮</div>
                   <h3 className="text-xl font-black text-accent-2 mb-3">Are all games really free?</h3>
-                  <p className="text-text/80 text-sm leading-relaxed">
+                  <p className="text-gray-200 text-sm leading-relaxed">
                     Yes! All games on GameHub Central are completely free to play. No hidden fees, subscriptions, or in-app purchases required.
                   </p>
                 </div>
@@ -282,7 +282,7 @@ export default function ContactPage() {
                 <div className="text-center">
                   <div className="text-4xl mb-3">📱</div>
                   <h3 className="text-xl font-black text-accent-4 mb-3">Do games work on mobile?</h3>
-                  <p className="text-text/80 text-sm leading-relaxed">
+                  <p className="text-gray-200 text-sm leading-relaxed">
                     Absolutely! Our HTML5 games are designed to work seamlessly on smartphones, tablets, and desktop computers.
                   </p>
                 </div>
@@ -292,7 +292,7 @@ export default function ContactPage() {
                 <div className="text-center">
                   <div className="text-4xl mb-3">⚡</div>
                   <h3 className="text-xl font-black text-secondary mb-3">Why won't a game load?</h3>
-                  <p className="text-text/80 text-sm leading-relaxed">
+                  <p className="text-gray-200 text-sm leading-relaxed">
                     Try refreshing the page or clearing your browser cache. If issues persist, contact our support team for assistance.
                   </p>
                 </div>
@@ -302,7 +302,7 @@ export default function ContactPage() {
                 <div className="text-center">
                   <div className="text-4xl mb-3">🔒</div>
                   <h3 className="text-xl font-black text-primary mb-3">Is my data safe?</h3>
-                  <p className="text-text/80 text-sm leading-relaxed">
+                  <p className="text-gray-200 text-sm leading-relaxed">
                     Yes! We prioritize your privacy and security. We don't collect personal information unless you voluntarily provide it.
                   </p>
                 </div>
@@ -315,18 +315,18 @@ export default function ContactPage() {
             <div className="card cartoon-shadow border-4 border-accent-3 max-w-2xl mx-auto transform hover:scale-105 transition-transform pop-in">
               <div className="text-center">
                 <div className="text-5xl mb-4">⏱️</div>
-                <h3 className="text-2xl font-black text-text mb-4">Response Times</h3>
+                <h3 className="text-2xl font-black text-white mb-4">Response Times</h3>
                 <div className="space-y-3 text-left">
                   <div className="flex items-center justify-between">
-                    <span className="text-text/80">General Inquiries</span>
+                    <span className="text-gray-200">General Inquiries</span>
                     <span className="font-black text-accent-3">24 hours</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-text/80">Technical Support</span>
+                    <span className="text-gray-200">Technical Support</span>
                     <span className="font-black text-primary">12 hours</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-text/80">Bug Reports</span>
+                    <span className="text-gray-200">Bug Reports</span>
                     <span className="font-black text-secondary">6 hours</span>
                   </div>
                 </div>

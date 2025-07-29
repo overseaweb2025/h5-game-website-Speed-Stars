@@ -26,7 +26,7 @@ export default function DMCAPage() {
     <main className="bg-background">
       <Header />
 
-      <section className="py-12 md:py-16 bg-white relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-gray-900 relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-10 left-10 text-6xl opacity-10 pop-in">⚖️</div>
         <div className="absolute bottom-20 right-10 text-6xl opacity-10 pop-in" style={{ animationDelay: "0.3s" }}>
@@ -41,7 +41,7 @@ export default function DMCAPage() {
           <div className="mb-8 flex justify-center">
             <Link 
               href="/" 
-              className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-white rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
+              className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-gray-900 rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
             >
               <ChevronLeftIcon className="w-6 h-6 mr-2 transition-transform group-hover:-translate-x-1" />
               Back to Home
@@ -49,13 +49,13 @@ export default function DMCAPage() {
           </div>
 
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-black text-text mb-4 pop-in">
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-4 pop-in">
               DMCA <span className="gradient-text">Policy</span>
             </h1>
-            <p className="text-xl md:text-2xl text-text/80 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto">
               Digital Millennium Copyright Act compliance and takedown procedures
             </p>
-            <div className="mt-4 text-sm text-text/60">
+            <div className="mt-4 text-sm text-white/60">
               <p>Last updated: December 2024</p>
             </div>
           </div>
@@ -66,7 +66,7 @@ export default function DMCAPage() {
               <AlertTriangleIcon className="w-8 h-8 text-accent-2 flex-shrink-0 mt-1" />
               <div>
                 <h2 className="text-xl font-black text-accent-2 mb-2">Copyright Respect Notice</h2>
-                <p className="text-text/80 leading-relaxed">
+                <p className="text-white/80 leading-relaxed">
                   GameHub Central respects the intellectual property rights of others and expects our users to do the same. 
                   We comply with the Digital Millennium Copyright Act (DMCA) and will respond promptly to valid 
                   takedown notices for copyrighted material.
@@ -82,7 +82,7 @@ export default function DMCAPage() {
                 <div className="text-4xl mr-4">📖</div>
                 <h2 className="text-2xl md:text-3xl font-black text-primary">What is the DMCA?</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   The Digital Millennium Copyright Act (DMCA) is a United States copyright law that provides a framework 
                   for copyright holders to request removal of infringing content from online platforms.
@@ -104,7 +104,7 @@ export default function DMCAPage() {
                 <div className="text-4xl mr-4">📧</div>
                 <h2 className="text-2xl md:text-3xl font-black text-secondary">How to File a DMCA Takedown Notice</h2>
               </div>
-              <div className="text-text/90 space-y-6 leading-relaxed">
+              <div className="text-white/90 space-y-6 leading-relaxed">
                 <p>
                   If you believe that content on GameHub Central infringes your copyright, you may submit a DMCA takedown notice. 
                   Your notice must include the following information:
@@ -165,7 +165,7 @@ export default function DMCAPage() {
                 <div className="text-4xl mr-4">⚡</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent">Our Response Process</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   Upon receiving a valid DMCA takedown notice, we will:
                 </p>
@@ -212,7 +212,7 @@ export default function DMCAPage() {
                 <div className="text-4xl mr-4">🔄</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent-3">DMCA Counter-Notice</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   If you believe your content was wrongly removed due to a DMCA takedown notice, you may file a counter-notice. 
                   Your counter-notice must include:
@@ -252,7 +252,7 @@ export default function DMCAPage() {
                 <div className="text-4xl mr-4">🚫</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent-4">Repeat Infringer Policy</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   GameHub Central has a policy of terminating access for users who are repeat copyright infringers. 
                   We maintain records of DMCA notices and may take the following actions:
@@ -283,7 +283,7 @@ export default function DMCAPage() {
                 <div className="text-4xl mr-4">⚖️</div>
                 <h2 className="text-2xl md:text-3xl font-black text-primary">False Claims and Penalties</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <div className="bg-gradient-to-r from-red-100 to-red-50 rounded-xl p-6 border-4 border-red-400">
                   <div className="flex items-start space-x-3">
                     <div className="text-2xl">🚨</div>
@@ -315,7 +315,7 @@ export default function DMCAPage() {
                 <div className="text-4xl mr-4">📮</div>
                 <h2 className="text-2xl md:text-3xl font-black text-secondary">Designated DMCA Agent</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   Our designated agent for receiving DMCA notices is:
                 </p>
@@ -348,7 +348,7 @@ export default function DMCAPage() {
                 <div className="text-4xl mr-4">📚</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent">Additional Resources</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   For more information about copyright law and the DMCA:
                 </p>
@@ -379,7 +379,7 @@ export default function DMCAPage() {
             <div className="card cartoon-shadow border-4 border-primary max-w-2xl mx-auto transform hover:scale-105 transition-transform pop-in">
               <div className="text-center">
                 <div className="text-5xl mb-4">📄</div>
-                <h3 className="text-2xl font-black text-text mb-4">Legal Documents</h3>
+                <h3 className="text-2xl font-black text-white mb-4">Legal Documents</h3>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
                     href="/terms"

@@ -75,7 +75,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {" "}
           {/* Updated grid-cols from md:grid-cols-4 to md:grid-cols-3 */}
-          <div>
+          <div className="bg-gray-800/80 rounded-xl p-6 border border-gray-700/50">
             <h3 className="text-xl font-black mb-4 border-b-4 border-gray-600/50 pb-2 text-white">About Us</h3>
             <p className="text-gray-200 mb-4">
               GameHub Central offers the best collection of free HTML5 games for your entertainment, optimized for all
@@ -121,7 +121,7 @@ export default function Footer() {
             </div>
           </div>
           {/* Popular Games section removed */}
-          <div>
+          <div className="bg-gray-800/80 rounded-xl p-6 border border-gray-700/50">
             <h3 className="text-xl font-black mb-4 border-b-4 border-gray-600/50 pb-2 text-white">Quick Links</h3>
             <ul className="space-y-2">
               <li>
@@ -141,7 +141,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div>
+          <div className="bg-gray-800/80 rounded-xl p-6 border border-gray-700/50">
             <h3 className="text-xl font-black mb-4 border-b-4 border-gray-600/50 pb-2 text-white">Support</h3>
             <ul className="space-y-2">
               <li>

@@ -133,7 +133,7 @@ export default function HelpPage() {
     <main className="bg-background">
       <Header />
 
-      <section className="py-12 md:py-16 bg-white relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-gray-900 relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-10 left-10 text-6xl opacity-10 pop-in">🆘</div>
         <div className="absolute bottom-20 right-10 text-6xl opacity-10 pop-in" style={{ animationDelay: "0.3s" }}>
@@ -148,7 +148,7 @@ export default function HelpPage() {
           <div className="mb-8 flex justify-center">
             <Link 
               href="/" 
-              className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-white rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
+              className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-gray-900 rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
             >
               <ChevronLeftIcon className="w-6 h-6 mr-2 transition-transform group-hover:-translate-x-1" />
               Back to Home
@@ -156,10 +156,10 @@ export default function HelpPage() {
           </div>
 
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-black text-text mb-4 pop-in">
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-4 pop-in">
               Help <span className="gradient-text">Center</span>
             </h1>
-            <p className="text-xl md:text-2xl text-text/80 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto">
               Find answers to common questions and get the help you need
             </p>
           </div>
@@ -168,13 +168,13 @@ export default function HelpPage() {
           <div className="max-w-2xl mx-auto mb-12">
             <div className="card cartoon-shadow border-4 border-accent transform hover:scale-[1.02] transition-transform pop-in">
               <div className="relative">
-                <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-text/60 w-6 h-6" />
+                <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/60 w-6 h-6" />
                 <input
                   type="text"
                   placeholder="Search for help topics..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 bg-transparent border-none outline-none text-text font-medium text-lg placeholder-text/60"
+                  className="w-full pl-12 pr-4 py-4 bg-transparent border-none outline-none text-white font-medium text-lg placeholder-text/60"
                 />
               </div>
             </div>
@@ -188,25 +188,25 @@ export default function HelpPage() {
             >
               <div className="text-4xl mb-3">📧</div>
               <h3 className="text-lg font-black text-primary mb-2">Contact Support</h3>
-              <p className="text-text/80 text-sm">Get personalized help from our team</p>
+              <p className="text-white/80 text-sm">Get personalized help from our team</p>
             </Link>
 
             <div className="card cartoon-shadow border-4 border-secondary text-center transform hover:rotate-[-2deg] hover:scale-105 transition-all pop-in" style={{ animationDelay: "0.1s" }}>
               <div className="text-4xl mb-3">🎮</div>
               <h3 className="text-lg font-black text-secondary mb-2">Game Tutorials</h3>
-              <p className="text-text/80 text-sm">Learn how to play our games</p>
+              <p className="text-white/80 text-sm">Learn how to play our games</p>
             </div>
 
             <div className="card cartoon-shadow border-4 border-accent text-center transform hover:rotate-[2deg] hover:scale-105 transition-all pop-in" style={{ animationDelay: "0.2s" }}>
               <div className="text-4xl mb-3">🔧</div>
               <h3 className="text-lg font-black text-accent mb-2">Troubleshooting</h3>
-              <p className="text-text/80 text-sm">Fix common technical issues</p>
+              <p className="text-white/80 text-sm">Fix common technical issues</p>
             </div>
 
             <div className="card cartoon-shadow border-4 border-accent-3 text-center transform hover:rotate-[-2deg] hover:scale-105 transition-all pop-in" style={{ animationDelay: "0.3s" }}>
               <div className="text-4xl mb-3">💬</div>
               <h3 className="text-lg font-black text-accent-3 mb-2">Community</h3>
-              <p className="text-text/80 text-sm">Connect with other players</p>
+              <p className="text-white/80 text-sm">Connect with other players</p>
             </div>
           </div>
 
@@ -219,7 +219,7 @@ export default function HelpPage() {
                     <div className="text-4xl mr-4">{category.icon}</div>
                     <div>
                       <h2 className="text-2xl md:text-3xl font-black text-accent-2">{category.title}</h2>
-                      <p className="text-text/80">{category.description}</p>
+                      <p className="text-white/80">{category.description}</p>
                     </div>
                   </div>
                 </div>
@@ -235,14 +235,14 @@ export default function HelpPage() {
                           onClick={() => toggleQuestion(category.id, questionIndex)}
                           className="w-full px-6 py-4 text-left bg-gradient-to-r from-accent-2/10 to-primary/10 hover:from-accent-2/20 hover:to-primary/20 transition-colors flex items-center justify-between"
                         >
-                          <span className="font-black text-text">{qa.question}</span>
+                          <span className="font-black text-white">{qa.question}</span>
                           <div className={`transform transition-transform ${isExpanded ? 'rotate-180' : ''}`}>
                             ⌄
                           </div>
                         </button>
                         {isExpanded && (
-                          <div className="px-6 py-4 bg-white border-t-2 border-accent-2/20">
-                            <p className="text-text/80 leading-relaxed">{qa.answer}</p>
+                          <div className="px-6 py-4 bg-gray-900 border-t-2 border-accent-2/20">
+                            <p className="text-white/80 leading-relaxed">{qa.answer}</p>
                           </div>
                         )}
                       </div>
@@ -256,8 +256,8 @@ export default function HelpPage() {
           {searchTerm && filteredCategories.every(cat => cat.questions.length === 0) && (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-2xl font-black text-text mb-4">No results found</h3>
-              <p className="text-text/80 mb-6">
+              <h3 className="text-2xl font-black text-white mb-4">No results found</h3>
+              <p className="text-white/80 mb-6">
                 We couldn't find any help topics matching "{searchTerm}". Try different keywords or contact our support team.
               </p>
               <Link href="/contact" className="btn-primary text-lg jello">
@@ -271,8 +271,8 @@ export default function HelpPage() {
             <div className="card cartoon-shadow border-4 border-primary max-w-3xl mx-auto transform hover:rotate-[1deg] transition-transform pop-in">
               <div className="text-center">
                 <div className="text-6xl mb-4">🤝</div>
-                <h2 className="text-3xl md:text-4xl font-black text-text mb-4">Still Need Help?</h2>
-                <p className="text-lg text-text/80 mb-6">
+                <h2 className="text-3xl md:text-4xl font-black text-white mb-4">Still Need Help?</h2>
+                <p className="text-lg text-white/80 mb-6">
                   Can't find what you're looking for? Our support team is here to help! 
                   We typically respond within 24 hours.
                 </p>

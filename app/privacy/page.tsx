@@ -26,7 +26,7 @@ export default function PrivacyPage() {
     <main className="bg-background">
       <Header />
 
-      <section className="py-12 md:py-16 bg-white relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-gray-900 relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-10 left-10 text-6xl opacity-10 pop-in">🔐</div>
         <div className="absolute bottom-20 right-10 text-6xl opacity-10 pop-in" style={{ animationDelay: "0.3s" }}>
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
           <div className="mb-8 flex justify-center">
             <Link 
               href="/" 
-              className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-white rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
+              className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-gray-900 rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
             >
               <ChevronLeftIcon className="w-6 h-6 mr-2 transition-transform group-hover:-translate-x-1" />
               Back to Home
@@ -49,13 +49,13 @@ export default function PrivacyPage() {
           </div>
 
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-black text-text mb-4 pop-in">
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-4 pop-in">
               Privacy <span className="gradient-text">Policy</span>
             </h1>
-            <p className="text-xl md:text-2xl text-text/80 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto">
               Your privacy is important to us. Learn how we protect your data.
             </p>
-            <div className="mt-4 text-sm text-text/60">
+            <div className="mt-4 text-sm text-white/60">
               <p>Last updated: December 2024</p>
             </div>
           </div>
@@ -66,7 +66,7 @@ export default function PrivacyPage() {
               <ShieldIcon className="w-8 h-8 text-accent flex-shrink-0 mt-1" />
               <div>
                 <h2 className="text-xl font-black text-accent mb-2">Our Privacy Commitment</h2>
-                <p className="text-text/80 leading-relaxed">
+                <p className="text-white/80 leading-relaxed">
                   At GameHub Central, we believe privacy is a fundamental right. We are committed to being transparent 
                   about how we collect, use, and protect your information. We collect minimal data and never sell 
                   your personal information to third parties.
@@ -82,7 +82,7 @@ export default function PrivacyPage() {
                 <div className="text-4xl mr-4">1️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-primary">Information We Collect</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-4 border-2 border-primary/20">
                   <h3 className="font-black text-primary mb-2">📊 Automatically Collected Information</h3>
                   <ul className="list-disc list-inside space-y-1 ml-4 text-sm">
@@ -110,7 +110,7 @@ export default function PrivacyPage() {
                 <div className="text-4xl mr-4">2️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-secondary">How We Use Your Information</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   We use the information we collect for the following purposes:
                 </p>
@@ -141,7 +141,7 @@ export default function PrivacyPage() {
                 <div className="text-4xl mr-4">3️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent">Cookies and Tracking</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   We use cookies and similar technologies to enhance your gaming experience:
                 </p>
@@ -171,7 +171,7 @@ export default function PrivacyPage() {
                 <div className="text-4xl mr-4">4️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent-3">Data Sharing and Disclosure</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <div className="bg-gradient-to-r from-green-100 to-green-50 rounded-xl p-4 border-4 border-green-400">
                   <div className="flex items-center mb-2">
                     <div className="text-2xl mr-2">✅</div>
@@ -203,7 +203,7 @@ export default function PrivacyPage() {
                 <div className="text-4xl mr-4">5️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent-4">Data Security</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   We implement appropriate security measures to protect your information:
                 </p>
@@ -234,7 +234,7 @@ export default function PrivacyPage() {
                 <div className="text-4xl mr-4">6️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-primary">Your Rights and Choices</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   You have the following rights regarding your information:
                 </p>
@@ -265,7 +265,7 @@ export default function PrivacyPage() {
                 <div className="text-4xl mr-4">7️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-secondary">Children's Privacy</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <div className="bg-gradient-to-r from-blue-100 to-blue-50 rounded-xl p-4 border-4 border-blue-400">
                   <div className="flex items-center mb-2">
                     <div className="text-2xl mr-2">👶</div>
@@ -293,7 +293,7 @@ export default function PrivacyPage() {
                 <div className="text-4xl mr-4">8️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent">International Users</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   GameHub Central is operated from the United States. If you are accessing our services from outside 
                   the US, please be aware that your information may be transferred to, stored, and processed in the US.
@@ -314,7 +314,7 @@ export default function PrivacyPage() {
                 <div className="text-4xl mr-4">9️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent-2">Contact Us About Privacy</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   If you have questions about this Privacy Policy or want to exercise your rights, please contact us:
                 </p>
@@ -336,7 +336,7 @@ export default function PrivacyPage() {
             <div className="card cartoon-shadow border-4 border-primary max-w-2xl mx-auto transform hover:scale-105 transition-transform pop-in">
               <div className="text-center">
                 <div className="text-5xl mb-4">📋</div>
-                <h3 className="text-2xl font-black text-text mb-4">Related Policies</h3>
+                <h3 className="text-2xl font-black text-white mb-4">Related Policies</h3>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
                     href="/terms"

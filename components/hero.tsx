@@ -204,7 +204,7 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
                       const tagColor = tagColors[index % tagColors.length];
                       
                       return (
-                        <Link key={`left-${randomGame.id}-${index}`} href={`/games/${randomGame.name}`} className="block aspect-video">
+                        <Link key={`left-${randomGame.id}-${index}`} href={`/game/${randomGame.name}`} className="block aspect-video">
                           <div className="relative w-full h-full overflow-hidden hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl group" style={{ borderRadius: '12px' }}>
                             <Image
                               src={generateGameImage(randomGame, index)}
@@ -287,7 +287,7 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
                     <h3 className="text-lg font-bold text-center mb-4 text-primary">Discover More Games</h3>
                     <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-3 h-full">
                       {randomGames.slice(20, 80).map((randomGame, index) => (
-                        <Link key={`bottom-${randomGame.id}-${index}`} href={`/games/${randomGame.name}`} className="block">
+                        <Link key={`bottom-${randomGame.id}-${index}`} href={`/game/${randomGame.name}`} className="block">
                           <div className="relative w-full aspect-square overflow-hidden hover:scale-105 transition-transform duration-300" style={{ borderRadius: '12px' }}>
                             <Image
                               src={generateGameImage(randomGame, index + 20)}
@@ -328,7 +328,7 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
                   <div className="mt-8 space-y-6">
                     <div className="grid grid-cols-4 gap-6">
                       {randomGames.slice(50, 58).map((randomGame, index) => (
-                        <Link key={`explore-${randomGame.id}-${index}`} href={`/games/${randomGame.name}`} className="block">
+                        <Link key={`explore-${randomGame.id}-${index}`} href={`/game/${randomGame.name}`} className="block">
                           <div className="relative w-full aspect-square overflow-hidden hover:scale-105 transition-transform duration-300 shadow-md" style={{ borderRadius: '12px' }}>
                             <Image
                               src={generateGameImage(randomGame, index + 50)}
@@ -376,7 +376,7 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
                       const tagColor = tagColors[index % tagColors.length];
                       
                       return (
-                        <Link key={`right-${randomGame.id}-${index}`} href={`/games/${randomGame.name}`} className="block aspect-video">
+                        <Link key={`right-${randomGame.id}-${index}`} href={`/game/${randomGame.name}`} className="block aspect-video">
                           <div className="relative w-full h-full overflow-hidden hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl group" style={{ borderRadius: '12px' }}>
                             <Image
                               src={generateGameImage(randomGame, index + 10)}

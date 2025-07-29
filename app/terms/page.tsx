@@ -26,7 +26,7 @@ export default function TermsPage() {
     <main className="bg-background">
       <Header />
 
-      <section className="py-12 md:py-16 bg-white relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-gray-900 relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-10 left-10 text-6xl opacity-10 pop-in">⚖️</div>
         <div className="absolute bottom-20 right-10 text-6xl opacity-10 pop-in" style={{ animationDelay: "0.3s" }}>
@@ -38,7 +38,7 @@ export default function TermsPage() {
           <div className="mb-8 flex justify-center">
             <Link 
               href="/" 
-              className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-white rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
+              className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-gray-900 rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
             >
               <ChevronLeftIcon className="w-6 h-6 mr-2 transition-transform group-hover:-translate-x-1" />
               Back to Home
@@ -46,13 +46,13 @@ export default function TermsPage() {
           </div>
 
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-black text-text mb-4 pop-in">
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-4 pop-in">
               Terms of <span className="gradient-text">Service</span>
             </h1>
-            <p className="text-xl md:text-2xl text-text/80 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto">
               Legal terms and conditions for using GameHub Central
             </p>
-            <div className="mt-4 text-sm text-text/60">
+            <div className="mt-4 text-sm text-white/60">
               <p>Last updated: December 2024</p>
             </div>
           </div>
@@ -63,7 +63,7 @@ export default function TermsPage() {
               <AlertTriangleIcon className="w-8 h-8 text-accent-2 flex-shrink-0 mt-1" />
               <div>
                 <h2 className="text-xl font-black text-accent-2 mb-2">Important Notice</h2>
-                <p className="text-text/80 leading-relaxed">
+                <p className="text-white/80 leading-relaxed">
                   By accessing and using GameHub Central, you acknowledge that you have read, understood, 
                   and agree to be bound by these Terms of Service. If you do not agree with these terms, 
                   please do not use our services.
@@ -79,7 +79,7 @@ export default function TermsPage() {
                 <div className="text-4xl mr-4">1️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-primary">Acceptance of Terms</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   These Terms of Service govern your use of GameHub Central, operated by GameHub Central ("we," "us," or "our"). 
                   By accessing or using our website and services, you agree to comply with and be bound by these terms.
@@ -97,7 +97,7 @@ export default function TermsPage() {
                 <div className="text-4xl mr-4">2️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-secondary">Use of Services</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   GameHub Central provides free access to HTML5 games and related content. You may use our services for personal, 
                   non-commercial purposes in accordance with these terms.
@@ -119,7 +119,7 @@ export default function TermsPage() {
                 <div className="text-4xl mr-4">3️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent">Intellectual Property</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   All content on GameHub Central, including games, graphics, text, and software, is owned by us or our licensors 
                   and is protected by copyright, trademark, and other intellectual property laws.
@@ -137,7 +137,7 @@ export default function TermsPage() {
                 <div className="text-4xl mr-4">4️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent-3">User Conduct</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   You are responsible for your conduct while using our services. We expect all users to:
                 </p>
@@ -156,7 +156,7 @@ export default function TermsPage() {
                 <div className="text-4xl mr-4">5️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent-4">Privacy and Data</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   Your privacy is important to us. Our Privacy Policy explains how we collect, use, and protect your information. 
                   By using our services, you consent to our data practices as described in our Privacy Policy.
@@ -174,7 +174,7 @@ export default function TermsPage() {
                 <div className="text-4xl mr-4">6️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-primary">Disclaimers</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   Our services are provided "as is" without warranties of any kind. We do not guarantee that:
                 </p>
@@ -193,7 +193,7 @@ export default function TermsPage() {
                 <div className="text-4xl mr-4">7️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-secondary">Limitation of Liability</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   GameHub Central shall not be liable for any indirect, incidental, special, or consequential damages 
                   resulting from your use of our services, including but not limited to lost profits, data loss, or business interruption.
@@ -211,7 +211,7 @@ export default function TermsPage() {
                 <div className="text-4xl mr-4">8️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent">Termination</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   We reserve the right to terminate or suspend access to our services at any time, without prior notice, 
                   for conduct that we believe violates these terms or is harmful to other users or our services.
@@ -228,7 +228,7 @@ export default function TermsPage() {
                 <div className="text-4xl mr-4">9️⃣</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent-2">Contact Information</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   If you have questions about these Terms of Service, please contact us:
                 </p>
@@ -246,7 +246,7 @@ export default function TermsPage() {
             <div className="card cartoon-shadow border-4 border-primary max-w-2xl mx-auto transform hover:scale-105 transition-transform pop-in">
               <div className="text-center">
                 <div className="text-5xl mb-4">📄</div>
-                <h3 className="text-2xl font-black text-text mb-4">Related Documents</h3>
+                <h3 className="text-2xl font-black text-white mb-4">Related Documents</h3>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
                     href="/privacy"

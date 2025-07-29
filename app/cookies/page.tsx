@@ -26,7 +26,7 @@ export default function CookiesPage() {
     <main className="bg-background">
       <Header />
 
-      <section className="py-12 md:py-16 bg-white relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-gray-900 relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-10 left-10 text-6xl opacity-10 pop-in">🍪</div>
         <div className="absolute bottom-20 right-10 text-6xl opacity-10 pop-in" style={{ animationDelay: "0.3s" }}>
@@ -41,7 +41,7 @@ export default function CookiesPage() {
           <div className="mb-8 flex justify-center">
             <Link 
               href="/" 
-              className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-white rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
+              className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-gray-900 rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
             >
               <ChevronLeftIcon className="w-6 h-6 mr-2 transition-transform group-hover:-translate-x-1" />
               Back to Home
@@ -49,13 +49,13 @@ export default function CookiesPage() {
           </div>
 
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-black text-text mb-4 pop-in">
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-4 pop-in">
               Cookie <span className="gradient-text">Policy</span>
             </h1>
-            <p className="text-xl md:text-2xl text-text/80 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto">
               Learn about how we use cookies to improve your gaming experience
             </p>
-            <div className="mt-4 text-sm text-text/60">
+            <div className="mt-4 text-sm text-white/60">
               <p>Last updated: December 2024</p>
             </div>
           </div>
@@ -66,7 +66,7 @@ export default function CookiesPage() {
               <CookieIcon className="w-8 h-8 text-accent flex-shrink-0 mt-1" />
               <div>
                 <h2 className="text-xl font-black text-accent mb-2">What Are Cookies?</h2>
-                <p className="text-text/80 leading-relaxed">
+                <p className="text-white/80 leading-relaxed">
                   Cookies are small text files stored on your device when you visit websites. They help websites remember 
                   your preferences, improve functionality, and provide analytics. At GameHub Central, we use cookies 
                   responsibly to enhance your gaming experience while respecting your privacy.
@@ -82,7 +82,7 @@ export default function CookiesPage() {
                 <div className="text-4xl mr-4">🍪</div>
                 <h2 className="text-2xl md:text-3xl font-black text-primary">Types of Cookies We Use</h2>
               </div>
-              <div className="text-text/90 space-y-6 leading-relaxed">
+              <div className="text-white/90 space-y-6 leading-relaxed">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {/* Essential Cookies */}
                   <div className="bg-gradient-to-r from-green-100 to-green-50 rounded-xl p-6 border-4 border-green-400">
@@ -177,7 +177,7 @@ export default function CookiesPage() {
                 <div className="text-4xl mr-4">🔗</div>
                 <h2 className="text-2xl md:text-3xl font-black text-secondary">Third-Party Services</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   We use carefully selected third-party services to provide better functionality. These services may set their own cookies:
                 </p>
@@ -205,7 +205,7 @@ export default function CookiesPage() {
                 <div className="text-4xl mr-4">⚙️</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent">How to Control Cookies</h2>
               </div>
-              <div className="text-text/90 space-y-6 leading-relaxed">
+              <div className="text-white/90 space-y-6 leading-relaxed">
                 <p>
                   You have full control over cookies. Here's how to manage them:
                 </p>
@@ -262,7 +262,7 @@ export default function CookiesPage() {
                 <div className="text-4xl mr-4">🚫</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent-3">Opt-Out Options</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   You can opt out of specific tracking and analytics:
                 </p>
@@ -293,7 +293,7 @@ export default function CookiesPage() {
                 <div className="text-4xl mr-4">⏰</div>
                 <h2 className="text-2xl md:text-3xl font-black text-accent-4">Cookie Duration & Deletion</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <div className="overflow-x-auto">
                   <table className="w-full border-collapse">
                     <thead>
@@ -336,7 +336,7 @@ export default function CookiesPage() {
                 <div className="text-4xl mr-4">🔄</div>
                 <h2 className="text-2xl md:text-3xl font-black text-primary">Updates to This Policy</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   We may update this Cookie Policy from time to time to reflect changes in our practices or for legal reasons. 
                   When we make significant changes, we will:
@@ -358,7 +358,7 @@ export default function CookiesPage() {
                 <div className="text-4xl mr-4">📞</div>
                 <h2 className="text-2xl md:text-3xl font-black text-secondary">Questions About Cookies?</h2>
               </div>
-              <div className="text-text/90 space-y-4 leading-relaxed">
+              <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
                   If you have questions about our use of cookies or this Cookie Policy, please contact us:
                 </p>
@@ -377,7 +377,7 @@ export default function CookiesPage() {
             <div className="card cartoon-shadow border-4 border-primary max-w-2xl mx-auto transform hover:scale-105 transition-transform pop-in">
               <div className="text-center">
                 <div className="text-5xl mb-4">📋</div>
-                <h3 className="text-2xl font-black text-text mb-4">Related Policies</h3>
+                <h3 className="text-2xl font-black text-white mb-4">Related Policies</h3>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
                     href="/privacy"

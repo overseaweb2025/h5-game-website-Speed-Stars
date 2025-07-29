@@ -4,7 +4,7 @@ import { token_tool } from '@/lib/utils'
 import { toast } from '@/lib/ui_tool'
 
 // 本地服务器API地址 - Use localhost for development
-const NEXT_API_URL = process.env.NEXT_PUBLIC_API_URL ||  'http://localhost:9091'
+const NEXT_API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const createAxiosInstance = (): AxiosInstance => {
   const instance = axios.create({
