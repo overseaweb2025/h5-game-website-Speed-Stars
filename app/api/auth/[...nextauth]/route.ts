@@ -2,6 +2,16 @@ import NextAuth from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import type { NextAuthOptions } from "next-auth"
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id?: string
+      name?: string | null
+      email?: string | null
+      image?: string | null
+    }
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
@@ -21,10 +31,15 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async session({ session, token }) {
+      // Add user ID to session
+      if (session.user) {
+        session.user.id = token.sub
+      }
       return session
     },
-    async jwt({ token, user }) {
-        console.log('JWT Callback:', token);
+    async jwt({ token, user, account }) {
+      // Don't make backend calls in JWT callback as it blocks OAuth flow
+      // Just return the token
       return token
     },
   },

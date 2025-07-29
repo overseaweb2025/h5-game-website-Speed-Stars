@@ -44,7 +44,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <>
       <Header />
-      <main className="container mx-auto px-4 py-8 pt-24 md:pt-28 lg:pt-32 bg-background text-text">
+      <main className="container mx-auto px-4 py-8 pt-24 md:pt-28 lg:pt-32 bg-gray-900 text-white min-h-screen">
         <div className="mb-6">
           <Link href="/blog" className="inline-flex items-center text-primary hover:text-primary-hover font-bold group">
             <ChevronLeftIcon className="w-5 h-5 mr-1 transition-transform group-hover:-translate-x-1" />
@@ -64,7 +64,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {post.title}
               </CardTitle>
               
-              <div className="flex flex-wrap items-center gap-4 text-sm text-text/60 mb-4">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-300 mb-4">
                 <div className="flex items-center">
                   <User className="h-4 w-4 mr-1.5 text-secondary" />
                   {post.author}
@@ -85,14 +85,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 )}
               </div>
               
-              <p className="text-lg md:text-xl text-text/80 leading-relaxed font-medium">
+              <p className="text-lg md:text-xl text-gray-200 leading-relaxed font-medium">
                 {post.excerpt}
               </p>
             </CardHeader>
             
             <CardContent>
               <div 
-                className="prose prose-lg max-w-none prose-headings:font-black prose-headings:text-accent-3 prose-p:text-text/90 prose-p:leading-relaxed prose-strong:text-primary prose-ul:text-text/90 prose-ol:text-text/90 prose-li:mb-2"
+                className="prose prose-lg max-w-none prose-headings:font-black prose-headings:text-accent-3 prose-p:text-gray-200 prose-p:leading-relaxed prose-strong:text-primary prose-ul:text-gray-200 prose-ol:text-gray-200 prose-li:mb-2 prose-invert"
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
             </CardContent>

@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --primary: #ff006e;
-  --primary-hover: #ff4590;
-  --secondary: #00f5ff;
-  --secondary-hover: #00d9e3;
-  --accent: #ffbe0b;
-  --accent-2: #fb5607;
-  --accent-3: #8338ec;
-  --accent-4: #3a86ff;
-  --background: #f0f7ff;
-  --text: #2d1b69;
-  --card-bg: #ffffff;
+  --primary: #a855f7;
+  --primary-hover: #9333ea;
+  --secondary: #3b82f6;
+  --secondary-hover: #2563eb;
+  --accent: #f59e0b;
+  --accent-2: #ef4444;
+  --accent-3: #8b5cf6;
+  --accent-4: #06b6d4;
+  --background: #111827;
+  --text: #f9fafb;
+  --card-bg: #1f2937;
   --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  --gradient-4: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  --gradient-2: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+  --gradient-3: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --gradient-4: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
 }
 
 @layer base {
@@ -27,8 +27,9 @@
   
   body {
     @apply bg-background text-text;
-    font-family: "Comic Sans MS", "Chalkboard SE", "Comic Neue", cursive, sans-serif;
-    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%233a86ff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+    font-family: Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%238b5cf6' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-color: #111827;
     overflow-x: hidden;
     max-width: 100vw;
   }
@@ -160,15 +161,16 @@
   }
 
   .card {
-    @apply bg-white rounded-2xl md:rounded-3xl shadow-2xl p-4 md:p-6 lg:p-8 transition-all hover:shadow-3xl border-2 md:border-4 border-white;
-    background: linear-gradient(145deg, #ffffff 0%, #f8f8ff 100%);
-    box-shadow: 0 8px 0 rgba(0, 0, 0, 0.1), 0 16px 32px rgba(0, 0, 0, 0.15);
+    @apply bg-gray-800/95 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-2xl p-4 md:p-6 lg:p-8 transition-all hover:shadow-3xl border-2 md:border-4 border-gray-600/50;
+    background: linear-gradient(145deg, rgba(55, 65, 81, 0.95) 0%, rgba(31, 41, 55, 0.95) 100%);
+    box-shadow: 0 8px 0 rgba(139, 92, 246, 0.1), 0 16px 32px rgba(139, 92, 246, 0.15);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
   .card:hover {
     transform: translateY(-3px) rotate(0.5deg);
-    box-shadow: 0 12px 0 rgba(0, 0, 0, 0.1), 0 20px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 0 rgba(139, 92, 246, 0.2), 0 20px 40px rgba(139, 92, 246, 0.25);
+    border-color: rgba(139, 92, 246, 0.5);
   }
 
   @media (min-width: 768px) {
@@ -255,6 +257,16 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  /* 隐藏滚动条用于横向滚动 */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -631,5 +643,15 @@ textarea:focus {
 
   .hover\:-rotate-2:hover {
     transform: rotate(-1deg);
+  }
+}
+
+/* Navigation Arrow Animation */
+@keyframes slideLeft {
+  0%, 50%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-8px);
   }
 }

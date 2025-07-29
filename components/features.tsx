@@ -35,16 +35,16 @@ export default function Features() {
   ]
 
   return (
-    <section id="features" className="py-8 md:py-12 bg-white relative overflow-hidden">
+    <section id="features" className="py-8 md:py-12 relative overflow-hidden">
       {/* Decorative game controllers */}
       <div className="absolute top-10 right-10 text-6xl opacity-20 rotate-12">🎮</div>
       <div className="absolute bottom-10 left-10 text-8xl opacity-20 -rotate-12">🕹️</div>
       <div className="container mx-auto px-4">
         <div className="text-center mb-6">
-          <h2 className="text-text mb-4 font-black pop-in">
+          <h2 className="text-white mb-4 font-black pop-in text-shadow-lg">
             Amazing <span className="gradient-text">Features</span>
           </h2>
-          <p className="text-text/80 max-w-2xl mx-auto">
+          <p className="text-gray-200 max-w-2xl mx-auto font-medium">
             Speed Stars combines minimalistic yet beautiful visual design with satisfying physics-based movement
           </p>
         </div>
@@ -59,8 +59,8 @@ export default function Features() {
               <div className="game-icon mb-4 inline-flex transform hover:rotate-12 transition-transform swing">
                 {feature.icon}
               </div>
-              <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-              <p className="text-text/80">{feature.description}</p>
+              <h3 className="text-xl font-bold mb-2 text-white">{feature.title}</h3>
+              <p className="text-gray-200">{feature.description}</p>
             </div>
           ))}
         </div>

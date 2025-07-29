@@ -47,22 +47,6 @@ export default function PageLayout({
       {/* Games section */}
       <Games />
       
-      {/* Game-specific sections */}
-      <SpeedStarsSection />
-      
-      <GameplaySection />
-      
-      {/* Always show these sections for consistency */}
-      {showAllSections && (
-        <>
-          <Features />
-          <HowToPlay />
-          <Testimonials />
-          <FAQ />
-          <CTA />
-        </>
-      )}
-      
       <Footer />
     </main>
   )

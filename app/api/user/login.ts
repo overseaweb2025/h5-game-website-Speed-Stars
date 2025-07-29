@@ -1,4 +1,5 @@
-import api from '../index'
+import api from '..'
+import {GoogleLogin} from '@/app/api/types'
 export const login = async (username: string, password: string) => {
     try {
         const response = await api.post('/login', { username, password });
@@ -8,37 +9,12 @@ export const login = async (username: string, password: string) => {
     }
 }
 
-//  刷新 token
-export const refreshToken = async (refreshToken: string) => {
-    try {
-        const response = await api.post('/refresh', { refreshToken });
-        return response.data;
-    } catch (error) {
-        throw new Error('Token refresh failed');
-    }
-}
-
 // Google OAuth 登录，将 Google token 传给后端获取 JWT
-export const googleLogin = async (googleToken: string, userInfo?: any) => {
-    try {
-        console.log('Google Token:', googleToken);
-        const response = await api.post('/auth/google', { 
-            token: googleToken,
-            userInfo 
-        });
-        console.log('Backend response:', response.data);
-        return response.data;
-    } catch (error) {
-        throw new Error('Google login failed');
-    }
+export const googleLogin = async (userInfo?: GoogleLogin) => {
+  return await api.post('/api/v1/auth', userInfo);
 }
-
-// 验证 JWT token
-export const refresh_JWT  = async (token: string) => {
-    try {
-        const response = await api.post('/jwt', { token });
-        return response.data;
-    } catch (error) {
-        throw new Error('JWT validation failed');
-    }
+// 自动登录
+export const autoLogin = async () => {
+    // 这里的token 是在拦截器里面配置的
+    return await api.post('/api/v1/auth/auto-login');
 }

@@ -1,0 +1,256 @@
+"use client"
+
+import { useState, useCallback, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { useGameData } from "@/hooks/useGameData"
+import { getCategoryIcon } from "./utils"
+import { useResponsive } from "@/shared/hooks"
+
+// 固定的主要导航项目
+const fixedNavItems = [
+  { id: 'home', icon: '🏠', label: 'Home' },
+  { id: 'new', icon: '✨', label: 'New' },
+  { id: 'trending', icon: '🔥', label: 'Trending now' },
+  { id: 'updates', icon: '🔄', label: 'Updated' },
+  { id: 'originals', icon: '👑', label: 'Originals' },
+  { id: 'multiplayer', icon: '👥', label: 'Multiplayer' }
+]
+
+interface SaberProps {
+  onSidebarToggle?: (toggleFunction: () => void) => void
+  onStateChange?: (sidebarVisible: boolean, isCollapsed: boolean, isHovered: boolean) => void
+}
+
+const Saber = ({ onSidebarToggle, onStateChange }: SaberProps) => {
+  const { allCategories } = useGameData()
+  const router = useRouter()
+  
+  // 侧边栏状态管理
+  const [sidebarVisible, setSidebarVisible] = useState(true) // 侧边栏是否可见
+  const [isHovered, setIsHovered] = useState(false) // 鼠标悬停状态
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null) // 悬停的菜单项
+  const [selectedItem, setSelectedItem] = useState('home')
+
+  // 使用共享的响应式Hook
+  const { isSmallScreen, isCollapsed, setIsCollapsed } = useResponsive({
+    breakpoint: 1024,
+    initialCollapsed: false,
+    onScreenSizeChange: (isSmall, wasSmall) => {
+      if (isSmall && !wasSmall) {
+        setIsCollapsed(true) // 小屏时默认为图标模式
+        setSidebarVisible(true) // 确保侧边栏可见
+      } else if (!isSmall && wasSmall) {
+        setSidebarVisible(true) // 确保侧边栏可见
+      }
+    }
+  })
+
+  // 切换侧边栏的函数
+  const toggleSidebar = useCallback(() => {
+    if (isSmallScreen) {
+      // 小屏幕：直接隐藏整个侧边栏（不管当前是图标模式还是展开模式）
+      setSidebarVisible(!sidebarVisible)
+      // 确保下次显示时是图标模式
+      if (sidebarVisible) {
+        setIsCollapsed(true)
+      }
+    } else {
+      // 大屏幕：在默认模式和图标模式之间切换
+      setIsCollapsed(!isCollapsed)
+    }
+  }, [isSmallScreen, sidebarVisible, isCollapsed])
+
+
+  // 处理鼠标悬停
+  const handleMouseEnter = useCallback(() => {
+    if (isCollapsed && !isSmallScreen) {
+      setIsHovered(true)
+    }
+  }, [isCollapsed, isSmallScreen])
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false)
+    setHoveredItem(null)
+  }, [])
+
+  // 处理项目悬停
+  const handleItemHover = useCallback((itemId: string | null) => {
+    setHoveredItem(itemId)
+  }, [])
+
+  // 处理触摸事件 - 触摸任意行时将图标模式展开为完整模式
+  const handleTouchStart = useCallback(() => {
+    if (isCollapsed) {
+      setIsCollapsed(false) // 从图标模式切换到完整默认模式
+      setIsHovered(false)   // 确保悬停状态重置
+    }
+  }, [isCollapsed])
+
+  // 处理菜单项点击
+  const handleItemClick = useCallback((itemId: string) => {
+    setSelectedItem(itemId)
+    
+    // 如果点击的是分类项目，导航到分类页面
+    if (itemId.startsWith('category-')) {
+      const categoryId = itemId.replace('category-', '')
+      const category = allCategories.find(cat => cat.category_id.toString() === categoryId)
+      if (category) {
+        router.push(`/games/c/${encodeURIComponent(category.category_name)}`)
+      }
+    }
+  }, [router, allCategories])
+
+  // 将toggle函数传递给父组件
+  useEffect(() => {
+    onSidebarToggle?.(toggleSidebar)
+  }, [onSidebarToggle, toggleSidebar])
+
+  // 状态变化时通知父组件
+  useEffect(() => {
+    onStateChange?.(sidebarVisible, isCollapsed, isHovered)
+  }, [onStateChange, sidebarVisible, isCollapsed, isHovered])
+
+  // 键盘快捷键支持 (E键)
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'e' || event.key === 'E') {
+        // 确保不在输入框中
+        if (event.target instanceof HTMLElement && 
+            !['INPUT', 'TEXTAREA'].includes(event.target.tagName)) {
+          event.preventDefault()
+          toggleSidebar()
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [toggleSidebar])
+
+  // 创建侧边栏分类列表 - 使用所有分类（包括空的）
+  const createSidebarCategories = () => {
+    return allCategories.map(category => ({
+      id: `category-${category.category_id}`,
+      icon: getCategoryIcon(category.category_name),
+      label: category.category_name,
+      categoryId: category.category_id,
+      gameCount: category.games ? category.games.length : 0
+    }))
+  }
+
+  const sidebarCategories = createSidebarCategories()
+
+  if (!sidebarVisible) return null
+
+  return (
+    <div 
+      className="h-full w-full bg-gray-900/95 backdrop-blur-sm border-r border-gray-700 shadow-sm transition-all duration-300 sidebar-container"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="h-full overflow-y-auto scrollbar-hide">
+        <div className="py-4">
+          <nav className="flex flex-col">
+            {/* 固定主要导航 */}
+            <div className="mb-2">
+              {fixedNavItems.map((item) => (
+                <div
+                  key={item.id}
+                  className={`relative group flex items-center h-12 cursor-pointer select-none transition-all duration-200 hover:bg-gray-700/50 ${
+                    selectedItem === item.id ? 'border-l-[6px] border-purple-400' : ''
+                  }`}
+                  onClick={() => handleItemClick(item.id)}
+                  onMouseEnter={() => handleItemHover(item.id)}
+                  onMouseLeave={() => handleItemHover(null)}
+                  onTouchStart={handleTouchStart}
+                >
+                  {selectedItem === item.id && (
+                    <div 
+                      className="absolute left-0 top-0 bottom-0"
+                      style={{ width: '1.2px', backgroundColor: '#a48eff' }}
+                    />
+                  )}
+                  
+                  <div className="flex items-center w-full px-4">
+                    <span className="text-xl font-bold text-gray-300 flex-shrink-0 mr-3" style={{fontFamily: 'inherit'}}>{item.icon}</span>
+                    <div
+                      className={`transition-all duration-300 overflow-hidden whitespace-nowrap font-semibold ${
+                        selectedItem === item.id
+                          ? 'text-purple-400 transform translate-x-2'
+                          : hoveredItem === item.id
+                            ? 'text-purple-300 transform translate-x-2'
+                            : 'text-gray-300'
+                      }`}
+                      style={{
+                        opacity: (isCollapsed && !isHovered) ? 0 : 1,
+                        width: (isCollapsed && !isHovered) ? '0px' : 'auto',
+                        fontFamily: 'inherit'
+                      }}
+                    >
+                      {item.label}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* 游戏分类导航 - 来自API数据 */}
+            <div 
+              className="border-t border-gray-600/50 mt-4 pt-2 transition-all duration-300"
+              style={{
+                opacity: (isCollapsed && !isHovered) ? 1 : 1,
+                height: 'auto',
+                overflow: 'visible'
+              }}
+            >
+              {sidebarCategories.map((category) => (
+                <div
+                  key={category.id}
+                  className={`relative group flex items-center h-12 cursor-pointer select-none transition-all duration-200 hover:bg-gray-700/50 ${
+                    selectedItem === category.id ? 'border-l-[6px] border-purple-400' : ''
+                  } ${category.gameCount === 0 ? 'opacity-60' : ''}`}
+                  onClick={() => handleItemClick(category.id)}
+                  onMouseEnter={() => handleItemHover(category.id)}
+                  onMouseLeave={() => handleItemHover(null)}
+                  onTouchStart={handleTouchStart}
+                >
+                  {selectedItem === category.id && (
+                    <div 
+                      className="absolute left-0 top-0 bottom-0"
+                      style={{ width: '1.2px', backgroundColor: '#a48eff' }}
+                    />
+                  )}
+                  
+                  <div className="flex items-center w-full px-4">
+                    <span className="text-lg font-bold text-gray-300 flex-shrink-0 mr-3" style={{fontFamily: 'inherit'}}>{category.icon}</span>
+                    <div
+                      className={`text-sm transition-all duration-300 overflow-hidden whitespace-nowrap font-semibold ${
+                        selectedItem === category.id
+                          ? 'text-purple-400 transform translate-x-2'
+                          : hoveredItem === category.id
+                            ? 'text-purple-300 transform translate-x-2'
+                            : 'text-gray-300'
+                      }`}
+                      style={{
+                        opacity: (isCollapsed && !isHovered) ? 0 : 1,
+                        width: (isCollapsed && !isHovered) ? '0px' : 'auto',
+                        fontFamily: 'inherit'
+                      }}
+                    >
+                      <span>{category.label}</span>
+                      {category.gameCount > 0 && (
+                        <span className="ml-1 text-xs opacity-60">({category.gameCount})</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Saber

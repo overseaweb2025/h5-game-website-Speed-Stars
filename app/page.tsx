@@ -1,27 +1,21 @@
 import Header from "@/components/header"
 import Hero from "@/components/hero"
-import Features from "@/components/features"
-import Games from "@/components/games"
-import HowToPlay from "@/components/how-to-play"
-import Testimonials from "@/components/testimonials"
-import FAQ from "@/components/faq"
-import CTA from "@/components/cta"
 import Footer from "@/components/footer"
-import SpeedStarsSection from "@/components/speed-stars-section"
+import NavigationArrow from "@/components/navigation-arrow"
 import GameplaySection from "@/components/gameplay-section"
+import Features from "@/components/features"
+import CTA from "@/components/cta"
+import HomepageTestimonials from "@/components/homepage-testimonials"
+import FAQ from "@/components/faq"
+
 export default function Home() {
   return (
     <main>
       <Header />
       <Hero />
-      <Games />
-      <SpeedStarsSection />
-      <GameplaySection />
-      <Features />
-      <HowToPlay />
-      <Testimonials />
+      <HomepageTestimonials />
       <FAQ />
-      <CTA />
+      <NavigationArrow />
       <Footer />
     </main>
   )

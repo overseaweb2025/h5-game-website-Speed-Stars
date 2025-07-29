@@ -18,7 +18,9 @@
       "Bash(grep:*)",
       "Bash(mkdir:*)",
       "Bash(pgrep:*)",
-      "Bash(true)"
+      "Bash(true)",
+      "Bash(rg:*)",
+      "Bash(sed:*)"
     ],
     "deny": []
   }

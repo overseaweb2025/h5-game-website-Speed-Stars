@@ -39,7 +39,7 @@ export default function BlogPage() {
     <main className="bg-background">
       <Header />
 
-      <section className="section-padding bg-white relative overflow-hidden">
+      <section className="section-padding bg-gray-900 relative overflow-hidden">
         {/* Decorative elements - Mobile optimized */}
         <div className="absolute top-4 left-4 md:top-10 md:left-10 text-4xl md:text-6xl opacity-10 pop-in">📰</div>
         <div
@@ -57,10 +57,10 @@ export default function BlogPage() {
 
         <div className="container mx-auto container-padding">
           <div className="text-center mb-8 md:mb-12">
-            <h1 className="text-3xl md:text-4xl lg:text-6xl font-black mb-4 pop-in">
+            <h1 className="text-3xl md:text-4xl lg:text-6xl font-black mb-4 pop-in text-white">
               Speed Stars <span className="gradient-text">Official Blog</span>
             </h1>
-            <p className="text-lg md:text-xl lg:text-2xl text-text/80 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl lg:text-2xl text-gray-200 max-w-3xl mx-auto">
               Your official source for Speed Stars news, game strategies, and the latest in unblocked gaming!
             </p>
           </div>
@@ -70,7 +70,7 @@ export default function BlogPage() {
             <div className="mb-8 md:mb-12">
               <div className="flex items-center mb-6">
                 <TrendingUp className="h-6 w-6 md:h-8 md:w-8 text-primary mr-2" />
-                <h2 className="text-2xl md:text-3xl font-black text-text">Trending Now</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-white">Trending Now</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {trendingPosts.slice(0, 3).map((post, index) => (
@@ -85,9 +85,9 @@ export default function BlogPage() {
                         {post.category}
                       </span>
                     </div>
-                    <h3 className="text-lg md:text-xl font-black text-text mb-3 line-clamp-2">{post.title}</h3>
-                    <p className="text-text/80 mb-4 text-sm md:text-base line-clamp-3">{post.excerpt}</p>
-                    <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-text/60">
+                    <h3 className="text-lg md:text-xl font-black text-white mb-3 line-clamp-2">{post.title}</h3>
+                    <p className="text-gray-200 mb-4 text-sm md:text-base line-clamp-3">{post.excerpt}</p>
+                    <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-gray-300">
                       <div className="flex items-center">
                         <User className="h-3 w-3 md:h-4 md:w-4 mr-1 text-secondary" />
                         <span className="truncate">{post.author}</span>
@@ -106,7 +106,7 @@ export default function BlogPage() {
           {/* Featured Posts Section - Mobile optimized */}
           {featuredPosts.length > 0 && (
             <div className="mb-8 md:mb-12">
-              <h2 className="text-2xl md:text-3xl font-black text-text mb-6">Featured Articles</h2>
+              <h2 className="text-2xl md:text-3xl font-black text-white mb-6">Featured Articles</h2>
               <div className="space-y-6 md:space-y-8">
                 {featuredPosts.map((post, index) => (
                   <div
@@ -119,11 +119,11 @@ export default function BlogPage() {
                         {post.category}
                       </span>
                     </div>
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-text mb-4 hover:text-primary transition-colors">
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white mb-4 hover:text-primary transition-colors">
                       <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                     </h2>
-                    <p className="text-text/80 mb-6 text-base md:text-lg leading-relaxed">{post.excerpt}</p>
-                    <div className="flex flex-wrap items-center gap-2 md:gap-4 text-sm text-text/60 mb-6">
+                    <p className="text-gray-200 mb-6 text-base md:text-lg leading-relaxed">{post.excerpt}</p>
+                    <div className="flex flex-wrap items-center gap-2 md:gap-4 text-sm text-gray-300 mb-6">
                       <div className="flex items-center">
                         <User className="h-4 w-4 mr-1.5 text-secondary" />
                         {post.author}
@@ -156,7 +156,7 @@ export default function BlogPage() {
           {/* Regular Posts Grid - Mobile optimized */}
           {regularPosts.length > 0 && (
             <div className="mb-8 md:mb-12">
-              <h2 className="text-2xl md:text-3xl font-black text-text mb-6">Latest Articles</h2>
+              <h2 className="text-2xl md:text-3xl font-black text-white mb-6">Latest Articles</h2>
               <div className="mobile-grid">
                 {regularPosts.map((post, index) => (
                   <Link
@@ -166,13 +166,13 @@ export default function BlogPage() {
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div className="mb-3">
-                      <span className="bg-accent text-text px-3 py-1 rounded-full text-xs md:text-sm font-bold">
+                      <span className="bg-accent text-white px-3 py-1 rounded-full text-xs md:text-sm font-bold">
                         {post.category}
                       </span>
                     </div>
-                    <h3 className="text-lg md:text-xl font-black text-text mb-3 line-clamp-2">{post.title}</h3>
-                    <p className="text-text/80 mb-4 text-sm md:text-base line-clamp-3">{post.excerpt}</p>
-                    <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-text/60 mb-4">
+                    <h3 className="text-lg md:text-xl font-black text-white mb-3 line-clamp-2">{post.title}</h3>
+                    <p className="text-gray-200 mb-4 text-sm md:text-base line-clamp-3">{post.excerpt}</p>
+                    <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-gray-300 mb-4">
                       <div className="flex items-center">
                         <CalendarDays className="h-3 w-3 md:h-4 md:w-4 mr-1 text-secondary" />
                         {post.date}
@@ -194,10 +194,10 @@ export default function BlogPage() {
 
           {/* Newsletter Signup - Mobile optimized */}
           <div className="card p-6 md:p-8 bg-gradient-to-r from-primary/10 to-accent-3/10 border-4 border-accent text-center">
-            <h3 className="text-2xl md:text-3xl font-black text-text mb-4">
+            <h3 className="text-2xl md:text-3xl font-black text-white mb-4">
               Stay Updated with Official Speed Stars News!
             </h3>
-            <p className="text-text/80 mb-6 max-w-2xl mx-auto text-sm md:text-base">
+            <p className="text-gray-200 mb-6 max-w-2xl mx-auto text-sm md:text-base">
               Get the latest game updates, strategy guides, and exclusive content delivered straight to your inbox. Join
               thousands of Speed Stars fans!
             </p>

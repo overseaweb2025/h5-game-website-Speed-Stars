@@ -44,26 +44,26 @@ export default function FAQ() {
   }
 
   return (
-    <section id="faq" className="py-6 md:py-8 bg-white">
+    <section id="faq" className="py-6 md:py-8">
       <div className="container mx-auto px-4">
         <div className="text-center mb-6">
-          <h2 className="text-text mb-2">
+          <h2 className="text-white mb-2 font-black text-shadow-lg">
             Frequently Asked <span className="text-primary">Questions</span>
           </h2>
-          <p className="text-text/80 max-w-2xl mx-auto">Find answers to common questions about Speed Stars</p>
+          <p className="text-gray-200 max-w-2xl mx-auto font-medium">Find answers to common questions about Speed Stars</p>
         </div>
 
         <div className="max-w-3xl mx-auto" itemScope itemType="https://schema.org/FAQPage">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="border-b border-gray-200 py-3"
+              className="border-b border-gray-600/50 py-3"
               itemScope
               itemProp="mainEntity"
               itemType="https://schema.org/Question"
             >
               <button
-                className="flex justify-between items-center w-full text-left font-bold text-lg text-text"
+                className="flex justify-between items-center w-full text-left font-bold text-lg text-white"
                 onClick={() => toggleFAQ(index)}
                 aria-expanded={openIndex === index}
                 aria-controls={`faq-answer-${index}`}
@@ -72,13 +72,13 @@ export default function FAQ() {
                 {openIndex === index ? (
                   <ChevronUp className="h-5 w-5 text-primary" />
                 ) : (
-                  <ChevronDown className="h-5 w-5 text-text" />
+                  <ChevronDown className="h-5 w-5 text-gray-300" />
                 )}
               </button>
 
               <div
                 id={`faq-answer-${index}`}
-                className={`mt-2 text-text/80 ${openIndex === index ? "block" : "hidden"}`}
+                className={`mt-2 text-gray-200 ${openIndex === index ? "block" : "hidden"}`}
                 itemScope
                 itemProp="acceptedAnswer"
                 itemType="https://schema.org/Answer"

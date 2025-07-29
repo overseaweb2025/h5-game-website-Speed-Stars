@@ -29,7 +29,7 @@ export default function CTA() {
   }
 
   return (
-    <section id="play-now" className="py-8 md:py-12 bg-white relative overflow-hidden">
+    <section id="play-now" className="py-8 md:py-12 relative overflow-hidden">
       {/* Decorative confetti */}
       <div className="absolute top-0 left-0 w-full h-full opacity-30">
         <div className="absolute top-10 left-10 text-4xl pop-in">🎉</div>
@@ -46,10 +46,10 @@ export default function CTA() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="md:w-1/2 mb-4 md:mb-0">
-            <h2 className="text-text mb-4 font-black pop-in">
+            <h2 className="text-white mb-4 font-black pop-in text-shadow-lg">
               Ready to Join the <span className="gradient-text text-stroke">Speed Stars</span> Championship?
             </h2>
-            <p className="text-text/90 mb-6 text-xl font-bold">
+            <p className="text-gray-200 mb-6 text-xl font-bold">
               Experience the thrill of physics-based sprinting in this free online game. No downloads, no restrictions -
               just instant fun! Challenge friends, represent your country, and climb the global leaderboards.
             </p>

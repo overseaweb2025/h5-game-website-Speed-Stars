@@ -1,13 +1,34 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { GamepadIcon as GameController, Facebook, Twitter, Instagram, Youtube } from "lucide-react"
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const pathname = usePathname()
+  
+  // Helper function to check if link is active
+  const isActiveLink = (href: string) => {
+    if (href === '/') {
+      return pathname === '/'
+    }
+    return pathname.startsWith(href)
+  }
+
+  // Get active link classes for footer links
+  const getFooterLinkClasses = (href: string) => {
+    const baseClasses = "transition-colors hover:scale-105 transform"
+    const isActive = isActiveLink(href)
+    
+    if (isActive) {
+      return `${baseClasses} text-accent font-bold`
+    }
+    return `${baseClasses} text-gray-200 hover:text-primary`
+  }
 
   return (
-    <footer className="bg-gradient-to-br from-text via-accent-3 to-primary text-white py-12 relative overflow-hidden border-t-8 border-white">
+    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-12 relative overflow-hidden border-t-8 border-gray-600">
       {/* Decorative shapes */}
       <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
         <div className="absolute top-10 left-10 w-32 h-32 bg-accent rounded-full pop-in"></div>
@@ -42,26 +63,12 @@ export default function Footer() {
         </div>
       </div>
       <div className="container mx-auto px-4">
-        {/* Top Footer with Logo and Newsletter */}
-        <div className="flex flex-col md:flex-row justify-between items-center border-b border-white/10 pb-8 mb-8">
+        {/* Top Footer with Logo */}
+        <div className="flex flex-col md:flex-row justify-center items-center border-b border-gray-600/30 pb-8 mb-8">
           <Link href="/" className="flex items-center space-x-2 mb-4 md:mb-0">
             <GameController className="h-12 w-12 text-accent drop-shadow-lg wiggle" />
             <span className="text-4xl font-black text-white text-stroke">GameHub Central</span>
           </Link>
-
-          <div className="w-full md:w-auto">
-            <h3 className="text-lg font-bold mb-2 text-center md:text-right">Stay Updated with New Games</h3>
-            <div className="flex">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="px-6 py-3 rounded-l-full bg-white/20 text-white border-4 border-white/30 focus:border-accent focus:outline-none w-full md:w-64 font-bold placeholder-white/70"
-              />
-              <button className="bg-accent hover:bg-accent-2 text-text font-black py-3 px-6 rounded-r-full transition-all hover:scale-110 border-4 border-white shadow-cartoon">
-                Subscribe
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* Main Footer Links */}
@@ -69,8 +76,8 @@ export default function Footer() {
           {" "}
           {/* Updated grid-cols from md:grid-cols-4 to md:grid-cols-3 */}
           <div>
-            <h3 className="text-xl font-black mb-4 border-b-4 border-white/30 pb-2 text-accent">About Us</h3>
-            <p className="text-white/80 mb-4">
+            <h3 className="text-xl font-black mb-4 border-b-4 border-gray-600/50 pb-2 text-white">About Us</h3>
+            <p className="text-gray-200 mb-4">
               GameHub Central offers the best collection of free HTML5 games for your entertainment, optimized for all
               devices and completely unblocked.
             </p>
@@ -79,7 +86,7 @@ export default function Footer() {
                 href="https://www.facebook.com/sharer/sharer.php?u=https://speed-stars.net&quote=Play%20Speed%20Stars%20and%20amazing%20HTML5%20games%20for%20free!%20Unblocked%20access%20to%20the%20best%20online%20games."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white/90 hover:text-accent transition-all hover:scale-125 transform"
+                className="text-gray-200 hover:text-accent transition-all hover:scale-125 transform"
                 aria-label="Share on Facebook"
               >
                 <Facebook className="h-5 w-5" />
@@ -88,7 +95,7 @@ export default function Footer() {
                 href="https://twitter.com/intent/tweet?text=Check%20out%20Speed%20Stars%20-%20Amazing%20free%20HTML5%20games!%20🎮&url=https://speed-stars.net&hashtags=SpeedStars,HTML5Games,FreeGames,UnblockedGames"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white/90 hover:text-accent transition-all hover:scale-125 transform"
+                className="text-gray-200 hover:text-accent transition-all hover:scale-125 transform"
                 aria-label="Share on Twitter"
               >
                 <Twitter className="h-5 w-5" />
@@ -97,7 +104,7 @@ export default function Footer() {
                 href="https://www.linkedin.com/sharing/share-offsite/?url=https://speed-stars.net"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white/90 hover:text-accent transition-all hover:scale-125 transform"
+                className="text-gray-200 hover:text-accent transition-all hover:scale-125 transform"
                 aria-label="Share on LinkedIn"
               >
                 <Instagram className="h-5 w-5" />
@@ -106,7 +113,7 @@ export default function Footer() {
                 href="https://www.reddit.com/submit?url=https://speed-stars.net&title=Speed%20Stars%20-%20Amazing%20Free%20HTML5%20Games!"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white/90 hover:text-accent transition-all hover:scale-125 transform"
+                className="text-gray-200 hover:text-accent transition-all hover:scale-125 transform"
                 aria-label="Share on Reddit"
               >
                 <Youtube className="h-5 w-5" />
@@ -115,58 +122,50 @@ export default function Footer() {
           </div>
           {/* Popular Games section removed */}
           <div>
-            <h3 className="text-xl font-black mb-4 border-b-4 border-white/30 pb-2 text-accent">Quick Links</h3>
+            <h3 className="text-xl font-black mb-4 border-b-4 border-gray-600/50 pb-2 text-white">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/about" className="text-white/80 hover:text-primary transition-colors flex items-center">
-                  <div className="h-2 w-2 bg-secondary rounded-full mr-2"></div>
+                <Link href="/about" className={getFooterLinkClasses("/about")}>
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-white/80 hover:text-primary transition-colors flex items-center">
-                  <div className="h-2 w-2 bg-secondary rounded-full mr-2"></div>
+                <Link href="/contact" className={getFooterLinkClasses("/contact")}>
                   Contact
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-white/80 hover:text-primary transition-colors flex items-center">
-                  <div className="h-2 w-2 bg-secondary rounded-full mr-2"></div>
+                <Link href="/blog" className={getFooterLinkClasses("/blog")}>
                   Blog
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-xl font-black mb-4 border-b-4 border-white/30 pb-2 text-accent">Support</h3>
+            <h3 className="text-xl font-black mb-4 border-b-4 border-gray-600/50 pb-2 text-white">Support</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/help" className="text-white/80 hover:text-primary transition-colors flex items-center">
-                  <div className="h-2 w-2 bg-accent rounded-full mr-2"></div>
+                <Link href="/help" className={getFooterLinkClasses("/help")}>
                   Help Center
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-white/80 hover:text-primary transition-colors flex items-center">
-                  <div className="h-2 w-2 bg-accent rounded-full mr-2"></div>
+                <Link href="/terms" className={getFooterLinkClasses("/terms")}>
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="text-white/80 hover:text-primary transition-colors flex items-center">
-                  <div className="h-2 w-2 bg-accent rounded-full mr-2"></div>
+                <Link href="/privacy" className={getFooterLinkClasses("/privacy")}>
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/cookies" className="text-white/80 hover:text-primary transition-colors flex items-center">
-                  <div className="h-2 w-2 bg-accent rounded-full mr-2"></div>
+                <Link href="/cookies" className={getFooterLinkClasses("/cookies")}>
                   Cookie Policy
                 </Link>
               </li>
               <li>
-                <Link href="/dmca" className="text-white/80 hover:text-primary transition-colors flex items-center">
-                  <div className="h-2 w-2 bg-accent rounded-full mr-2"></div>
+                <Link href="/dmca" className={getFooterLinkClasses("/dmca")}>
                   DMCA
                 </Link>
               </li>
@@ -175,7 +174,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Footer */}
-        <div className="pt-6 border-t border-white/10 text-center text-white/60">
+        <div className="pt-6 border-t border-gray-600/30 text-center text-gray-300">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
               <p>&copy; {currentYear} GameHub Central. All rights reserved.</p>
@@ -184,7 +183,7 @@ export default function Footer() {
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="flex items-center text-white/80 hover:text-accent transition-all font-black hover:scale-110"
+                className="flex items-center text-gray-200 hover:text-accent transition-all font-black hover:scale-110"
                 aria-label="Back to top"
               >
                 <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -214,7 +213,7 @@ export default function Footer() {
               </span>
             </address>
 
-            <div className="mt-4 pt-4 border-t border-white/20 flex flex-col md:flex-row justify-between items-center">
+            <div className="mt-4 pt-4 border-t border-gray-600/30 flex flex-col md:flex-row justify-between items-center">
               <p>🎮 Made with love for gamers everywhere</p>
               <p>🔒 Your privacy and security are our priority</p>
             </div>
