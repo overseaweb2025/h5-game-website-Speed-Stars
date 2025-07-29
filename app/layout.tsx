@@ -170,6 +170,9 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#ff006e" />
         <meta name="msapplication-tap-highlight" content="no" />
 
+        {/* Permissions Policy for Unity WebGL games to access device sensors */}
+        <meta httpEquiv="Permissions-Policy" content="accelerometer=*, gyroscope=*, magnetometer=*, ambient-light-sensor=*, camera=*, microphone=*, geolocation=*" />
+
         {/* Structured Data */}
         <script
           type="application/ld+json"

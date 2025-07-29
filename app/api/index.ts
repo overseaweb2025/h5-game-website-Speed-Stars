@@ -42,8 +42,11 @@ const createAxiosInstance = (): AxiosInstance => {
         console.log("Proxied URL:", config.url)
       }
       
-      // 只处理认证相关的请求头
-      if (config.method?.toLowerCase() === 'post' && !config.url?.includes('/api/v1/auth')) {
+      // 只处理认证相关的请求头 - 检查原始URL而不是代理后的URL
+      const isAuthRequest = config.url?.includes('/api/v1/auth') || 
+                           (config.baseURL === '/api/proxy' && config.url?.includes('api%2Fv1%2Fauth'))
+      
+      if (config.method?.toLowerCase() === 'post' && !isAuthRequest) {
         const token = token_tool.getToken()
         if (token) {
           config.headers.Authorization = `${token_tool.getTokenType()} ${token}`
