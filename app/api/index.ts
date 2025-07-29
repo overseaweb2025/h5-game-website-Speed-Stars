@@ -3,10 +3,8 @@ import axios, { type AxiosInstance, type AxiosResponse, type AxiosError } from '
 import { token_tool } from '@/lib/utils'
 import { toast } from '@/lib/ui_tool'
 
-// 本地服务器API地址 - Use localhost for development
-const NEXT_API_URL = process.env.NODE_ENV === 'development' 
-  ? '/api/proxy' 
-  : 'http://www.xingnengyun.com'
+// 本地服务器API地址 - Always use proxy to avoid CORS issues
+const NEXT_API_URL = '/api/proxy'
 
 const createAxiosInstance = (): AxiosInstance => {
   const instance = axios.create({
@@ -27,8 +25,8 @@ const createAxiosInstance = (): AxiosInstance => {
       // 在服务端环境中不使用localStorage，因为它只在客户端可用
       console.log("Request config:", config.url)
       
-      // 如果是开发环境，使用代理
-      if (process.env.NODE_ENV === 'development' && config.baseURL === '/api/proxy') {
+      // 使用代理处理所有请求
+      if (config.baseURL === '/api/proxy') {
         // 构建完整的目标 URL，包括查询参数
         let originalUrl = `http://www.xingnengyun.com${config.url}`
         
@@ -45,7 +43,7 @@ const createAxiosInstance = (): AxiosInstance => {
       }
       
       // 只处理认证相关的请求头
-      if (config.method?.toLowerCase() === 'post' && config.url !== '/api/v1/auth') {
+      if (config.method?.toLowerCase() === 'post' && !config.url?.includes('/api/v1/auth')) {
         const token = token_tool.getToken()
         if (token) {
           config.headers.Authorization = `${token_tool.getTokenType()} ${token}`

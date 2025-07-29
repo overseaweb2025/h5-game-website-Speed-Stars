@@ -97,7 +97,7 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
           const response = await getGameDetails('speed-stars')
           console.log('Speed-stars response:', response)
           
-          if (response.data.data?.reviews) {
+          if (response?.data?.data?.reviews) {
             setSpeedStarsReviews(response.data.data.reviews)
             console.log('Speed-stars reviews loaded:', response.data.data.reviews.length)
           } else {
@@ -109,9 +109,14 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
           if (error instanceof Error) {
             console.error('Error details:', error.message)
           }
+          // 设置空数组，避免反复尝试
+          setSpeedStarsReviews([])
         }
       }
-      fetchSpeedStarsReviews()
+      
+      // 延迟执行，等待游戏数据加载完成
+      const timer = setTimeout(fetchSpeedStarsReviews, 1000)
+      return () => clearTimeout(timer)
     }
   }, [game])
 

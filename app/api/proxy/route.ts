@@ -10,6 +10,11 @@ export async function GET(request: NextRequest) {
 
   try {
     console.log('Proxy GET request to:', targetUrl)
+    console.log('Request headers:', {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'User-Agent': 'Mozilla/5.0 (compatible; NextJS-Proxy/1.0)',
+    })
     
     const response = await fetch(targetUrl, {
       method: 'GET',
@@ -60,17 +65,41 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    console.log('Proxy POST request to:', targetUrl)
+    
     const body = await request.json()
+    const authHeader = request.headers.get('authorization')
+    
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'User-Agent': 'Mozilla/5.0 (compatible; NextJS-Proxy/1.0)',
+    }
+    
+    // 传递认证头
+    if (authHeader) {
+      headers.Authorization = authHeader
+    }
+    
     const response = await fetch(targetUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
+      headers,
       body: JSON.stringify(body),
     })
 
+    console.log('Proxy POST response status:', response.status)
+    
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error('Proxy POST error response:', errorText)
+      return NextResponse.json(
+        { error: `Target server error: ${response.status}`, details: errorText }, 
+        { status: response.status }
+      )
+    }
+
     const data = await response.json()
+    console.log('Proxy POST response data:', data)
 
     return NextResponse.json(data, {
       status: response.status,
@@ -81,9 +110,9 @@ export async function POST(request: NextRequest) {
       },
     })
   } catch (error) {
-    console.error('Proxy error:', error)
+    console.error('Proxy POST error:', error)
     return NextResponse.json(
-      { error: 'Failed to fetch data' }, 
+      { error: 'Failed to fetch data', details: error instanceof Error ? error.message : 'Unknown error' }, 
       { status: 500 }
     )
   }
