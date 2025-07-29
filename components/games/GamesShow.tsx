@@ -238,7 +238,7 @@ const GamesShow = ({ sidebarVisible, isSmallScreen, isCollapsed, isHovered }: Ga
             <div className="flex items-center gap-4 flex-wrap">
               <span>Categories: {categoriesWithGames.length}</span>
               <span>Games: {allGames.length}</span>
-              <span>Status: {loading ? 'Loading...' : error ? 'Error' : 'Ready'}</span>
+              <span>Status: {typeof window === 'undefined' ? 'Initializing...' : loading ? 'Loading...' : error ? 'Error' : 'Ready'}</span>
               <button 
                 onClick={refresh}
                 className="bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded text-xs"

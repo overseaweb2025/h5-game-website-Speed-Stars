@@ -93,12 +93,22 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
     if (!game) { // 只在首页时执行
       const fetchSpeedStarsReviews = async () => {
         try {
+          console.log('Fetching speed-stars reviews...')
           const response = await getGameDetails('speed-stars')
+          console.log('Speed-stars response:', response)
+          
           if (response.data.data?.reviews) {
             setSpeedStarsReviews(response.data.data.reviews)
+            console.log('Speed-stars reviews loaded:', response.data.data.reviews.length)
+          } else {
+            console.log('No reviews found in response')
           }
         } catch (error) {
           console.error('Failed to fetch speed-stars reviews:', error)
+          // 即使获取评论失败，也不影响页面其他功能
+          if (error instanceof Error) {
+            console.error('Error details:', error.message)
+          }
         }
       }
       fetchSpeedStarsReviews()
