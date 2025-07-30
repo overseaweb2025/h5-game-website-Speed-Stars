@@ -55,10 +55,66 @@ const shouldFetchData = (): boolean => {
   return false
 }
 
+// Fallback本地游戏数据
+const fallbackGameData: CategoryGameList[] = [
+  {
+    category_id: 1,
+    category_name: "Action",
+    games: [
+      { id: 1, name: "speed-stars", display_name: "Speed Stars" },
+      { id: 2, name: "speed-stars-2", display_name: "Speed Stars 2" },
+      { id: 3, name: "crazy-cattle-3d", display_name: "Crazy Cattle 3D" },
+      { id: 4, name: "speed-stars-3", display_name: "Speed Stars 3" },
+      { id: 5, name: "action-hero", display_name: "Action Hero" }
+    ]
+  },
+  {
+    category_id: 2,
+    category_name: "Racing",
+    games: [
+      { id: 6, name: "highway-race", display_name: "Highway Race" },
+      { id: 7, name: "drift-master", display_name: "Drift Master" },
+      { id: 8, name: "street-racer", display_name: "Street Racer" },
+      { id: 9, name: "turbo-speed", display_name: "Turbo Speed" }
+    ]
+  },
+  {
+    category_id: 3,
+    category_name: "Puzzle",
+    games: [
+      { id: 10, name: "block-puzzle", display_name: "Block Puzzle" },
+      { id: 11, name: "word-challenge", display_name: "Word Challenge" },
+      { id: 12, name: "mind-maze", display_name: "Mind Maze" },
+      { id: 13, name: "logic-master", display_name: "Logic Master" }
+    ]
+  },
+  {
+    category_id: 4,
+    category_name: "Adventure",
+    games: [
+      { id: 14, name: "treasure-hunt", display_name: "Treasure Hunt" },
+      { id: 15, name: "jungle-quest", display_name: "Jungle Quest" },
+      { id: 16, name: "mystery-island", display_name: "Mystery Island" }
+    ]
+  },
+  {
+    category_id: 5,
+    category_name: "Sports",
+    games: [
+      { id: 17, name: "soccer-pro", display_name: "Soccer Pro" },
+      { id: 18, name: "basketball-star", display_name: "Basketball Star" },
+      { id: 19, name: "tennis-ace", display_name: "Tennis Ace" }
+    ]
+  }
+]
+
 // 获取游戏数据的函数
 const fetchGameData = async (): Promise<void> => {
   // 如果正在加载，避免重复请求
-  if (globalGameData.loading) return
+  if (globalGameData.loading) {
+    console.log('Game data fetch already in progress, skipping...')
+    return
+  }
 
   try {
     updateGlobalState({ loading: true, error: null })
@@ -77,12 +133,61 @@ const fetchGameData = async (): Promise<void> => {
     })
     
     console.log('Game data fetched successfully:', gameCategories)
-  } catch (err) {
+  } catch (err: any) {
     console.error('Error fetching game data:', err)
-    updateGlobalState({
-      loading: false,
-      error: 'Failed to load games'
-    })
+    
+    // 更详细的错误处理
+    let errorMessage = 'Failed to load games'
+    let useFallback = false
+    
+    if (err?.response?.status === 500) {
+      errorMessage = 'Server error'
+      console.log('Server error detected, checking for cached or fallback data')
+      
+      // 如果服务器错误但有缓存数据，保持现有数据不变
+      if (globalGameData.data.length > 0) {
+        updateGlobalState({
+          loading: false,
+          error: null // 不显示错误，保持使用缓存数据
+        })
+        return
+      } else {
+        // 没有缓存数据，使用fallback数据
+        useFallback = true
+        errorMessage = 'Using offline game data'
+      }
+    } else if (err?.response?.status === 404) {
+      errorMessage = 'Game data not found'
+      useFallback = true
+    } else if (err?.code === 'NETWORK_ERROR' || !err?.response) {
+      errorMessage = 'Network connection failed'
+      // 检查是否有缓存数据
+      if (globalGameData.data.length > 0) {
+        updateGlobalState({
+          loading: false,
+          error: null
+        })
+        return
+      } else {
+        useFallback = true
+        errorMessage = 'Using offline game data'
+      }
+    }
+    
+    if (useFallback) {
+      console.log('Using fallback game data')
+      updateGlobalState({
+        data: fallbackGameData,
+        loading: false,
+        error: null, // 不显示错误，显示fallback数据
+        lastFetchTime: Date.now()
+      })
+    } else {
+      updateGlobalState({
+        loading: false,
+        error: errorMessage
+      })
+    }
   }
 }
 
@@ -101,10 +206,14 @@ const initializeGameData = async () => {
   }
 }
 
-// 立即开始初始化数据
+// 延迟初始化数据，避免路由切换时立即执行
 if (typeof window !== 'undefined') {
-  // 确保在客户端环境中执行
-  initializeGameData()
+  // 使用setTimeout延迟执行，避免在路由切换时立即触发
+  setTimeout(() => {
+    if (!isInitialized) {
+      initializeGameData()
+    }
+  }, 100)
 }
 
 // 自定义Hook
@@ -127,13 +236,13 @@ export const useGameData = () => {
       initializeGameData()
     }
 
-    // 设置定期检查数据是否过期
+    // 设置定期检查数据是否过期（延长检查间隔）
     intervalRef.current = setInterval(() => {
-      if (isDataExpired() && globalGameData.data.length > 0) {
+      if (isDataExpired() && globalGameData.data.length > 0 && !globalGameData.loading) {
         console.log('Game data expired, refetching...')
         fetchGameData()
       }
-    }, 30000) // 每30秒检查一次
+    }, 60000) // 每60秒检查一次，减少频率
 
     // 清理函数
     return () => {

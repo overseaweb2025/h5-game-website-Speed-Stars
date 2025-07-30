@@ -252,7 +252,7 @@ export default function Testimonials({ gameSlug, reviews }: TestimonialsProps) {
         {testimonials.slice(4).map((testimonial, index) => (
           <div
             key={`more-${index}`}
-            className="bg-gray-800/80 backdrop-blur-sm border-2 border-gray-700/50 p-4 md:p-5 flex-shrink-0 w-[280px] md:w-auto flex flex-col pop-in hover:shadow-cartoon-lg transition-all hover:-rotate-1 snap-start rounded-2xl hover:border-purple-500/50"
+            className="bg-gray-800/80 backdrop-blur-sm border-2 border-gray-700/50 p-4 md:p-5 flex-shrink-0 w-[calc(100vw-2.5rem)] max-w-[280px] md:w-auto flex flex-col pop-in hover:shadow-cartoon-lg transition-all hover:-rotate-1 snap-start rounded-2xl hover:border-purple-500/50"
             style={{ animationDelay: `${(index + 4) * 0.1}s` }}
             itemScope
             itemType="https://schema.org/Review"

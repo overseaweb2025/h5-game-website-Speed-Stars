@@ -1,36 +1,87 @@
 import { Game } from "@/app/api/types/Get/game"
 import { ExtendedGame } from "./types"
 
-// 根据分类名称获取图标的函数
-export const getCategoryIcon = (categoryName: string) => {
+// 可用的游戏分类图标池
+const CATEGORY_ICONS = [
+  '🎮', '⚔️', '🗺️', '🧩', '🏆', '🏎️', '🎯', '🏀', '⚽', '💄', 
+  '🚲', '👥', '🏃', '🎴', '🎱', '🌐', '👻', '🚪', '🚗', '⛏️', 
+  '🀄', '🏰', '⚡', '👆', '😎', '👗', '🎪', '🎨', '🎲', '🎭',
+  '🎸', '🎺', '🎻', '🎹', '🎤', '🎧', '🎬', '🎥', '📱', '💻',
+  '🎊', '🎉', '🎈', '🎁', '🏅', '🥇', '🥈', '🥉', '🏵️', '🎖️'
+]
+
+// 已使用的图标跟踪器
+const usedIconsMap = new Map<string, Set<string>>()
+
+// 根据分类名称获取图标的函数 - 优先匹配关键词，然后随机分配
+export const getCategoryIcon = (categoryName: string, categoryId?: number) => {
   const name = categoryName.toLowerCase()
-  if (name.includes('action')) return '⚔️'
-  if (name.includes('adventure')) return '🗺️'
-  if (name.includes('puzzle')) return '🧩'
-  if (name.includes('sports')) return '🏆'
-  if (name.includes('racing') || name.includes('car')) return '🏎️'
-  if (name.includes('shooting') || name.includes('fps')) return '🎯'
-  if (name.includes('basketball')) return '🏀'
-  if (name.includes('soccer')) return '⚽'
-  if (name.includes('beauty')) return '💄'
-  if (name.includes('bike')) return '🚲'
-  if (name.includes('2 player')) return '👥'
-  if (name.includes('stickman')) return '🏃'
-  if (name.includes('card')) return '🎴'
-  if (name.includes('pool')) return '🎱'
-  if (name.includes('io')) return '🌐'
-  if (name.includes('horror')) return '👻'
-  if (name.includes('escape')) return '🚪'
-  if (name.includes('driving')) return '🚗'
-  if (name.includes('minecraft')) return '⛏️'
-  if (name.includes('mahjong')) return '🀄'
-  if (name.includes('tower defense')) return '🏰'
-  if (name.includes('flash')) return '⚡'
-  if (name.includes('controller')) return '🎮'
-  if (name.includes('clicker')) return '👆'
-  if (name.includes('casual')) return '😎'
-  if (name.includes('dress up')) return '👗'
-  return '🎮' // 默认游戏图标
+  
+  // 首先尝试关键词匹配
+  const keywordMatches: { [key: string]: string } = {
+    'action': '⚔️',
+    'adventure': '🗺️', 
+    'puzzle': '🧩',
+    'sports': '🏆',
+    'racing': '🏎️',
+    'car': '🏎️',
+    'shooting': '🎯',
+    'fps': '🎯',
+    'basketball': '🏀',
+    'soccer': '⚽',
+    'football': '⚽',
+    'beauty': '💄',
+    'bike': '🚲',
+    'player': '👥',
+    'stickman': '🏃',
+    'card': '🎴',
+    'pool': '🎱',
+    'io': '🌐',
+    'horror': '👻',
+    'escape': '🚪',
+    'driving': '🚗',
+    'minecraft': '⛏️',
+    'mahjong': '🀄',
+    'tower': '🏰',
+    'defense': '🏰',
+    'flash': '⚡',
+    'controller': '🎮',
+    'clicker': '👆',
+    'casual': '😎',
+    'dress': '👗'
+  }
+  
+  // 检查关键词匹配
+  for (const [keyword, icon] of Object.entries(keywordMatches)) {
+    if (name.includes(keyword)) {
+      return icon
+    }
+  }
+  
+  // 如果没有关键词匹配，使用随机分配策略
+  const sessionKey = 'current_session'
+  if (!usedIconsMap.has(sessionKey)) {
+    usedIconsMap.set(sessionKey, new Set())
+  }
+  
+  const usedIcons = usedIconsMap.get(sessionKey)!
+  
+  // 如果所有图标都用过了，重置使用记录
+  if (usedIcons.size >= CATEGORY_ICONS.length - 5) {
+    usedIcons.clear()
+  }
+  
+  // 找到未使用的图标
+  const availableIcons = CATEGORY_ICONS.filter(icon => !usedIcons.has(icon))
+  
+  // 使用分类名称作为种子来保证相同分类总是得到相同图标
+  const seed = categoryName.split('').reduce((a, b) => a + b.charCodeAt(0), 0)
+  const selectedIcon = availableIcons[seed % availableIcons.length] || '🎮'
+  
+  // 记录已使用的图标
+  usedIcons.add(selectedIcon)
+  
+  return selectedIcon
 }
 
 // 生成游戏占位符图片的函数

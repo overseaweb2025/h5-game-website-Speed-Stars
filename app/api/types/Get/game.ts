@@ -3,6 +3,17 @@ export interface Game {
     id: number;
     name: string;
     display_name: string;
+    package?: {
+        url: string;
+    };
+    category?: CategorySEO;
+}
+
+// 类别SEO信息
+export interface CategorySEO {
+    page_title: string;
+    page_description: string;
+    page_keywords: string;
 }
 
 // 分类游戏列表
@@ -42,6 +53,9 @@ export interface reviews_comment {
 // 游戏详情的完整数据结构
 export interface GameDetailsData {
     breadcrumbs: Breadcrumb[];
+    page_title: string;
+    page_description: string;
+    page_keywords: string;
     display_name: string;
     package: GamePack;
     rating: string;           // 原始评分字符串，如 "4.5(2votes)"
@@ -82,7 +96,7 @@ export interface HeroGameData {
     id: string;
     title: string;
     description: string;  // 这里是HTML格式的info
-    image?: string;
+    image: string;
     category: string;
     iframeSrc: string;
     features?: string[];

@@ -60,10 +60,9 @@ export function useIsLoggedIn() {
     // Check immediately
     checkToken()
     
-    // Check periodically
-    const interval = setInterval(checkToken, 5000)
+    // Remove the periodic check to prevent unnecessary API calls
+    // Token changes will be handled by NextAuth session management
     
-    return () => clearInterval(interval)
   }, [])
 
   return isLoggedIn

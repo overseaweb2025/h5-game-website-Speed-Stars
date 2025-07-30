@@ -14,7 +14,7 @@ export default function UserProfilePage() {
   const params = useParams()
   const slug = params.slug as string
   const [userData, setUserData] = useState<StaticUserData | null>(null)
-  const [activeTab, setActiveTab] = useState<'overview' | 'history' | 'favorites' | 'comments' | 'achievements'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'history' | 'comments' | 'achievements'>('overview')
   const [loading, setLoading] = useState(true)
   const [realGameHistory, setRealGameHistory] = useState<any[]>([])
   const [isCurrentUser, setIsCurrentUser] = useState(false)
@@ -249,7 +249,6 @@ export default function UserProfilePage() {
             {[
               { id: 'overview', label: 'Overview', icon: UserCircleIcon },
               { id: 'history', label: 'Game History', icon: ClockIcon },
-              { id: 'favorites', label: 'Favorites', icon: HeartIcon },
               { id: 'comments', label: 'Comments', icon: MessageCircleIcon },
               { id: 'achievements', label: 'Achievements', icon: TrophyIcon }
             ].map(tab => {
@@ -419,27 +418,6 @@ export default function UserProfilePage() {
             </div>
           )}
 
-          {activeTab === 'favorites' && (
-            <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-white mb-4">Favorite Games</h2>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {userData.favoriteGames.map(game => (
-                  <div key={game.id} className="bg-gray-700 rounded-xl p-4 hover:bg-gray-600 transition-colors">
-                    <img
-                      src={game.gameImage}
-                      alt={game.gameDisplayName}
-                      className="w-full h-32 rounded-lg object-cover mb-3"
-                    />
-                    <h3 className="text-white font-semibold text-lg mb-2">{game.gameDisplayName}</h3>
-                    <div className="flex items-center text-sm text-gray-400 mb-3">
-                      <HeartIcon className="w-4 h-4 mr-1 text-red-400" />
-                      Added {formatDate(game.addedDate)}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
 
           {activeTab === 'comments' && (
             <div className="space-y-4">

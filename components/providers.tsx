@@ -12,13 +12,18 @@ import { toast } from '@/lib/ui_tool'
 function TokenManager() {
   const { data: session, status } = useSession()
   const [initialized, setInitialized] = useState(false)
+  const processedSessionRef = useRef<string | null>(null)
 
   useEffect(() => {
     // 只在status确定后执行一次
     if (status === "loading") return
 
-    if (!initialized) {
-      console.log("TokenManager initialized", { session, status })
+    // 使用session ID避免重复处理同一个session
+    const sessionId = session?.user?.email || 'anonymous'
+    
+    if (!initialized && processedSessionRef.current !== sessionId) {
+      console.log("TokenManager initialized", { session, status, sessionId })
+      
       if(status === "authenticated" && session?.user) {
         // 如果用户已登录，尝试获取并设置token
         const token = token_tool.getToken()
@@ -32,16 +37,23 @@ function TokenManager() {
             provider_name: 'google',
             provider_id: session.user.id || ''
           }
+          
+          // 防止重复API调用
           googleLogin(userInfo).then(res=>{
             // 如果登录成功，保存token
             if(res.data.code === 200) {
               token_tool.saveToken(res.data.data.token)
-              // 显示欢迎提示
-              toast.welcome(session.user.name || 'User')
+              // 只在第一次成功获取token时显示欢迎提示
+              if (processedSessionRef.current !== sessionId) {
+                toast.welcome(session.user.name || 'User')
+              }
             }
           }).catch(error => {
             console.error('Login failed:', error)
-            toast.error('登录失败，请重试')
+            // 只在真正的登录失败时显示错误，避免路由切换时重复显示
+            if (processedSessionRef.current !== sessionId) {
+              toast.error('Login failed, please try again')
+            }
           })
         }
       } else if (status === "unauthenticated") {
@@ -52,8 +64,9 @@ function TokenManager() {
           console.log('User logged out, clearing token')
         }
       }
+      
+      processedSessionRef.current = sessionId
       setInitialized(true)
-      // 其他初始化逻辑...
     }
   }, [session, status, initialized])
 

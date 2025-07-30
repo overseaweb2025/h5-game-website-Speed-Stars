@@ -65,7 +65,7 @@ const SimpleGameCards = () => {
             {/* Game Image */}
             <div className="relative w-full h-48 overflow-hidden">
               <img
-                src={game.image}
+                src={game.image || '/placeholder-game.jpg'}
                 alt={game.display_name}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 onError={(e) => {

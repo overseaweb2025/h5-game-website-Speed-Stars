@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { UserCircleIcon, GamepadIcon, HeartIcon, MessageCircleIcon, ClockIcon, StarIcon, TrophyIcon, CalendarIcon } from "lucide-react"
+import { useGameHistory } from "@/hooks/useGameHistory"
 
 interface GameHistory {
   id: number
@@ -16,13 +17,13 @@ interface GameHistory {
   image: string
 }
 
-interface FavoriteGame {
-  id: number
-  name: string
-  display_name: string
-  addedDate: string
-  image: string
-}
+// interface FavoriteGame {
+//   id: number
+//   name: string
+//   display_name: string
+//   addedDate: string
+//   image: string
+// }
 
 interface CommentHistory {
   id: number
@@ -46,7 +47,16 @@ interface UserStats {
 export default function UserPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
-  const [activeTab, setActiveTab] = useState<'overview' | 'history' | 'favorites' | 'comments'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'history' | 'comments'>('overview')
+  
+  // 游戏历史记录功能
+  const { 
+    history: realGameHistory, 
+    stats: gameStats, 
+    isEnabled: historyEnabled,
+    getRecentGames 
+  } = useGameHistory()
+  
   const [userStats, setUserStats] = useState<UserStats>({
     totalGamesPlayed: 0,
     totalPlayTime: 0,
@@ -57,7 +67,7 @@ export default function UserPage() {
     achievements: 0
   })
   const [gameHistory, setGameHistory] = useState<GameHistory[]>([])
-  const [favoriteGames, setFavoriteGames] = useState<FavoriteGame[]>([])
+  // const [favoriteGames, setFavoriteGames] = useState<FavoriteGame[]>([])
   const [commentHistory, setCommentHistory] = useState<CommentHistory[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -69,61 +79,47 @@ export default function UserPage() {
       return
     }
 
-    // 模拟数据加载
+    // 加载数据，结合真实游戏历史记录
     setTimeout(() => {
-      setUserStats({
-        totalGamesPlayed: 15,
-        totalPlayTime: 1250, // 分钟
-        favoriteGames: 5,
+      // 使用真实游戏历史数据更新统计信息
+      const realStats = historyEnabled && gameStats ? {
+        totalGamesPlayed: gameStats.totalGames,
+        totalPlayTime: Math.floor(gameStats.totalPlayTime / 60), // 转换为分钟
+        favoriteGames: 0, // 隐藏收藏功能
+        commentsCount: 8, // 保持模拟数据
+        joinDate: session.user?.email ? '2024-01-15' : '',
+        level: Math.min(Math.floor(gameStats.totalGames / 5) + 1, 50), // 根据游戏数量计算等级
+        achievements: Math.floor(gameStats.totalGames / 2) // 根据游戏数量计算成就
+      } : {
+        totalGamesPlayed: 0,
+        totalPlayTime: 0,
+        favoriteGames: 0,
         commentsCount: 8,
-        joinDate: '2024-01-15',
-        level: 12,
-        achievements: 23
-      })
+        joinDate: session.user?.email ? '2024-01-15' : '',
+        level: 1,
+        achievements: 0
+      }
+      
+      setUserStats(realStats)
 
-      setGameHistory([
-        {
-          id: 1,
-          name: "sniper-challenge-game",
-          display_name: "Sniper Challenge Game",
-          lastPlayed: "2024-01-20T10:30:00Z",
-          playTime: 45,
-          image: "/placeholder.svg?height=80&width=120&text=Sniper&bg=4a9eff&color=white"
-        },
-        {
-          id: 2,
-          name: "super-slime",
-          display_name: "Super Slime",
-          lastPlayed: "2024-01-19T15:45:00Z",
-          playTime: 32,
-          image: "/placeholder.svg?height=80&width=120&text=Slime&bg=8b4513&color=white"
-        },
-        {
-          id: 3,
-          name: "dig-tycoon",
-          display_name: "Dig Tycoon",
-          lastPlayed: "2024-01-18T20:15:00Z",
-          playTime: 67,
-          image: "/placeholder.svg?height=80&width=120&text=Dig&bg=2196f3&color=white"
-        }
-      ])
+      // 不再设置模拟的gameHistory，因为我们使用真实的realGameHistory
 
-      setFavoriteGames([
-        {
-          id: 1,
-          name: "sniper-challenge-game",
-          display_name: "Sniper Challenge Game",
-          addedDate: "2024-01-10",
-          image: "/placeholder.svg?height=80&width=120&text=Sniper&bg=4a9eff&color=white"
-        },
-        {
-          id: 2,
-          name: "twisted-tangle",
-          display_name: "Twisted Tangle",
-          addedDate: "2024-01-12",
-          image: "/placeholder.svg?height=80&width=120&text=Tangle&bg=8b008b&color=white"
-        }
-      ])
+      // setFavoriteGames([
+      //   {
+      //     id: 1,
+      //     name: "sniper-challenge-game",
+      //     display_name: "Sniper Challenge Game",
+      //     addedDate: "2024-01-10",
+      //     image: "/placeholder.svg?height=80&width=120&text=Sniper&bg=4a9eff&color=white"
+      //   },
+      //   {
+      //     id: 2,
+      //     name: "twisted-tangle",
+      //     display_name: "Twisted Tangle",
+      //     addedDate: "2024-01-12",
+      //     image: "/placeholder.svg?height=80&width=120&text=Tangle&bg=8b008b&color=white"
+      //   }
+      // ])
 
       setCommentHistory([
         {
@@ -146,7 +142,7 @@ export default function UserPage() {
 
       setLoading(false)
     }, 1000)
-  }, [session, status, router])
+  }, [session, status, router, historyEnabled, gameStats, realGameHistory])
 
   if (status === "loading" || loading) {
     return (
@@ -277,7 +273,6 @@ export default function UserPage() {
             {[
               { id: 'overview', label: 'Overview', icon: UserCircleIcon },
               { id: 'history', label: 'Game History', icon: ClockIcon },
-              { id: 'favorites', label: 'Favorites', icon: HeartIcon },
               { id: 'comments', label: 'Comments', icon: MessageCircleIcon }
             ].map(tab => {
               const Icon = tab.icon
@@ -314,19 +309,41 @@ export default function UserPage() {
                     Recent Activity
                   </h3>
                   <div className="space-y-3">
-                    {gameHistory.slice(0, 3).map(game => (
-                      <div key={game.id} className="flex items-center gap-3 bg-gray-600 rounded-lg p-3">
-                        <img
-                          src={game.image}
-                          alt={game.display_name}
-                          className="w-12 h-8 rounded object-cover"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-white font-medium truncate">{game.display_name}</p>
-                          <p className="text-gray-400 text-sm">{formatDateTime(game.lastPlayed)}</p>
+                    {historyEnabled && realGameHistory.length > 0 ? (
+                      getRecentGames(10).map((game, index) => (
+                        <div key={`${game.slug}-${game.visitedAt}`} className="flex items-center gap-3 bg-gray-600 rounded-lg p-3">
+                          <img
+                            src={game.image || '/placeholder-game.jpg'}
+                            alt={game.name}
+                            className="w-12 h-8 rounded object-cover"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = '/placeholder-game.jpg'
+                            }}
+                          />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-white font-medium truncate">{game.name}</p>
+                            <p className="text-gray-400 text-sm">
+                              {new Date(game.visitedAt).toLocaleDateString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              })} • {Math.floor(game.visitDuration / 60)}m {game.visitDuration % 60}s
+                            </p>
+                          </div>
                         </div>
+                      ))
+                    ) : (
+                      <div className="text-center py-8">
+                        <ClockIcon className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+                        <p className="text-gray-400 text-sm">
+                          {!historyEnabled 
+                            ? "Game history is disabled. Please sign in to track your activity." 
+                            : "No recent activity. Start playing games to see your history here!"
+                          }
+                        </p>
                       </div>
-                    ))}
+                    )}
                   </div>
                 </div>
 
@@ -337,10 +354,11 @@ export default function UserPage() {
                     Quick Stats
                   </h3>
                   <div className="space-y-3">
-                    <div className="flex justify-between items-center">
+                    {/* Favorite Games - Hidden */}
+                    {/* <div className="flex justify-between items-center">
                       <span className="text-gray-400">Favorite Games</span>
                       <span className="text-white font-semibold">{userStats.favoriteGames}</span>
-                    </div>
+                    </div> */}
                     <div className="flex justify-between items-center">
                       <span className="text-gray-400">Comments Written</span>
                       <span className="text-white font-semibold">{userStats.commentsCount}</span>
@@ -361,66 +379,86 @@ export default function UserPage() {
 
           {activeTab === 'history' && (
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-white mb-4">Game History</h2>
-              <div className="space-y-3">
-                {gameHistory.map(game => (
-                  <div key={game.id} className="flex items-center gap-4 bg-gray-700 rounded-xl p-4 hover:bg-gray-600 transition-colors">
-                    <img
-                      src={game.image}
-                      alt={game.display_name}
-                      className="w-20 h-14 rounded-lg object-cover"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-white font-semibold text-lg">{game.display_name}</h3>
-                      <div className="flex flex-wrap gap-4 mt-1 text-sm text-gray-400">
-                        <span className="flex items-center">
-                          <ClockIcon className="w-4 h-4 mr-1" />
-                          Last played: {formatDateTime(game.lastPlayed)}
-                        </span>
-                        <span className="flex items-center">
-                          <GamepadIcon className="w-4 h-4 mr-1" />
-                          Play time: {formatPlayTime(game.playTime)}
-                        </span>
-                      </div>
-                    </div>
-                    <button className="bg-accent hover:bg-accent-2 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
-                      Play Again
-                    </button>
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-bold text-white">Game History</h2>
+                {historyEnabled && realGameHistory.length > 0 && (
+                  <div className="text-sm text-gray-400">
+                    {realGameHistory.length} games played
                   </div>
-                ))}
+                )}
               </div>
+              
+              {historyEnabled && realGameHistory.length > 0 ? (
+                <div className="space-y-3">
+                  {realGameHistory.map((game, index) => (
+                    <div key={`${game.slug}-${game.visitedAt}`} className="flex items-center gap-4 bg-gray-700 rounded-xl p-4 hover:bg-gray-600 transition-colors">
+                      <img
+                        src={game.image || '/placeholder-game.jpg'}
+                        alt={game.name}
+                        className="w-20 h-14 rounded-lg object-cover"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = '/placeholder-game.jpg'
+                        }}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-white font-semibold text-lg">{game.name}</h3>
+                        <div className="flex flex-wrap gap-4 mt-1 text-sm text-gray-400">
+                          <span className="flex items-center">
+                            <ClockIcon className="w-4 h-4 mr-1" />
+                            Played: {new Date(game.visitedAt).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'short', 
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </span>
+                          <span className="flex items-center">
+                            <GamepadIcon className="w-4 h-4 mr-1" />
+                            Duration: {Math.floor(game.visitDuration / 60)}m {game.visitDuration % 60}s
+                          </span>
+                          {game.category && (
+                            <span className="flex items-center">
+                              <TrophyIcon className="w-4 h-4 mr-1 text-purple-400" />
+                              {game.category}
+                            </span>
+                          )}
+                        </div>
+                        {game.description && (
+                          <p className="text-gray-500 text-sm mt-1 truncate">{game.description}</p>
+                        )}
+                      </div>
+                      <a 
+                        href={`/game/${game.slug}`}
+                        className="bg-accent hover:bg-accent-2 text-white px-4 py-2 rounded-lg font-semibold transition-colors"
+                      >
+                        Play Again
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <GamepadIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-white mb-2">
+                    {!historyEnabled ? "Game History Disabled" : "No Game History Yet"}
+                  </h3>
+                  <p className="text-gray-400 mb-4">
+                    {!historyEnabled 
+                      ? "Please sign in to track your gaming history and see detailed statistics."
+                      : "Start playing games to build your gaming history! Play any game for at least 30 seconds to save it here."
+                    }
+                  </p>
+                  {!historyEnabled && (
+                    <p className="text-sm text-gray-500">
+                      History tracking is only available for logged-in users.
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           )}
 
-          {activeTab === 'favorites' && (
-            <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-white mb-4">Favorite Games</h2>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {favoriteGames.map(game => (
-                  <div key={game.id} className="bg-gray-700 rounded-xl p-4 hover:bg-gray-600 transition-colors">
-                    <img
-                      src={game.image}
-                      alt={game.display_name}
-                      className="w-full h-32 rounded-lg object-cover mb-3"
-                    />
-                    <h3 className="text-white font-semibold text-lg mb-2">{game.display_name}</h3>
-                    <div className="flex items-center text-sm text-gray-400 mb-3">
-                      <HeartIcon className="w-4 h-4 mr-1 text-red-400" />
-                      Added {formatDate(game.addedDate)}
-                    </div>
-                    <div className="flex gap-2">
-                      <button className="flex-1 bg-accent hover:bg-accent-2 text-white px-3 py-2 rounded-lg font-semibold transition-colors">
-                        Play
-                      </button>
-                      <button className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg transition-colors">
-                        <HeartIcon className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
 
           {activeTab === 'comments' && (
             <div className="space-y-4">

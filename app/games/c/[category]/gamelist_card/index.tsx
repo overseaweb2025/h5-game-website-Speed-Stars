@@ -13,10 +13,8 @@ const GameListCard = ({ category }: GameListCardProps) => {
   const { categoriesWithGames, loading, error } = useGameData()
   const [categoryList, setCategoryList] = useState<ExtendedGame[]>([])
 
-  useEffect(() => {
-    if (!categoriesWithGames) return
-
-    const decodedCategory = decodeURIComponent(category)
+  const handelCategory = ()=>{
+   const decodedCategory = decodeURIComponent(category)
 
     const foundCategory = categoriesWithGames.find(
       (cat) => cat.category_name.toLowerCase() === decodedCategory.toLowerCase()
@@ -27,6 +25,17 @@ const GameListCard = ({ category }: GameListCardProps) => {
     } else {
       setCategoryList([])
     }
+}
+
+  useEffect(() => {
+    console.log('categoriesWithGames',categoriesWithGames)
+    console.log('category',category)
+    categoriesWithGames.forEach((Item,index)=>{
+      if(Item.category_name === category && Item.games.length >0){
+        handelCategory()
+      }
+    })
+
   }, [categoriesWithGames, category])
 
   if (loading) {

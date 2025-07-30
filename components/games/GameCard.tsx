@@ -8,14 +8,60 @@ const GameCard = ({ game, className = "", size = 'medium' }: GameCardProps) => {
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
+  // 根据size设置不同的尺寸样式
+  const getSizeStyles = () => {
+    switch (size) {
+      case 'small':
+        return {
+          width: '100%',
+          minWidth: '140px',
+          height: '120px',
+          aspectRatio: '7/6'
+        }
+      case 'medium':
+        return {
+          width: '100%',
+          minWidth: '180px',
+          height: '160px',
+          aspectRatio: '9/8'
+        }
+      case 'large':
+        return {
+          width: '100%',
+          minWidth: '240px',
+          height: '255px',
+          aspectRatio: '6/5'
+        }
+      case 'horizontal-scroll':
+        return {
+          width: '200px',
+          minWidth: '180px',
+          height: '150px',
+          aspectRatio: '4/3'
+        }
+      default:
+        return {
+          width: '100%',
+          minWidth: '180px',
+          height: '160px',
+          aspectRatio: '9/8'
+        }
+    }
+  }
+
+  const sizeStyles = getSizeStyles()
+
   return (
     <Link
       href={`/game/${game.name}`}
       className={`group block relative overflow-visible rounded-[7px] transition-all duration-300 shadow-md hover:shadow-lg ${className}`}
-      style={{ minWidth: size === 'horizontal-scroll' ? '180px' : 'auto' }}
+      style={sizeStyles}
     >
-      <div className="relative w-full h-full bg-gray-800 rounded-[7px] overflow-hidden" style={{ aspectRatio: size === 'horizontal-scroll' ? '4/3' : 'auto' }}>
-        {!imageError ? (
+      <div 
+        className="relative w-full h-full bg-gray-800 rounded-[7px] overflow-hidden border border-gray-600/50" 
+        style={{ width: '100%', height: '100%' }}
+      >
+        {!imageError && game.image ? (
           <img
             src={game.image}
             alt={game.display_name}

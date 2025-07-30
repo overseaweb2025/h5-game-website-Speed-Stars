@@ -116,11 +116,11 @@ export const toExtendedDetails = (details: GameDetailsData): ExtendedGameDetails
   
   return {
     ...details,
-    parsedRating,
+    parsedRating: parsedRating || undefined,
     formattedReleaseDate: formatDate(details.released_at),
     formattedUpdateDate: formatDate(details.last_updated),
-    categoryInfo,
-    gameSlug
+    categoryInfo: categoryInfo || undefined,
+    gameSlug: gameSlug || undefined
   }
 }
 

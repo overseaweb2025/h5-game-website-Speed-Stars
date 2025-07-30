@@ -7,7 +7,8 @@ import { useSession } from "next-auth/react"
 import { heroData } from "@/data/home/hero-data"
 import { useGamePlayTracker } from "@/hooks/useGamePlayTracker"
 import { useGameData } from "@/hooks/useGameData"
-import { Game as APIGame, reviews_comment } from "@/app/api/types/Get/game"
+import { Game as APIGame, reviews_comment, ExtendedGameDetails } from "@/app/api/types/Get/game"
+import GameCard from "./games/GameCard"
 import { getGameDetails } from "@/app/api/gameList"
 import Games from "@/components/games"
 import SpeedStarsSection from "@/components/speed-stars-section"
@@ -40,9 +41,18 @@ interface HeroProps {
   title?: string;
   description?: string;
   reviews?: Review[];
+  gameData?: ExtendedGameDetails;
 }
 
-export default function Hero({ game, title, description, reviews }: HeroProps) {
+// 辅助函数：将 APIGame 转换为 ExtendedGame
+const convertToExtendedGame = (apiGame: APIGame): any => ({
+  id: apiGame.id,
+  name: apiGame.name,
+  display_name: apiGame.display_name,
+  image: undefined // 将会生成占位图
+})
+
+export default function Hero({ game, title, description, reviews, gameData }: HeroProps) {
   const { data: session } = useSession()
   const [iframeHeight, setIframeHeight] = useState("600px")
   const [randomGames, setRandomGames] = useState<APIGame[]>([])
@@ -61,16 +71,9 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
   
   // 游戏追踪系统
   const {
-    isTracking,
-    elapsedTime,
-    threshold,
     initializeGame,
-    handleGameAreaClick,
     setGameContainerRef,
     setIframeRef,
-    trackingState,
-    debugInfo,
-    getPlayHistory
   } = useGamePlayTracker()
 
   // 获取随机游戏数据 - 只在allGames首次加载时执行一次
@@ -186,6 +189,55 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
       <div className="container mx-auto px-2 sm:px-4">
         <div className="flex flex-col gap-4">
           <div className="w-full">
+            {/* Breadcrumbs Navigation - Above title */}
+            {gameData && gameData.breadcrumbs && gameData.breadcrumbs.length > 0 && (
+              <div className="flex justify-center mb-4">
+                <div style={{ width: "1494px", maxWidth: "calc(100vw - 32px)" }}>
+                  <nav aria-label="Breadcrumb">
+                    <div className="flex items-center space-x-1 text-sm">
+                      {/* Games link */}
+                      <Link href="/games" className="text-gray-300 hover:text-primary transition-colors cursor-pointer px-2 py-1 rounded hover:bg-white/10">
+                        Games
+                      </Link>
+                      {gameData.breadcrumbs.map((crumb, index) => {
+                        // Skip the first breadcrumb if it's "Games" to avoid duplication
+                        if (index === 0 && crumb.name.toLowerCase() === 'games') {
+                          return null;
+                        }
+                        
+                        const isLast = index === gameData.breadcrumbs.length - 1;
+                        const categorySlug = crumb.name.toLowerCase().replace(/\s+/g, '-');
+                        
+                        return (
+                          <div key={index} className="flex items-center">
+                            <svg 
+                              className="mx-2 h-4 w-4 text-gray-400" 
+                              fill="currentColor" 
+                              viewBox="0 0 20 20"
+                            >
+                              <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                            </svg>
+                            <span className={isLast ? "text-primary font-semibold px-2 py-1 rounded" : ""}>
+                              {isLast ? (
+                                crumb.name
+                              ) : (
+                                <Link 
+                                  href={`/games/c/${categorySlug}`}
+                                  className="text-gray-300 hover:text-primary transition-colors cursor-pointer px-2 py-1 rounded hover:bg-white/10"
+                                >
+                                  {crumb.name}
+                                </Link>
+                              )}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </nav>
+                </div>
+              </div>
+            )}
+
             <h1 className="text-5xl md:text-6xl lg:text-7xl text-text font-black mb-4 leading-tight text-center pop-in">
               {game ? (
                 <span className="gradient-text">{game.title}</span>
@@ -212,42 +264,14 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
               >
                 <div className="p-3">
                   <div className="grid grid-cols-1 gap-4">
-                    {randomGames.slice(0, 10).map((randomGame, index) => {
-                      const tags = ['Hot', 'New', 'Top rated'];
-                      const tagColors = ['bg-red-500', 'bg-purple-500', 'bg-orange-500'];
-                      const randomTag = tags[index % tags.length];
-                      const tagColor = tagColors[index % tagColors.length];
-                      
-                      return (
-                        <Link key={`left-${randomGame.id}-${index}`} href={`/game/${randomGame.name}`} className="block aspect-video">
-                          <div className="relative w-full h-full overflow-hidden hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl group" style={{ borderRadius: '12px' }}>
-                            <Image
-                              src={generateGameImage(randomGame, index)}
-                              alt={randomGame.display_name}
-                              fill
-                              className="object-cover group-hover:scale-110 transition-transform duration-300"
-                              sizes="180px"
-                            />
-                            
-                            {/* Tag badge in top-left corner */}
-                            <div className={`absolute top-2 left-2 px-2 py-1 ${tagColor} text-white text-xs font-bold z-10`} style={{ borderRadius: '4px' }}>
-                              {randomTag}
-                            </div>
-                            
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" style={{ borderRadius: '12px' }} />
-                            
-                            {/* Game title at bottom */}
-                            <div className="absolute bottom-0 left-0 right-0 p-3">
-                              <h4 className="text-sm font-bold text-white drop-shadow-lg line-clamp-2 leading-tight">
-                                {randomGame.display_name}
-                              </h4>
-                            </div>
-                            
-                            <div className="absolute inset-0 ring-1 ring-white/10 group-hover:ring-white/30 transition-all duration-300" style={{ borderRadius: '12px' }} />
-                          </div>
-                        </Link>
-                      );
-                    })}
+                    {randomGames.slice(0, 10).map((randomGame, index) => (
+                      <GameCard
+                        key={`left-${randomGame.id}-${index}`}
+                        game={convertToExtendedGame(randomGame)}
+                        className="w-full"
+                        size="small"
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
@@ -290,36 +314,17 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
                 </div>
 
                 {/* Bottom games panel - Random games display */}
-                <div 
-                  className="bg-gradient-to-r from-accent-3/20 via-primary/20 to-secondary/20 border-3 border-accent-4/30 cartoon-shadow mb-6"
-                  style={{ 
-                    width: "100%",
-                    minHeight: "200px",
-                    borderRadius: '12px'
-                  }}
-                >
-                  <div className="p-6 h-full">
-                    <h3 className="text-lg font-bold text-center mb-4 text-primary">Discover More Games</h3>
-                    <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-3 h-full">
-                      {randomGames.slice(20, 80).map((randomGame, index) => (
-                        <Link key={`bottom-${randomGame.id}-${index}`} href={`/game/${randomGame.name}`} className="block">
-                          <div className="relative w-full aspect-square overflow-hidden hover:scale-105 transition-transform duration-300" style={{ borderRadius: '12px' }}>
-                            <Image
-                              src={generateGameImage(randomGame, index + 20)}
-                              alt={randomGame.display_name}
-                              fill
-                              className="object-cover"
-                              sizes="(max-width: 640px) 60px, (max-width: 768px) 70px, (max-width: 1024px) 80px, 70px"
-                            />
-                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-1" style={{ borderRadius: '0 0 12px 12px' }}>
-                              <h4 className="text-[7px] sm:text-[8px] md:text-[9px] font-bold text-white text-center line-clamp-1">
-                                {randomGame.display_name}
-                              </h4>
-                            </div>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
+                <div className="bg-gradient-to-r from-accent-3/20 via-primary/20 to-secondary/20 border-3 border-accent-4/30 cartoon-shadow mb-6 rounded-xl p-4">
+                  <h3 className="text-lg font-bold text-white mb-4">Discover More Games</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {randomGames.slice(0, 4).map((randomGame, index) => (
+                      <GameCard
+                        key={`discover-${randomGame.id}-${index}`}
+                        game={convertToExtendedGame(randomGame)}
+                        className="w-full"
+                        size="medium"
+                      />
+                    ))}
                   </div>
                 </div>
 
@@ -337,29 +342,38 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
                     {heroData.buttons.secondary}
                   </Link>
                 </div>
+                {game && (
+                   <div className="container mx-auto px-4 mt-12 space-y-8">
+                     {/* Game Info HTML Content */}
+                     {game.description && (
+                       <section className="py-8">
+                         <div className="max-w-4xl mx-auto">
+                           <div 
+                             className="prose prose-lg max-w-none text-text/80 leading-relaxed [&>h1]:text-text [&>h2]:text-text [&>h3]:text-text [&>h4]:text-text [&>h5]:text-text [&>h6]:text-text [&>p]:text-text/80 [&>ul]:text-text/80 [&>ol]:text-text/80 [&>li]:text-text/80 [&>a]:text-primary [&>a]:hover:text-primary/80 [&>strong]:text-text [&>b]:text-text"
+                             dangerouslySetInnerHTML={{
+                               __html: game.description
+                             }}
+                           />
+                         </div>
+                       </section>
+                     )}
+                     {/* What Players Say 区域 */}
+                     {/* 已移除，评论只由 Testimonials 组件渲染 */}
+
+                   </div>
+                 )}
 
                 {/* Only show content sections on homepage (when no game prop) */}
                 {!game && (
                   <div className="mt-8 space-y-6">
                     <div className="grid grid-cols-4 gap-6">
                       {randomGames.slice(50, 58).map((randomGame, index) => (
-                        <Link key={`explore-${randomGame.id}-${index}`} href={`/game/${randomGame.name}`} className="block">
-                          <div className="relative w-full aspect-square overflow-hidden hover:scale-105 transition-transform duration-300 shadow-md" style={{ borderRadius: '12px' }}>
-                            <Image
-                              src={generateGameImage(randomGame, index + 50)}
-                              alt={randomGame.display_name}
-                              fill
-                              className="object-cover"
-                              sizes="(max-width: 1024px) 200px, 250px"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                            <div className="absolute bottom-0 left-0 right-0 p-2">
-                              <h4 className="text-sm font-bold text-white text-center line-clamp-2 leading-tight">
-                                {randomGame.display_name}
-                              </h4>
-                            </div>
-                          </div>
-                        </Link>
+                        <GameCard
+                          key={`explore-${randomGame.id}-${index}`}
+                          game={convertToExtendedGame(randomGame)}
+                          className="w-full"
+                          size="medium"
+                        />
                       ))}
                     </div>
                     
@@ -384,40 +398,19 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
               >
                 <div className="p-3">
                   <div className="grid grid-cols-1 gap-4">
-                    {randomGames.slice(10, 20).map((randomGame, index) => {
+                    {randomGames.slice(0, 10).map((randomGame, index) => {
                       const tags = ['New', 'Hot', 'Top rated'];
-                      const tagColors = ['bg-purple-500', 'bg-red-500', 'bg-blue-500'];
-                      const randomTag = tags[index % tags.length];
-                      const tagColor = tagColors[index % tagColors.length];
-                      
+                      const taggedGame = {
+                        ...convertToExtendedGame(randomGame),
+                        tag: tags[index % 3]
+                      };
                       return (
-                        <Link key={`right-${randomGame.id}-${index}`} href={`/game/${randomGame.name}`} className="block aspect-video">
-                          <div className="relative w-full h-full overflow-hidden hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl group" style={{ borderRadius: '12px' }}>
-                            <Image
-                              src={generateGameImage(randomGame, index + 10)}
-                              alt={randomGame.display_name}
-                              fill
-                              className="object-cover group-hover:scale-110 transition-transform duration-300"
-                              sizes="180px"
-                            />
-                            
-                            {/* Tag badge in top-left corner */}
-                            <div className={`absolute top-2 left-2 px-2 py-1 ${tagColor} text-white text-xs font-bold z-10`} style={{ borderRadius: '4px' }}>
-                              {randomTag}
-                            </div>
-                            
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" style={{ borderRadius: '12px' }} />
-                            
-                            {/* Game title at bottom */}
-                            <div className="absolute bottom-0 left-0 right-0 p-3">
-                              <h4 className="text-sm font-bold text-white drop-shadow-lg line-clamp-2 leading-tight">
-                                {randomGame.display_name}
-                              </h4>
-                            </div>
-                            
-                            <div className="absolute inset-0 ring-1 ring-white/10 group-hover:ring-white/30 transition-all duration-300" style={{ borderRadius: '12px' }} />
-                          </div>
-                        </Link>
+                        <GameCard
+                          key={`right-${randomGame.id}-${index}`}
+                          game={taggedGame}
+                          className="w-full"
+                          size="small"
+                        />
                       );
                     })}
                   </div>
@@ -459,25 +452,44 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
                 </div>
               </div>
 
-              {/* Side panels for mobile - responsive layout */}
-              <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 justify-center items-stretch mx-1 sm:mx-2">
-                {/* For very small screens, stack vertically. For 480px+, use horizontal */}
-                <div className="flex flex-col min-[480px]:flex-row gap-2 sm:gap-3">
-                  <div className="flex-1 min-w-0 bg-gradient-to-b from-primary/20 to-secondary/20 rounded-lg sm:rounded-xl md:rounded-2xl border-2 sm:border-3 border-accent/30 cartoon-shadow">
-                    <div className="p-2 sm:p-3 md:p-4 text-center">
-                      <div className="text-lg sm:text-xl md:text-2xl mb-1 sm:mb-2">🎮</div>
-                      <h3 className="text-sm sm:text-base md:text-lg font-bold text-text mb-1 leading-tight">Game Tips</h3>
-                      <p className="text-xs sm:text-sm text-text/80 leading-tight break-words">Master timing!</p>
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0 bg-gradient-to-b from-accent/20 to-accent-2/20 rounded-lg sm:rounded-xl md:rounded-2xl border-2 sm:border-3 border-primary/30 cartoon-shadow">
-                    <div className="p-2 sm:p-3 md:p-4 text-center">
-                      <div className="text-lg sm:text-xl md:text-2xl mb-1 sm:mb-2">🏆</div>
-                      <h3 className="text-sm sm:text-base md:text-lg font-bold text-text mb-1 leading-tight">High Score</h3>
-                      <p className="text-xs sm:text-sm text-text/80 leading-tight break-words">Beat best!</p>
-                    </div>
-                  </div>
-                </div>
+              {/* Game cards for mobile - responsive layout */}
+              <div className="mx-1 sm:mx-2 mb-4">
+                {(() => {
+                  // 获取第一个有游戏的分类作为标题
+                  const { categoriesWithGames } = useGameData();
+                  const firstCategory = categoriesWithGames.length > 0 ? categoriesWithGames[0] : null;
+                  
+                  return (
+                    <>
+                      <h3 className="text-lg font-bold text-white mb-3 text-center">
+                        {firstCategory ? firstCategory.category_name : 'Featured Games'}
+                      </h3>
+                      <div className="grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {firstCategory && firstCategory.games && firstCategory.games.length > 0 ? (
+                          firstCategory.games.slice(0, 3).map((game, index) => (
+                            <GameCard
+                              key={`mobile-featured-${game.id}-${index}`}
+                              game={convertToExtendedGame(game)}
+                              className="w-full"
+                              size="small"
+                            />
+                          ))
+                        ) : (
+                          // Fallback cards when no data is available
+                          [1, 2, 3].map((index) => (
+                            <div key={`fallback-${index}`} className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-lg border border-gray-600/50 p-4 min-h-[120px] flex items-center justify-center">
+                              <div className="text-center">
+                                <div className="text-2xl mb-2">🎮</div>
+                                <div className="text-white text-sm font-medium">Game {index}</div>
+                                <div className="text-gray-400 text-xs">Loading...</div>
+                              </div>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             </div>
 
@@ -487,27 +499,15 @@ export default function Hero({ game, title, description, reviews }: HeroProps) {
       </div>
       
       {/* Only show these sections for game pages (when game prop is provided) */}
-      {game && (
-        <div className="container mx-auto px-4 mt-12 space-y-8">
-          {/* Game Info HTML Content */}
-          {game.description && (
-            <section className="py-8">
-              <div className="max-w-4xl mx-auto">
-                <div 
-                  className="prose prose-lg max-w-none text-text/80 leading-relaxed [&>h1]:text-text [&>h2]:text-text [&>h3]:text-text [&>h4]:text-text [&>h5]:text-text [&>h6]:text-text [&>p]:text-text/80 [&>ul]:text-text/80 [&>ol]:text-text/80 [&>li]:text-text/80 [&>a]:text-primary [&>a]:hover:text-primary/80 [&>strong]:text-text [&>b]:text-text"
-                  dangerouslySetInnerHTML={{
-                    __html: game.description
-                  }}
-                />
-              </div>
-            </section>
-          )}
-          {/* What Players Say 区域 */}
-          {/* 已移除，评论只由 Testimonials 组件渲染 */}
-          
+ 
+
+      {/* 首页不显示 */}
+      {
+        game && (
           <Testimonials gameSlug={game?.id} reviews={reviews} />
-        </div>
-      )}
+        )
+      }
+
     </section>
   )
 }

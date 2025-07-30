@@ -46,7 +46,7 @@ const FeaturedGameSection = ({ games }: { games: ExtendedGame[] }) => {
       
       {/* 整个行区域 - 限制在屏幕宽度内 */}
       <div 
-        className="group relative w-full min-h-[320px] bg-gradient-to-r from-gray-800/30 to-gray-900/30 rounded-2xl overflow-hidden backdrop-blur-sm"
+        className="group relative w-full bg-gradient-to-r from-gray-800/30 to-gray-900/30 rounded-2xl overflow-hidden backdrop-blur-sm"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onTouchStart={handleTouchStart}
@@ -83,14 +83,16 @@ const FeaturedGameSection = ({ games }: { games: ExtendedGame[] }) => {
         >
           <div className="flex gap-6 p-6" style={{ width: 'max-content' }}>
             <div className="flex-shrink-0">
-              <div className="flex gap-6 h-[266px] min-w-[800px] sm:min-w-[900px] lg:w-[1000px]">
-                <div className="flex-1 min-w-[380px] sm:min-w-[420px]">
-                  <GameCard game={games[0]} className="h-full shadow-xl hover:shadow-2xl" size="large" />
+              <div className="grid grid-cols-3 gap-6 min-w-[800px] sm:min-w-[900px] lg:w-[1000px]">
+                {/* 第一个游戏卡片 */}
+                <div className="col-span-1">
+                  <GameCard game={games[0]} className="shadow-xl hover:shadow-2xl" size="large" />
                 </div>
-                <div className="flex-1 min-w-[380px] sm:min-w-[420px]">
-                  <div className="grid grid-cols-2 grid-rows-2 gap-4 h-full">
+                {/* 其他游戏卡片 - 2x2网格 */}
+                <div className="col-span-1">
+                  <div className="grid grid-cols-2 gap-4">
                     {games.slice(1, 5).map((game, index) => (
-                      <GameCard key={game.id} game={game} className="h-full min-w-[180px] sm:min-w-[200px] shadow-lg hover:shadow-xl" size="small" />
+                      <GameCard key={game.id} game={game} className="shadow-lg hover:shadow-xl" size="small" />
                     ))}
                   </div>
                 </div>
@@ -227,7 +229,7 @@ const GamesShow = ({ sidebarVisible, isSmallScreen, isCollapsed, isHovered }: Ga
   
   // Featured Games使用所有可用游戏
   const featuredGames = allGames.length > 0 ? addRandomTags(allGames).slice(0, 5) : []
-
+  
   return (
     <div className="w-full overflow-hidden bg-gray-800 backdrop-blur-sm">
       {/* Main game showcase area - 限制宽度不超过容器 */}

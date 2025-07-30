@@ -20,7 +20,11 @@
       "Bash(pgrep:*)",
       "Bash(true)",
       "Bash(rg:*)",
-      "Bash(sed:*)"
+      "Bash(sed:*)",
+      "Bash(npx next build:*)",
+      "Bash(npm run type-check:*)",
+      "Bash(npm run:*)",
+      "Bash(node:*)"
     ],
     "deny": []
   }

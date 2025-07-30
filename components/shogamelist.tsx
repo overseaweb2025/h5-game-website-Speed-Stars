@@ -167,7 +167,7 @@ const ScrollableGameRow = ({ games, categoryName, showViewAll }: ScrollableGameR
             href={`/games/category/${categoryName.toLowerCase().replace(/\s+/g, '-')}`}
             className="text-primary hover:text-primary-hover font-bold text-sm md:text-base transition-colors"
           >
-            All {categoryName} Games →
+            {categoryName} →
           </Link>
         )}
       </div>
@@ -238,7 +238,7 @@ const GridGameSection = ({ games, categoryName, showViewAll }: GridGameSectionPr
             href={`/games/category/${categoryName.toLowerCase().replace(/\s+/g, '-')}`}
             className="text-primary hover:text-primary-hover font-bold text-sm md:text-base transition-colors"
           >
-            All {categoryName} Games →
+            {categoryName} →
           </Link>
         )}
       </div>
@@ -269,10 +269,10 @@ interface GameGroupProps {
 }
 
 const GameGroup = ({ games, index }: GameGroupProps) => {
-  // Take 5 games for this group (1 main + 4 small)
+  // Take up to 5 games for this group (1 main + up to 4 small)
   const groupGames = games.slice(0, 5)
   const mainGame = groupGames[0]
-  const smallGames = groupGames.slice(1, 5)
+  const smallGames = groupGames.slice(1) // Take all remaining games, even if less than 4
   
   if (!mainGame) return null
   
@@ -368,21 +368,32 @@ const FeaturedGameRow = ({ games, categoryName, showViewAll }: FeaturedGameRowPr
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(false)
 
-  // Create 6 groups from available games
+  // Create groups from available games
   const createGameGroups = () => {
     const groups = []
     const gamesPerGroup = 5
     
-    // Repeat games if we don't have enough
+    if (games.length === 0) return groups
+    
+    // If we have less than 5 games, create one group with all games
+    if (games.length < 5) {
+      groups.push(games)
+      return groups
+    }
+    
+    // Create groups of 5, repeat games if necessary to fill multiple groups
     const allGames = [...games]
-    while (allGames.length < 30) { // 6 groups * 5 games each
+    const targetGroups = Math.min(6, Math.ceil(games.length / gamesPerGroup)) // Maximum 6 groups
+    
+    // Repeat games if we don't have enough for multiple groups
+    while (allGames.length < targetGroups * gamesPerGroup) {
       allGames.push(...games)
     }
     
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < targetGroups; i++) {
       const startIndex = i * gamesPerGroup
       const groupGames = allGames.slice(startIndex, startIndex + gamesPerGroup)
-      if (groupGames.length >= 5) {
+      if (groupGames.length > 0) {
         groups.push(groupGames)
       }
     }
@@ -441,7 +452,7 @@ const FeaturedGameRow = ({ games, categoryName, showViewAll }: FeaturedGameRowPr
     }
     
     return () => clearTimeout(timer)
-  }, [gameGroups])
+  }, [games])
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -464,7 +475,7 @@ const FeaturedGameRow = ({ games, categoryName, showViewAll }: FeaturedGameRowPr
             href={`/games/category/${categoryName.toLowerCase().replace(/\s+/g, '-')}`}
             className="text-primary hover:text-primary-hover font-bold text-sm md:text-base transition-colors"
           >
-            All {categoryName} Games →
+            {categoryName} →
           </Link>
         )}
       </div>
@@ -635,13 +646,13 @@ const ShowGameList = () => {
               const isScrollCategory = scrollCategories.includes(category.category_name)
               const isGridCategory = gridCategories.includes(category.category_name)
               
-              // Use Featured layout for the first category with enough games
-              if (categoryIndex === 0 && category.games.length >= 5) {
+              // Use Featured layout for the first category - use the actual category name, not "Featured"
+              if (categoryIndex === 0 && category.games.length > 0) {
                 return (
                   <FeaturedGameRow
                     key={category.category_id}
                     games={category.games}
-                    categoryName={`Featured ${category.category_name}`}
+                    categoryName={category.category_name}
                     showViewAll={shouldShowViewAll}
                   />
                 )

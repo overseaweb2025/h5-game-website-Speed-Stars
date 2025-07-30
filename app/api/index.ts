@@ -52,8 +52,8 @@ const createAxiosInstance = (): AxiosInstance => {
           config.headers.Authorization = `${token_tool.getTokenType()} ${token}`
         } else {
           // 没有token时提示用户未登录
-          toast.error('用户未登录，请先登录')
-          return Promise.reject(new Error('用户未登录'))
+          toast.error('User not logged in, please login first')
+          return Promise.reject(new Error('User not logged in'))
         }
       }
       return config
@@ -74,7 +74,7 @@ const createAxiosInstance = (): AxiosInstance => {
     },
     (error: AxiosError) => {
       // 错误响应处理
-      let errorMessage = '请求失败'
+      let errorMessage = 'Request failed'
       
       if (error.response) {
         // 服务器响应错误
@@ -82,14 +82,14 @@ const createAxiosInstance = (): AxiosInstance => {
         
         switch (status) {
           case 400:
-            errorMessage = (data as any)?.message || '请求参数错误'
+            errorMessage = (data as any)?.message || 'Invalid request parameters'
             break
           case 401:
-            errorMessage = '未授权访问'
+            errorMessage = 'Unauthorized access'
             // 401错误时自动删除存储的token并触发登出
             if (typeof window !== 'undefined') {
               token_tool.clearToken()
-              toast.error('登录已过期，请重新登录')
+              toast.error('Login expired, please login again')
               
               // 触发NextAuth登出
               import('next-auth/react').then(({ signOut }) => {
@@ -98,34 +98,34 @@ const createAxiosInstance = (): AxiosInstance => {
             }
             break
           case 403:
-            errorMessage = '禁止访问'
+            errorMessage = 'Access forbidden'
             break
           case 404:
-            errorMessage = '资源未找到'
+            errorMessage = 'Resource not found'
             break
           case 422:
-            errorMessage = (data as any)?.message || '请求数据验证失败'
+            errorMessage = (data as any)?.message || 'Request data validation failed'
             console.error('422 Validation Error Details:', data)
             break
           case 500:
-            errorMessage = '服务器内部错误'
+            errorMessage = 'Internal server error'
             break
           default:
-            errorMessage = (data as any)?.message || `请求失败 (${status})`
+            errorMessage = (data as any)?.message || `Request failed (${status})`
         }
       } else if (error.request) {
         // 网络错误或CORS错误
         if (error.message?.includes('CORS') || error.message?.includes('Cross-Origin')) {
-          errorMessage = '跨域请求被阻止，请检查服务器CORS配置'
+          errorMessage = 'Cross-origin request blocked, please check server CORS configuration'
         } else {
-          errorMessage = '网络连接失败'
+          errorMessage = 'Network connection failed'
         }
       } else {
         // 其他错误
         if (error.message?.includes('CORS') || error.message?.includes('Cross-Origin')) {
-          errorMessage = '跨域请求失败'
+          errorMessage = 'Cross-origin request failed'
         } else {
-          errorMessage = error.message || '未知错误'
+          errorMessage = error.message || 'Unknown error'
         }
       }
       

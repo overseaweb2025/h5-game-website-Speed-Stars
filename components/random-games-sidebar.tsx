@@ -55,7 +55,7 @@ export default function GameSidebar({
                   <div className="flex items-center space-x-2 p-2 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors">
                     <div className="relative w-8 h-8 flex-shrink-0">
                       <Image
-                        src={game.image}
+                        src={game.image || '/placeholder-game.jpg'}
                         alt={game.title}
                         fill
                         className="object-cover rounded"
@@ -81,7 +81,7 @@ export default function GameSidebar({
                   <div className="flex items-center space-x-2 p-2 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors">
                     <div className="relative w-8 h-8 flex-shrink-0">
                       <Image
-                        src={game.image}
+                        src={game.image || '/placeholder-game.jpg'}
                         alt={game.title}
                         fill
                         className="object-cover rounded"

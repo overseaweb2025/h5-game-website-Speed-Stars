@@ -79,12 +79,20 @@ const Saber = ({ onSidebarToggle, onStateChange }: SaberProps) => {
   }, [])
 
   // 处理触摸事件 - 触摸任意行时将图标模式展开为完整模式
-  const handleTouchStart = useCallback(() => {
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    // 防止触摸事件冒泡，确保只有当前项目被处理
+    e.stopPropagation()
+    
     if (isCollapsed) {
       setIsCollapsed(false) // 从图标模式切换到完整默认模式
       setIsHovered(false)   // 确保悬停状态重置
+      
+      // 在小屏幕上，添加轻微的触觉反馈（如果支持）
+      if (isSmallScreen && 'vibrate' in navigator) {
+        navigator.vibrate(50)
+      }
     }
-  }, [isCollapsed])
+  }, [isCollapsed, isSmallScreen])
 
   // 处理菜单项点击
   const handleItemClick = useCallback((itemId: string) => {
@@ -156,7 +164,7 @@ const Saber = ({ onSidebarToggle, onStateChange }: SaberProps) => {
               {fixedNavItems.map((item) => (
                 <div
                   key={item.id}
-                  className={`relative group flex items-center h-12 cursor-pointer select-none transition-all duration-200 hover:bg-gray-700/50 ${
+                  className={`relative group flex items-center h-12 cursor-pointer select-none transition-all duration-200 hover:bg-gray-700/50 touch-manipulation active:bg-gray-600/50 ${
                     selectedItem === item.id ? 'border-l-[6px] border-purple-400' : ''
                   }`}
                   onClick={() => handleItemClick(item.id)}
@@ -206,7 +214,7 @@ const Saber = ({ onSidebarToggle, onStateChange }: SaberProps) => {
               {sidebarCategories.map((category) => (
                 <div
                   key={category.id}
-                  className={`relative group flex items-center h-12 cursor-pointer select-none transition-all duration-200 hover:bg-gray-700/50 ${
+                  className={`relative group flex items-center h-12 cursor-pointer select-none transition-all duration-200 hover:bg-gray-700/50 touch-manipulation active:bg-gray-600/50 ${
                     selectedItem === category.id ? 'border-l-[6px] border-purple-400' : ''
                   } ${category.gameCount === 0 ? 'opacity-60' : ''}`}
                   onClick={() => handleItemClick(category.id)}
