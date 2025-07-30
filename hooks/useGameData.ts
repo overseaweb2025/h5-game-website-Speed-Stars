@@ -26,6 +26,7 @@ const listeners = new Set<() => void>()
 
 // 初始化标志
 let isInitialized = false
+let initPromise: Promise<void> | null = null
 
 // 通知所有监听器状态更新
 const notifyListeners = () => {
@@ -116,6 +117,12 @@ const fetchGameData = async (): Promise<void> => {
     return
   }
 
+  // 如果已经有数据且未过期，跳过请求
+  if (globalGameData.data.length > 0 && !isDataExpired()) {
+    console.log('Game data is still valid, skipping fetch...')
+    return
+  }
+
   try {
     updateGlobalState({ loading: true, error: null })
     
@@ -197,23 +204,65 @@ const refreshGameData = async (): Promise<void> => {
   await fetchGameData()
 }
 
-// 初始化数据 - 在模块加载时立即执行
-const initializeGameData = async () => {
-  if (!isInitialized && !globalGameData.loading) {
-    isInitialized = true
-    console.log('Initializing game data on module load...')
-    await fetchGameData()
+// 初始化数据 - 确保只初始化一次
+const initializeGameData = async (): Promise<void> => {
+  // 如果已经初始化或正在初始化，返回现有的Promise
+  if (isInitialized) {
+    console.log('Game data already initialized, skipping...')
+    return
   }
+  
+  if (initPromise) {
+    console.log('Game data initialization in progress, waiting...')
+    return initPromise
+  }
+
+  // 标记已初始化，防止重复调用
+  isInitialized = true
+  
+  initPromise = (async () => {
+    try {
+      console.log('Initializing game data (single time)...')
+      await fetchGameData()
+    } catch (error) {
+      console.error('Failed to initialize game data:', error)
+      // 重置标志，允许重试
+      isInitialized = false
+      throw error
+    } finally {
+      initPromise = null
+    }
+  })()
+  
+  return initPromise
 }
 
-// 延迟初始化数据，避免路由切换时立即执行
+// 延迟初始化数据，确保只在客户端执行一次
 if (typeof window !== 'undefined') {
-  // 使用setTimeout延迟执行，避免在路由切换时立即触发
-  setTimeout(() => {
-    if (!isInitialized) {
-      initializeGameData()
+  // 使用requestIdleCallback或setTimeout来延迟初始化，避免阻塞页面渲染
+  const scheduleInit = () => {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        if (!isInitialized) {
+          initializeGameData().catch(console.error)
+        }
+      })
+    } else {
+      setTimeout(() => {
+        if (!isInitialized) {
+          initializeGameData().catch(console.error)
+        }
+      }, 100)
     }
-  }, 100)
+  }
+  
+  // 如果页面已经加载完成，立即执行
+  if (document.readyState === 'complete') {
+    scheduleInit()
+  } else {
+    // 否则等待页面加载完成
+    window.addEventListener('load', scheduleInit, { once: true })
+  }
 }
 
 // 自定义Hook
@@ -230,19 +279,20 @@ export const useGameData = () => {
     // 添加监听器
     listeners.add(triggerUpdate)
     
-    // 确保数据已经开始获取（如果还没有的话）
+    // 确保数据已经开始获取（作为fallback机制）
     if (!isInitialized && shouldFetchData()) {
       console.log('Fallback: Starting data fetch from useEffect...')
-      initializeGameData()
+      initializeGameData().catch(console.error)
     }
 
-    // 设置定期检查数据是否过期（延长检查间隔）
+    // 设置定期检查数据是否过期（仅在需要时）
     intervalRef.current = setInterval(() => {
+      // 只有在有数据且过期时才重新获取
       if (isDataExpired() && globalGameData.data.length > 0 && !globalGameData.loading) {
         console.log('Game data expired, refetching...')
-        fetchGameData()
+        fetchGameData().catch(console.error)
       }
-    }, 60000) // 每60秒检查一次，减少频率
+    }, 5 * 60 * 1000) // 每5分钟检查一次，减少频率
 
     // 清理函数
     return () => {
