@@ -7,7 +7,11 @@ import Link from "next/link"
 import Image from "next/image"
 import { Loader2 } from "lucide-react"
 
-export default function CTA() {
+interface CTAProps {
+  t?: any;
+}
+
+export default function CTA({ t }: CTAProps = {}) {
   const [isLoading, setIsLoading] = useState(false)
 
   const scrollToGame = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -47,25 +51,24 @@ export default function CTA() {
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="md:w-1/2 mb-4 md:mb-0">
             <h2 className="text-white mb-4 font-black pop-in text-shadow-lg">
-              Ready to Join the <span className="gradient-text text-stroke">Speed Stars</span> Championship?
+              {t?.cta?.readyToJoin || "Ready to Join the Speed Stars Championship?"}
             </h2>
             <p className="text-gray-200 mb-6 text-xl font-bold">
-              Experience the thrill of physics-based sprinting in this free online game. No downloads, no restrictions -
-              just instant fun! Challenge friends, represent your country, and climb the global leaderboards.
+              {t?.cta?.ctaDescription || "Experience the thrill of physics-based sprinting in this free online game. No downloads, no restrictions - just instant fun! Challenge friends, represent your country, and climb the global leaderboards."}
             </p>
             <Link
               href="#"
               onClick={scrollToGame}
               className="bg-gradient-to-r from-primary to-accent-2 hover:from-accent-2 hover:to-primary text-white font-black py-4 px-10 rounded-full transition-all transform hover:scale-110 hover:rotate-3 shadow-cartoon-lg text-center inline-flex items-center justify-center min-w-[250px] text-xl border-4 border-white jello"
-              aria-label={isLoading ? "Loading game..." : "Play Speed Stars Now"}
+              aria-label={isLoading ? (t?.cta?.loadingGame || "Loading game...") : (t?.cta?.playSpeedStarsNow || "Play Speed Stars Now")}
             >
               {isLoading ? (
                 <>
                   <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                  Loading Game...
+                  {t?.cta?.loadingGame || "Loading Game..."}
                 </>
               ) : (
-                "Play Speed Stars Now - It's Free!"
+                {t?.cta?.playSpeedStarsNow || "Play Speed Stars Now - It's Free!"}
               )}
             </Link>
           </div>
@@ -74,7 +77,7 @@ export default function CTA() {
             <div className="relative h-[300px] w-full transform hover:scale-105 transition-transform">
               <Image
                 src="https://play-lh.googleusercontent.com/034GbR6y0xK4StG-uiYgc9bL2ZhiOA8ktcLjIUF0pNmMovpGwF8hXYBbd8zGG-TQCbxx=w526-h296-rw"
-                alt="Speed Stars game screenshot"
+                alt={t?.hero?.speedStarUnblocked || "Speed Stars game screenshot"}
                 fill
                 className="object-contain swing"
               />

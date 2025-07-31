@@ -22,7 +22,7 @@ export const getPages = async () => {
       }
     };
   } catch (error) {
-    console.error('Error fetching pages from gamelist:', error);
+    // Error fetching pages from gamelist - silently handled
     throw error;
   }
 }
@@ -45,7 +45,7 @@ export const getPageByName = async (gameName: string) => {
       }
     };
   } catch (error) {
-    console.error(`Error fetching game "${gameName}":`, error);
+    // Error fetching game - silently handled
     throw error;
   }
 }
@@ -56,7 +56,7 @@ export const getAllGameSlugsFromAPI = async (): Promise<string[]> => {
     const response = await getPages();
     return response.data.data.map(game => game.name);
   } catch (error) {
-    console.error('Error fetching game slugs:', error);
+    // Error fetching game slugs - silently handled
     return [];
   }
 }
@@ -91,7 +91,7 @@ export const getGameDataForStaticPage = async (gameName: string) => {
       ]
     };
   } catch (error) {
-    console.error(`Error getting game data for "${gameName}":`, error);
+    // Error getting game data - silently handled
     return null;
   }
 }

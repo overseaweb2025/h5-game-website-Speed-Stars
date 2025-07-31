@@ -14,7 +14,7 @@ export const getUserGameHistory = (userId?: string): GamePlayRecord[] => {
     // 过滤出属于指定用户的记录
     return allRecords.filter(record => record.userId === userId)
   } catch (error) {
-    console.error('Error reading game history:', error)
+    // Error reading game history - silently handled
     return []
   }
 }

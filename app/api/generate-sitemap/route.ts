@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     const { stdout, stderr } = await execAsync("npx ts-node --project tsconfig.server.json scripts/generate-sitemap.ts")
 
     if (stderr) {
-      console.error(`Sitemap generation error: ${stderr}`)
+      // Sitemap generation error - silently handled
       return NextResponse.json({ error: stderr }, { status: 500 })
     }
 
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
       details: stdout,
     })
   } catch (error) {
-    console.error("Error generating sitemap:", error)
+    // Error generating sitemap - silently handled
     return NextResponse.json(
       {
         error: "Failed to generate sitemap",

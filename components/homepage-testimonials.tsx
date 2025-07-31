@@ -103,7 +103,6 @@ export default function HomepageTestimonials() {
           ])
         }
       } catch (error) {
-        console.error('Failed to fetch speed-stars reviews:', error)
         // 在错误情况下显示默认评论，而不是显示错误
         setTestimonials([
           {
@@ -193,7 +192,6 @@ export default function HomepageTestimonials() {
         description: "Thanks for your feedback!",
       })
     } catch (error) {
-      console.error("Failed to submit review:", error)
       toast({
         title: "Submission Failed",
         description: "Failed to submit your review. Please try again.",

@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { GameCardProps } from "./types"
 
-const GameCard = ({ game, className = "", size = 'medium' }: GameCardProps) => {
+const GameCard = ({ game, className = "", size = 'medium', t }: GameCardProps) => {
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
@@ -61,9 +61,9 @@ const GameCard = ({ game, className = "", size = 'medium' }: GameCardProps) => {
         className="relative w-full h-full bg-gray-800 rounded-[7px] overflow-hidden border border-gray-600/50" 
         style={{ width: '100%', height: '100%' }}
       >
-        {!imageError && game.image ? (
+        {!imageError && (game.cover || game.image) ? (
           <img
-            src={game.image}
+            src={game.cover || game.image}
             alt={game.display_name}
             className={`w-full h-full object-cover transition-all duration-300 group-hover:scale-110 ${
               imageLoaded ? 'opacity-100' : 'opacity-0'
@@ -82,7 +82,7 @@ const GameCard = ({ game, className = "", size = 'medium' }: GameCardProps) => {
             <div className="text-center text-gray-400">
               <div className="text-4xl mb-2">🎮</div>
               <div className="text-xs font-medium px-2">
-                {imageError ? 'Image failed to load' : 'Loading...'}
+                {imageError ? (t?.hero?.imageFailedToLoad || 'Image failed to load') : (t?.common?.loading || 'Loading...')}
               </div>
             </div>
           </div>

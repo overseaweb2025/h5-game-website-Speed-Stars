@@ -113,23 +113,18 @@ const fallbackGameData: CategoryGameList[] = [
 const fetchGameData = async (): Promise<void> => {
   // 如果正在加载，避免重复请求
   if (globalGameData.loading) {
-    console.log('Game data fetch already in progress, skipping...')
     return
   }
 
   // 如果已经有数据且未过期，跳过请求
   if (globalGameData.data.length > 0 && !isDataExpired()) {
-    console.log('Game data is still valid, skipping fetch...')
     return
   }
 
   try {
     updateGlobalState({ loading: true, error: null })
     
-    console.log('Starting to fetch game data...')
     const response = await getGameList()
-
-    console.log('Fetched game data:', response)
     const gameCategories = response.data.data
     
     updateGlobalState({
@@ -139,9 +134,7 @@ const fetchGameData = async (): Promise<void> => {
       lastFetchTime: Date.now()
     })
     
-    console.log('Game data fetched successfully:', gameCategories)
   } catch (err: any) {
-    console.error('Error fetching game data:', err)
     
     // 更详细的错误处理
     let errorMessage = 'Failed to load games'
@@ -149,7 +142,6 @@ const fetchGameData = async (): Promise<void> => {
     
     if (err?.response?.status === 500) {
       errorMessage = 'Server error'
-      console.log('Server error detected, checking for cached or fallback data')
       
       // 如果服务器错误但有缓存数据，保持现有数据不变
       if (globalGameData.data.length > 0) {
@@ -182,7 +174,6 @@ const fetchGameData = async (): Promise<void> => {
     }
     
     if (useFallback) {
-      console.log('Using fallback game data')
       updateGlobalState({
         data: fallbackGameData,
         loading: false,
@@ -208,12 +199,10 @@ const refreshGameData = async (): Promise<void> => {
 const initializeGameData = async (): Promise<void> => {
   // 如果已经初始化或正在初始化，返回现有的Promise
   if (isInitialized) {
-    console.log('Game data already initialized, skipping...')
     return
   }
   
   if (initPromise) {
-    console.log('Game data initialization in progress, waiting...')
     return initPromise
   }
 
@@ -222,10 +211,8 @@ const initializeGameData = async (): Promise<void> => {
   
   initPromise = (async () => {
     try {
-      console.log('Initializing game data (single time)...')
       await fetchGameData()
     } catch (error) {
-      console.error('Failed to initialize game data:', error)
       // 重置标志，允许重试
       isInitialized = false
       throw error
@@ -244,13 +231,13 @@ if (typeof window !== 'undefined') {
     if ('requestIdleCallback' in window) {
       requestIdleCallback(() => {
         if (!isInitialized) {
-          initializeGameData().catch(console.error)
+          initializeGameData().catch(() => {})
         }
       })
     } else {
       setTimeout(() => {
         if (!isInitialized) {
-          initializeGameData().catch(console.error)
+          initializeGameData().catch(() => {})
         }
       }, 100)
     }
@@ -281,16 +268,14 @@ export const useGameData = () => {
     
     // 确保数据已经开始获取（作为fallback机制）
     if (!isInitialized && shouldFetchData()) {
-      console.log('Fallback: Starting data fetch from useEffect...')
-      initializeGameData().catch(console.error)
+      initializeGameData().catch(() => {})
     }
 
     // 设置定期检查数据是否过期（仅在需要时）
     intervalRef.current = setInterval(() => {
       // 只有在有数据且过期时才重新获取
       if (isDataExpired() && globalGameData.data.length > 0 && !globalGameData.loading) {
-        console.log('Game data expired, refetching...')
-        fetchGameData().catch(console.error)
+        fetchGameData().catch(() => {})
       }
     }, 5 * 60 * 1000) // 每5分钟检查一次，减少频率
 

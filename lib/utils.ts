@@ -14,7 +14,7 @@ export const token_tool = {
     Cookies.set('token_type', tokenType, { path: '/', expires: 1, sameSite: 'Lax' });
     Cookies.set('login_timestamp', now.toString(), { path: '/', expires: 1, sameSite: 'Lax' });
     
-    console.log("✅ Token saved with timestamp:", new Date(now));
+    // Token saved with timestamp - logging removed for production
   },
   
   getToken: () => {
@@ -34,7 +34,7 @@ export const token_tool = {
     Cookies.remove('token');
     Cookies.remove('token_type');
     Cookies.remove('login_timestamp');
-    console.log("✅ All tokens and timestamp cleared");
+    // All tokens and timestamp cleared - logging removed for production
   },
   
   // 检查是否需要刷新token（超过3小时）
@@ -46,12 +46,7 @@ export const token_tool = {
     const threeHours = 3 * 60 * 60 * 1000; // 3小时的毫秒数
     const timeDiff = now - loginTime;
     
-    console.log("🔍 Token age check:", {
-      loginTime: new Date(loginTime),
-      now: new Date(now),
-      timeDiff: Math.round(timeDiff / 1000 / 60) + " minutes",
-      shouldRefresh: timeDiff > threeHours
-    });
+    // Token age check - logging removed for production
     
     return timeDiff > threeHours;
   }

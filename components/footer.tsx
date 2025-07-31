@@ -4,7 +4,11 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { GamepadIcon as GameController, Facebook, Twitter, Instagram, Youtube } from "lucide-react"
 
-export default function Footer() {
+interface FooterProps {
+  t?: any;
+}
+
+export default function Footer({ t }: FooterProps = {}) {
   const currentYear = new Date().getFullYear()
   const pathname = usePathname()
   
@@ -67,7 +71,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-center items-center border-b border-gray-600/30 pb-8 mb-8">
           <Link href="/" className="flex items-center space-x-2 mb-4 md:mb-0">
             <GameController className="h-12 w-12 text-accent drop-shadow-lg wiggle" />
-            <span className="text-4xl font-black text-white text-stroke">GameHub Central</span>
+            <span className="text-4xl font-black text-white text-stroke">{t?.footer?.gameHubCentralDescription?.split(' ')[0] === 'GameHub' ? 'GameHub Central' : 'GameHub Central'}</span>
           </Link>
         </div>
 
@@ -76,10 +80,9 @@ export default function Footer() {
           {" "}
           {/* Updated grid-cols from md:grid-cols-4 to md:grid-cols-3 */}
           <div className="bg-gray-800/80 rounded-xl p-6 border border-gray-700/50">
-            <h3 className="text-xl font-black mb-4 border-b-4 border-gray-600/50 pb-2 text-white">About Us</h3>
+            <h3 className="text-xl font-black mb-4 border-b-4 border-gray-600/50 pb-2 text-white">{t?.footer?.aboutUs || "About Us"}</h3>
             <p className="text-gray-200 mb-4">
-              GameHub Central offers the best collection of free HTML5 games for your entertainment, optimized for all
-              devices and completely unblocked.
+              {t?.footer?.gameHubCentralDescription || "GameHub Central offers the best collection of free HTML5 games for your entertainment, optimized for all devices and completely unblocked."}
             </p>
             <div className="flex space-x-4">
               <Link
@@ -87,7 +90,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-200 hover:text-accent transition-all hover:scale-125 transform"
-                aria-label="Share on Facebook"
+                aria-label={t?.footer?.shareOnFacebook || "Share on Facebook"}
               >
                 <Facebook className="h-5 w-5" />
               </Link>
@@ -96,7 +99,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-200 hover:text-accent transition-all hover:scale-125 transform"
-                aria-label="Share on Twitter"
+                aria-label={t?.footer?.shareOnTwitter || "Share on Twitter"}
               >
                 <Twitter className="h-5 w-5" />
               </Link>
@@ -105,7 +108,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-200 hover:text-accent transition-all hover:scale-125 transform"
-                aria-label="Share on LinkedIn"
+                aria-label={t?.footer?.shareOnLinkedIn || "Share on LinkedIn"}
               >
                 <Instagram className="h-5 w-5" />
               </Link>
@@ -114,7 +117,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-200 hover:text-accent transition-all hover:scale-125 transform"
-                aria-label="Share on Reddit"
+                aria-label={t?.footer?.shareOnReddit || "Share on Reddit"}
               >
                 <Youtube className="h-5 w-5" />
               </Link>
@@ -122,51 +125,51 @@ export default function Footer() {
           </div>
           {/* Popular Games section removed */}
           <div className="bg-gray-800/80 rounded-xl p-6 border border-gray-700/50">
-            <h3 className="text-xl font-black mb-4 border-b-4 border-gray-600/50 pb-2 text-white">Quick Links</h3>
+            <h3 className="text-xl font-black mb-4 border-b-4 border-gray-600/50 pb-2 text-white">{t?.footer?.quickLinks || "Quick Links"}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/about" className={getFooterLinkClasses("/about")}>
-                  About Us
+                  {t?.footer?.aboutUs || "About Us"}
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className={getFooterLinkClasses("/contact")}>
-                  Contact
+                  {t?.footer?.contact || "Contact"}
                 </Link>
               </li>
               <li>
                 <Link href="/blog" className={getFooterLinkClasses("/blog")}>
-                  Blog
+                  {t?.navigation?.blog || "Blog"}
                 </Link>
               </li>
             </ul>
           </div>
           <div className="bg-gray-800/80 rounded-xl p-6 border border-gray-700/50">
-            <h3 className="text-xl font-black mb-4 border-b-4 border-gray-600/50 pb-2 text-white">Support</h3>
+            <h3 className="text-xl font-black mb-4 border-b-4 border-gray-600/50 pb-2 text-white">{t?.footer?.support || "Support"}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/help" className={getFooterLinkClasses("/help")}>
-                  Help Center
+                  {t?.footer?.helpCenter || "Help Center"}
                 </Link>
               </li>
               <li>
                 <Link href="/terms" className={getFooterLinkClasses("/terms")}>
-                  Terms of Service
+                  {t?.footer?.termsOfService || "Terms of Service"}
                 </Link>
               </li>
               <li>
                 <Link href="/privacy" className={getFooterLinkClasses("/privacy")}>
-                  Privacy Policy
+                  {t?.footer?.privacyPolicy || "Privacy Policy"}
                 </Link>
               </li>
               <li>
                 <Link href="/cookies" className={getFooterLinkClasses("/cookies")}>
-                  Cookie Policy
+                  {t?.footer?.cookiePolicy || "Cookie Policy"}
                 </Link>
               </li>
               <li>
                 <Link href="/dmca" className={getFooterLinkClasses("/dmca")}>
-                  DMCA
+                  {t?.footer?.dmca || "DMCA"}
                 </Link>
               </li>
             </ul>
@@ -177,45 +180,45 @@ export default function Footer() {
         <div className="pt-6 border-t border-gray-600/30 text-center text-gray-300">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
-              <p>&copy; {currentYear} GameHub Central. All rights reserved.</p>
+              <p>&copy; {currentYear} GameHub Central. {t?.footer?.allRightsReserved || "All rights reserved."}</p>
             </div>
 
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 className="flex items-center text-gray-200 hover:text-accent transition-all font-black hover:scale-110"
-                aria-label="Back to top"
+                aria-label={t?.footer?.backToTop || "Back to top"}
               >
                 <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
                 </svg>
-                Back to Top
+                {t?.footer?.backToTop || "Back to Top"}
               </button>
             </div>
           </div>
 
           <div className="mt-6 text-sm">
-            <p className="mb-2">GameHub Central is not affiliated with any game developers unless specifically stated.</p>
+            <p className="mb-2">{t?.footer?.notAffiliatedDisclaimer || "GameHub Central is not affiliated with any game developers unless specifically stated."}</p>
             <address className="mt-2 not-italic flex flex-col md:flex-row justify-center items-center gap-2">
               <span className="flex items-center">
                 <span className="mr-2">📍</span>
-                36 Central Avenue, California, USA
+                {t?.footer?.address || "36 Central Avenue, California, USA"}
               </span>
               <span className="hidden md:inline mx-2">|</span>
               <span className="flex items-center">
                 <span className="mr-2">📧</span>
-                support@speed-stars.net
+                {t?.footer?.email || "support@speed-stars.net"}
               </span>
               <span className="hidden md:inline mx-2">|</span>
               <span className="flex items-center">
                 <span className="mr-2">📱</span>
-                +16070231235
+                {t?.footer?.phone || "+16070231235"}
               </span>
             </address>
 
             <div className="mt-4 pt-4 border-t border-gray-600/30 flex flex-col md:flex-row justify-between items-center">
-              <p>🎮 Made with love for gamers everywhere</p>
-              <p>🔒 Your privacy and security are our priority</p>
+              <p>{t?.footer?.madeWithLove || "🎮 Made with love for gamers everywhere"}</p>
+              <p>{t?.footer?.privacyPriority || "🔒 Your privacy and security are our priority"}</p>
             </div>
           </div>
         </div>

@@ -54,7 +54,6 @@ export const useGamePlayTracker = () => {
       const stored = localStorage.getItem(STORAGE_KEY)
       return stored ? JSON.parse(stored) : []
     } catch (error) {
-      console.error('Error reading play history:', error)
       return []
     }
   }, [])
@@ -65,9 +64,7 @@ export const useGamePlayTracker = () => {
       const history = getPlayHistory()
       const newHistory = [record, ...history].slice(0, 100) // 只保留最近100条记录
       localStorage.setItem(STORAGE_KEY, JSON.stringify(newHistory))
-      console.log('Game record saved:', record)
     } catch (error) {
-      console.error('Error saving game record:', error)
     }
   }, [getPlayHistory])
 

@@ -67,14 +67,13 @@ const loadCacheFromStorage = (): Map<string, CachedCategorySEO> => {
         if (item.expiresAt > now) {
           validCache.set(category, item)
         } else {
-          console.log(`Removing expired SEO cache for category: ${category}`)
+          // Remove expired cache item
         }
       })
       
       return validCache
     }
   } catch (error) {
-    console.error('Error loading category SEO cache from storage:', error)
   }
   
   return new Map()
@@ -88,7 +87,6 @@ const saveCacheToStorage = (cache: Map<string, CachedCategorySEO>) => {
     const cacheArray = Array.from(cache.entries())
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cacheArray))
   } catch (error) {
-    console.error('Error saving category SEO cache to storage:', error)
   }
 }
 
@@ -111,7 +109,6 @@ const extractSEOFromResponse = (response: any): CategorySEO | null => {
       }
     }
   } catch (error) {
-    console.error('Error extracting SEO data:', error)
   }
   return null
 }
@@ -137,7 +134,6 @@ const cleanupExpiredCache = () => {
       newCache.set(category, item)
     } else {
       hasExpired = true
-      console.log(`Cleaning up expired SEO cache for category: ${category}`)
     }
   })
   
@@ -152,7 +148,6 @@ const initializeCache = () => {
   if (globalCategorySEOState.cache.size === 0) {
     const storedCache = loadCacheFromStorage()
     updateGlobalState({ cache: storedCache })
-    console.log(`Loaded ${storedCache.size} category SEO items from cache`)
   }
 }
 
@@ -160,7 +155,6 @@ const initializeCache = () => {
 const fetchCategorySEO = async (category: string): Promise<CategorySEO | null> => {
   // 检查是否正在加载
   if (globalCategorySEOState.loading.has(category)) {
-    console.log(`Category SEO for ${category} is already being fetched`)
     return null
   }
   
@@ -170,7 +164,6 @@ const fetchCategorySEO = async (category: string): Promise<CategorySEO | null> =
   // 检查缓存
   const cached = globalCategorySEOState.cache.get(category)
   if (cached && !isCacheExpired(cached)) {
-    console.log(`Using cached category SEO for ${category}`)
     return cached.seo
   }
   
@@ -180,7 +173,6 @@ const fetchCategorySEO = async (category: string): Promise<CategorySEO | null> =
   updateGlobalState({ loading: newLoading })
   
   try {
-    console.log(`Fetching category SEO for ${category} from API`)
     const response = await getGameCategory(category)
     
     const seoData = extractSEOFromResponse(response)
@@ -212,14 +204,12 @@ const fetchCategorySEO = async (category: string): Promise<CategorySEO | null> =
       })
       
       saveCacheToStorage(newCache)
-      console.log(`Cached category SEO for ${category}`)
       
       return seoData
     } else {
       throw new Error('No SEO data found in response')
     }
   } catch (error: any) {
-    console.warn(`API failed for category SEO ${category}, using default:`, error.message || error)
     
     // 先清除加载状态
     const newLoadingState = new Set(globalCategorySEOState.loading)
@@ -270,7 +260,6 @@ const clearCategoryCache = (category: string) => {
   })
   
   saveCacheToStorage(newCache)
-  console.log(`Cleared SEO cache for category: ${category}`)
 }
 
 // 清除所有缓存
@@ -284,7 +273,6 @@ const clearAllCache = () => {
     localStorage.removeItem(STORAGE_KEY)
   }
   
-  console.log('Cleared all category SEO cache')
 }
 
 // 类别SEO Hook
@@ -305,7 +293,6 @@ export const useCategorySEO = (category?: string) => {
     
     // 如果提供了category且没有数据，自动获取
     if (category && !globalCategorySEOState.cache.has(category) && !globalCategorySEOState.loading.has(category)) {
-      console.log(`Auto-fetching category SEO for ${category}`)
       fetchCategorySEO(category)
     }
     

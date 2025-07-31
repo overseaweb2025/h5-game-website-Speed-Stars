@@ -9,12 +9,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    console.log('Proxy GET request to:', targetUrl)
-    console.log('Request headers:', {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'User-Agent': 'Mozilla/5.0 (compatible; NextJS-Proxy/1.0)',
-    })
+    // Request logging removed for production
     
     const response = await fetch(targetUrl, {
       method: 'GET',
@@ -25,11 +20,11 @@ export async function GET(request: NextRequest) {
       },
     })
 
-    console.log('Proxy response status:', response.status)
+    // Response status logging removed for production
     
     if (!response.ok) {
       const errorText = await response.text()
-      console.error('Proxy error response:', errorText)
+      // Error response logging removed for production
       return NextResponse.json(
         { error: `Target server error: ${response.status}`, details: errorText }, 
         { status: response.status }
@@ -37,7 +32,7 @@ export async function GET(request: NextRequest) {
     }
 
     const data = await response.json()
-    console.log('Proxy response data:', data)
+    // Response data logging removed for production
 
     return NextResponse.json(data, {
       status: response.status,
@@ -48,7 +43,7 @@ export async function GET(request: NextRequest) {
       },
     })
   } catch (error) {
-    console.error('Proxy error:', error)
+    // Error logging removed for production
     return NextResponse.json(
       { error: 'Failed to fetch data', details: error instanceof Error ? error.message : 'Unknown error' }, 
       { status: 500 }
@@ -65,7 +60,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    console.log('Proxy POST request to:', targetUrl)
+    // POST request logging removed for production
     
     const body = await request.json()
     const authHeader = request.headers.get('authorization')
@@ -87,11 +82,11 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify(body),
     })
 
-    console.log('Proxy POST response status:', response.status)
+    // POST response status logging removed for production
     
     if (!response.ok) {
       const errorText = await response.text()
-      console.error('Proxy POST error response:', errorText)
+      // POST error response logging removed for production
       return NextResponse.json(
         { error: `Target server error: ${response.status}`, details: errorText }, 
         { status: response.status }
@@ -99,7 +94,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json()
-    console.log('Proxy POST response data:', data)
+    // POST response data logging removed for production
 
     return NextResponse.json(data, {
       status: response.status,
@@ -110,7 +105,7 @@ export async function POST(request: NextRequest) {
       },
     })
   } catch (error) {
-    console.error('Proxy POST error:', error)
+    // POST error logging removed for production
     return NextResponse.json(
       { error: 'Failed to fetch data', details: error instanceof Error ? error.message : 'Unknown error' }, 
       { status: 500 }

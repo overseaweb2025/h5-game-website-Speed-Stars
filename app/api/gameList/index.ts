@@ -1,6 +1,6 @@
 import api from '../index'
 import { ApiResponse } from '../types';
-import { GameList,GameDetails } from '../types/Get/game';
+import { GameList,GameDetails, HomeGameData } from '../types/Get/game';
 
 export const getGameList = () => {
 
@@ -14,4 +14,9 @@ export const getGameCategory = (category:string)=>{
 export const getGameDetails = (name: string) => {
   // Use local proxy route which handles fallback to local data
   return api.get<ApiResponse<GameDetails>>(`/api/v1/game`,{params:{name}});
+}
+
+//获取首页得信息
+export const getGameHome = ()=>{
+  return api.get<HomeGameData>('/api/v1/index/show')
 }

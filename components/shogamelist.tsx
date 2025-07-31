@@ -534,24 +534,12 @@ const ShowGameList = () => {
   useEffect(() => {
     const fetchGameData = async () => {
       try {
-        console.log('开始请求游戏数据...')
         const res = await getGameList()
-        console.log('API响应:', res)
-        console.log('请求到的游戏数据', res.data)
-        console.log('Categories found:', res.data?.data?.length || res.data?.length)
         
         // Handle different response structures
         const gameCategories = res.data.data || res.data
         setGameData(gameCategories)
       } catch (error: any) {
-        console.error('Failed to fetch game data:', error)
-        console.error('Error details:', {
-          message: error.message,
-          status: error.response?.status,
-          statusText: error.response?.statusText,
-          data: error.response?.data,
-          config: error.config
-        })
         
         // Use mock data for development if API fails
         const mockData = [
@@ -595,7 +583,6 @@ const ShowGameList = () => {
           }
         ]
         
-        console.log('Using mock data due to API error')
         setGameData(mockData)
       } finally {
         setLoading(false)
@@ -619,7 +606,6 @@ const ShowGameList = () => {
   }
 
   const categories = gameData?.filter(cat => cat.games.length > 0) || []
-  console.log('Filtered categories:', categories.length)
 
   return (
     <section className="py-12 md:py-16 bg-white relative overflow-hidden">

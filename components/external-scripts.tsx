@@ -28,6 +28,12 @@ export default function ExternalScripts() {
           __html: `window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`,
         }}
       />
+
+      {/* Unity WebGL 优化脚本 */}
+      <Script
+        src="/unity-webgl-optimizer.js"
+        strategy="afterInteractive"
+      />
     </>
   )
 }

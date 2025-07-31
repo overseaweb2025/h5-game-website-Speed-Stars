@@ -10,4 +10,5 @@ export interface GameCardProps {
   game: ExtendedGame
   className?: string
   size?: 'small' | 'medium' | 'large' | 'horizontal-scroll'
+  t?: any
 }

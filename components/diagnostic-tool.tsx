@@ -3,7 +3,11 @@
 import { useState } from "react"
 import { CheckCircle, XCircle, AlertTriangle, HelpCircle } from "lucide-react"
 
-export default function DiagnosticTool() {
+interface DiagnosticToolProps {
+  t?: any;
+}
+
+export default function DiagnosticTool({ t }: DiagnosticToolProps = {}) {
   const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [result, setResult] = useState<{
@@ -68,7 +72,7 @@ export default function DiagnosticTool() {
     ) {
       setResult({
         status: "error",
-        message: "Browser Compatibility Issue Detected",
+        message: t?.diagnostic?.browserCompatibilityIssue || "Browser Compatibility Issue Detected",
         solution:
           "Your browser may not support modern H5 games. Try updating to Chrome 90+, Firefox 89+, or Edge 90+ and ensure WebGL is enabled (visit chrome://gpu or about:support).",
       })
@@ -79,28 +83,28 @@ export default function DiagnosticTool() {
     ) {
       setResult({
         status: "warning",
-        message: "Network Restriction Detected",
+        message: t?.diagnostic?.networkRestrictionDetected || "Network Restriction Detected",
         solution:
           "Your network may be blocking game resources. Try using mobile data (4G/5G) instead, or use Speed Stars Proxy service to bypass restrictions.",
       })
     } else if (userAnswers.error === "Game is very slow/laggy") {
       setResult({
         status: "warning",
-        message: "Performance Issue Detected",
+        message: t?.diagnostic?.performanceIssueDetected || "Performance Issue Detected",
         solution:
           "Your device may be struggling with the game. Try closing other tabs/apps, clearing browser cache, or enabling hardware acceleration in browser settings.",
       })
     } else if (userAnswers.error === "Game loads but crashes") {
       setResult({
         status: "warning",
-        message: "Memory or Resource Issue Detected",
+        message: t?.diagnostic?.memoryResourceIssue || "Memory or Resource Issue Detected",
         solution:
           "The game may be using too much memory. Try restarting your browser, updating your graphics drivers, or using a device with more resources.",
       })
     } else {
       setResult({
         status: "success",
-        message: "Your setup should be compatible with Speed Stars games",
+        message: t?.diagnostic?.setupShouldBeCompatible || "Your setup should be compatible with Speed Stars games",
         solution:
           "If you're still experiencing issues, try clearing your browser cache, restarting your device, or contacting our support team with details about your specific problem.",
       })
@@ -116,7 +120,7 @@ export default function DiagnosticTool() {
   return (
     <div className="card p-6 shadow-cartoon-lg mt-8">
       <h3 className="text-2xl font-black mb-4 text-center">
-        <span className="gradient-text">Speed Stars Game Diagnostic Tool</span>
+        <span className="gradient-text">{t?.diagnostic?.speedStarsGameDiagnostic || "Speed Stars Game Diagnostic Tool"}</span>
       </h3>
 
       {result ? (
@@ -148,7 +152,7 @@ export default function DiagnosticTool() {
               onClick={resetDiagnostic}
               className="bg-primary hover:bg-primary-hover text-white font-bold py-3 px-6 rounded-full transition-all transform hover:scale-105 shadow-lg"
             >
-              Run Another Diagnostic
+              {t?.diagnostic?.runAnotherDiagnostic || "Run Another Diagnostic"}
             </button>
           </div>
         </div>
@@ -156,9 +160,9 @@ export default function DiagnosticTool() {
         <div className="space-y-6">
           <div className="flex justify-between mb-4">
             <span className="text-sm text-text/60">
-              Question {step + 1} of {questions.length}
+              {t?.diagnostic?.questionNumber?.replace('{number}', (step + 1).toString()).replace('{total}', questions.length.toString()) || `Question ${step + 1} of ${questions.length}`}
             </span>
-            <span className="text-sm text-text/60">{Math.round(((step + 1) / questions.length) * 100)}% Complete</span>
+            <span className="text-sm text-text/60">{Math.round(((step + 1) / questions.length) * 100)}{t?.diagnostic?.percentComplete || "% Complete"}</span>
           </div>
 
           <div className="w-full bg-gray-200 rounded-full h-2.5">

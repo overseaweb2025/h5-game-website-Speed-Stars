@@ -46,7 +46,6 @@ export const useGamePageTimer = ({
     if (!hasTriggered && historyEnabled && enabled) {
       const duration = calculateElapsedTime()
       const currentGameInfo = gameInfoRef.current
-      console.log(`Game page timer: Adding ${currentGameInfo.name} to history after ${duration} seconds`)
       
       addToHistory(currentGameInfo, duration)
       setHasTriggered(true)
@@ -59,11 +58,9 @@ export const useGamePageTimer = ({
       if (document.hidden) {
         // 页面隐藏时停止计时
         setIsActive(false)
-        console.log('Game page timer: Page hidden, pausing timer')
       } else {
         // 页面重新显示时继续计时
         setIsActive(true)
-        console.log('Game page timer: Page visible, resuming timer')
       }
     }
   }, [])
@@ -75,7 +72,6 @@ export const useGamePageTimer = ({
       // 如果停留时间超过10秒但不足30秒，也添加到历史记录
       if (duration >= 10) {
         const currentGameInfo = gameInfoRef.current
-        console.log(`Game page timer: Adding ${currentGameInfo.name} to history on page unload after ${duration} seconds`)
         addToHistory(currentGameInfo, duration)
       }
     }
@@ -83,11 +79,8 @@ export const useGamePageTimer = ({
 
   useEffect(() => {
     if (!enabled || !historyEnabled) {
-      console.log('Game page timer: Disabled (enabled:', enabled, ', historyEnabled:', historyEnabled, ')')
       return
     }
-
-    console.log(`Game page timer: Started for ${gameInfo.name}, threshold: ${threshold}s`)
 
     // 设置主计时器：在指定时间后触发历史记录添加
     timerRef.current = setTimeout(() => {
@@ -148,7 +141,6 @@ export const useGamePageTimer = ({
           }
         }, remainingTime * 1000)
         
-        console.log(`Game page timer: Resumed, ${remainingTime}s remaining`)
       } else {
         // 如果已经超过阈值，立即触发
         triggerHistoryAdd()

@@ -55,9 +55,10 @@ interface Review {
 interface TestimonialsProps {
   gameSlug?: string;
   reviews?: Review[];
+  t?: any;
 }
 
-export default function Testimonials({ gameSlug, reviews }: TestimonialsProps) {
+export default function Testimonials({ gameSlug, reviews, t }: TestimonialsProps) {
   const [newReview, setNewReview] = useState({ rating: 0, text: "" })
   const [hoverRating, setHoverRating] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -117,16 +118,16 @@ export default function Testimonials({ gameSlug, reviews }: TestimonialsProps) {
 
     if (!session) {
       toast({
-        title: "Login Required",
-        description: "Please sign in to leave a review.",
+        title: t?.testimonials?.loginRequired || "Login Required",
+        description: t?.testimonials?.pleaseSignInToLeaveReview || "Please sign in to leave a review.",
         variant: "destructive",
       })
       return
     }
     if (newReview.rating === 0 || !newReview.text.trim()) {
       toast({
-        title: "Missing Information",
-        description: "Please fill in your rating and review text.",
+        title: t?.testimonials?.missingInformation || "Missing Information",
+        description: t?.testimonials?.fillRatingAndReview || "Please fill in your rating and review text.",
         variant: "destructive",
       })
       return
@@ -157,14 +158,13 @@ export default function Testimonials({ gameSlug, reviews }: TestimonialsProps) {
       setNewReview({ rating: 0, text: "" })
 
       toast({
-        title: "Review Submitted!",
-        description: "Thanks for your feedback!",
+        title: t?.testimonials?.reviewSubmitted || "Review Submitted!",
+        description: t?.testimonials?.thanksForFeedback || "Thanks for your feedback!",
       })
     } catch (error) {
-      console.error("Failed to submit review:", error)
       toast({
-        title: "Submission Failed",
-        description: "Failed to submit your review. Please try again.",
+        title: t?.testimonials?.submissionFailed || "Submission Failed",
+        description: t?.testimonials?.failedToSubmitReview || "Failed to submit your review. Please try again.",
         variant: "destructive",
       })
     } finally {
@@ -237,7 +237,7 @@ export default function Testimonials({ gameSlug, reviews }: TestimonialsProps) {
 
             {testimonial.game && (
               <p className="text-xs font-semibold text-primary mb-2 bg-primary/10 px-2 py-1 rounded-full inline-block">
-                Review for: {testimonial.game}
+                {t?.testimonials?.reviewFor?.replace('{gameName}', testimonial.game) || `Review for: ${testimonial.game}`}
               </p>
             )}
 
@@ -316,10 +316,10 @@ export default function Testimonials({ gameSlug, reviews }: TestimonialsProps) {
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
           <h2 className="text-4xl md:text-5xl font-black text-white mb-4 pop-in text-shadow-lg">
-            What Players <span className="gradient-text">Say</span>
+            {t?.testimonials?.whatPlayersSay || "What Players Say"}
           </h2>
           <p className="text-xl text-gray-200 max-w-2xl mx-auto font-semibold">
-            Don't just take our word for it - hear from our happy players!
+            {t?.testimonials?.dontJustTakeOurWord || "Don't just take our word for it - hear from our happy players!"}
           </p>
         </div>
 
@@ -332,26 +332,26 @@ export default function Testimonials({ gameSlug, reviews }: TestimonialsProps) {
             <div className={`${testimonials.length > 0 ? 'xl:w-1/3' : 'xl:w-2/3 mx-auto'} xl:sticky xl:top-24`}>
               <div className="bg-gray-800/90 backdrop-blur-sm border-2 border-purple-500/50 p-4 sm:p-6 md:p-8 shadow-cartoon-xl rounded-2xl hover:border-purple-400/70 transition-all">
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-center text-purple-400 mb-4 md:mb-6">
-                  {testimonials.length === 0 ? 'Be the First to Review!' : 'Leave Your Review!'}
+                  {testimonials.length === 0 ? (t?.testimonials?.beFirstToReview || 'Be the First to Review!') : (t?.testimonials?.leaveYourReview || 'Leave Your Review!')}
                 </h3>
 
                 {!session && (
                   <div className="text-center mb-4 p-4 bg-yellow-900/30 rounded-lg border border-yellow-500/30">
-                    <p className="text-sm text-yellow-200 mb-2">Please sign in to leave a review</p>
-                    <p className="text-xs text-yellow-300">You need to be logged in to share your experience with other players.</p>
+                    <p className="text-sm text-yellow-200 mb-2">{t?.testimonials?.pleaseSignInToLeaveReview || "Please sign in to leave a review"}</p>
+                    <p className="text-xs text-yellow-300">{t?.testimonials?.needToBeLoggedIn || "You need to be logged in to share your experience with other players."}</p>
                   </div>
                 )}
 
                 {hasUserReviewed && session && (
                   <div className="text-center mb-4 p-4 bg-green-900/30 rounded-lg border border-green-500/30">
-                    <p className="text-sm text-green-200 mb-2">Thank you for your review!</p>
-                    <p className="text-xs text-green-300">You have already submitted a review for this game.</p>
+                    <p className="text-sm text-green-200 mb-2">{t?.testimonials?.thankYouForReview || "Thank you for your review!"}</p>
+                    <p className="text-xs text-green-300">{t?.testimonials?.alreadySubmittedReview || "You have already submitted a review for this game."}</p>
                   </div>
                 )}
 
                 <form onSubmit={handleSubmitReview} className="space-y-4 md:space-y-6">
                   <div>
-                    <label className="block text-sm font-bold text-white mb-1.5">Your Rating</label>
+                    <label className="block text-sm font-bold text-white mb-1.5">{t?.testimonials?.yourRating || "Your Rating"}</label>
                     <div className="flex items-center justify-center space-x-2 sm:justify-start">
                       {[1, 2, 3, 4, 5].map(star => (
                         <Star
@@ -373,7 +373,7 @@ export default function Testimonials({ gameSlug, reviews }: TestimonialsProps) {
 
                   <div>
                     <label htmlFor="text" className="block text-sm font-bold text-white mb-1.5">
-                      Your Review
+                      {t?.testimonials?.yourReview || "Your Review"}
                     </label>
                     <Textarea
                       id="text"
@@ -382,10 +382,10 @@ export default function Testimonials({ gameSlug, reviews }: TestimonialsProps) {
                       onChange={handleInputChange}
                       placeholder={
                         !session 
-                          ? "Please sign in to leave a review" 
+                          ? (t?.testimonials?.pleaseSignInToLeaveReview || "Please sign in to leave a review")
                           : hasUserReviewed 
-                            ? "You have already reviewed this game"
-                            : `Tell us what you think about ${currentGameName.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase())}...`
+                            ? (t?.testimonials?.alreadyReviewed || "You have already reviewed this game")
+                            : (t?.testimonials?.tellUsWhatYouThink?.replace('{gameName}', currentGameName.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase())) || `Tell us what you think about ${currentGameName.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase())}...`)
                       }
                       rows={4}
                       className="w-full text-base sm:text-base resize-none min-h-[100px] touch-manipulation"
@@ -401,13 +401,13 @@ export default function Testimonials({ gameSlug, reviews }: TestimonialsProps) {
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="h-5 w-5 mr-2 animate-spin" /> Submitting...
+                        <Loader2 className="h-5 w-5 mr-2 animate-spin" /> {t?.testimonials?.submitting || "Submitting..."}
                       </>
                     ) : hasUserReviewed ? (
-                      "Review Already Submitted"
+                      t?.testimonials?.reviewAlreadySubmitted || "Review Already Submitted"
                     ) : (
                       <>
-                        <Send className="h-5 w-5 mr-2" /> Submit Review
+                        <Send className="h-5 w-5 mr-2" /> {t?.testimonials?.submitReview || "Submit Review"}
                       </>
                     )}
                   </Button>
@@ -421,8 +421,8 @@ export default function Testimonials({ gameSlug, reviews }: TestimonialsProps) {
             <div className="xl:w-2/3 mx-auto text-center">
               <div className="bg-gray-800/90 backdrop-blur-sm border-2 border-green-500/50 p-8 shadow-cartoon-xl rounded-2xl">
                 <div className="text-6xl mb-4">🎉</div>
-                <h3 className="text-2xl font-bold text-white mb-2">Thank You!</h3>
-                <p className="text-gray-200">Your review has been submitted and will appear once approved.</p>
+                <h3 className="text-2xl font-bold text-white mb-2">{t?.testimonials?.thankYou || "Thank You!"}</h3>
+                <p className="text-gray-200">{t?.testimonials?.reviewSubmittedApproval || "Your review has been submitted and will appear once approved."}</p>
               </div>
             </div>
           )}

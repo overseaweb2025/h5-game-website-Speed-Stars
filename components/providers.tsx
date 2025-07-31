@@ -22,13 +22,12 @@ function TokenManager() {
     const sessionId = session?.user?.email || 'anonymous'
     
     if (!initialized && processedSessionRef.current !== sessionId) {
-      console.log("TokenManager initialized", { session, status, sessionId })
       
       if(status === "authenticated" && session?.user) {
         // 如果用户已登录，尝试获取并设置token
         const token = token_tool.getToken()
         if (token) {
-          console.log("Token found:", token)
+          // Token already exists
         } else {
           //如果登录了第三方 但是发现没有 token 就去我们的服务器上去获取token
           const userInfo: GoogleLogin = {
@@ -49,7 +48,6 @@ function TokenManager() {
               }
             }
           }).catch(error => {
-            console.error('Login failed:', error)
             // 只在真正的登录失败时显示错误，避免路由切换时重复显示
             if (processedSessionRef.current !== sessionId) {
               toast.error('Login failed, please try again')
@@ -61,7 +59,6 @@ function TokenManager() {
         const existingToken = token_tool.getToken()
         if (existingToken) {
           token_tool.clearToken()
-          console.log('User logged out, clearing token')
         }
       }
       

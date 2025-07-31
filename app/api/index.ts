@@ -23,7 +23,7 @@ const createAxiosInstance = (): AxiosInstance => {
   instance.interceptors.request.use(
     (config) => {
       // 在服务端环境中不使用localStorage，因为它只在客户端可用
-      console.log("Request config:", config.url)
+      // Request config logging removed for production
       
       // 使用代理处理所有请求
       if (config.baseURL === '/api/proxy') {
@@ -38,8 +38,7 @@ const createAxiosInstance = (): AxiosInstance => {
         }
         
         config.url = `?url=${encodeURIComponent(originalUrl)}`
-        console.log("Original URL:", originalUrl)
-        console.log("Proxied URL:", config.url)
+        // URL logging removed for production
       }
       
       // 只处理认证相关的请求头 - 检查原始URL而不是代理后的URL
@@ -105,8 +104,10 @@ const createAxiosInstance = (): AxiosInstance => {
             break
           case 422:
             errorMessage = (data as any)?.message || 'Request data validation failed'
-            console.error('422 Validation Error Details:', data)
+            // Validation error details logging removed for production
             break
+          case 429:
+            errorMessage = 'Frequent requests'
           case 500:
             errorMessage = 'Internal server error'
             break

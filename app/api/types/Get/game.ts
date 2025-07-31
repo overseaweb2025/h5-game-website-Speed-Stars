@@ -7,6 +7,7 @@ export interface Game {
         url: string;
     };
     category?: CategorySEO;
+    cover:string;
 }
 
 // 类别SEO信息
@@ -99,8 +100,31 @@ export interface HeroGameData {
     image: string;
     category: string;
     iframeSrc: string;
+
     features?: string[];
     howToPlay?: string[];
+}
+
+export interface HomeGameData {
+    data: {
+        title:string,
+        keywords: string,
+        description: string,
+        game: {
+            package: {
+                url: string;
+            };
+            page_title: string;
+            page_description: string;
+            page_keywords: string;
+            category: string;
+        };
+        page_content: {
+            About: string;  // HTML格式的内容
+            Features: string;
+            Gameplay: string;
+        };
+    };
 }
 
 // 工具函数的类型定义

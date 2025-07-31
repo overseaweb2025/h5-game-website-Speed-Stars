@@ -60,7 +60,6 @@ const loadHistoryFromStorage = (): GameHistoryItem[] => {
       }
     }
   } catch (error) {
-    console.error('Error loading game history from storage:', error)
   }
   
   return []
@@ -73,7 +72,6 @@ const saveHistoryToStorage = (history: GameHistoryItem[]) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(history))
   } catch (error) {
-    console.error('Error saving game history to storage:', error)
   }
 }
 
@@ -105,7 +103,6 @@ const addGameToHistory = (gameInfo: Omit<GameHistoryItem, 'visitedAt' | 'visitDu
   updateHistoryState({ history: limitedHistory })
   saveHistoryToStorage(limitedHistory)
   
-  console.log('Game added to history:', gameInfo.name, 'Duration:', visitDuration, 'seconds')
 }
 
 // 清除历史记录

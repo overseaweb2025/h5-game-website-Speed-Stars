@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { useGameData } from "@/hooks/useGameData"
 import { getCategoryIcon } from "./utils"
 import { useResponsive } from "@/shared/hooks"
@@ -24,6 +24,7 @@ interface SaberProps {
 const Saber = ({ onSidebarToggle, onStateChange }: SaberProps) => {
   const { allCategories } = useGameData()
   const router = useRouter()
+  const pathname = usePathname()
   
   // 侧边栏状态管理
   const [sidebarVisible, setSidebarVisible] = useState(true) // 侧边栏是否可见
@@ -48,10 +49,16 @@ const Saber = ({ onSidebarToggle, onStateChange }: SaberProps) => {
   // 切换侧边栏的函数
   const toggleSidebar = useCallback(() => {
     if (isSmallScreen) {
-      // 小屏幕：直接隐藏整个侧边栏（不管当前是图标模式还是展开模式）
-      setSidebarVisible(!sidebarVisible)
-      // 确保下次显示时是图标模式
-      if (sidebarVisible) {
+      // 小屏幕：在图标模式和隐藏之间切换，但不完全销毁组件
+      if (sidebarVisible && !isCollapsed) {
+        // 从展开模式 → 图标模式
+        setIsCollapsed(true)
+      } else if (sidebarVisible && isCollapsed) {
+        // 从图标模式 → 隐藏
+        setSidebarVisible(false)
+      } else {
+        // 从隐藏 → 图标模式
+        setSidebarVisible(true)
         setIsCollapsed(true)
       }
     } else {
@@ -98,15 +105,30 @@ const Saber = ({ onSidebarToggle, onStateChange }: SaberProps) => {
   const handleItemClick = useCallback((itemId: string) => {
     setSelectedItem(itemId)
     
+    // 从当前路径提取语言代码
+    const getLangFromPath = () => {
+      const segments = pathname.split('/')
+      // pathname 格式: /en/games 或 /zh/games
+      return segments[1] || 'en' // 默认英语
+    }
+    
+    // 处理Home按钮点击 - 跳转到当前语言的首页
+    if (itemId === 'home') {
+      const lang = getLangFromPath()
+      router.push(`/${lang}/games`)
+      return
+    }
+    
     // 如果点击的是分类项目，导航到分类页面
     if (itemId.startsWith('category-')) {
       const categoryId = itemId.replace('category-', '')
       const category = allCategories.find(cat => cat.category_id.toString() === categoryId)
       if (category) {
-        router.push(`/games/c/${encodeURIComponent(category.category_name)}`)
+        const lang = getLangFromPath()
+        router.push(`/${lang}/games/c/${encodeURIComponent(category.category_name)}`)
       }
     }
-  }, [router, allCategories])
+  }, [router, allCategories, pathname])
 
   // 将toggle函数传递给父组件
   useEffect(() => {
@@ -148,11 +170,11 @@ const Saber = ({ onSidebarToggle, onStateChange }: SaberProps) => {
 
   const sidebarCategories = createSidebarCategories()
 
-  if (!sidebarVisible) return null
-
   return (
     <div 
-      className="h-full w-full bg-gray-900/95 backdrop-blur-sm border-r border-gray-700 shadow-sm transition-all duration-300 sidebar-container"
+      className={`h-full w-full bg-gray-900/95 backdrop-blur-sm border-r border-gray-700 shadow-sm transition-all duration-300 sidebar-container ${
+        !sidebarVisible ? 'hidden' : ''
+      }`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

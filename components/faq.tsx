@@ -3,37 +3,35 @@
 import { useState } from "react"
 import { ChevronDown, ChevronUp } from "lucide-react"
 
-export default function FAQ() {
+interface FAQProps {
+  t?: any;
+}
+
+export default function FAQ({ t }: FAQProps = {}) {
   const faqs = [
     {
-      question: "What is Speed Stars?",
-      answer:
-        "Speed Stars is a physics-based sprinting game where you control a runner by tapping alternately to simulate foot movements. It combines rhythm gameplay with hilarious ragdoll physics for an entertaining and challenging experience.",
+      question: t?.faq?.whatIsSpeedStars || "What is Speed Stars?",
+      answer: t?.faq?.whatIsSpeedStarsAnswer || "Speed Stars is a physics-based sprinting game where you control a runner by tapping alternately to simulate foot movements. It combines rhythm gameplay with hilarious ragdoll physics for an entertaining and challenging experience.",
     },
     {
-      question: "Is Speed Stars free to play?",
-      answer:
-        "Yes, Speed Stars is completely free to play online. You can access it from any device with a web browser without any restrictions.",
+      question: t?.faq?.isSpeedStarsFree || "Is Speed Stars free to play?",
+      answer: t?.faq?.isSpeedStarsFreeAnswer || "Yes, Speed Stars is completely free to play online. You can access it from any device with a web browser without any restrictions.",
     },
     {
-      question: "What does 'unblocked' mean?",
-      answer:
-        "Unblocked means you can play the game anywhere, even in environments where gaming websites might typically be restricted. Speed Stars Unblocked is accessible from school, work, or any other location.",
+      question: t?.faq?.whatDoesUnblockedMean || "What does 'unblocked' mean?",
+      answer: t?.faq?.unblockedMeaningAnswer || "Unblocked means you can play the game anywhere, even in environments where gaming websites might typically be restricted. Speed Stars Unblocked is accessible from school, work, or any other location.",
     },
     {
-      question: "What are the controls for Speed Stars?",
-      answer:
-        "The basic controls are: Left Arrow to move the left leg, Right Arrow to move the right leg, Up Arrow to lean forward, and Down Arrow to lean backward. Mastering the rhythm of these controls is key to success.",
+      question: t?.faq?.speedStarsControls || "What are the controls for Speed Stars?",
+      answer: t?.faq?.speedStarsControlsAnswer || "The basic controls are: Left Arrow to move the left leg, Right Arrow to move the right leg, Up Arrow to lean forward, and Down Arrow to lean backward. Mastering the rhythm of these controls is key to success.",
     },
     {
-      question: "Can I play Speed Stars on mobile devices?",
-      answer:
-        "Yes, Speed Stars is fully optimized for mobile play. On touchscreen devices, you can tap the left and right sides of the screen to control your runner's legs.",
+      question: t?.faq?.canPlayOnMobile || "Can I play Speed Stars on mobile devices?",
+      answer: t?.faq?.mobilePlayAnswer || "Yes, Speed Stars is fully optimized for mobile play. On touchscreen devices, you can tap the left and right sides of the screen to control your runner's legs.",
     },
     {
-      question: "How do I improve my times in Speed Stars?",
-      answer:
-        "Practice is key! Use the replay system to analyze your performance, focus on maintaining a consistent rhythm, and learn the optimal timing for each track. Start with shorter distances before attempting the 100-meter sprint.",
+      question: t?.faq?.howToImprove || "How do I improve my times in Speed Stars?",
+      answer: t?.faq?.improvementTipsAnswer || "Practice is key! Use the replay system to analyze your performance, focus on maintaining a consistent rhythm, and learn the optimal timing for each track. Start with shorter distances before attempting the 100-meter sprint.",
     },
   ]
 
@@ -48,9 +46,9 @@ export default function FAQ() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-6">
           <h2 className="text-white mb-2 font-black text-shadow-lg">
-            Frequently Asked <span className="text-primary">Questions</span>
+            {t?.faq?.frequentlyAskedQuestions || "Frequently Asked Questions"}
           </h2>
-          <p className="text-gray-200 max-w-2xl mx-auto font-medium">Find answers to common questions about Speed Stars</p>
+          <p className="text-gray-200 max-w-2xl mx-auto font-medium">{t?.faq?.findAnswers || "Find answers to common questions about Speed Stars"}</p>
         </div>
 
         <div className="max-w-3xl mx-auto" itemScope itemType="https://schema.org/FAQPage">

@@ -1,36 +1,40 @@
 import { Zap, Globe, Clock, Award, Shield, Smartphone } from "lucide-react"
 
-export default function Features() {
+interface FeaturesProps {
+  t?: any;
+}
+
+export default function Features({ t }: FeaturesProps = {}) {
   const features = [
     {
       icon: <Zap className="h-10 w-10" />,
-      title: "Physics-Based Mechanics",
-      description: "Feel every step and lean with realistic physics that impact your success",
+      title: t?.features?.physicsBasedMechanics || "Physics-Based Mechanics",
+      description: t?.features?.physicsDescription || "Feel every step and lean with realistic physics that impact your success",
     },
     {
       icon: <Globe className="h-10 w-10" />,
-      title: "Play Anywhere",
-      description: "Free online and unblocked - play directly in your browser on any device",
+      title: t?.features?.playAnywhere || "Play Anywhere",
+      description: t?.features?.playAnywhereDescription || "Free online and unblocked - play directly in your browser on any device",
     },
     {
       icon: <Clock className="h-10 w-10" />,
-      title: "Replay System",
-      description: "Analyze your performance and improve your strategy with slow-motion replays",
+      title: t?.features?.replaySystem || "Replay System",
+      description: t?.features?.replayDescription || "Analyze your performance and improve your strategy with slow-motion replays",
     },
     {
       icon: <Award className="h-10 w-10" />,
-      title: "Global Leaderboards",
-      description: "Compete with players worldwide and represent your country",
+      title: t?.features?.globalLeaderboards || "Global Leaderboards",
+      description: t?.features?.leaderboardsDescription || "Compete with players worldwide and represent your country",
     },
     {
       icon: <Shield className="h-10 w-10" />,
-      title: "Two-Player Mode",
-      description: "Challenge a friend in intense head-to-head races",
+      title: t?.features?.twoPlayerMode || "Two-Player Mode",
+      description: t?.features?.twoPlayerDescription || "Challenge a friend in intense head-to-head races",
     },
     {
       icon: <Smartphone className="h-10 w-10" />,
-      title: "Mobile Optimized",
-      description: "Perfectly designed for touch controls and mobile screens",
+      title: t?.features?.mobileOptimized || "Mobile Optimized",
+      description: t?.features?.mobileDescription || "Perfectly designed for touch controls and mobile screens",
     },
   ]
 
@@ -42,10 +46,10 @@ export default function Features() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-6">
           <h2 className="text-white mb-4 font-black pop-in text-shadow-lg">
-            Amazing <span className="gradient-text">Features</span>
+            {t?.features?.amazingFeatures || "Amazing Features"}
           </h2>
           <p className="text-gray-200 max-w-2xl mx-auto font-medium">
-            Speed Stars combines minimalistic yet beautiful visual design with satisfying physics-based movement
+            {t?.features?.speedStarsDescription || "Speed Stars combines minimalistic yet beautiful visual design with satisfying physics-based movement"}
           </p>
         </div>
 

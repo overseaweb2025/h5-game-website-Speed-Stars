@@ -6,7 +6,7 @@ const loadToast = async () => {
     try {
       toastModule = await import('react-hot-toast')
     } catch (error) {
-      console.warn('Failed to load react-hot-toast:', error)
+      // Failed to load react-hot-toast - silently handled
     }
   }
   return toastModule
@@ -57,12 +57,10 @@ const showToast = async (message: string, type: 'success' | 'error' = 'error') =
         })
       }
     } else {
-      // Fallback to console
-      console.log(`${type.toUpperCase()}: ${message}`)
+      // Toast fallback - silently handled
     }
   } else {
-    // Fallback for server-side
-    console.log(`${type.toUpperCase()}: ${message}`)
+    // Server-side toast fallback - silently handled
   }
 }
 // 创建欢迎消息的专用函数

@@ -9,18 +9,18 @@ import toast from "react-hot-toast"
 import MobileSidebar from "./mobile-sidebar"
 import LoginModal from "./auth/LoginModal"
 import UserDropdown from "./auth/UserDropdown"
+import LanguageSelector from "./LanguageSelector"
 
 interface HeaderProps {
   onSidebarToggle?: () => void
   showSidebarToggle?: boolean
+  t?:any
 }
 
-export default function Header({ onSidebarToggle, showSidebarToggle = false }: HeaderProps) {
+export default function Header({ onSidebarToggle, showSidebarToggle = false ,t}: HeaderProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false)
   const [hasShownLoginSuccess, setHasShownLoginSuccess] = useState(false)
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
-  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false)
   const { data: session, status } = useSession()
   const pathname = usePathname()
 
@@ -45,16 +45,8 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false }: H
   // Handle login success
   useEffect(() => {
     if (session && !hasShownLoginSuccess && status === "authenticated") {
-      // Log user data to console
-        console.log("Google ID:", session.user?.id)
-        console.log("🎉 Login successful! User data:", {
-        user: session.user,
-        expires: session.expires,
-        fullSession: session
-      })
-      
       // Show success toast
-      toast.success(`Welcome back, ${session.user?.name || session.user?.email || 'Gamer'}! 🎮`, {
+      toast.success((t?.login?.welcome_back || "Welcome back, {name}! 🎮").replace("{name}", session.user?.name || session.user?.email || t?.login?.gamer || 'Gamer'), {
         duration: 4000,
         style: {
           background: '#4ade80',
@@ -154,8 +146,8 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false }: H
               <Link href="/" className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0 mr-3 sm:mr-6">
               <GameController className="h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 text-purple-400 drop-shadow-lg swing flex-shrink-0" />
                 <span className="text-sm sm:text-lg lg:text-xl xl:text-2xl font-black text-white whitespace-nowrap" style={{fontFamily: 'inherit'}}>
-                  <span className="hidden sm:inline">GameHub Central</span>
-                  <span className="sm:hidden">GameHub</span>
+                  <span className="hidden sm:inline">{t?.header?.gameHubCentral || "GameHub Central"}</span>
+                  <span className="sm:hidden">{t?.header?.gameHub || "GameHub"}</span>
                 </span>
               </Link>
             </div>
@@ -168,30 +160,35 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false }: H
                 href="/"
                 className={getLinkClasses("/")}
               >
-                Home
+                {t?.header?.home || "Home"}
               </Link>
               <Link
                 href="/games"
                 className={getLinkClasses("/games")}
               >
-                Games
+                {t?.header?.games || "Games"}
               </Link>
               <Link
                 href="/blog"
                 className={getLinkClasses("/blog")}
               >
-                Blog
+                {t?.header?.blog || "Blog"}
               </Link>
               
             </nav>
 
-            {/* Right Side - Auth + Mobile Menu */}
+            {/* Right Side - Language + Auth + Mobile Menu */}
             <div className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4 flex-shrink-0">
+              {/* Desktop Language Selector */}
+              <div className="hidden lg:block">
+                <LanguageSelector variant="desktop" />
+              </div>
+              
               {/* Desktop Auth */}
               <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
                 {status === "loading" ? (
                   <div className="bg-accent-3 text-white font-bold py-2 px-3 xl:px-4 rounded-full border-2 border-white whitespace-nowrap text-xs xl:text-sm">
-                    Loading...
+                    {t?.header?.loading || "Loading..."}
                   </div>
                 ) : session ? (
                   <div className="flex items-center space-x-1 xl:space-x-2">
@@ -206,7 +203,7 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false }: H
                     <button
                       onClick={() => {
                         signOut()
-                        toast.success("Successfully signed out! See you next time! 👋", {
+                        toast.success(t?.login?.signOut_success || "Successfully signed out! See you next time! 👋", {
                           duration: 3000,
                           style: {
                             background: '#f59e0b',
@@ -220,7 +217,7 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false }: H
                       className="bg-red-600 hover:bg-red-700 text-white font-bold py-1 xl:py-2 px-2 xl:px-3 rounded-full transition-all transform hover:scale-105 border-2 border-gray-600 flex items-center whitespace-nowrap text-xs xl:text-sm"
                     >
                       <LogOutIcon className="w-3 h-3 xl:w-4 xl:h-4 mr-1 flex-shrink-0" />
-                      <span className="hidden xl:inline">Out</span>
+                      <span className="hidden xl:inline">{t?.header?.out || "Out"}</span>
                     </button>
                   </div>
                 ) : (
@@ -229,8 +226,8 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false }: H
                     className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-1 xl:py-2 px-3 xl:px-4 rounded-full transition-all transform hover:scale-105 border-2 border-gray-600 flex items-center whitespace-nowrap text-xs xl:text-sm"
                   >
                     <LogInIcon className="w-3 h-3 xl:w-4 xl:h-4 mr-1 flex-shrink-0" />
-                    <span className="hidden xl:inline">Sign In</span>
-                    <span className="xl:hidden">In</span>
+                    <span className="hidden xl:inline">{t?.login?.signIn || "Sign In"}</span>
+                    <span className="xl:hidden">{t?.login?.in || "In"}</span>
                   </button>
                 )}
               </div>
@@ -239,7 +236,7 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false }: H
               <button
                 className="lg:hidden text-white bg-gray-800/50 p-2 rounded-full border-2 border-gray-600/50 hover:bg-gray-700/70 transition-all flex-shrink-0 touch-target"
                 onClick={() => setIsSidebarOpen(true)}
-                aria-label="Open menu"
+                aria-label={t?.header?.openMenu || "Open menu"}
               >
                 <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>

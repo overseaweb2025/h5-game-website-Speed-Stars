@@ -12,12 +12,14 @@ interface GameHistoryProps {
   className?: string
   showStats?: boolean
   maxItems?: number
+  t?: any
 }
 
 export const GameHistory: React.FC<GameHistoryProps> = ({ 
   className = '', 
   showStats = true,
-  maxItems 
+  maxItems,
+  t 
 }) => {
   const { 
     history, 
@@ -42,12 +44,12 @@ export const GameHistory: React.FC<GameHistoryProps> = ({
           <CardContent className="pt-6">
             <div className="text-center py-8">
               <Clock className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-              <h3 className="text-lg font-semibold text-white mb-2">Game History</h3>
+              <h3 className="text-lg font-semibold text-white mb-2">{t?.gameHistory?.gameHistory || "Game History"}</h3>
               <p className="text-gray-400 mb-4">
-                Sign in to track your game browsing history and see which games you've spent time playing.
+                {t?.gameHistory?.signInToTrackHistory || "Sign in to track your game browsing history and see which games you've spent time playing."}
               </p>
               <Button className="btn-primary">
-                Sign In to Enable
+                {t?.gameHistory?.signInToEnable || "Sign In to Enable"}
               </Button>
             </div>
           </CardContent>
@@ -64,7 +66,7 @@ export const GameHistory: React.FC<GameHistoryProps> = ({
           <CardContent className="pt-6">
             <div className="text-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-              <p className="text-gray-400">Loading game history...</p>
+              <p className="text-gray-400">{t?.gameHistory?.loadingGameHistory || "Loading game history..."}</p>
             </div>
           </CardContent>
         </Card>
@@ -81,7 +83,7 @@ export const GameHistory: React.FC<GameHistoryProps> = ({
             <div className="text-center py-8">
               <p className="text-red-400 mb-4">{error}</p>
               <Button variant="outline" onClick={() => window.location.reload()}>
-                Retry
+                {t?.common?.retry || "Retry"}
               </Button>
             </div>
           </CardContent>
@@ -98,9 +100,9 @@ export const GameHistory: React.FC<GameHistoryProps> = ({
           <CardContent className="pt-6">
             <div className="text-center py-8">
               <Clock className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-              <h3 className="text-lg font-semibold text-white mb-2">No Game History</h3>
+              <h3 className="text-lg font-semibold text-white mb-2">{t?.gameHistory?.noGameHistory || "No Game History"}</h3>
               <p className="text-gray-400 mb-4">
-                Start playing games to see your browsing history here. Games you spend 30+ seconds on will be automatically tracked.
+                {t?.gameHistory?.startPlayingGames || "Start playing games to see your browsing history here. Games you spend 30+ seconds on will be automatically tracked."}
               </p>
             </div>
           </CardContent>
@@ -168,7 +170,7 @@ export const GameHistory: React.FC<GameHistoryProps> = ({
                 <BarChart3 className="h-8 w-8 text-primary" />
                 <div className="ml-2">
                   <p className="text-2xl font-bold text-white">{stats.totalGames}</p>
-                  <p className="text-xs text-gray-400">Total Games</p>
+                  <p className="text-xs text-gray-400">{t?.gameHistory?.totalGames || "Total Games"}</p>
                 </div>
               </div>
             </CardContent>
@@ -180,7 +182,7 @@ export const GameHistory: React.FC<GameHistoryProps> = ({
                 <Clock className="h-8 w-8 text-green-400" />
                 <div className="ml-2">
                   <p className="text-2xl font-bold text-white">{formatTime(stats.totalPlayTime)}</p>
-                  <p className="text-xs text-gray-400">Total Time</p>
+                  <p className="text-xs text-gray-400">{t?.gameHistory?.totalTime || "Total Time"}</p>
                 </div>
               </div>
             </CardContent>
@@ -192,7 +194,7 @@ export const GameHistory: React.FC<GameHistoryProps> = ({
                 <Calendar className="h-8 w-8 text-blue-400" />
                 <div className="ml-2">
                   <p className="text-2xl font-bold text-white">{stats.recentGames}</p>
-                  <p className="text-xs text-gray-400">Today</p>
+                  <p className="text-xs text-gray-400">{t?.gameHistory?.today || "Today"}</p>
                 </div>
               </div>
             </CardContent>
@@ -204,7 +206,7 @@ export const GameHistory: React.FC<GameHistoryProps> = ({
                 <BarChart3 className="h-8 w-8 text-purple-400" />
                 <div className="ml-2">
                   <p className="text-2xl font-bold text-white">{formatTime(stats.averagePlayTime)}</p>
-                  <p className="text-xs text-gray-400">Average</p>
+                  <p className="text-xs text-gray-400">{t?.gameHistory?.average || "Average"}</p>
                 </div>
               </div>
             </CardContent>
@@ -216,7 +218,7 @@ export const GameHistory: React.FC<GameHistoryProps> = ({
       <Card className="bg-gray-800/50 border-gray-700">
         <CardHeader>
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <CardTitle className="text-white">Game History ({filteredHistory.length})</CardTitle>
+            <CardTitle className="text-white">{t?.gameHistory?.gameHistoryCount?.replace('{count}', filteredHistory.length.toString()) || `Game History (${filteredHistory.length})`}</CardTitle>
             <div className="flex flex-wrap gap-2">
               {/* 分类筛选 */}
               <select 
@@ -226,7 +228,7 @@ export const GameHistory: React.FC<GameHistoryProps> = ({
               >
                 {categoryList.map(cat => (
                   <option key={cat} value={cat}>
-                    {cat === 'all' ? 'All Categories' : cat}
+                    {cat === 'all' ? (t?.gameHistory?.allCategories || 'All Categories') : cat}
                   </option>
                 ))}
               </select>
@@ -237,9 +239,9 @@ export const GameHistory: React.FC<GameHistoryProps> = ({
                 onChange={(e) => setSortBy(e.target.value as any)}
                 className="bg-gray-700 border-gray-600 text-white text-sm rounded px-3 py-1"
               >
-                <option value="recent">Recent First</option>
-                <option value="duration">Longest First</option>
-                <option value="name">Name A-Z</option>
+                <option value="recent">{t?.gameHistory?.recentFirst || "Recent First"}</option>
+                <option value="duration">{t?.gameHistory?.longestFirst || "Longest First"}</option>
+                <option value="name">{t?.gameHistory?.nameAZ || "Name A-Z"}</option>
               </select>
               
               {/* 清除历史 */}
@@ -250,7 +252,7 @@ export const GameHistory: React.FC<GameHistoryProps> = ({
                 className="text-red-400 border-red-400 hover:bg-red-400/10"
               >
                 <Trash2 className="h-4 w-4 mr-1" />
-                Clear All
+                {t?.gameHistory?.clearAll || "Clear All"}
               </Button>
             </div>
           </div>

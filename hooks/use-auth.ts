@@ -17,11 +17,6 @@ export function useAuth() {
       setIsAuthenticated(hasToken)
       setIsLoading(false)
       
-      console.log("🔍 Auth Status:", {
-        hasToken,
-        nextAuthStatus: status,
-        isAuthenticated: hasToken
-      })
     }
 
     // Check immediately

@@ -69,14 +69,13 @@ const loadCacheFromStorage = (): Map<string, CachedGameDetails> => {
         if (item.expiresAt > now) {
           validCache.set(slug, item)
         } else {
-          console.log(`Removing expired cache for game: ${slug}`)
+          // Remove expired cache
         }
       })
       
       return validCache
     }
   } catch (error) {
-    console.error('Error loading game details cache from storage:', error)
   }
   
   return new Map()
@@ -91,7 +90,6 @@ const saveCacheToStorage = (cache: Map<string, CachedGameDetails>) => {
     const cacheArray = Array.from(cache.entries())
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cacheArray))
   } catch (error) {
-    console.error('Error saving game details cache to storage:', error)
   }
 }
 
@@ -114,11 +112,8 @@ const createGameDetailsFromLocal = (slug: string): ExtendedGameDetails | null =>
   })
   
   if (!localGame) {
-    console.log(`No local fallback found for game: ${slug}`)
     return null
   }
-  
-  console.log(`Using local fallback data for game: ${slug}`)
   
   // 创建一个基于本地数据的ExtendedGameDetails对象
   const fallbackDetails: ExtendedGameDetails = {
@@ -169,7 +164,6 @@ const cleanupExpiredCache = () => {
       newCache.set(slug, item)
     } else {
       hasExpired = true
-      console.log(`Cleaning up expired cache for game: ${slug}`)
     }
   })
   
@@ -184,7 +178,6 @@ const initializeCache = () => {
   if (globalGameDetailsState.cache.size === 0) {
     const storedCache = loadCacheFromStorage()
     updateGlobalState({ cache: storedCache })
-    console.log(`Loaded ${storedCache.size} game details from cache`)
   }
 }
 
@@ -192,7 +185,6 @@ const initializeCache = () => {
 const fetchGameDetails = async (slug: string): Promise<ExtendedGameDetails | null> => {
   // 检查是否正在加载
   if (globalGameDetailsState.loading.has(slug)) {
-    console.log(`Game details for ${slug} is already being fetched`)
     return null
   }
   
@@ -202,7 +194,6 @@ const fetchGameDetails = async (slug: string): Promise<ExtendedGameDetails | nul
   // 检查缓存
   const cached = globalGameDetailsState.cache.get(slug)
   if (cached && !isCacheExpired(cached)) {
-    console.log(`Using cached game details for ${slug}`)
     return cached.data
   }
   
@@ -212,7 +203,6 @@ const fetchGameDetails = async (slug: string): Promise<ExtendedGameDetails | nul
   updateGlobalState({ loading: newLoading })
   
   try {
-    console.log(`Fetching game details for ${slug} from API`)
     const response = await getGameDetails(slug)
     
     if (response.data && response.data.data) {
@@ -244,14 +234,12 @@ const fetchGameDetails = async (slug: string): Promise<ExtendedGameDetails | nul
       })
       
       saveCacheToStorage(newCache)
-      console.log(`Cached game details for ${slug}`)
       
       return extendedDetails
     } else {
       throw new Error('Invalid response data')
     }
   } catch (error: any) {
-    console.warn(`API failed for game details ${slug}, trying fallback:`, error.message || error)
     
     // 先清除加载状态
     const newLoadingState = new Set(globalGameDetailsState.loading)
@@ -261,7 +249,6 @@ const fetchGameDetails = async (slug: string): Promise<ExtendedGameDetails | nul
     const fallbackData = createGameDetailsFromLocal(slug)
     
     if (fallbackData) {
-      console.log(`✅ Using local fallback data for ${slug}`)
       
       // 缓存fallback数据（短时间缓存，优先从API获取）
       const now = Date.now()
@@ -289,7 +276,6 @@ const fetchGameDetails = async (slug: string): Promise<ExtendedGameDetails | nul
       
       return fallbackData
     } else {
-      console.warn(`❌ No fallback data available for ${slug}`)
       
       // 如果没有fallback数据，记录错误
       const newErrors = new Map(globalGameDetailsState.errors)
@@ -319,7 +305,6 @@ const clearGameCache = (slug: string) => {
   })
   
   saveCacheToStorage(newCache)
-  console.log(`Cleared cache for game: ${slug}`)
 }
 
 // 清除所有缓存
@@ -333,7 +318,6 @@ const clearAllCache = () => {
     localStorage.removeItem(STORAGE_KEY)
   }
   
-  console.log('Cleared all game details cache')
 }
 
 // 预加载游戏详情
@@ -359,7 +343,6 @@ export const useGameDetails = (slug?: string) => {
     
     // 如果提供了slug且没有数据，自动获取
     if (slug && !globalGameDetailsState.cache.has(slug) && !globalGameDetailsState.loading.has(slug)) {
-      console.log(`Auto-fetching game details for ${slug}`)
       fetchGameDetails(slug)
     }
     

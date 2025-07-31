@@ -1,7 +1,11 @@
 import Link from "next/link"
 import { ExternalLink, CheckCircle, AlertTriangle, Zap, Cpu, Wrench } from "lucide-react"
 
-export default function HelpCenter() {
+interface HelpCenterProps {
+  t?: any;
+}
+
+export default function HelpCenter({ t }: HelpCenterProps = {}) {
   return (
     <section id="help-center" className="py-8 md:py-12 bg-white relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
@@ -17,10 +21,10 @@ export default function HelpCenter() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
           <h2 className="text-4xl md:text-5xl font-black mb-4 pop-in">
-            Why Can't I Play <span className="gradient-text">H5 Games</span>?
+            {t?.helpCenter?.whyCantPlayH5Games || "Why Can't I Play H5 Games?"}
           </h2>
           <p className="text-xl text-text/80 max-w-3xl mx-auto">
-            Top Reasons & <span className="text-primary font-bold">Speed Stars Unblock Solutions</span>
+            {t?.helpCenter?.topReasonsAndSolutions || "Top Reasons & Speed Stars Unblock Solutions"}
           </p>
         </div>
 
@@ -51,12 +55,12 @@ export default function HelpCenter() {
                 1
               </div>
               <h3 className="text-2xl font-black">
-                Browser Compatibility Issues | <span className="text-primary">Unblock H5 Games</span>
+                {t?.helpCenter?.browserCompatibility || "Browser Compatibility Issues | Unblock H5 Games"}
               </h3>
             </div>
 
             <div className="mb-4">
-              <h4 className="text-xl font-bold mb-2 text-accent-3">Causes:</h4>
+              <h4 className="text-xl font-bold mb-2 text-accent-3">{t?.helpCenter?.causes || "Causes:"}:</h4>
               <ul className="space-y-2 pl-6 mb-4">
                 <li className="flex items-start">
                   <AlertTriangle className="h-5 w-5 text-accent-2 mr-2 flex-shrink-0 mt-1" />
@@ -76,7 +80,7 @@ export default function HelpCenter() {
             </div>
 
             <div>
-              <h4 className="text-xl font-bold mb-2 text-secondary">Speed Stars Official Fixes:</h4>
+              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsOfficialFixes || "Speed Stars Official Fixes:"}:</h4>
               <ul className="space-y-3 pl-6">
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-secondary mr-2 flex-shrink-0 mt-1" />
@@ -109,12 +113,12 @@ export default function HelpCenter() {
                 2
               </div>
               <h3 className="text-2xl font-black">
-                Network Errors (Most Common) | <span className="text-accent-3">Free Unblock Tools</span>
+                {t?.helpCenter?.networkErrors || "Network Errors (Most Common) | Free Unblock Tools"}
               </h3>
             </div>
 
             <div className="mb-4">
-              <h4 className="text-xl font-bold mb-2 text-accent-3">Causes:</h4>
+              <h4 className="text-xl font-bold mb-2 text-accent-3">{t?.helpCenter?.causes || "Causes:"}:</h4>
               <ul className="space-y-2 pl-6 mb-4">
                 <li className="flex items-start">
                   <AlertTriangle className="h-5 w-5 text-accent-2 mr-2 flex-shrink-0 mt-1" />
@@ -130,7 +134,7 @@ export default function HelpCenter() {
             </div>
 
             <div>
-              <h4 className="text-xl font-bold mb-2 text-secondary">Speed Stars Solutions:</h4>
+              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsSolutions || "Speed Stars Solutions:"}:</h4>
               <ul className="space-y-3 pl-6">
                 <li className="flex items-start">
                   <Zap className="h-5 w-5 text-accent mr-2 flex-shrink-0 mt-1" />
@@ -162,12 +166,12 @@ export default function HelpCenter() {
                 3
               </div>
               <h3 className="text-2xl font-black">
-                Missing Runtime Features | <span className="text-secondary">Optimize Game Speed</span>
+                {t?.helpCenter?.missingRuntimeFeatures || "Missing Runtime Features | Optimize Game Speed"}
               </h3>
             </div>
 
             <div className="mb-4">
-              <h4 className="text-xl font-bold mb-2 text-accent-3">Causes:</h4>
+              <h4 className="text-xl font-bold mb-2 text-accent-3">{t?.helpCenter?.causes || "Causes:"}:</h4>
               <ul className="space-y-2 pl-6 mb-4">
                 <li className="flex items-start">
                   <AlertTriangle className="h-5 w-5 text-accent-2 mr-2 flex-shrink-0 mt-1" />
@@ -183,7 +187,7 @@ export default function HelpCenter() {
             </div>
 
             <div>
-              <h4 className="text-xl font-bold mb-2 text-secondary">Speed Stars Fixes:</h4>
+              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsFixes || "Speed Stars Fixes:"}:</h4>
               <ul className="space-y-3 pl-6">
                 <li className="flex items-start">
                   <Cpu className="h-5 w-5 text-accent-4 mr-2 flex-shrink-0 mt-1" />
@@ -215,12 +219,12 @@ export default function HelpCenter() {
                 4
               </div>
               <h3 className="text-2xl font-black">
-                Code-Level Failures | <span className="text-accent">Official Game Support</span>
+                {t?.helpCenter?.codeLevelFailures || "Code-Level Failures | Official Game Support"}
               </h3>
             </div>
 
             <div className="mb-4">
-              <h4 className="text-xl font-bold mb-2 text-accent-3">Causes:</h4>
+              <h4 className="text-xl font-bold mb-2 text-accent-3">{t?.helpCenter?.causes || "Causes:"}:</h4>
               <ul className="space-y-2 pl-6 mb-4">
                 <li className="flex items-start">
                   <AlertTriangle className="h-5 w-5 text-accent-2 mr-2 flex-shrink-0 mt-1" />
@@ -234,7 +238,7 @@ export default function HelpCenter() {
             </div>
 
             <div>
-              <h4 className="text-xl font-bold mb-2 text-secondary">Speed Stars Pro Tips:</h4>
+              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsProTips || "Speed Stars Pro Tips:"}:</h4>
               <ul className="space-y-3 pl-6">
                 <li className="flex items-start">
                   <Cpu className="h-5 w-5 text-accent-4 mr-2 flex-shrink-0 mt-1" />
@@ -257,12 +261,12 @@ export default function HelpCenter() {
                 5
               </div>
               <h3 className="text-2xl font-black">
-                Hardware Limits | <span className="text-accent-4">Speed Stars Certified</span>
+                {t?.helpCenter?.hardwareLimits || "Hardware Limits | Speed Stars Certified"}
               </h3>
             </div>
 
             <div className="mb-4">
-              <h4 className="text-xl font-bold mb-2 text-accent-3">Causes:</h4>
+              <h4 className="text-xl font-bold mb-2 text-accent-3">{t?.helpCenter?.causes || "Causes:"}:</h4>
               <ul className="space-y-2 pl-6 mb-4">
                 <li className="flex items-start">
                   <AlertTriangle className="h-5 w-5 text-accent-2 mr-2 flex-shrink-0 mt-1" />
@@ -280,7 +284,7 @@ export default function HelpCenter() {
             </div>
 
             <div>
-              <h4 className="text-xl font-bold mb-2 text-secondary">Speed Stars Solutions:</h4>
+              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsSolutions || "Speed Stars Solutions:"}:</h4>
               <ul className="space-y-3 pl-6">
                 <li className="flex items-start">
                   <Wrench className="h-5 w-5 text-accent-2 mr-2 flex-shrink-0 mt-1" />
@@ -308,7 +312,7 @@ export default function HelpCenter() {
         {/* Free H5 Game Unblock Guide */}
         <div className="mt-10 card bg-gradient-to-r from-primary/10 to-accent-3/10 border-4 border-accent">
           <h3 className="text-2xl font-black mb-4 text-center">
-            <span className="gradient-text">Free H5 Game Unblock Guide</span>
+            <span className="gradient-text">{t?.helpCenter?.freeH5GameUnblockGuide || "Free H5 Game Unblock Guide"}</span>
           </h3>
           <ul className="space-y-3 mb-6">
             <li className="flex items-start">
@@ -340,7 +344,7 @@ export default function HelpCenter() {
           </ul>
 
           <div className="bg-white p-4 rounded-xl border-2 border-accent-3">
-            <h4 className="text-xl font-bold mb-2 text-center text-accent-3">Official Speed Stars Support:</h4>
+            <h4 className="text-xl font-bold mb-2 text-center text-accent-3">{t?.helpCenter?.officialSpeedStarsSupport || "Official Speed Stars Support:"}:</h4>
             <p className="text-center">
               Submit diagnostics via JSON.stringify(window.performance.timing) to Speed Stars Team.
             </p>

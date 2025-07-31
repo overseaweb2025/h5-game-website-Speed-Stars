@@ -1,27 +1,31 @@
 import { Play, Download, Trophy, Palette } from "lucide-react"
 import Image from "next/image"
 
-export default function HowToPlay() {
+interface HowToPlayProps {
+  t?: any;
+}
+
+export default function HowToPlay({ t }: HowToPlayProps = {}) {
   const steps = [
     {
       icon: <Play className="h-8 w-8" />,
-      title: "Master Your Rhythm",
-      description: "Tap alternately to control your runner's legs and maintain perfect balance",
+      title: t?.howToPlay?.masterYourRhythm || "Master Your Rhythm",
+      description: t?.howToPlay?.rhythmDescription || "Tap alternately to control your runner's legs and maintain perfect balance",
     },
     {
       icon: <Download className="h-8 w-8" />,
-      title: "No Downloads Required",
-      description: "Play instantly in your browser - completely free and unblocked",
+      title: t?.howToPlay?.noDownloadsRequired || "No Downloads Required",
+      description: t?.howToPlay?.noDownloadsDescription || "Play instantly in your browser - completely free and unblocked",
     },
     {
       icon: <Palette className="h-8 w-8" />,
-      title: "Customize Your Runner",
-      description: "Choose from various outfits and colors to create your unique athlete",
+      title: t?.howToPlay?.customizeYourRunner || "Customize Your Runner",
+      description: t?.howToPlay?.customizeDescription || "Choose from various outfits and colors to create your unique athlete",
     },
     {
       icon: <Trophy className="h-8 w-8" />,
-      title: "Compete Globally",
-      description: "Race against players worldwide and climb the leaderboards",
+      title: t?.howToPlay?.competeGlobally || "Compete Globally",
+      description: t?.howToPlay?.competeDescription || "Race against players worldwide and climb the leaderboards",
     },
   ]
 
@@ -30,10 +34,10 @@ export default function HowToPlay() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-6">
           <h2 className="text-text mb-2">
-            How to <span className="text-primary">Play</span>
+            {t?.howToPlay?.howToPlay || "How to Play"}
           </h2>
           <p className="text-text/80 max-w-2xl mx-auto">
-            Getting started with Speed Stars is quick and easy - master these simple steps to become a champion
+            {t?.howToPlay?.gettingStartedDescription || "Getting started with Speed Stars is quick and easy - master these simple steps to become a champion"}
           </p>
         </div>
 
@@ -42,7 +46,7 @@ export default function HowToPlay() {
             <div className="relative rounded-xl overflow-hidden shadow-xl">
               <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/speed-stars-unblock-p6VNjFOpqJrZ4kQ34bOBw8sOIzYxF7.webp"
-                alt="Speed Stars character customization screen showing outfit options and a colorful runner"
+                alt={t?.howToPlay?.customizeYourRunner || "Speed Stars character customization screen showing outfit options and a colorful runner"}
                 width={600}
                 height={400}
                 className="w-full h-auto"
@@ -50,7 +54,7 @@ export default function HowToPlay() {
               />
             </div>
             <p className="text-center text-sm text-text/70 mt-2">
-              Customize your runner with various outfits and colors to stand out on the track
+              {t?.howToPlay?.customizeRunnerDetails || "Customize your runner with various outfits and colors to stand out on the track"}
             </p>
           </div>
 

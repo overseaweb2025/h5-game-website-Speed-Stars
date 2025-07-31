@@ -65,8 +65,7 @@ export const useUserProfile = (): UseUserProfileReturn => {
       const response = await getUserProfile(userId)
       setProfile(response.data.data)
     } catch (err) {
-      console.error('Error fetching user profile:', err)
-      setError('Failed to load user profile')
+            setError('Failed to load user profile')
       
       // 如果API不可用，使用模拟数据
       setProfile({
@@ -110,8 +109,7 @@ export const useUserProfile = (): UseUserProfileReturn => {
       const response = await getUserGameHistory(userId, 1, 20)
       setGameHistory(response.data.data)
     } catch (err) {
-      console.error('Error fetching game history:', err)
-      
+            
       // 使用模拟数据
       setGameHistory([
         {
@@ -158,8 +156,7 @@ export const useUserProfile = (): UseUserProfileReturn => {
       const response = await getUserFavoriteGames(userId, 1, 20)
       setFavoriteGames(response.data.data)
     } catch (err) {
-      console.error('Error fetching favorite games:', err)
-      
+            
       // 使用模拟数据
       setFavoriteGames([
         {
@@ -191,8 +188,7 @@ export const useUserProfile = (): UseUserProfileReturn => {
       const response = await getUserCommentHistory(userId, 1, 20)
       setCommentHistory(response.data.data)
     } catch (err) {
-      console.error('Error fetching comment history:', err)
-      
+            
       // 使用模拟数据
       setCommentHistory([
         {
@@ -238,8 +234,7 @@ export const useUserProfile = (): UseUserProfileReturn => {
         await loadFavoriteGames()
       }
     } catch (err) {
-      console.error('Error toggling favorite game:', err)
-      // 模拟本地状态更新
+            // 模拟本地状态更新
       if (isFavorited) {
         setFavoriteGames(prev => prev.filter(game => game.gameId !== gameId))
       } else {
@@ -279,8 +274,7 @@ export const useUserProfile = (): UseUserProfileReturn => {
                 const response = await getUserProfile(userId)
                 setProfile(response.data.data)
               } catch (err) {
-                console.error('Error fetching user profile:', err)
-                setProfile({
+                                setProfile({
                   profile: {
                     id: userId,
                     name: session?.user?.name || 'User',
@@ -314,8 +308,7 @@ export const useUserProfile = (): UseUserProfileReturn => {
                 const response = await getUserGameHistory(userId, 1, 20)
                 setGameHistory(response.data.data)
               } catch (err) {
-                console.error('Error fetching game history:', err)
-                setGameHistory([
+                                setGameHistory([
                   {
                     id: 1,
                     gameId: 1,
@@ -335,8 +328,7 @@ export const useUserProfile = (): UseUserProfileReturn => {
                 const response = await getUserFavoriteGames(userId, 1, 20)
                 setFavoriteGames(response.data.data)
               } catch (err) {
-                console.error('Error fetching favorite games:', err)
-                setFavoriteGames([
+                                setFavoriteGames([
                   {
                     id: 1,
                     gameId: 1,
@@ -353,8 +345,7 @@ export const useUserProfile = (): UseUserProfileReturn => {
                 const response = await getUserCommentHistory(userId, 1, 20)
                 setCommentHistory(response.data.data)
               } catch (err) {
-                console.error('Error fetching comment history:', err)
-                setCommentHistory([
+                                setCommentHistory([
                   {
                     id: 1,
                     gameId: 1,

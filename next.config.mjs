@@ -16,24 +16,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Permissions-Policy',
-            value: 'accelerometer=self, gyroscope=self, magnetometer=self, ambient-light-sensor=self, camera=self, microphone=self, geolocation=self'
-          },
-          {
-            key: 'Feature-Policy',
-            value: 'accelerometer "self"; gyroscope "self"; magnetometer "self"; ambient-light-sensor "self"; camera "self"; microphone "self"; geolocation "self"'
-          }
-        ],
-      },
-      {
-        source: '/game/:path*',
-        headers: [
-          {
-            key: 'Permissions-Policy',
-            value: 'accelerometer=*, gyroscope=*, magnetometer=*, ambient-light-sensor=*, camera=*, microphone=*, geolocation=*'
-          },
-          {
-            key: 'Feature-Policy',
-            value: 'accelerometer *; gyroscope *; magnetometer *; ambient-light-sensor *; camera *; microphone *; geolocation *'
+            value: 'accelerometer=*, gyroscope=*, magnetometer=*, ambient-light-sensor=*, camera=*, microphone=*, geolocation=*, fullscreen=*'
           },
           {
             key: 'Cross-Origin-Embedder-Policy',
@@ -42,6 +25,23 @@ const nextConfig = {
           {
             key: 'Cross-Origin-Opener-Policy',
             value: 'same-origin-allow-popups'
+          }
+        ],
+      },
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*'
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS'
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization'
           }
         ],
       }
