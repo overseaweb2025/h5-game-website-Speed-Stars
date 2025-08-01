@@ -283,6 +283,7 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t}:
         isOpen={isSidebarOpen} 
         onClose={() => setIsSidebarOpen(false)}
         scrollToSection={scrollToSection}
+        t={t}
       />
 
     </>

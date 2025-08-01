@@ -3,10 +3,13 @@ import type { Metadata } from "next";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { getBlogPostBySlug, getAllBlogSlugs } from "@/data/blog/blog-data";
-import { ChevronLeftIcon, CalendarDays, User, Clock, MessageSquare } from "lucide-react";
+import { ChevronLeftIcon } from "lucide-react";
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getDictionary } from "@/lib/lang/i18n";
+import ShareButton from "./ShareButton";
+import ExpandableText from "./ExpandableText";
+import AuthorTooltip from "./AuthorTooltip";
+import DateTooltip from "./DateTooltip";
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string; lang: string }>;
@@ -34,6 +37,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   };
 }
 
+
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug, lang } = await params;
   const t = await getDictionary(lang as "en" | "zh");
@@ -46,72 +50,115 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <>
       <Header t={t} />
-      <main className="container mx-auto px-4 py-8 pt-24 md:pt-28 lg:pt-32 bg-gray-900 text-white min-h-screen">
-        <div className="mb-6">
-          <Link href="/blog" className="inline-flex items-center text-primary hover:text-primary-hover font-bold group">
-            <ChevronLeftIcon className="w-5 h-5 mr-1 transition-transform group-hover:-translate-x-1" />
-            Back to Blog
-          </Link>
-        </div>
-
-        <article className="max-w-4xl mx-auto">
-          <Card className="mb-8 card cartoon-shadow border-4 border-accent-3 transform hover:rotate-[-1deg] transition-transform duration-300">
-            <CardHeader className="pb-6">
-              <div className="mb-4">
-                <span className="bg-primary text-white px-4 py-2 rounded-full text-sm font-bold">
-                  {post.category}
-                </span>
-              </div>
-              <CardTitle className="text-3xl md:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent-3 to-secondary mb-4 text-stroke-sm leading-tight">
-                {post.title}
-              </CardTitle>
-              
-              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-300 mb-4">
-                <div className="flex items-center">
-                  <User className="h-4 w-4 mr-1.5 text-secondary" />
-                  {post.author}
-                </div>
-                <div className="flex items-center">
-                  <CalendarDays className="h-4 w-4 mr-1.5 text-secondary" />
-                  {post.date}
-                </div>
-                <div className="flex items-center">
-                  <Clock className="h-4 w-4 mr-1.5 text-accent-3" />
-                  {post.readTime}
-                </div>
-                {post.comments && (
-                  <div className="flex items-center">
-                    <MessageSquare className="h-4 w-4 mr-1.5 text-accent" />
-                    {post.comments} Comments
-                  </div>
-                )}
-              </div>
-              
-              <p className="text-lg md:text-xl text-gray-200 leading-relaxed font-medium">
-                {post.excerpt}
-              </p>
-            </CardHeader>
-            
-            <CardContent>
-              <div 
-                className="prose prose-lg max-w-none prose-headings:font-black prose-headings:text-accent-3 prose-p:text-gray-200 prose-p:leading-relaxed prose-strong:text-primary prose-ul:text-gray-200 prose-ol:text-gray-200 prose-li:mb-2 prose-invert"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
-            </CardContent>
-          </Card>
-          
-          {/* Related posts or additional content could go here */}
-          <div className="text-center">
+      
+      {/* Hero Section with Background */}
+      <div className="bg-gradient-to-br from-gray-900 via-black to-gray-900 min-h-screen">
+        
+        {/* Navigation */}
+        <div className="pt-2 pb-4 md:pt-20 md:pb-8">
+          <div className="container mx-auto px-4">
             <Link 
               href="/blog" 
-              className="btn-primary inline-flex items-center"
+              className="inline-flex items-center text-purple-400 hover:text-purple-300 font-semibold group transition-all duration-200 text-sm md:text-base"
             >
-              <ChevronLeftIcon className="w-5 h-5 mr-2" />
-              Back to All Posts
+              <ChevronLeftIcon className="w-4 h-4 md:w-5 md:h-5 mr-1 md:mr-2 transition-transform group-hover:-translate-x-1" />
+              <span className="truncate">{t?.blog?.backToBlog || "Back to Blog"}</span>
             </Link>
           </div>
-        </article>
-      </main>
+        </div>
+
+        <main className="container mx-auto px-4 pb-6 md:pb-12">
+          <article className="max-w-4xl mx-auto">
+            
+            {/* Article Header */}
+            <header className="mb-6 md:mb-12">
+              
+              {/* Title */}
+              <div className="mb-4 md:mb-6">
+                <ExpandableText 
+                  className="text-2xl md:text-4xl lg:text-6xl font-black text-white leading-tight"
+                  maxLines={2}
+                >
+                  {post.title}
+                </ExpandableText>
+              </div>
+              
+              {/* Excerpt */}
+              <div className="mb-4 md:mb-8">
+                <ExpandableText 
+                  className="text-sm md:text-xl lg:text-2xl text-gray-300 leading-relaxed font-light"
+                  maxLines={2}
+                >
+                  {post.excerpt}
+                </ExpandableText>
+              </div>
+              
+              {/* Meta Information */}
+              <div className="grid grid-cols-7 gap-2 md:gap-4 p-3 md:p-6 bg-gray-800/50 rounded-2xl border border-gray-700/50 backdrop-blur-sm items-center">
+                
+                {/* Author - 3 columns */}
+                <div className="col-span-3 text-gray-300 min-w-0">
+                  <AuthorTooltip 
+                    author={post.author}
+                    className="text-sm md:text-lg font-medium block"
+                  />
+                </div>
+                
+                {/* Date - 2 columns */}
+                <div className="col-span-2 text-gray-300 min-w-0">
+                  <DateTooltip 
+                    date={post.date}
+                    className="text-sm md:text-lg font-medium"
+                  />
+                </div>
+                
+                {/* Share Button - 2 columns */}
+                <div className="col-span-2 flex justify-end">
+                  <ShareButton />
+                </div>
+                
+              </div>
+              
+            </header>
+            
+            {/* Article Content */}
+            <div className="bg-gray-900/80 rounded-3xl p-4 md:p-8 lg:p-12 border border-gray-700/50 backdrop-blur-sm shadow-2xl">
+              <div 
+                className="prose prose-xl max-w-none 
+                prose-headings:text-white prose-headings:font-bold prose-headings:mb-6 prose-headings:mt-8
+                prose-h2:text-3xl prose-h2:text-purple-300 prose-h2:border-b prose-h2:border-gray-700 prose-h2:pb-3
+                prose-h3:text-2xl prose-h3:text-blue-300
+                prose-h4:text-xl prose-h4:text-green-300
+                prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-6
+                prose-strong:text-purple-400 prose-strong:font-semibold
+                prose-ul:text-gray-300 prose-ol:text-gray-300 
+                prose-li:mb-2 prose-li:leading-relaxed
+                prose-blockquote:border-l-4 prose-blockquote:border-purple-500 prose-blockquote:bg-gray-800/50 prose-blockquote:p-4 prose-blockquote:rounded-r-lg prose-blockquote:text-gray-300
+                prose-code:text-purple-300 prose-code:bg-gray-800 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm
+                prose-pre:bg-gray-800 prose-pre:border prose-pre:border-gray-600 prose-pre:rounded-lg
+                prose-a:text-purple-400 prose-a:hover:text-purple-300 prose-a:no-underline prose-a:font-medium
+                prose-img:rounded-lg prose-img:shadow-lg
+                first:prose-p:text-xl first:prose-p:text-gray-200 first:prose-p:font-medium"
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              />
+            </div>
+            
+            
+            {/* Back to Blog */}
+            <div className="text-center mt-6 md:mt-12">
+              <Link 
+                href="/blog" 
+                className="inline-flex items-center px-4 md:px-8 py-3 md:py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 text-sm md:text-base"
+              >
+                <ChevronLeftIcon className="w-4 h-4 md:w-5 md:h-5 mr-1 md:mr-2" />
+                <span className="truncate">{t?.blog?.backToAllPosts || "Back to All Posts"}</span>
+              </Link>
+            </div>
+            
+          </article>
+        </main>
+      </div>
+      
       <Footer t={t} />
     </>
   );

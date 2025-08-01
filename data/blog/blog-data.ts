@@ -22,6 +22,7 @@ export const blogPosts: BlogPost[] = [
     date: "May 28, 2025",
     author: "Speed Stars Development Team",
     excerpt: "Master Speed Stars with our comprehensive guide! Learn essential controls, advanced techniques, and pro strategies to dominate the competition in this exciting unblocked racing game.",
+    tags: ["guide", "tutorial", "gaming", "speed-stars", "strategy"],
     content: `
       <h2>Welcome to the Ultimate Speed Stars Guide</h2>
       <p>Speed Stars is more than just a running game – it's a physics-based challenge that requires timing, skill, and strategy. This comprehensive guide will help you master every aspect of the game.</p>

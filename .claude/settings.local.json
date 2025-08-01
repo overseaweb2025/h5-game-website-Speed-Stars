@@ -25,7 +25,8 @@
       "Bash(npm run type-check:*)",
       "Bash(npm run:*)",
       "Bash(node:*)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "Bash(python3:*)"
     ],
     "deny": []
   }

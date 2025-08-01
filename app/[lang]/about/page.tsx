@@ -77,14 +77,10 @@ export default async function AboutPage({params}: {params: {lang: string}}) {
               </div>
               <div className="text-gray-200 space-y-4">
                 <p className="text-lg leading-relaxed">
-                  At GameHub Central, we believe that everyone deserves access to high-quality entertainment. 
-                  Our mission is to provide a vast collection of free HTML5 games that are accessible to 
-                  players worldwide, regardless of their device or location.
+                  {t?.legal?.missionDescription1 || "At GameHub Central, we believe that everyone deserves access to high-quality entertainment. Our mission is to provide a vast collection of free HTML5 games that are accessible to players worldwide, regardless of their device or location."}
                 </p>
                 <p className="text-lg leading-relaxed">
-                  We're committed to creating a safe, fun, and inclusive gaming environment where players 
-                  of all ages can discover new adventures, challenge themselves, and connect with others 
-                  through the universal language of games.
+                  {t?.legal?.missionDescription2 || "We're committed to creating a safe, fun, and inclusive gaming environment where players of all ages can discover new adventures, challenge themselves, and connect with others through the universal language of games."}
                 </p>
               </div>
             </div>
@@ -96,14 +92,10 @@ export default async function AboutPage({params}: {params: {lang: string}}) {
               </div>
               <div className="text-gray-200 space-y-4">
                 <p className="text-lg leading-relaxed">
-                  We envision GameHub Central as the go-to platform for instant gaming entertainment. 
-                  Our goal is to eliminate barriers between players and great games by providing 
-                  instant access without downloads, installations, or complicated setup processes.
+                  {t?.legal?.visionDescription1 || "We envision GameHub Central as the go-to platform for instant gaming entertainment. Our goal is to eliminate barriers between players and great games by providing instant access without downloads, installations, or complicated setup processes."}
                 </p>
                 <p className="text-lg leading-relaxed">
-                  Through cutting-edge HTML5 technology and careful curation, we aim to deliver 
-                  console-quality gaming experiences directly through your web browser, making 
-                  gaming more accessible than ever before.
+                  {t?.legal?.visionDescription2 || "Through cutting-edge HTML5 technology and careful curation, we aim to deliver console-quality gaming experiences directly through your web browser, making gaming more accessible than ever before."}
                 </p>
               </div>
             </div>
@@ -113,18 +105,18 @@ export default async function AboutPage({params}: {params: {lang: string}}) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-16">
             <div className="card cartoon-shadow border-4 border-accent-3 text-center transform hover:scale-105 transition-transform pop-in">
               <div className="text-5xl mb-4">🎮</div>
-              <h3 className="text-2xl font-black text-accent-3 mb-2">50+ Games</h3>
-              <p className="text-gray-200">Carefully curated collection of premium HTML5 games</p>
+              <h3 className="text-2xl font-black text-accent-3 mb-2">{t?.legal?.gamesCount || "50+ Games"}</h3>
+              <p className="text-gray-200">{t?.legal?.gamesCountDesc || "Carefully curated collection of premium HTML5 games"}</p>
             </div>
             <div className="card cartoon-shadow border-4 border-accent text-center transform hover:scale-105 transition-transform pop-in" style={{ animationDelay: "0.2s" }}>
               <div className="text-5xl mb-4">👥</div>
-              <h3 className="text-2xl font-black text-accent mb-2">100K+ Players</h3>
-              <p className="text-gray-200">Active gaming community from around the world</p>
+              <h3 className="text-2xl font-black text-accent mb-2">{t?.legal?.playersCount || "100K+ Players"}</h3>
+              <p className="text-gray-200">{t?.legal?.playersCountDesc || "Active gaming community from around the world"}</p>
             </div>
             <div className="card cartoon-shadow border-4 border-primary text-center transform hover:scale-105 transition-transform pop-in" style={{ animationDelay: "0.4s" }}>
               <div className="text-5xl mb-4">⚡</div>
-              <h3 className="text-2xl font-black text-primary mb-2">0 Downloads</h3>
-              <p className="text-gray-200">Instant play - no installations or plugins required</p>
+              <h3 className="text-2xl font-black text-primary mb-2">{t?.legal?.downloadsCount || "0 Downloads"}</h3>
+              <p className="text-gray-200">{t?.legal?.downloadsCountDesc || "Instant play - no installations or plugins required"}</p>
             </div>
           </div>
 
@@ -132,33 +124,33 @@ export default async function AboutPage({params}: {params: {lang: string}}) {
           <div className="mb-16">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-black text-white mb-4 pop-in">
-                Our <span className="gradient-text">Core Values</span>
+                {t?.legal?.coreValues || "Our Core Values"}
               </h2>
               <p className="text-xl text-gray-200 max-w-2xl mx-auto">
-                The principles that guide everything we do at GameHub Central
+                {t?.legal?.coreValuesDesc || "The principles that guide everything we do at GameHub Central"}
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="card cartoon-shadow border-4 border-accent-2 text-center transform hover:rotate-[2deg] transition-transform pop-in">
                 <div className="text-4xl mb-3">🔒</div>
-                <h3 className="text-xl font-black text-accent-2 mb-2">Safety First</h3>
-                <p className="text-gray-200 text-sm">All games are thoroughly tested and safe for players of all ages</p>
+                <h3 className="text-xl font-black text-accent-2 mb-2">{t?.legal?.safetyFirst || "Safety First"}</h3>
+                <p className="text-gray-200 text-sm">{t?.legal?.safetyFirstDesc || "All games are thoroughly tested and safe for players of all ages"}</p>
               </div>
               <div className="card cartoon-shadow border-4 border-accent-4 text-center transform hover:rotate-[-2deg] transition-transform pop-in" style={{ animationDelay: "0.1s" }}>
                 <div className="text-4xl mb-3">⚡</div>
-                <h3 className="text-xl font-black text-accent-4 mb-2">Speed & Performance</h3>
-                <p className="text-gray-200 text-sm">Lightning-fast loading times and smooth gameplay experience</p>
+                <h3 className="text-xl font-black text-accent-4 mb-2">{t?.legal?.speedPerformance || "Speed & Performance"}</h3>
+                <p className="text-gray-200 text-sm">{t?.legal?.speedPerformanceDesc || "Lightning-fast loading times and smooth gameplay experience"}</p>
               </div>
               <div className="card cartoon-shadow border-4 border-secondary text-center transform hover:rotate-[2deg] transition-transform pop-in" style={{ animationDelay: "0.2s" }}>
                 <div className="text-4xl mb-3">🌍</div>
-                <h3 className="text-xl font-black text-secondary mb-2">Global Access</h3>
-                <p className="text-gray-200 text-sm">Available worldwide with no geographic restrictions</p>
+                <h3 className="text-xl font-black text-secondary mb-2">{t?.legal?.globalAccess || "Global Access"}</h3>
+                <p className="text-gray-200 text-sm">{t?.legal?.globalAccessDesc || "Available worldwide with no geographic restrictions"}</p>
               </div>
               <div className="card cartoon-shadow border-4 border-primary text-center transform hover:rotate-[-2deg] transition-transform pop-in" style={{ animationDelay: "0.3s" }}>
                 <div className="text-4xl mb-3">🎯</div>
-                <h3 className="text-xl font-black text-primary mb-2">Quality Curation</h3>
-                <p className="text-gray-200 text-sm">Hand-picked games that meet our high standards for fun and quality</p>
+                <h3 className="text-xl font-black text-primary mb-2">{t?.legal?.qualityCuration || "Quality Curation"}</h3>
+                <p className="text-gray-200 text-sm">{t?.legal?.qualityCurationDesc || "Hand-picked games that meet our high standards for fun and quality"}</p>
               </div>
             </div>
           </div>
@@ -166,29 +158,27 @@ export default async function AboutPage({params}: {params: {lang: string}}) {
           {/* Team Section */}
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-black text-white mb-8 pop-in">
-              Meet Our <span className="gradient-text">Team</span>
+              {t?.legal?.meetOurTeam || "Meet Our Team"}
             </h2>
             <div className="card cartoon-shadow border-4 border-accent-3 max-w-4xl mx-auto transform hover:scale-105 transition-transform">
               <div className="text-center">
                 <div className="text-6xl mb-4">👨‍💻👩‍💻</div>
-                <h3 className="text-2xl font-black text-white mb-4">Gaming Enthusiasts & Tech Experts</h3>
+                <h3 className="text-2xl font-black text-white mb-4">{t?.legal?.gamingEnthusiasts || "Gaming Enthusiasts & Tech Experts"}</h3>
                 <p className="text-lg text-gray-200 leading-relaxed">
-                  Our team consists of passionate gamers, experienced developers, and dedicated community managers 
-                  who work tirelessly to bring you the best gaming experience possible. We're gamers ourselves, 
-                  and we understand what makes a great game great.
+                  {t?.legal?.teamDescription || "Our team consists of passionate gamers, experienced developers, and dedicated community managers who work tirelessly to bring you the best gaming experience possible. We're gamers ourselves, and we understand what makes a great game great."}
                 </p>
                 <div className="flex justify-center space-x-8 mt-8">
                   <div className="text-center">
                     <div className="text-3xl mb-2">🎮</div>
-                    <p className="text-sm font-bold text-gray-200">Game Curators</p>
+                    <p className="text-sm font-bold text-gray-200">{t?.legal?.gameCurators || "Game Curators"}</p>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl mb-2">💻</div>
-                    <p className="text-sm font-bold text-gray-200">Developers</p>
+                    <p className="text-sm font-bold text-gray-200">{t?.legal?.developers || "Developers"}</p>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl mb-2">💬</div>
-                    <p className="text-sm font-bold text-gray-200">Community Managers</p>
+                    <p className="text-sm font-bold text-gray-200">{t?.legal?.communityManagers || "Community Managers"}</p>
                   </div>
                 </div>
               </div>
@@ -200,24 +190,23 @@ export default async function AboutPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-primary max-w-3xl mx-auto transform hover:rotate-[1deg] transition-transform pop-in">
               <div className="text-center">
                 <div className="text-6xl mb-4">🎉</div>
-                <h2 className="text-3xl md:text-4xl font-black text-white mb-4">Ready to Play?</h2>
+                <h2 className="text-3xl md:text-4xl font-black text-white mb-4">{t?.legal?.readyToPlay || "Ready to Play?"}</h2>
                 <p className="text-lg text-gray-200 mb-6">
-                  Join thousands of players who have already discovered the joy of gaming at GameHub Central. 
-                  Start your adventure today!
+                  {t?.legal?.readyToPlayDesc || "Join thousands of players who have already discovered the joy of gaming at GameHub Central. Start your adventure today!"}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
                     href="/games"
                     className="btn-primary text-xl jello"
                   >
-                    Browse All Games
+                    {t?.legal?.browseAllGames || "Browse All Games"}
                   </Link>
                   <Link
                     href="/"
                     className="btn-secondary text-xl jello"
                     style={{ animationDelay: "0.2s" }}
                   >
-                    Start Playing Now
+                    {t?.legal?.startPlayingNow || "Start Playing Now"}
                   </Link>
                 </div>
               </div>

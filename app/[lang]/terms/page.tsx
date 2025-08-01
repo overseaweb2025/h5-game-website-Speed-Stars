@@ -82,12 +82,10 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
-                  These Terms of Service govern your use of GameHub Central, operated by GameHub Central ("we," "us," or "our"). 
-                  By accessing or using our website and services, you agree to comply with and be bound by these terms.
+                  {t?.legal?.termsSection1Content1 || "These Terms of Service govern your use of GameHub Central, operated by GameHub Central ('we,' 'us,' or 'our'). By accessing or using our website and services, you agree to comply with and be bound by these terms."}
                 </p>
                 <p>
-                  We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting. 
-                  Your continued use of our services after changes are posted constitutes acceptance of the modified terms.
+                  {t?.legal?.termsSection1Content2 || "We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting. Your continued use of our services after changes are posted constitutes acceptance of the modified terms."}
                 </p>
               </div>
             </div>
@@ -100,16 +98,15 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
-                  GameHub Central provides free access to HTML5 games and related content. You may use our services for personal, 
-                  non-commercial purposes in accordance with these terms.
+                  {t?.legal?.termsSection2Content1 || "GameHub Central provides free access to HTML5 games and related content. You may use our services for personal, non-commercial purposes in accordance with these terms."}
                 </p>
-                <p className="font-medium">You agree NOT to:</p>
+                <p className="font-medium">{t?.legal?.termsSection2Content2 || "You agree NOT to:"}</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Use our services for any illegal or unauthorized purpose</li>
-                  <li>Attempt to hack, reverse engineer, or modify any games or content</li>
-                  <li>Distribute viruses or harmful code through our platform</li>
-                  <li>Violate any applicable laws or regulations</li>
-                  <li>Interfere with or disrupt our services or servers</li>
+                  <li>{t?.legal?.termsSection2List1 || "Use our services for any illegal or unauthorized purpose"}</li>
+                  <li>{t?.legal?.termsSection2List2 || "Attempt to hack, reverse engineer, or modify any games or content"}</li>
+                  <li>{t?.legal?.termsSection2List3 || "Distribute viruses or harmful code through our platform"}</li>
+                  <li>{t?.legal?.termsSection2List4 || "Violate any applicable laws or regulations"}</li>
+                  <li>{t?.legal?.termsSection2List5 || "Interfere with or disrupt our services or servers"}</li>
                 </ul>
               </div>
             </div>
@@ -122,12 +119,10 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
-                  All content on GameHub Central, including games, graphics, text, and software, is owned by us or our licensors 
-                  and is protected by copyright, trademark, and other intellectual property laws.
+                  {t?.legal?.termsSection3Content1 || "All content on GameHub Central, including games, graphics, text, and software, is owned by us or our licensors and is protected by copyright, trademark, and other intellectual property laws."}
                 </p>
                 <p>
-                  You may not copy, reproduce, distribute, or create derivative works from our content without explicit written permission. 
-                  Games are provided for your personal enjoyment only.
+                  {t?.legal?.termsSection3Content2 || "You may not copy, reproduce, distribute, or create derivative works from our content without explicit written permission. Games are provided for your personal enjoyment only."}
                 </p>
               </div>
             </div>
@@ -140,13 +135,13 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
-                  You are responsible for your conduct while using our services. We expect all users to:
+                  {t?.legal?.termsSection4Content1 || "You are responsible for your conduct while using our services. We expect all users to:"}
                 </p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Respect other users and maintain a friendly environment</li>
-                  <li>Use appropriate language and behavior</li>
-                  <li>Report any technical issues or inappropriate content</li>
-                  <li>Respect the integrity of games and not attempt to cheat or exploit</li>
+                  <li>{t?.legal?.termsSection4List1 || "Respect other users and maintain a friendly environment"}</li>
+                  <li>{t?.legal?.termsSection4List2 || "Use appropriate language and behavior"}</li>
+                  <li>{t?.legal?.termsSection4List3 || "Report any technical issues or inappropriate content"}</li>
+                  <li>{t?.legal?.termsSection4List4 || "Respect the integrity of games and not attempt to cheat or exploit"}</li>
                 </ul>
               </div>
             </div>
@@ -159,12 +154,10 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
-                  Your privacy is important to us. Our Privacy Policy explains how we collect, use, and protect your information. 
-                  By using our services, you consent to our data practices as described in our Privacy Policy.
+                  {t?.legal?.termsSection5Content1 || "Your privacy is important to us. Our Privacy Policy explains how we collect, use, and protect your information. By using our services, you consent to our data practices as described in our Privacy Policy."}
                 </p>
                 <p>
-                  We do not require personal information to play games. Any data collected is used solely to improve your gaming experience 
-                  and our services.
+                  {t?.legal?.termsSection5Content2 || "We do not require personal information to play games. Any data collected is used solely to improve your gaming experience and our services."}
                 </p>
               </div>
             </div>
@@ -177,13 +170,13 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
-                  Our services are provided "as is" without warranties of any kind. We do not guarantee that:
+                  {t?.legal?.termsSection6Content1 || "Our services are provided 'as is' without warranties of any kind. We do not guarantee that:"}
                 </p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Our services will be uninterrupted or error-free</li>
-                  <li>All games will work on every device or browser</li>
-                  <li>Content will always be available or up-to-date</li>
-                  <li>Our services will meet your specific requirements</li>
+                  <li>{t?.legal?.termsSection6List1 || "Our services will be uninterrupted or error-free"}</li>
+                  <li>{t?.legal?.termsSection6List2 || "All games will work on every device or browser"}</li>
+                  <li>{t?.legal?.termsSection6List3 || "Content will always be available or up-to-date"}</li>
+                  <li>{t?.legal?.termsSection6List4 || "Our services will meet your specific requirements"}</li>
                 </ul>
               </div>
             </div>
@@ -196,12 +189,10 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
-                  GameHub Central shall not be liable for any indirect, incidental, special, or consequential damages 
-                  resulting from your use of our services, including but not limited to lost profits, data loss, or business interruption.
+                  {t?.legal?.termsSection7Content1 || "GameHub Central shall not be liable for any indirect, incidental, special, or consequential damages resulting from your use of our services, including but not limited to lost profits, data loss, or business interruption."}
                 </p>
                 <p>
-                  Our total liability to you shall not exceed the amount paid by you to use our services (which is currently zero, 
-                  as our services are free).
+                  {t?.legal?.termsSection7Content2 || "Our total liability to you shall not exceed the amount paid by you to use our services (which is currently zero, as our services are free)."}
                 </p>
               </div>
             </div>
@@ -214,11 +205,10 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
-                  We reserve the right to terminate or suspend access to our services at any time, without prior notice, 
-                  for conduct that we believe violates these terms or is harmful to other users or our services.
+                  {t?.legal?.termsSection8Content1 || "We reserve the right to terminate or suspend access to our services at any time, without prior notice, for conduct that we believe violates these terms or is harmful to other users or our services."}
                 </p>
                 <p>
-                  You may discontinue using our services at any time. Upon termination, your right to use our services ceases immediately.
+                  {t?.legal?.termsSection8Content2 || "You may discontinue using our services at any time. Upon termination, your right to use our services ceases immediately."}
                 </p>
               </div>
             </div>
@@ -231,12 +221,12 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
-                  If you have questions about these Terms of Service, please contact us:
+                  {t?.legal?.termsSection9Content1 || "If you have questions about these Terms of Service, please contact us:"}
                 </p>
                 <div className="bg-gradient-to-r from-accent-2/10 to-primary/10 rounded-xl p-4 border-2 border-accent-2/20">
-                  <p><strong>Email:</strong> support@speed-stars.net</p>
-                  <p><strong>Address:</strong> 36 Central Avenue, California, USA</p>
-                  <p><strong>Phone:</strong> +1 (607) 023-1235</p>
+                  <p><strong>{t?.legal?.email || "Email"}:</strong> support@speed-stars.net</p>
+                  <p><strong>{t?.legal?.address || "Address"}:</strong> 36 Central Avenue, California, USA</p>
+                  <p><strong>{t?.legal?.phone || "Phone"}:</strong> +1 (607) 023-1235</p>
                 </div>
               </div>
             </div>

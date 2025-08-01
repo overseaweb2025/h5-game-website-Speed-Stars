@@ -2,7 +2,7 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import Link from "next/link"
 import type { Metadata } from "next"
-import { CalendarDays, MessageSquare, ArrowRight, User, Clock, TrendingUp } from "lucide-react"
+import { CalendarDays, MessageSquare, ArrowRight, TrendingUp } from "lucide-react"
 import { blogPosts } from "@/data/blog/blog-data"
 import { getDictionary } from "@/lib/lang/i18n"
 
@@ -83,23 +83,8 @@ export default async function BlogPage({params}: {params: {lang: string}}) {
                     className="card hover:scale-105 transition-all pop-in"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
-                    <div className="mb-3">
-                      <span className="bg-primary text-white px-3 py-1 rounded-full text-xs md:text-sm font-bold">
-                        {post.category}
-                      </span>
-                    </div>
                     <h3 className="text-lg md:text-xl font-black text-white mb-3 line-clamp-2">{post.title}</h3>
                     <p className="text-gray-200 mb-4 text-sm md:text-base line-clamp-3">{post.excerpt}</p>
-                    <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-gray-300">
-                      <div className="flex items-center">
-                        <User className="h-3 w-3 md:h-4 md:w-4 mr-1 text-secondary" />
-                        <span className="truncate">{post.author}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Clock className="h-3 w-3 md:h-4 md:w-4 mr-1 text-accent-3" />
-                        {post.readTime}
-                      </div>
-                    </div>
                   </Link>
                 ))}
               </div>
@@ -117,31 +102,14 @@ export default async function BlogPage({params}: {params: {lang: string}}) {
                     className="card p-6 md:p-8 border-4 border-primary rainbow-border shadow-cartoon-xl pop-in"
                     style={{ animationDelay: `${index * 0.2}s` }}
                   >
-                    <div className="mb-4">
-                      <span className="bg-primary text-white px-4 py-2 rounded-full text-sm font-bold">
-                        {post.category}
-                      </span>
-                    </div>
                     <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white mb-4 hover:text-primary transition-colors">
                       <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                     </h2>
                     <p className="text-gray-200 mb-6 text-base md:text-lg leading-relaxed">{post.excerpt}</p>
                     <div className="flex flex-wrap items-center gap-2 md:gap-4 text-sm text-gray-300 mb-6">
                       <div className="flex items-center">
-                        <User className="h-4 w-4 mr-1.5 text-secondary" />
-                        {post.author}
-                      </div>
-                      <div className="flex items-center">
                         <CalendarDays className="h-4 w-4 mr-1.5 text-secondary" />
                         {post.date}
-                      </div>
-                      <div className="flex items-center">
-                        <MessageSquare className="h-4 w-4 mr-1.5 text-accent" />
-                        {post.comments} Comments
-                      </div>
-                      <div className="flex items-center">
-                        <Clock className="h-4 w-4 mr-1.5 text-accent-3" />
-                        {post.readTime}
                       </div>
                     </div>
                     <Link
@@ -168,21 +136,12 @@ export default async function BlogPage({params}: {params: {lang: string}}) {
                     className="card hover:scale-105 transition-all pop-in"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
-                    <div className="mb-3">
-                      <span className="bg-accent text-white px-3 py-1 rounded-full text-xs md:text-sm font-bold">
-                        {post.category}
-                      </span>
-                    </div>
                     <h3 className="text-lg md:text-xl font-black text-white mb-3 line-clamp-2">{post.title}</h3>
                     <p className="text-gray-200 mb-4 text-sm md:text-base line-clamp-3">{post.excerpt}</p>
                     <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-gray-300 mb-4">
                       <div className="flex items-center">
                         <CalendarDays className="h-3 w-3 md:h-4 md:w-4 mr-1 text-secondary" />
                         {post.date}
-                      </div>
-                      <div className="flex items-center">
-                        <Clock className="h-3 w-3 md:h-4 md:w-4 mr-1 text-accent-3" />
-                        {post.readTime}
                       </div>
                     </div>
                     <div className="flex items-center justify-between">

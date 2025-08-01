@@ -1,5 +1,10 @@
 // 基础游戏信息
 export interface Game {
+    category_name: string | undefined;
+    description: string | undefined;
+    image: string | undefined;
+    url: string | undefined;
+    iframe_src: string | undefined;
     id: number;
     name: string;
     display_name: string;

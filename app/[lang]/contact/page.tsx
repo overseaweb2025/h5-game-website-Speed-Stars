@@ -57,7 +57,7 @@ export default async function ContactPage({params}: {params: {lang: string}}) {
               className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-white rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
             >
               <ChevronLeftIcon className="w-6 h-6 mr-2 transition-transform group-hover:-translate-x-1" />
-              Back to Home
+              {t?.common?.backToHome || "Back to Home"}
             </Link>
           </div>
 
@@ -127,10 +127,10 @@ export default async function ContactPage({params}: {params: {lang: string}}) {
           <div className="mb-16">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-black text-white mb-4 pop-in">
-                Frequently Asked <span className="gradient-text">Questions</span>
+                {t?.contact?.frequentlyAskedQuestions || "Frequently Asked"} <span className="gradient-text">Questions</span>
               </h2>
               <p className="text-xl text-gray-200 max-w-2xl mx-auto">
-                Quick answers to common questions
+                {t?.contact?.quickAnswers || "Quick answers to common questions"}
               </p>
             </div>
 
@@ -138,9 +138,9 @@ export default async function ContactPage({params}: {params: {lang: string}}) {
               <div className="card cartoon-shadow border-4 border-accent-2 transform hover:rotate-[1deg] transition-transform pop-in">
                 <div className="text-center">
                   <div className="text-4xl mb-3">🎮</div>
-                  <h3 className="text-xl font-black text-accent-2 mb-3">Are all games really free?</h3>
+                  <h3 className="text-xl font-black text-accent-2 mb-3">{t?.contact?.allGamesFree || "Are all games really free?"}</h3>
                   <p className="text-gray-200 text-sm leading-relaxed">
-                    Yes! All games on GameHub Central are completely free to play. No hidden fees, subscriptions, or in-app purchases required.
+                    {t?.contact?.allGamesFreeAnswer || "Yes! All games on GameHub Central are completely free to play. No hidden fees, subscriptions, or in-app purchases required."}
                   </p>
                 </div>
               </div>
@@ -148,9 +148,9 @@ export default async function ContactPage({params}: {params: {lang: string}}) {
               <div className="card cartoon-shadow border-4 border-accent-4 transform hover:rotate-[-1deg] transition-transform pop-in" style={{ animationDelay: "0.1s" }}>
                 <div className="text-center">
                   <div className="text-4xl mb-3">📱</div>
-                  <h3 className="text-xl font-black text-accent-4 mb-3">Do games work on mobile?</h3>
+                  <h3 className="text-xl font-black text-accent-4 mb-3">{t?.contact?.gamesWorkMobile || "Do games work on mobile?"}</h3>
                   <p className="text-gray-200 text-sm leading-relaxed">
-                    Absolutely! Our HTML5 games are designed to work seamlessly on smartphones, tablets, and desktop computers.
+                    {t?.contact?.gamesWorkMobileAnswer || "Absolutely! Our HTML5 games are designed to work seamlessly on smartphones, tablets, and desktop computers."}
                   </p>
                 </div>
               </div>
@@ -158,9 +158,9 @@ export default async function ContactPage({params}: {params: {lang: string}}) {
               <div className="card cartoon-shadow border-4 border-secondary transform hover:rotate-[1deg] transition-transform pop-in" style={{ animationDelay: "0.2s" }}>
                 <div className="text-center">
                   <div className="text-4xl mb-3">⚡</div>
-                  <h3 className="text-xl font-black text-secondary mb-3">Why won't a game load?</h3>
+                  <h3 className="text-xl font-black text-secondary mb-3">{t?.contact?.whyGameNotLoad || "Why won't a game load?"}</h3>
                   <p className="text-gray-200 text-sm leading-relaxed">
-                    Try refreshing the page or clearing your browser cache. If issues persist, contact our support team for assistance.
+                    {t?.contact?.whyGameNotLoadAnswer || "Try refreshing the page or clearing your browser cache. If issues persist, contact our support team for assistance."}
                   </p>
                 </div>
               </div>
@@ -168,9 +168,9 @@ export default async function ContactPage({params}: {params: {lang: string}}) {
               <div className="card cartoon-shadow border-4 border-primary transform hover:rotate-[-1deg] transition-transform pop-in" style={{ animationDelay: "0.3s" }}>
                 <div className="text-center">
                   <div className="text-4xl mb-3">🔒</div>
-                  <h3 className="text-xl font-black text-primary mb-3">Is my data safe?</h3>
+                  <h3 className="text-xl font-black text-primary mb-3">{t?.contact?.isDataSafe || "Is my data safe?"}</h3>
                   <p className="text-gray-200 text-sm leading-relaxed">
-                    Yes! We prioritize your privacy and security. We don't collect personal information unless you voluntarily provide it.
+                    {t?.contact?.isDataSafeAnswer || "Yes! We prioritize your privacy and security. We don't collect personal information unless you voluntarily provide it."}
                   </p>
                 </div>
               </div>
@@ -182,19 +182,19 @@ export default async function ContactPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-accent-3 max-w-2xl mx-auto transform hover:scale-105 transition-transform pop-in">
               <div className="text-center">
                 <div className="text-5xl mb-4">⏱️</div>
-                <h3 className="text-2xl font-black text-white mb-4">Response Times</h3>
+                <h3 className="text-2xl font-black text-white mb-4">{t?.contact?.responseTimes || "Response Times"}</h3>
                 <div className="space-y-3 text-left">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-200">General Inquiries</span>
-                    <span className="font-black text-accent-3">24 hours</span>
+                    <span className="text-gray-200">{t?.contact?.generalInquiries || "General Inquiries"}</span>
+                    <span className="font-black text-accent-3">{t?.contact?.hours24 || "24 hours"}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-200">Technical Support</span>
-                    <span className="font-black text-primary">12 hours</span>
+                    <span className="text-gray-200">{t?.contact?.technicalSupportTime || "Technical Support"}</span>
+                    <span className="font-black text-primary">{t?.contact?.hours12 || "12 hours"}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-200">Bug Reports</span>
-                    <span className="font-black text-secondary">6 hours</span>
+                    <span className="text-gray-200">{t?.contact?.bugReports || "Bug Reports"}</span>
+                    <span className="font-black text-secondary">{t?.contact?.hours6 || "6 hours"}</span>
                   </div>
                 </div>
               </div>

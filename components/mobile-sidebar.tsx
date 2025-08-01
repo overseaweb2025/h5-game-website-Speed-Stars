@@ -3,12 +3,10 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { X, Home, GamepadIcon as GameController, BookOpen, Star, HelpCircle, MessageCircle, Zap, Target, UserCircleIcon, LogInIcon, LogOutIcon, ChevronLeft, Globe } from "lucide-react"
+import { X, Home, GamepadIcon as GameController, BookOpen, Star, HelpCircle, MessageCircle, Zap, Target, UserCircleIcon, LogInIcon, LogOutIcon, ChevronLeft, Globe, Search } from "lucide-react"
 import { useSession, signIn, signOut } from "next-auth/react"
 import toast from "react-hot-toast"
 import LanguageSelector from "./LanguageSelector"
-import { SearchBox } from "./search"
-import { useGameData } from "@/hooks/useGameData"
 
 interface MobileSidebarProps {
   isOpen: boolean
@@ -24,9 +22,6 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
   const [isAnimating, setIsAnimating] = useState(false)
   const [currentView, setCurrentView] = useState<SidebarView>('main')
   const pathname = usePathname()
-  
-  // 获取游戏数据用于搜索
-  const { allGames } = useGameData()
 
   // Get current language from pathname
   const getCurrentLang = () => {
@@ -85,6 +80,12 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
       action: () => { window.location.href = createLocalizedLink('/'); onClose() }
     },
     { 
+      icon: Search, 
+      label: t?.navigation?.search || t?.mobileSidebar?.search || "Search", 
+      path: "/search",
+      action: () => { window.location.href = createLocalizedLink('/search'); onClose() }
+    },
+    { 
       icon: GameController, 
       label: t?.navigation?.allGames || t?.mobileSidebar?.allGames || "All Games", 
       path: "/games",
@@ -104,7 +105,7 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
     },
     { 
       icon: Globe, 
-      label: t?.mobileSidebar?.language || "Language", 
+      label: t?.mobileSidebar?.language || t?.common?.language || "Language", 
       path: "",
       action: switchToLanguageView
     }
@@ -148,16 +149,6 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
               </button>
             </div>
 
-            {/* Search Section */}
-            <div className="p-4 border-b-2 border-gray-700/50 flex-shrink-0">
-              <SearchBox
-                games={allGames}
-                placeholder={t?.search?.placeholder || "Search games..."}
-                variant="default"
-                t={t}
-                onResultClick={onClose} // 搜索结果点击后关闭侧边栏
-              />
-            </div>
 
             {/* User Section */}
             <div className="p-6 border-b-2 border-gray-700/50 flex-shrink-0">
