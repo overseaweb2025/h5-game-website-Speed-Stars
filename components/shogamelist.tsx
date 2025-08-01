@@ -20,21 +20,21 @@ const GameCard = ({ game, size = 'medium', tag }: GameCardProps) => {
       case 'featured':
         return {
           container: 'w-[200px] md:w-[240px]',
-          imageAspect: 'aspect-[16/9]',
+          imageAspect: 'aspect-square',
           titleSize: 'text-sm md:text-base',
           rounded: 'rounded-[13px]'
         }
       case 'small':
         return {
           container: 'w-[160px] md:w-[180px]',
-          imageAspect: 'aspect-[16/9]',
+          imageAspect: 'aspect-square',
           titleSize: 'text-xs md:text-sm',
           rounded: 'rounded-[13px]'
         }
       default:
         return {
           container: 'w-[180px] md:w-[200px]',
-          imageAspect: 'aspect-[16/9]',
+          imageAspect: 'aspect-square',
           titleSize: 'text-sm',
           rounded: 'rounded-[13px]'
         }
@@ -45,7 +45,7 @@ const GameCard = ({ game, size = 'medium', tag }: GameCardProps) => {
   
   // Generate responsive srcset for placeholder
   const generateSrcSet = (width: number) => {
-    const baseUrl = `/placeholder.svg?height=${Math.round(width * 9/16)}&width=${width}&text=${encodeURIComponent(game.display_name)}`
+    const baseUrl = `/placeholder.svg?height=${width}&width=${width}&text=${encodeURIComponent(game.display_name)}`
     return [
       `${baseUrl}&dpr=1 1x`,
       `${baseUrl}&dpr=2 2x`,
@@ -62,7 +62,7 @@ const GameCard = ({ game, size = 'medium', tag }: GameCardProps) => {
     >
       <div className={`relative ${dimensions.imageAspect} w-full overflow-hidden ${dimensions.rounded} bg-gradient-to-br from-gray-100 to-gray-200 shadow-md group-hover:shadow-lg transition-shadow`}>
         <img
-          src={`/placeholder.svg?height=${Math.round(baseWidth * 9/16)}&width=${baseWidth}&text=${encodeURIComponent(game.display_name)}`}
+          src={`/placeholder.svg?height=${baseWidth}&width=${baseWidth}&text=${encodeURIComponent(game.display_name)}`}
           srcSet={generateSrcSet(baseWidth)}
           alt={game.display_name}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"

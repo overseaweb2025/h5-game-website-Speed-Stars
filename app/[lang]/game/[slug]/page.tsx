@@ -1,6 +1,4 @@
 import { Metadata } from "next";
-import { gameDetailsParser} from "@/lib/game-utils";
-import { getGameDetails } from "@/app/api/gameList";
 import { getGameCanonicalUrl } from "@/lib/seo-utils";
 import { getDictionary } from "@/lib/lang/i18n";
 import GamePageClient from "./GamePageClient";
@@ -39,5 +37,5 @@ export async function generateMetadata(
 export default async function GamePage({ params }: { params: { slug: string; lang: string } }) {
   const lang = params.lang as "en" | "zh";
   const t = await getDictionary(lang);
-  return <GamePageClient slug={params.slug} t={t} />;
+  return <GamePageClient slug={params.slug}/>;
 }

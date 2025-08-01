@@ -50,16 +50,16 @@ export default async function HelpPage({params}: {params: {lang: string}}) {
               className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-gray-900 rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
             >
               <ChevronLeftIcon className="w-6 h-6 mr-2 transition-transform group-hover:-translate-x-1" />
-              Back to Home
+              {t?.common?.back || "Back to Home"}
             </Link>
           </div>
 
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-6xl font-black text-white mb-4 pop-in">
-              Help <span className="gradient-text">Center</span>
+              {t?.help?.helpCenterTitle || "Help Center"}
             </h1>
             <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto">
-              Find answers to common questions and get the help you need
+              {t?.help?.helpDescription || "Find answers to common questions and get the help you need"}
             </p>
           </div>
 

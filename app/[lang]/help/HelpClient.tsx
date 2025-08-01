@@ -122,7 +122,7 @@ export default function HelpClient({ t }: HelpClientProps) {
             <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/60 w-6 h-6" />
             <input
               type="text"
-              placeholder="Search for help topics..."
+              placeholder={t?.help?.searchHelpTopics || "Search for help topics..."}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-12 pr-4 py-4 bg-transparent border-none outline-none text-white font-medium text-lg placeholder-text/60"
@@ -138,26 +138,26 @@ export default function HelpClient({ t }: HelpClientProps) {
           className="card cartoon-shadow border-4 border-primary text-center transform hover:rotate-[2deg] hover:scale-105 transition-all pop-in"
         >
           <div className="text-4xl mb-3">📧</div>
-          <h3 className="text-lg font-black text-primary mb-2">Contact Support</h3>
-          <p className="text-white/80 text-sm">Get personalized help from our team</p>
+          <h3 className="text-lg font-black text-primary mb-2">{t?.help?.contactSupport || "Contact Support"}</h3>
+          <p className="text-white/80 text-sm">{t?.help?.getPersonalizedHelp || "Get personalized help from our team"}</p>
         </Link>
 
         <div className="card cartoon-shadow border-4 border-secondary text-center transform hover:rotate-[-2deg] hover:scale-105 transition-all pop-in" style={{ animationDelay: "0.1s" }}>
           <div className="text-4xl mb-3">🎮</div>
-          <h3 className="text-lg font-black text-secondary mb-2">Game Tutorials</h3>
-          <p className="text-white/80 text-sm">Learn how to play our games</p>
+          <h3 className="text-lg font-black text-secondary mb-2">{t?.help?.gameTutorials || "Game Tutorials"}</h3>
+          <p className="text-white/80 text-sm">{t?.help?.learnHowToPlay || "Learn how to play our games"}</p>
         </div>
 
         <div className="card cartoon-shadow border-4 border-accent text-center transform hover:rotate-[2deg] hover:scale-105 transition-all pop-in" style={{ animationDelay: "0.2s" }}>
           <div className="text-4xl mb-3">🔧</div>
-          <h3 className="text-lg font-black text-accent mb-2">Troubleshooting</h3>
-          <p className="text-white/80 text-sm">Fix common technical issues</p>
+          <h3 className="text-lg font-black text-accent mb-2">{t?.help?.troubleshooting || "Troubleshooting"}</h3>
+          <p className="text-white/80 text-sm">{t?.help?.fixCommonIssues || "Fix common technical issues"}</p>
         </div>
 
         <div className="card cartoon-shadow border-4 border-accent-3 text-center transform hover:rotate-[-2deg] hover:scale-105 transition-all pop-in" style={{ animationDelay: "0.3s" }}>
           <div className="text-4xl mb-3">💬</div>
-          <h3 className="text-lg font-black text-accent-3 mb-2">Community</h3>
-          <p className="text-white/80 text-sm">Connect with other players</p>
+          <h3 className="text-lg font-black text-accent-3 mb-2">{t?.help?.community || "Community"}</h3>
+          <p className="text-white/80 text-sm">{t?.help?.connectWithPlayers || "Connect with other players"}</p>
         </div>
       </div>
 
@@ -169,8 +169,8 @@ export default function HelpClient({ t }: HelpClientProps) {
               <div className="flex items-center mb-4">
                 <div className="text-4xl mr-4">{category.icon}</div>
                 <div>
-                  <h2 className="text-2xl md:text-3xl font-black text-accent-2">{category.title}</h2>
-                  <p className="text-white/80">{category.description}</p>
+                  <h2 className="text-2xl md:text-3xl font-black text-accent-2">{t?.help?.[`category_${category.id}_title`] || category.title}</h2>
+                  <p className="text-white/80">{t?.help?.[`category_${category.id}_description`] || category.description}</p>
                 </div>
               </div>
             </div>
@@ -186,14 +186,14 @@ export default function HelpClient({ t }: HelpClientProps) {
                       onClick={() => toggleQuestion(category.id, questionIndex)}
                       className="w-full px-6 py-4 text-left bg-gradient-to-r from-accent-2/10 to-primary/10 hover:from-accent-2/20 hover:to-primary/20 transition-colors flex items-center justify-between"
                     >
-                      <span className="font-black text-white">{qa.question}</span>
+                      <span className="font-black text-white">{t?.help?.[`question_${category.id}_${questionIndex}`] || qa.question}</span>
                       <div className={`transform transition-transform ${isExpanded ? 'rotate-180' : ''}`}>
                         ⌄
                       </div>
                     </button>
                     {isExpanded && (
                       <div className="px-6 py-4 bg-gray-900 border-t-2 border-accent-2/20">
-                        <p className="text-white/80 leading-relaxed">{qa.answer}</p>
+                        <p className="text-white/80 leading-relaxed">{t?.help?.[`answer_${category.id}_${questionIndex}`] || qa.answer}</p>
                       </div>
                     )}
                   </div>
@@ -207,12 +207,12 @@ export default function HelpClient({ t }: HelpClientProps) {
       {searchTerm && filteredCategories.every(cat => cat.questions.length === 0) && (
         <div className="text-center py-12">
           <div className="text-6xl mb-4">🔍</div>
-          <h3 className="text-2xl font-black text-white mb-4">No results found</h3>
+          <h3 className="text-2xl font-black text-white mb-4">{t?.help?.noResultsFound || "No results found"}</h3>
           <p className="text-white/80 mb-6">
-            We couldn't find any help topics matching "{searchTerm}". Try different keywords or contact our support team.
+            {(t?.help?.noResultsMessage || "We couldn't find any help topics matching \"{searchTerm}\". Try different keywords or contact our support team.").replace('{searchTerm}', searchTerm)}
           </p>
           <Link href="/contact" className="btn-primary text-lg jello">
-            Contact Support
+            {t?.help?.contactSupport || "Contact Support"}
           </Link>
         </div>
       )}
@@ -222,24 +222,23 @@ export default function HelpClient({ t }: HelpClientProps) {
         <div className="card cartoon-shadow border-4 border-primary max-w-3xl mx-auto transform hover:rotate-[1deg] transition-transform pop-in">
           <div className="text-center">
             <div className="text-6xl mb-4">🤝</div>
-            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">Still Need Help?</h2>
+            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">{t?.help?.stillNeedHelp || "Still Need Help?"}</h2>
             <p className="text-lg text-white/80 mb-6">
-              Can't find what you're looking for? Our support team is here to help! 
-              We typically respond within 24 hours.
+              {t?.help?.stillNeedHelpMessage || "Can't find what you're looking for? Our support team is here to help! We typically respond within 24 hours."}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/contact"
                 className="btn-primary text-xl jello"
               >
-                Contact Support
+                {t?.help?.contactSupport || "Contact Support"}
               </Link>
               <a
                 href="mailto:support@speed-stars.net"
                 className="btn-secondary text-xl jello"
                 style={{ animationDelay: "0.2s" }}
               >
-                Email Us Directly
+                {t?.help?.emailDirectly || "Email Us Directly"}
               </a>
             </div>
           </div>

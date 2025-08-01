@@ -47,19 +47,19 @@ export default async function PrivacyPage({params}: {params: {lang: string}}) {
               className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-gray-900 rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
             >
               <ChevronLeftIcon className="w-6 h-6 mr-2 transition-transform group-hover:-translate-x-1" />
-              Back to Home
+{t?.common?.back || "Back to Home"}
             </Link>
           </div>
 
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-6xl font-black text-white mb-4 pop-in">
-              Privacy <span className="gradient-text">Policy</span>
+              {t?.legal?.privacyPolicyTitle || "Privacy Policy"}
             </h1>
             <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto">
-              Your privacy is important to us. Learn how we protect your data.
+              {t?.legal?.privacyDescription || "Your privacy is important to us. Learn how we protect your data."}
             </p>
             <div className="mt-4 text-sm text-white/60">
-              <p>Last updated: December 2024</p>
+              <p>{t?.legal?.lastUpdated || "Last updated: December 2024"}</p>
             </div>
           </div>
 
@@ -68,11 +68,9 @@ export default async function PrivacyPage({params}: {params: {lang: string}}) {
             <div className="flex items-start space-x-4">
               <ShieldIcon className="w-8 h-8 text-accent flex-shrink-0 mt-1" />
               <div>
-                <h2 className="text-xl font-black text-accent mb-2">Our Privacy Commitment</h2>
+                <h2 className="text-xl font-black text-accent mb-2">{t?.legal?.ourPrivacyCommitment || "Our Privacy Commitment"}</h2>
                 <p className="text-white/80 leading-relaxed">
-                  At GameHub Central, we believe privacy is a fundamental right. We are committed to being transparent 
-                  about how we collect, use, and protect your information. We collect minimal data and never sell 
-                  your personal information to third parties.
+                  {t?.legal?.privacyCommitmentText || "At GameHub Central, we believe privacy is a fundamental right. We are committed to being transparent about how we collect, use, and protect your information. We collect minimal data and never sell your personal information to third parties."}
                 </p>
               </div>
             </div>
@@ -83,11 +81,11 @@ export default async function PrivacyPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-primary transform hover:rotate-[0.5deg] transition-transform pop-in">
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">1️⃣</div>
-                <h2 className="text-2xl md:text-3xl font-black text-primary">Information We Collect</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-primary">{t?.legal?.informationWeCollect || "Information We Collect"}</h2>
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-4 border-2 border-primary/20">
-                  <h3 className="font-black text-primary mb-2">📊 Automatically Collected Information</h3>
+                  <h3 className="font-black text-primary mb-2">📊 {t?.legal?.automaticallyCollectedInfo || "Automatically Collected Information"}</h3>
                   <ul className="list-disc list-inside space-y-1 ml-4 text-sm">
                     <li>IP address and general location (city/country level)</li>
                     <li>Browser type and version</li>
@@ -97,7 +95,7 @@ export default async function PrivacyPage({params}: {params: {lang: string}}) {
                   </ul>
                 </div>
                 <div className="bg-gradient-to-r from-secondary/10 to-accent/10 rounded-xl p-4 border-2 border-secondary/20">
-                  <h3 className="font-black text-secondary mb-2">👤 Personal Information</h3>
+                  <h3 className="font-black text-secondary mb-2">👤 {t?.legal?.personalInformation || "Personal Information"}</h3>
                   <p className="text-sm">
                     We do NOT require registration or personal information to play games. 
                     Any personal information (like email) is only collected if you voluntarily 
@@ -111,7 +109,7 @@ export default async function PrivacyPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-secondary transform hover:rotate-[-0.5deg] transition-transform pop-in" style={{ animationDelay: "0.1s" }}>
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">2️⃣</div>
-                <h2 className="text-2xl md:text-3xl font-black text-secondary">How We Use Your Information</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-secondary">{t?.legal?.howWeUseInfo || "How We Use Your Information"}</h2>
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
@@ -119,7 +117,7 @@ export default async function PrivacyPage({params}: {params: {lang: string}}) {
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-gradient-to-r from-secondary/10 to-primary/10 rounded-lg p-4 border-2 border-secondary/20">
-                    <h4 className="font-black text-secondary mb-2">🎮 Service Improvement</h4>
+                    <h4 className="font-black text-secondary mb-2">🎮 {t?.legal?.serviceImprovement || "Service Improvement"}</h4>
                     <p className="text-sm">Analyze usage patterns to improve game performance and user experience</p>
                   </div>
                   <div className="bg-gradient-to-r from-accent/10 to-accent-2/10 rounded-lg p-4 border-2 border-accent/20">
@@ -142,7 +140,7 @@ export default async function PrivacyPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-accent transform hover:rotate-[0.5deg] transition-transform pop-in" style={{ animationDelay: "0.2s" }}>
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">3️⃣</div>
-                <h2 className="text-2xl md:text-3xl font-black text-accent">Cookies and Tracking</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-accent">{t?.legal?.cookiesAndTracking || "Cookies and Tracking"}</h2>
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
@@ -172,13 +170,13 @@ export default async function PrivacyPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-accent-3 transform hover:rotate-[-0.5deg] transition-transform pop-in" style={{ animationDelay: "0.3s" }}>
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">4️⃣</div>
-                <h2 className="text-2xl md:text-3xl font-black text-accent-3">Data Sharing and Disclosure</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-accent-3">{t?.legal?.dataSharingDisclosure || "Data Sharing and Disclosure"}</h2>
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <div className="bg-gradient-to-r from-green-100 to-green-50 rounded-xl p-4 border-4 border-green-400">
                   <div className="flex items-center mb-2">
                     <div className="text-2xl mr-2">✅</div>
-                    <h3 className="font-black text-green-800">What We DON'T Do</h3>
+                    <h3 className="font-black text-green-800">{t?.legal?.whatWeDontDo || "What We DON'T Do"}</h3>
                   </div>
                   <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-green-800">
                     <li>We do NOT sell your personal information</li>

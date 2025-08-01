@@ -66,12 +66,11 @@ export interface GameDetailsData {
     released_at: string;     // 发布日期，ISO格式
     reviews: reviews_comment[];
     last_updated: string;    // 最后更新日期，ISO格式
+    cover:string;
 }
 
 // API响应结构
-export interface GameDetailsResponse {
-    data: GameDetailsData;
-}
+export type GameDetailsResponse =GameDetailsData
 
 // 扩展的游戏详情（包含解析后的数据，用于组件）
 export interface ExtendedGameDetails extends GameDetailsData {
@@ -114,6 +113,7 @@ export interface HomeGameData {
             package: {
                 url: string;
             };
+            cover:string;
             page_title: string;
             page_description: string;
             page_keywords: string;

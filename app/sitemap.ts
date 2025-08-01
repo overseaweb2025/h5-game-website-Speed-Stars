@@ -47,12 +47,15 @@ async function getGamesList() {
 async function getGameCategories() {
   try {
     const homeData = await fetchHomeGameData()
-    if (homeData?.data?.data) {
-      return homeData.data.data.map((category: any) => ({
-        slug: category.slug || category.name?.toLowerCase().replace(/\s+/g, '-'),
-        name: category.name,
-        updated_at: category.updated_at
-      }))
+    if (homeData) {
+      // Assuming homeData is an array of categories
+      return Array.isArray(homeData)
+        ? homeData.map((category: any) => ({
+            slug: category.slug || category.name?.toLowerCase().replace(/\s+/g, '-'),
+            name: category.name,
+            updated_at: category.updated_at
+          }))
+        : [];
     }
   } catch (error) {
     console.warn('Failed to fetch categories for sitemap, using fallback data')
@@ -99,7 +102,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
 
     // Game category pages - high priority
-    categories.forEach(category => {
+    categories.forEach((category: { slug: any; updated_at: string | number | Date }) => {
       urls.push({
         url: `${baseUrl}${localePrefix}/games/c/${category.slug}`,
         lastModified: category.updated_at ? new Date(category.updated_at) : currentDate,

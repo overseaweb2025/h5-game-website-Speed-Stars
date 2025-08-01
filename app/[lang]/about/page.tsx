@@ -55,16 +55,16 @@ export default async function AboutPage({params}: {params: {lang: string}}) {
               className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-white rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
             >
               <ChevronLeftIcon className="w-6 h-6 mr-2 transition-transform group-hover:-translate-x-1" />
-              Back to Home
+              {t?.common?.back || "Back to Home"}
             </Link>
           </div>
 
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-6xl font-black text-white mb-4 pop-in">
-              About <span className="gradient-text">GameHub Central</span>
+              {t?.legal?.aboutUsTitle || "About GameHub Central"}
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto">
-              Your premier destination for free, unblocked HTML5 games
+              {t?.legal?.aboutUsDescription || "Your premier destination for free, unblocked HTML5 games"}
             </p>
           </div>
 
@@ -73,7 +73,7 @@ export default async function AboutPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-primary transform hover:rotate-[1deg] transition-transform duration-300 pop-in">
               <div className="text-center mb-6">
                 <div className="text-6xl mb-4">🚀</div>
-                <h2 className="text-3xl md:text-4xl font-black text-primary text-stroke">Our Mission</h2>
+                <h2 className="text-3xl md:text-4xl font-black text-primary text-stroke">{t?.legal?.ourMission || "Our Mission"}</h2>
               </div>
               <div className="text-gray-200 space-y-4">
                 <p className="text-lg leading-relaxed">
@@ -92,7 +92,7 @@ export default async function AboutPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-secondary transform hover:rotate-[-1deg] transition-transform duration-300 pop-in" style={{ animationDelay: "0.2s" }}>
               <div className="text-center mb-6">
                 <div className="text-6xl mb-4">🎯</div>
-                <h2 className="text-3xl md:text-4xl font-black text-secondary text-stroke">Our Vision</h2>
+                <h2 className="text-3xl md:text-4xl font-black text-secondary text-stroke">{t?.legal?.ourVision || "Our Vision"}</h2>
               </div>
               <div className="text-gray-200 space-y-4">
                 <p className="text-lg leading-relaxed">

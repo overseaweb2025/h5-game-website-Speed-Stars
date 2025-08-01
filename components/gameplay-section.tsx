@@ -7,7 +7,7 @@ interface GameplaySectionProps {
 
 export default function GameplaySection({ t }: GameplaySectionProps = {}) {
   return (
-    <section className="py-6 md:py-8">
+    <section id="gameplay" className="py-6 md:py-8">
       <div className="container mx-auto px-4">
         <div className="text-center mb-6">
           <h2 className="text-white mb-2 font-black text-shadow-lg">

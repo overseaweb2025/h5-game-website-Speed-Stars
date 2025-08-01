@@ -35,34 +35,31 @@ const Saber = ({ onSidebarToggle, onStateChange }: SaberProps) => {
   // 使用共享的响应式Hook
   const { isSmallScreen, isCollapsed, setIsCollapsed } = useResponsive({
     breakpoint: 1024,
-    initialCollapsed: false,
+    initialCollapsed: true, // 移动端默认收起状态
     onScreenSizeChange: (isSmall, wasSmall) => {
       if (isSmall && !wasSmall) {
-        setIsCollapsed(true) // 小屏时默认为图标模式
-        setSidebarVisible(true) // 确保侧边栏可见
+        // 切换到移动端：显示但设置为图标模式
+        setSidebarVisible(true)
+        setIsCollapsed(true)
       } else if (!isSmall && wasSmall) {
-        setSidebarVisible(true) // 确保侧边栏可见
+        // 切换到桌面端：显示且展开
+        setSidebarVisible(true)
+        setIsCollapsed(false)
       }
     }
   })
 
-  // 切换侧边栏的函数
+  // 切换侧边栏的函数 - 移动端在显示/隐藏之间切换
   const toggleSidebar = useCallback(() => {
     if (isSmallScreen) {
-      // 小屏幕：在图标模式和隐藏之间切换，但不完全销毁组件
-      if (sidebarVisible && !isCollapsed) {
-        // 从展开模式 → 图标模式
-        setIsCollapsed(true)
-      } else if (sidebarVisible && isCollapsed) {
-        // 从图标模式 → 隐藏
-        setSidebarVisible(false)
-      } else {
-        // 从隐藏 → 图标模式
-        setSidebarVisible(true)
+      // 移动端：在显示和隐藏之间切换
+      setSidebarVisible(!sidebarVisible)
+      // 如果显示侧边栏，默认为图标模式
+      if (!sidebarVisible) {
         setIsCollapsed(true)
       }
     } else {
-      // 大屏幕：在默认模式和图标模式之间切换
+      // 桌面端：在默认模式和图标模式之间切换
       setIsCollapsed(!isCollapsed)
     }
   }, [isSmallScreen, sidebarVisible, isCollapsed])

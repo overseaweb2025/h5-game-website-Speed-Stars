@@ -53,7 +53,7 @@ const GameListCard = ({ category }: GameListCardProps) => {
     <div className="w-full">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
         {categoryList.map((item, index) => (
-          <div key={`${item.id}-${index}`} className="aspect-[4/3]">
+          <div key={`${item.id}-${index}`} className="aspect-square">
             <GameCard 
               game={item}
               className="w-full h-full shadow-lg hover:shadow-xl"

@@ -63,10 +63,10 @@ export default async function ContactPage({params}: {params: {lang: string}}) {
 
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-6xl font-black text-white mb-4 pop-in">
-              Contact <span className="gradient-text">GameHub Central</span>
+              {t?.contact?.contactGameHubCentral || "Contact GameHub Central"}
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto">
-              We'd love to hear from you! Get in touch with our team
+              {t?.contact?.contactDescription || "We'd love to hear from you! Get in touch with our team"}
             </p>
           </div>
 
@@ -76,9 +76,9 @@ export default async function ContactPage({params}: {params: {lang: string}}) {
               <div className="card cartoon-shadow border-4 border-primary transform hover:rotate-[1deg] transition-transform duration-300 pop-in">
                 <div className="text-center">
                   <div className="text-5xl mb-4">📧</div>
-                  <h3 className="text-2xl font-black text-primary mb-3">Email Us</h3>
+                  <h3 className="text-2xl font-black text-primary mb-3">{t?.contact?.emailUs || "Email Us"}</h3>
                   <p className="text-gray-200 mb-4">
-                    Send us an email and we'll get back to you within 24 hours
+                    {t?.contact?.emailDescription || "Send us an email and we'll get back to you within 24 hours"}
                   </p>
                   <a 
                     href="mailto:support@speed-stars.net" 
@@ -92,9 +92,9 @@ export default async function ContactPage({params}: {params: {lang: string}}) {
               <div className="card cartoon-shadow border-4 border-secondary transform hover:rotate-[-1deg] transition-transform duration-300 pop-in" style={{ animationDelay: "0.2s" }}>
                 <div className="text-center">
                   <div className="text-5xl mb-4">📞</div>
-                  <h3 className="text-2xl font-black text-secondary mb-3">Call Us</h3>
+                  <h3 className="text-2xl font-black text-secondary mb-3">{t?.contact?.callUs || "Call Us"}</h3>
                   <p className="text-gray-200 mb-4">
-                    Available Monday to Friday, 9 AM - 6 PM PST
+                    {t?.contact?.callDescription || "Available Monday to Friday, 9 AM - 6 PM PST"}
                   </p>
                   <a 
                     href="tel:+16070231235" 
@@ -108,7 +108,7 @@ export default async function ContactPage({params}: {params: {lang: string}}) {
               <div className="card cartoon-shadow border-4 border-accent transform hover:rotate-[1deg] transition-transform duration-300 pop-in" style={{ animationDelay: "0.4s" }}>
                 <div className="text-center">
                   <div className="text-5xl mb-4">📍</div>
-                  <h3 className="text-2xl font-black text-accent mb-3">Visit Us</h3>
+                  <h3 className="text-2xl font-black text-accent mb-3">{t?.contact?.visitUs || "Visit Us"}</h3>
                   <p className="text-gray-200">
                     36 Central Avenue<br />
                     California, USA

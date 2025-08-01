@@ -44,19 +44,19 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
               className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-gray-900 rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
             >
               <ChevronLeftIcon className="w-6 h-6 mr-2 transition-transform group-hover:-translate-x-1" />
-              Back to Home
+              {t?.common?.back || "Back to Home"}
             </Link>
           </div>
 
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-6xl font-black text-white mb-4 pop-in">
-              Terms of <span className="gradient-text">Service</span>
+              {t?.legal?.termsOfServiceTitle || "Terms of Service"}
             </h1>
             <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto">
-              Legal terms and conditions for using GameHub Central
+              {t?.legal?.legalTermsDescription || "Legal terms and conditions for using GameHub Central"}
             </p>
             <div className="mt-4 text-sm text-white/60">
-              <p>Last updated: December 2024</p>
+              <p>{t?.legal?.lastUpdated || "Last updated: December 2024"}</p>
             </div>
           </div>
 
@@ -65,11 +65,9 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
             <div className="flex items-start space-x-4">
               <AlertTriangleIcon className="w-8 h-8 text-accent-2 flex-shrink-0 mt-1" />
               <div>
-                <h2 className="text-xl font-black text-accent-2 mb-2">Important Notice</h2>
+                <h2 className="text-xl font-black text-accent-2 mb-2">{t?.legal?.importantNotice || "Important Notice"}</h2>
                 <p className="text-white/80 leading-relaxed">
-                  By accessing and using GameHub Central, you acknowledge that you have read, understood, 
-                  and agree to be bound by these Terms of Service. If you do not agree with these terms, 
-                  please do not use our services.
+                  {t?.legal?.termsAcceptanceText || "By accessing and using GameHub Central, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. If you do not agree with these terms, please do not use our services."}
                 </p>
               </div>
             </div>
@@ -80,7 +78,7 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-primary transform hover:rotate-[0.5deg] transition-transform pop-in">
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">1️⃣</div>
-                <h2 className="text-2xl md:text-3xl font-black text-primary">Acceptance of Terms</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-primary">{t?.legal?.acceptanceOfTerms || "Acceptance of Terms"}</h2>
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
@@ -98,7 +96,7 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-secondary transform hover:rotate-[-0.5deg] transition-transform pop-in" style={{ animationDelay: "0.1s" }}>
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">2️⃣</div>
-                <h2 className="text-2xl md:text-3xl font-black text-secondary">Use of Services</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-secondary">{t?.legal?.useOfServices || "Use of Services"}</h2>
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
@@ -120,7 +118,7 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-accent transform hover:rotate-[0.5deg] transition-transform pop-in" style={{ animationDelay: "0.2s" }}>
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">3️⃣</div>
-                <h2 className="text-2xl md:text-3xl font-black text-accent">Intellectual Property</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-accent">{t?.legal?.intellectualProperty || "Intellectual Property"}</h2>
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
@@ -138,7 +136,7 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-accent-3 transform hover:rotate-[-0.5deg] transition-transform pop-in" style={{ animationDelay: "0.3s" }}>
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">4️⃣</div>
-                <h2 className="text-2xl md:text-3xl font-black text-accent-3">User Conduct</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-accent-3">{t?.legal?.userConduct || "User Conduct"}</h2>
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
@@ -157,7 +155,7 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-accent-4 transform hover:rotate-[0.5deg] transition-transform pop-in" style={{ animationDelay: "0.4s" }}>
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">5️⃣</div>
-                <h2 className="text-2xl md:text-3xl font-black text-accent-4">Privacy and Data</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-accent-4">{t?.legal?.privacyAndData || "Privacy and Data"}</h2>
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
@@ -175,7 +173,7 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-primary transform hover:rotate-[-0.5deg] transition-transform pop-in" style={{ animationDelay: "0.5s" }}>
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">6️⃣</div>
-                <h2 className="text-2xl md:text-3xl font-black text-primary">Disclaimers</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-primary">{t?.legal?.disclaimers || "Disclaimers"}</h2>
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
@@ -194,7 +192,7 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-secondary transform hover:rotate-[0.5deg] transition-transform pop-in" style={{ animationDelay: "0.6s" }}>
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">7️⃣</div>
-                <h2 className="text-2xl md:text-3xl font-black text-secondary">Limitation of Liability</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-secondary">{t?.legal?.limitationOfLiability || "Limitation of Liability"}</h2>
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
@@ -212,7 +210,7 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-accent transform hover:rotate-[-0.5deg] transition-transform pop-in" style={{ animationDelay: "0.7s" }}>
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">8️⃣</div>
-                <h2 className="text-2xl md:text-3xl font-black text-accent">Termination</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-accent">{t?.legal?.termination || "Termination"}</h2>
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
@@ -229,7 +227,7 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-accent-2 transform hover:rotate-[0.5deg] transition-transform pop-in" style={{ animationDelay: "0.8s" }}>
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">9️⃣</div>
-                <h2 className="text-2xl md:text-3xl font-black text-accent-2">Contact Information</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-accent-2">{t?.legal?.contactInfo || "Contact Information"}</h2>
               </div>
               <div className="text-white/90 space-y-4 leading-relaxed">
                 <p>
@@ -249,27 +247,27 @@ export default async function TermsPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-primary max-w-2xl mx-auto transform hover:scale-105 transition-transform pop-in">
               <div className="text-center">
                 <div className="text-5xl mb-4">📄</div>
-                <h3 className="text-2xl font-black text-white mb-4">Related Documents</h3>
+                <h3 className="text-2xl font-black text-white mb-4">{t?.legal?.relatedDocuments || "Related Documents"}</h3>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
                     href="/privacy"
                     className="btn-secondary text-lg jello"
                   >
-                    Privacy Policy
+                    {t?.footer?.privacyPolicy || "Privacy Policy"}
                   </Link>
                   <Link
                     href="/cookies"
                     className="btn-secondary text-lg jello"
                     style={{ animationDelay: "0.1s" }}
                   >
-                    Cookie Policy
+                    {t?.footer?.cookiePolicy || "Cookie Policy"}
                   </Link>
                   <Link
                     href="/dmca"
                     className="btn-secondary text-lg jello"
                     style={{ animationDelay: "0.2s" }}
                   >
-                    DMCA Policy
+                    {t?.footer?.dmca || "DMCA Policy"}
                   </Link>
                 </div>
               </div>

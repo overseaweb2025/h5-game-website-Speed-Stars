@@ -30,13 +30,30 @@ const extractSEOFromResponse = (response: any): CategorySEO | null => {
   return null
 }
 
-// 创建默认SEO信息
-const createDefaultSEO = (category: string): CategorySEO => {
+// 创建默认SEO信息 - 立即可用，包含分类名称
+const createDefaultSEO = (category: string, lang: string = 'en'): CategorySEO => {
   const decodedCategory = decodeURIComponent(category)
+  
+  // 根据语言生成不同的默认文案
+  const translations = {
+    en: {
+      title: `${decodedCategory} Games - Free Online ${decodedCategory} Games Collection`,
+      description: `Discover the best free ${decodedCategory.toLowerCase()} games online! Play ${decodedCategory.toLowerCase()} games instantly in your browser - no downloads required. Enjoy hours of ${decodedCategory.toLowerCase()} gaming fun with our handpicked collection of HTML5 games.`,
+      keywords: `${decodedCategory}, ${decodedCategory.toLowerCase()} games, free ${decodedCategory.toLowerCase()} games, online ${decodedCategory.toLowerCase()} games, HTML5 ${decodedCategory.toLowerCase()} games, browser games, free online games`
+    },
+    zh: {
+      title: `${decodedCategory}游戏 - 免费在线${decodedCategory}游戏合集`,
+      description: `发现最好的免费${decodedCategory}游戏！在浏览器中即时玩${decodedCategory}游戏 - 无需下载。享受我们精心挑选的HTML5游戏合集，畅玩数小时${decodedCategory}游戏乐趣。`,
+      keywords: `${decodedCategory}, ${decodedCategory}游戏, 免费${decodedCategory}游戏, 在线${decodedCategory}游戏, HTML5游戏, 浏览器游戏, 免费在线游戏`
+    }
+  }
+  
+  const t = translations[lang as keyof typeof translations] || translations.en
+  
   return {
-    page_title: `${decodedCategory} Games - Free Online Games`,
-    page_description: `Play free ${decodedCategory.toLowerCase()} games online. Enjoy our collection of ${decodedCategory.toLowerCase()} games with no downloads required.`,
-    page_keywords: `${decodedCategory}, games, online games, free games, browser games, ${decodedCategory.toLowerCase()} games`
+    page_title: t.title,
+    page_description: t.description,
+    page_keywords: t.keywords
   }
 }
 
@@ -82,11 +99,11 @@ export async function generateMetadata(
       seoData = extractedSEO
     } else {
       // 如果API没有返回有效SEO数据，使用默认数据
-      seoData = createDefaultSEO(category)
+      seoData = createDefaultSEO(category, lang)
     }
   } catch (error) {
     // API失败时使用默认数据
-    seoData = createDefaultSEO(category)
+    seoData = createDefaultSEO(category, lang)
   }
 
   const title = seoData.page_title || `${decodeURIComponent(category)} Games - Free Online Games`

@@ -47,19 +47,19 @@ export default async function CookiesPage({params}: {params: {lang: string}}) {
               className="inline-flex items-center text-primary hover:text-primary-hover font-black text-lg group bg-gray-900 rounded-full px-6 py-3 shadow-cartoon border-4 border-primary cartoon-shadow transform hover:scale-110 hover:rotate-2 transition-all jello"
             >
               <ChevronLeftIcon className="w-6 h-6 mr-2 transition-transform group-hover:-translate-x-1" />
-              Back to Home
+{t?.common?.back || "Back to Home"}
             </Link>
           </div>
 
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-6xl font-black text-white mb-4 pop-in">
-              Cookie <span className="gradient-text">Policy</span>
+              {t?.legal?.cookiePolicyTitle || "Cookie Policy"}
             </h1>
             <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto">
-              Learn about how we use cookies to improve your gaming experience
+              {t?.legal?.cookieDescription || "Learn about how we use cookies to improve your gaming experience"}
             </p>
             <div className="mt-4 text-sm text-white/60">
-              <p>Last updated: December 2024</p>
+              <p>{t?.legal?.lastUpdated || "Last updated: December 2024"}</p>
             </div>
           </div>
 
@@ -68,7 +68,7 @@ export default async function CookiesPage({params}: {params: {lang: string}}) {
             <div className="flex items-start space-x-4">
               <CookieIcon className="w-8 h-8 text-accent flex-shrink-0 mt-1" />
               <div>
-                <h2 className="text-xl font-black text-accent mb-2">What Are Cookies?</h2>
+                <h2 className="text-xl font-black text-accent mb-2">{t?.legal?.whatAreCookies || "What Are Cookies?"}</h2>
                 <p className="text-white/80 leading-relaxed">
                   Cookies are small text files stored on your device when you visit websites. They help websites remember 
                   your preferences, improve functionality, and provide analytics. At GameHub Central, we use cookies 
@@ -83,7 +83,7 @@ export default async function CookiesPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-primary transform hover:rotate-[0.5deg] transition-transform pop-in">
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">🍪</div>
-                <h2 className="text-2xl md:text-3xl font-black text-primary">Types of Cookies We Use</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-primary">{t?.legal?.cookieTypes || "Types of Cookies We Use"}</h2>
               </div>
               <div className="text-white/90 space-y-6 leading-relaxed">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -206,7 +206,7 @@ export default async function CookiesPage({params}: {params: {lang: string}}) {
             <div className="card cartoon-shadow border-4 border-accent transform hover:rotate-[0.5deg] transition-transform pop-in" style={{ animationDelay: "0.2s" }}>
               <div className="flex items-center mb-6">
                 <div className="text-4xl mr-4">⚙️</div>
-                <h2 className="text-2xl md:text-3xl font-black text-accent">How to Control Cookies</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-accent">{t?.legal?.manageCookies || "How to Control Cookies"}</h2>
               </div>
               <div className="text-white/90 space-y-6 leading-relaxed">
                 <p>

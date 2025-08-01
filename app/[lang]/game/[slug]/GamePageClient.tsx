@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect, useMemo } from "react"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { notFound } from "next/navigation"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
@@ -13,13 +13,18 @@ import { useGameDetails } from "@/hooks/useGameDetails"
 import { useGameHistory } from "@/hooks/useGameHistory"
 import { useGamePageTimer } from "@/hooks/useGamePageTimer"
 import { gameDetailsParser } from "@/lib/game-utils"
+import { useResponsive } from "@/shared/hooks/useResponsive"
+import { GameRouter } from "@/lib/router"
 
 interface GamePageClientProps {
   slug: string
 }
 
 export default function GamePageClient({ slug }: GamePageClientProps) {
-  const params = useParams()
+  const router = useRouter()
+
+  // 响应式屏幕检测
+  const { isSmallScreen } = useResponsive({ breakpoint: 1024 })
 
   // 游戏详情状态管理器
   const {
@@ -68,6 +73,19 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
     gameInfo: gameInfo,
     enabled: !!gameData && isEnabled // 只有在游戏数据加载完成且用户登录时才启用
   })
+
+  // 移动端自动跳转到play页面的逻辑
+  useEffect(() => {
+    if (isSmallScreen && gameData && typeof window !== 'undefined') {
+      const gameTitle = gameData.display_name || gameData.page_title || 'Game'
+      const gameUrl = gameData.iframe_src || gameData.url
+      
+      // 使用统一的路由工具跳转到play页面
+      if (gameUrl) {
+        GameRouter.toGamePlay(slug, gameUrl, gameTitle)
+      }
+    }
+  }, [isSmallScreen, gameData, slug])
 
   useEffect(() => {
     // 确保在页面加载时获取游戏详情
@@ -156,7 +174,7 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
         <Hero game={heroGameData} reviews={gameData.reviews} gameData={gameData} />
       )}
       
-      <NavigationArrow />
+      <NavigationArrow isHomePage={false} />
       
       {/* Game Information Section */}
      

@@ -9,6 +9,7 @@ export interface ExtendedGame extends Game {
 export interface GameCardProps {
   game: ExtendedGame
   className?: string
-  size?: 'small' | 'medium' | 'large' | 'horizontal-scroll'
+  size?: 'tiny' | 'small' | 'medium' | 'large' | 'horizontal-scroll'
   t?: any
+  isHomepage?: boolean  // 新增：用于区分是否在首页使用
 }

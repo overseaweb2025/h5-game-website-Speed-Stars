@@ -44,14 +44,6 @@ export default function Features({ t }: FeaturesProps = {}) {
       <div className="absolute top-10 right-10 text-6xl opacity-20 rotate-12">🎮</div>
       <div className="absolute bottom-10 left-10 text-8xl opacity-20 -rotate-12">🕹️</div>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-6">
-          <h2 className="text-white mb-4 font-black pop-in text-shadow-lg">
-            {t?.features?.amazingFeatures || "Amazing Features"}
-          </h2>
-          <p className="text-gray-200 max-w-2xl mx-auto font-medium">
-            {t?.features?.speedStarsDescription || "Speed Stars combines minimalistic yet beautiful visual design with satisfying physics-based movement"}
-          </p>
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {features.map((feature, index) => (

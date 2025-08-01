@@ -7,9 +7,10 @@ import { CategorySEO } from '@/app/api/types/Get/game'
 
 interface CategoryPageClientProps {
   category: string
+  t?: any
 }
 
-export default function CategoryPageClient({ category }: CategoryPageClientProps) {
+export default function CategoryPageClient({ category, t }: CategoryPageClientProps) {
   const decodedCategory = decodeURIComponent(category)
   const [seoData, setSeoData] = useState<CategorySEO | null>(null)
   
@@ -57,11 +58,15 @@ export default function CategoryPageClient({ category }: CategoryPageClientProps
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl font-black text-white mb-4">
-              {decodedCategory}
+              🎮 {decodedCategory} {t?.games?.games || "Games"}
             </h1>
-            <p className="text-gray-400 text-sm md:text-base">
-              {getPageDescription()}
+            <p className="text-gray-400 text-sm md:text-base mb-6">
+              {seoData?.page_description || `${t?.seo?.categoryGamesDescription?.replace('{category}', decodedCategory) || `Play free ${decodedCategory.toLowerCase()} games online. Enjoy our collection of ${decodedCategory.toLowerCase()} games with no downloads required.`}`}
             </p>
+            
+            <h2 className="text-2xl md:text-3xl font-black text-white mb-4">
+              🌟 {t?.games?.featuredGames || "Featured"} {decodedCategory} {t?.games?.games || "Games"}
+            </h2>
             
             {/* 开发环境显示SEO调试信息 */}
             {process.env.NODE_ENV === 'development' && (

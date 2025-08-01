@@ -29,21 +29,21 @@ const gameData = [
     id: 4,
     name: "racing-game",
     display_name: "Racing Game",
-    image: "https://via.placeholder.com/300x200/4F46E5/ffffff?text=Racing+Game",
+    image: "https://via.placeholder.com/300x300/4F46E5/ffffff?text=Racing+Game",
     tag: "Hot"
   },
   {
     id: 5,
     name: "puzzle-adventure",
     display_name: "Puzzle Adventure",
-    image: "https://via.placeholder.com/300x200/059669/ffffff?text=Puzzle+Game",
+    image: "https://via.placeholder.com/300x300/059669/ffffff?text=Puzzle+Game"
     tag: "New"
   },
   {
     id: 6,
     name: "action-hero", 
     display_name: "Action Hero",
-    image: "https://via.placeholder.com/300x200/DC2626/ffffff?text=Action+Hero",
+    image: "https://via.placeholder.com/300x300/DC2626/ffffff?text=Action+Hero"
     tag: "Updated"
   }
 ]
@@ -63,14 +63,14 @@ const SimpleGameCards = () => {
             className="group relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden hover:scale-105"
           >
             {/* Game Image */}
-            <div className="relative w-full h-48 overflow-hidden">
+            <div className="relative w-full aspect-square overflow-hidden">
               <img
                 src={game.image || '/placeholder-game.jpg'}
                 alt={game.display_name}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.src = `https://via.placeholder.com/300x200/6B7280/ffffff?text=${encodeURIComponent(game.display_name)}`;
+                  target.src = `https://via.placeholder.com/300x300/6B7280/ffffff?text=${encodeURIComponent(game.display_name)}`;
                 }}
               />
               

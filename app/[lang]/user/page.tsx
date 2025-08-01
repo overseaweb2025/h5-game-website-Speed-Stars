@@ -312,14 +312,24 @@ export default function UserPage() {
                     {historyEnabled && realGameHistory.length > 0 ? (
                       getRecentGames(10).map((game, index) => (
                         <div key={`${game.slug}-${game.visitedAt}`} className="flex items-center gap-3 bg-gray-600 rounded-lg p-3">
-                          <img
-                            src={game.image || '/placeholder-game.jpg'}
-                            alt={game.name}
-                            className="w-12 h-8 rounded object-cover"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = '/placeholder-game.jpg'
-                            }}
-                          />
+                          <div className="w-12 h-8 rounded flex-shrink-0">
+                            {game.image && game.image !== '' ? (
+                              <img
+                                src={game.image}
+                                alt={game.name}
+                                className="w-full h-full rounded object-cover"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.style.display = 'none';
+                                  const placeholder = target.nextElementSibling as HTMLElement;
+                                  if (placeholder) placeholder.style.display = 'flex';
+                                }}
+                              />
+                            ) : null}
+                            <div className={`w-full h-full rounded flex items-center justify-center ${game.image && game.image !== '' ? 'hidden' : 'flex'}`}>
+                              <div className="text-white text-2xl flex items-center justify-center">🎮</div>
+                            </div>
+                          </div>
                           <div className="flex-1 min-w-0">
                             <p className="text-white font-medium truncate">{game.name}</p>
                             <p className="text-gray-400 text-sm">
@@ -392,14 +402,24 @@ export default function UserPage() {
                 <div className="space-y-3">
                   {realGameHistory.map((game, index) => (
                     <div key={`${game.slug}-${game.visitedAt}`} className="flex items-center gap-4 bg-gray-700 rounded-xl p-4 hover:bg-gray-600 transition-colors">
-                      <img
-                        src={game.image || '/placeholder-game.jpg'}
-                        alt={game.name}
-                        className="w-20 h-14 rounded-lg object-cover"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = '/placeholder-game.jpg'
-                        }}
-                      />
+                      <div className="w-20 h-14 rounded-lg flex-shrink-0">
+                        {game.image && game.image !== '' ? (
+                          <img
+                            src={game.image}
+                            alt={game.name}
+                            className="w-full h-full rounded-lg object-cover"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = 'none';
+                              const placeholder = target.nextElementSibling as HTMLElement;
+                              if (placeholder) placeholder.style.display = 'flex';
+                            }}
+                          />
+                        ) : null}
+                     <div className={`w-full h-full rounded-lg flex items-center justify-center ${game.image && game.image !== '' ? 'hidden' : 'flex'}`}>
+                         <div className="text-white text-3xl flex items-center justify-center">🎮</div>
+                     </div>
+                      </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-white font-semibold text-lg">{game.name}</h3>
                         <div className="flex flex-wrap gap-4 mt-1 text-sm text-gray-400">

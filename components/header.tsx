@@ -10,6 +10,8 @@ import MobileSidebar from "./mobile-sidebar"
 import LoginModal from "./auth/LoginModal"
 import UserDropdown from "./auth/UserDropdown"
 import LanguageSelector from "./LanguageSelector"
+import { SearchBox } from "./search"
+import { useGameData } from "@/hooks/useGameData"
 
 interface HeaderProps {
   onSidebarToggle?: () => void
@@ -23,6 +25,25 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t}:
   const [hasShownLoginSuccess, setHasShownLoginSuccess] = useState(false)
   const { data: session, status } = useSession()
   const pathname = usePathname()
+  
+  // 获取游戏数据用于搜索
+  const { allGames } = useGameData()
+
+  // Get current language from pathname
+  const getCurrentLang = () => {
+    const pathSegments = pathname.split('/')
+    const lang = pathSegments[1]
+    return (lang === 'en' || lang === 'zh') ? lang : 'en'
+  }
+
+  // Create localized link
+  const createLocalizedLink = (path: string) => {
+    const currentLang = getCurrentLang()
+    if (path === '/') {
+      return `/${currentLang}`
+    }
+    return `/${currentLang}${path}`
+  }
 
   // Helper function to check if link is active
   const isActiveLink = (href: string) => {
@@ -143,7 +164,7 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t}:
               )}
               
               {/* Brand */}
-              <Link href="/" className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0 mr-3 sm:mr-6">
+              <Link href={createLocalizedLink('/')} className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0 mr-3 sm:mr-6">
               <GameController className="h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 text-purple-400 drop-shadow-lg swing flex-shrink-0" />
                 <span className="text-sm sm:text-lg lg:text-xl xl:text-2xl font-black text-white whitespace-nowrap" style={{fontFamily: 'inherit'}}>
                   <span className="hidden sm:inline">{t?.header?.gameHubCentral || "GameHub Central"}</span>
@@ -153,29 +174,41 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t}:
             </div>
 
             {/* Desktop Navigation - Adaptive */}
-            <nav className="hidden lg:flex items-center space-x-2 xl:space-x-4 flex-1 justify-center max-w-3xl mx-2">
+            <div className="hidden lg:flex items-center flex-1 justify-center max-w-4xl mx-2 space-x-4">
               
-              {/* Always visible core items */}
-              <Link
-                href="/"
-                className={getLinkClasses("/")}
-              >
-                {t?.header?.home || "Home"}
-              </Link>
-              <Link
-                href="/games"
-                className={getLinkClasses("/games")}
-              >
-                {t?.header?.games || "Games"}
-              </Link>
-              <Link
-                href="/blog"
-                className={getLinkClasses("/blog")}
-              >
-                {t?.header?.blog || "Blog"}
-              </Link>
+              {/* Navigation Links */}
+              <nav className="flex items-center space-x-2 xl:space-x-4">
+                <Link
+                  href={createLocalizedLink('/')}
+                  className={getLinkClasses("/")}
+                >
+                  {t?.header?.home || "Home"}
+                </Link>
+                <Link
+                  href={createLocalizedLink('/games')}
+                  className={getLinkClasses("/games")}
+                >
+                  {t?.header?.games || "Games"}
+                </Link>
+                <Link
+                  href={createLocalizedLink('/blog')}
+                  className={getLinkClasses("/blog")}
+                >
+                  {t?.header?.blog || "Blog"}
+                </Link>
+              </nav>
               
-            </nav>
+              {/* Search Box */}
+              <div className="flex-1 max-w-md">
+                <SearchBox
+                  games={allGames}
+                  placeholder={t?.search?.placeholder || "Search games..."}
+                  variant="compact"
+                  t={t}
+                />
+              </div>
+              
+            </div>
 
             {/* Right Side - Language + Auth + Mobile Menu */}
             <div className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4 flex-shrink-0">
@@ -234,7 +267,7 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t}:
 
               {/* Mobile Menu Button */}
               <button
-                className="lg:hidden text-white bg-gray-800/50 p-2 rounded-full border-2 border-gray-600/50 hover:bg-gray-700/70 transition-all flex-shrink-0 touch-target"
+                className="lg:hidden text-white bg-gray-800/50 p-2 rounded-full border-2 border-gray-600/50 hover:bg-gray-700/70 transition-all flex-shrink-0 touch-target flex items-center justify-center"
                 onClick={() => setIsSidebarOpen(true)}
                 aria-label={t?.header?.openMenu || "Open menu"}
               >

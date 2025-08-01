@@ -15,6 +15,8 @@ export async function generateMetadata({params}: {params: Promise<{lang: string}
     // Fetch home game data for SEO metadata
     const homeData = await fetchHomeGameData()
     const seoData = extractSEOFromHomeData(homeData)
+
+    console.log('homedata',homeData)
     return {
       title: homeData?.data.title,
       description: homeData?.data.description,
@@ -48,9 +50,9 @@ export default async function Home({params}: {params: Promise<{lang: string}>}) 
     <main>
       <Header t={t} />
       <Hero t={t} />
-      <HomepageTestimonials  />
+      <HomepageTestimonials />
       <FAQ t={t} />
-      <NavigationArrow/>
+      <NavigationArrow isHomePage={true} />
       <Footer t={t} />
     </main>
   )

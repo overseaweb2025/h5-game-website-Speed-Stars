@@ -39,14 +39,14 @@ const FeaturedGameSection = ({ games }: { games: ExtendedGame[] }) => {
   const shouldShowControls = showControls || touched
 
   return (
-    <div className="mb-8">
-      <h3 className="text-2xl md:text-3xl font-black text-white mb-6 pop-in">
-        🎮 Featured Games
-      </h3>
+    <div className="mb-4">
+      <h2 className="text-2xl md:text-3xl font-black text-white mb-4 pop-in">
+        🌟 Featured Games
+      </h2>
       
-      {/* 整个行区域 - 限制在屏幕宽度内 */}
+      {/* 整个行区域 - 严格限制在屏幕宽度内 */}
       <div 
-        className="relative w-full bg-gradient-to-r from-gray-800/30 to-gray-900/30 rounded-2xl overflow-hidden backdrop-blur-sm"
+        className="relative w-full max-w-full bg-gradient-to-r from-gray-800/30 to-gray-900/30 rounded-2xl overflow-hidden backdrop-blur-sm"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onTouchStart={handleTouchStart}
@@ -75,22 +75,23 @@ const FeaturedGameSection = ({ games }: { games: ExtendedGame[] }) => {
           </svg>
         </button>
         
-        {/* 内容区域 - 限制在容器内滚动 */}
+        {/* 内容区域 - 严格限制在容器内滚动 */}
         <div 
           ref={scrollRef} 
           className="overflow-x-auto scrollbar-hide"
           style={{ width: '100%', maxWidth: '100%' }}
         >
-          <div className="flex gap-6 p-6" style={{ width: 'max-content' }}>
+          <div className="flex gap-2 p-2 sm:gap-4 sm:p-4 md:gap-6 md:p-6" style={{ width: 'max-content', minWidth: '100%' }}>
             <div className="flex-shrink-0">
-              <div className="grid grid-cols-3 gap-6 min-w-[800px] sm:min-w-[900px] lg:w-[1000px]">
-                {/* 第一个游戏卡片 */}
+              {/* Featured Games 布局：移动端gap-2，桌面端gap-6 */}
+              <div className="grid grid-cols-2 gap-2 sm:gap-4 md:gap-6">
+                {/* 第一个格子：大卡片 */}
                 <div className="col-span-1">
                   <GameCard game={games[0]} className="shadow-xl hover:shadow-2xl" size="large" />
                 </div>
-                {/* 其他游戏卡片 - 2x2网格 */}
+                {/* 第二个格子：包含四个小卡片的大div */}
                 <div className="col-span-1">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-1 sm:gap-2 md:gap-3">
                     {games.slice(1, 5).map((game, index) => (
                       <GameCard key={game.id} game={game} className="shadow-lg hover:shadow-xl" size="small" />
                     ))}
@@ -138,14 +139,14 @@ const GameRowSection = ({ title, games, sectionIndex }: { title: string, games: 
   const shouldShowControls = showControls || touched
 
   return (
-    <div className="mb-8">
-      <h3 className="text-2xl md:text-3xl font-black text-white mb-6 pop-in">
+    <div className="mb-4">
+      <h2 className="text-2xl md:text-3xl font-black text-white mb-4 pop-in">
         {title}
-      </h3>
+      </h2>
       
-      {/* 整个行区域 - 限制在屏幕宽度内 */}
+      {/* 整个行区域 - 严格限制在屏幕宽度内 */}
       <div 
-        className="relative w-full min-h-[200px] bg-gradient-to-r from-gray-800/20 to-gray-900/20 rounded-xl overflow-hidden backdrop-blur-sm"
+        className="relative w-full max-w-full min-h-[200px] bg-gradient-to-r from-gray-800/20 to-gray-900/20 rounded-xl overflow-hidden backdrop-blur-sm"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onTouchStart={handleTouchStart}
@@ -174,18 +175,18 @@ const GameRowSection = ({ title, games, sectionIndex }: { title: string, games: 
           </svg>
         </button>
         
-        {/* 内容区域 - 限制在容器内滚动 */}
+        {/* 内容区域 - 严格限制在容器内滚动 */}
         <div 
           ref={scrollRef} 
           className="overflow-x-auto scrollbar-hide"
           style={{ width: '100%', maxWidth: '100%' }}
         >
-          <div className="flex gap-5 p-5" style={{ width: 'max-content' }}>
+          <div className="flex gap-4 p-4 sm:gap-6 sm:p-6" style={{ width: 'max-content', minWidth: '100%' }}>
             {games.map((game, index) => (
               <div key={`${sectionIndex}-${game.id}-${index}`} className="flex-shrink-0">
                 <GameCard 
                   game={game}
-                  className="w-[200px] sm:w-[220px] md:w-[240px] h-[133px] sm:h-[146px] md:h-[150px] min-w-[200px] shadow-lg hover:shadow-xl"
+                  className="flex-shrink-0 shadow-lg hover:shadow-xl"
                   size="horizontal-scroll"
                 />
               </div>
@@ -197,14 +198,8 @@ const GameRowSection = ({ title, games, sectionIndex }: { title: string, games: 
   )
 }
 
-interface GamesShowProps {
-  sidebarVisible: boolean
-  isSmallScreen: boolean
-  isCollapsed: boolean
-  isHovered: boolean
-}
-
-const GamesShow = ({ sidebarVisible, isSmallScreen, isCollapsed, isHovered }: GamesShowProps) => {
+// GamesShow不再直接接收侧边栏状态，由Layout统一管理
+const GamesShow = () => {
   const { 
     data: gameCategories, 
     loading, 
@@ -231,9 +226,19 @@ const GamesShow = ({ sidebarVisible, isSmallScreen, isCollapsed, isHovered }: Ga
   const featuredGames = allGames.length > 0 ? addRandomTags(allGames).slice(0, 5) : []
   
   return (
-    <div className="w-full overflow-hidden bg-gray-800 backdrop-blur-sm">
-      {/* Main game showcase area - 限制宽度不超过容器 */}
-      <div className="w-full overflow-hidden">
+    <div className="w-full max-w-full overflow-hidden bg-gray-800 backdrop-blur-sm">
+      {/* Page Header */}
+      <div className="text-center py-6 px-4 sm:py-8">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-4 pop-in">
+          🎮 <span className="gradient-text">Game Collection</span>
+        </h1>
+        <p className="text-lg sm:text-xl md:text-2xl text-white/80 max-w-3xl mx-auto px-4">
+          Discover amazing free HTML5 games for endless entertainment
+        </p>
+      </div>
+
+      {/* Main game showcase area - 严格限制宽度不超过容器 */}
+      <div className="w-full max-w-full overflow-hidden px-2 sm:px-4">
         {/* 调试信息栏 - 只在开发环境显示 */}
         {process.env.NODE_ENV === 'development' && (
           <div className="bg-gray-800 text-white text-sm p-3 mb-4 rounded-lg">

@@ -6,7 +6,7 @@ interface SpeedStarsSectionProps {
 
 export default function SpeedStarsSection({ t }: SpeedStarsSectionProps = {}) {
   return (
-    <section className="bg-background min-h-screen py-12">
+    <section id="about" className="bg-background min-h-screen py-12">
       <div className="container mx-auto px-4">
         <div className="text-center mb-6">
           <h2 className="text-text mb-2 text-5xl font-black leading-none">

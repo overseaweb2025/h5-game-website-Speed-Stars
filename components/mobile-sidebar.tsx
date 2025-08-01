@@ -7,6 +7,8 @@ import { X, Home, GamepadIcon as GameController, BookOpen, Star, HelpCircle, Mes
 import { useSession, signIn, signOut } from "next-auth/react"
 import toast from "react-hot-toast"
 import LanguageSelector from "./LanguageSelector"
+import { SearchBox } from "./search"
+import { useGameData } from "@/hooks/useGameData"
 
 interface MobileSidebarProps {
   isOpen: boolean
@@ -22,6 +24,25 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
   const [isAnimating, setIsAnimating] = useState(false)
   const [currentView, setCurrentView] = useState<SidebarView>('main')
   const pathname = usePathname()
+  
+  // 获取游戏数据用于搜索
+  const { allGames } = useGameData()
+
+  // Get current language from pathname
+  const getCurrentLang = () => {
+    const pathSegments = pathname.split('/')
+    const lang = pathSegments[1]
+    return (lang === 'en' || lang === 'zh') ? lang : 'en'
+  }
+
+  // Create localized link
+  const createLocalizedLink = (path: string) => {
+    const currentLang = getCurrentLang()
+    if (path === '/') {
+      return `/${currentLang}`
+    }
+    return `/${currentLang}${path}`
+  }
 
   // Helper function to check if a path is active
   const isActivePath = (path: string) => {
@@ -61,13 +82,13 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
       icon: Home, 
       label: t?.mobileSidebar?.home || t?.header?.home || "Home", 
       path: "/",
-      action: () => { window.location.href = '/'; onClose() }
+      action: () => { window.location.href = createLocalizedLink('/'); onClose() }
     },
     { 
       icon: GameController, 
       label: t?.navigation?.allGames || t?.mobileSidebar?.allGames || "All Games", 
       path: "/games",
-      action: () => { window.location.href = '/games'; onClose() }
+      action: () => { window.location.href = createLocalizedLink('/games'); onClose() }
     },
     { 
       icon: Zap, 
@@ -79,7 +100,7 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
       icon: BookOpen, 
       label: t?.navigation?.blog || t?.mobileSidebar?.blog || "Blog", 
       path: "/blog",
-      action: () => { window.location.href = '/blog'; onClose() }
+      action: () => { window.location.href = createLocalizedLink('/blog'); onClose() }
     },
     { 
       icon: Globe, 
@@ -111,7 +132,7 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
             currentView === 'main' ? 'translate-x-0' : '-translate-x-full'
           }`}>
             {/* Header */}
-            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-accent via-primary to-secondary border-b-4 border-gray-700 flex-shrink-0">
+            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-accent via-primary to-secondary border-b-4 border-gray-700 flex-shrink-0" style={{ height: '80px' }}>
               <div className="flex items-center space-x-3">
                 <GameController className="h-8 w-8 text-white drop-shadow-lg flex-shrink-0" />
                 <span className="text-xl font-black text-white text-stroke">
@@ -127,6 +148,17 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
               </button>
             </div>
 
+            {/* Search Section */}
+            <div className="p-4 border-b-2 border-gray-700/50 flex-shrink-0">
+              <SearchBox
+                games={allGames}
+                placeholder={t?.search?.placeholder || "Search games..."}
+                variant="default"
+                t={t}
+                onResultClick={onClose} // 搜索结果点击后关闭侧边栏
+              />
+            </div>
+
             {/* User Section */}
             <div className="p-6 border-b-2 border-gray-700/50 flex-shrink-0">
               {status === "loading" ? (
@@ -136,14 +168,14 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
                 </div>
               ) : session ? (
                 <div className="space-y-4">
-                  <Link href="/user" onClick={onClose}>
+                  <Link href={createLocalizedLink('/user')} onClick={onClose}>
                     <div className="flex items-center space-x-3 bg-gradient-to-r from-gray-700/50 to-gray-800/50 rounded-xl px-4 py-3 border-2 border-gray-600/50 hover:bg-gradient-to-r hover:from-gray-600/50 hover:to-gray-700/50 transition-all cursor-pointer">
                       <UserCircleIcon className="w-10 h-10 text-accent-3 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
-                        <p className="text-white font-bold text-base truncate">
+                        <p className="text-white font-bold text-sm truncate">
                           {session.user?.name || (t?.mobileSidebar?.user || t?.login?.gamer || "User")}
                         </p>
-                        <p className="text-gray-300 text-sm truncate">
+                        <p className="text-gray-300 text-xs truncate">
                           {session.user?.email}
                         </p>
                       </div>
@@ -164,7 +196,7 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
                         }
                       })
                     }}
-                    className="w-full bg-accent-2 hover:bg-accent text-white font-bold py-3 px-4 rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center touch-target"
+                    className="w-full bg-accent-2 hover:bg-accent text-white font-bold py-2.5 px-4 rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center touch-target"
                   >
                     <LogOutIcon className="w-5 h-5 mr-2 flex-shrink-0" />
                     <span>{t?.login?.signOut || "Sign Out"}</span>
@@ -176,7 +208,7 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
                     signIn()
                     onClose()
                   }}
-                  className="w-full bg-accent-3 hover:bg-accent-4 text-white font-bold py-4 px-4 rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center touch-target"
+                  className="w-full bg-accent-3 hover:bg-accent-4 text-white font-bold py-3 px-4 rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center touch-target"
                 >
                   <LogInIcon className="w-5 h-5 mr-2 flex-shrink-0" />
                   <span>{t?.login?.signInToGameHub || t?.mobileSidebar?.signInToGameHub || "Sign In to GameHub"}</span>
@@ -186,25 +218,25 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
 
             {/* Navigation Menu */}
             <div className="flex-1 overflow-y-auto">
-              <nav className="px-6 py-6 space-y-3">
+              <nav className="px-6 py-4 space-y-2">
                 {menuItems.map((item, index) => {
                   const isActive = item.path && isActivePath(item.path)
                   return (
                     <button
                       key={index}
                       onClick={item.action}
-                      className={`w-full flex items-center space-x-4 p-4 text-left rounded-xl transition-all duration-200 group hover:scale-[1.02] hover:shadow-md touch-target transform ${
+                      className={`w-full flex items-center space-x-3 p-3 text-left rounded-xl transition-all duration-200 group hover:scale-[1.02] hover:shadow-md touch-target transform ${
                         isActive 
                           ? 'bg-accent/20 border-2 border-accent/30' 
                           : 'hover:bg-accent/10 border-2 border-transparent'
                       }`}
                     >
-                      <item.icon className={`w-6 h-6 transition-colors flex-shrink-0 ${
+                      <item.icon className={`w-5 h-5 transition-colors flex-shrink-0 ${
                         isActive 
                           ? 'text-accent' 
                           : 'text-accent-3 group-hover:text-primary'
                       }`} />
-                      <span className={`font-semibold transition-colors text-base ${
+                      <span className={`font-semibold transition-colors text-sm ${
                         isActive 
                           ? 'text-accent font-bold' 
                           : 'text-white group-hover:text-primary'
@@ -235,7 +267,7 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
             currentView === 'language' ? 'translate-x-0' : 'translate-x-full'
           }`}>
             {/* Language Header */}
-            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-accent via-primary to-secondary border-b-4 border-gray-700 flex-shrink-0">
+            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-accent via-primary to-secondary border-b-4 border-gray-700 flex-shrink-0" style={{ height: '80px' }}>
               <div className="flex items-center space-x-3">
                 <button
                   onClick={switchToMainView}
@@ -310,7 +342,7 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
         }}
       >
         {/* Desktop version content (keep existing design for desktop) */}
-        <div className="flex items-center justify-between p-6 bg-gradient-to-r from-accent via-primary to-secondary border-b-4 border-gray-700">
+        <div className="flex items-center justify-between p-6 bg-gradient-to-r from-accent via-primary to-secondary border-b-4 border-gray-700" style={{ height: '80px' }}>
           <div className="flex items-center space-x-3">
             <GameController className="h-8 w-8 text-white drop-shadow-lg" />
             <span className="text-xl font-black text-white text-stroke">GameHub</span>
@@ -324,15 +356,15 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
         </div>
         
         <div className="flex-1 overflow-y-auto p-4">
-          <nav className="space-y-2">
+          <nav className="space-y-1.5">
             {menuItems.slice(0, -1).map((item, index) => ( // Exclude language item for desktop
               <button
                 key={index}
                 onClick={item.action}
-                className="w-full flex items-center space-x-3 p-3 text-left rounded-xl hover:bg-accent/10 transition-all"
+                className="w-full flex items-center space-x-2.5 p-2.5 text-left rounded-xl hover:bg-accent/10 transition-all"
               >
-                <item.icon className="w-5 h-5 text-accent-3" />
-                <span className="text-white font-medium">{item.label}</span>
+                <item.icon className="w-4 h-4 text-accent-3" />
+                <span className="text-white font-medium text-sm">{item.label}</span>
               </button>
             ))}
           </nav>

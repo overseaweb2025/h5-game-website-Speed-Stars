@@ -4,7 +4,11 @@ import { useState, useEffect, useRef } from "react"
 import { ChevronLeft, ChevronUp } from "lucide-react"
 import Link from "next/link"
 
-export default function NavigationArrow() {
+interface NavigationArrowProps {
+  isHomePage?: boolean;
+}
+
+export default function NavigationArrow({ isHomePage = true }: NavigationArrowProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [drawerHeight, setDrawerHeight] = useState(40) // percentage
   const [isDragging, setIsDragging] = useState(false)
@@ -176,31 +180,54 @@ export default function NavigationArrow() {
         }}>
           <div className="px-4 py-3 whitespace-nowrap">
             <div className="space-y-2">
-              <Link 
-                href="/games"
-                onClick={() => setIsOpen(false)}
-                className="block w-full px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 hover:text-gray-100 transition-colors rounded text-left"
-                style={{fontFamily: 'inherit'}}
-              >
-                All Games
-              </Link>
-              
-              <button
-                onClick={() => scrollToSection("explore-games")}
-                className="block w-full px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 hover:text-gray-100 transition-colors rounded text-left"
-                style={{fontFamily: 'inherit'}}
-              >
-                Hot Games
-              </button>
-              
-              <Link 
-                href="/blog"
-                onClick={() => setIsOpen(false)}
-                className="block w-full px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 hover:text-gray-100 transition-colors rounded text-left"
-                style={{fontFamily: 'inherit'}}
-              >
-                Blog
-              </Link>
+              {isHomePage ? (
+                <>
+                  <Link
+                    href="#about"
+                    onClick={() => setIsOpen(false)}
+                    className="block w-full px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 hover:text-gray-100 transition-colors rounded text-left"
+                    style={{fontFamily: 'inherit'}}
+                  >
+                    About
+                  </Link>
+                  
+                  <Link
+                    href="#gameplay"
+                    onClick={() => setIsOpen(false)}
+                    className="block w-full px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 hover:text-gray-100 transition-colors rounded text-left"
+                    style={{fontFamily: 'inherit'}}
+                  >
+                    Gameplay
+                  </Link>
+                  
+                  <Link
+                    href="#what-players-say"
+                    onClick={() => setIsOpen(false)}
+                    className="block w-full px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 hover:text-gray-100 transition-colors rounded text-left"
+                    style={{fontFamily: 'inherit'}}
+                  >
+                    What Players Say
+                  </Link>
+                  
+                  <Link
+                    href="#faq"
+                    onClick={() => setIsOpen(false)}
+                    className="block w-full px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 hover:text-gray-100 transition-colors rounded text-left"
+                    style={{fontFamily: 'inherit'}}
+                  >
+                    FAQ
+                  </Link>
+                </>
+              ) : (
+                <Link
+                  href="#what-players-say"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 hover:text-gray-100 transition-colors rounded text-left"
+                  style={{fontFamily: 'inherit'}}
+                >
+                  What Players Say
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -252,31 +279,54 @@ export default function NavigationArrow() {
             {/* Content */}
             <div className="px-6 py-4 h-full overflow-y-auto">
               <div className="space-y-4">
-                <Link 
-                  href="/games"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-between w-full p-4 text-lg font-semibold text-white hover:bg-gray-700 transition-colors rounded-lg"
-                >
-                  <span>All Games</span>
-                  <ChevronLeft className="w-5 h-5 rotate-180 text-gray-400" />
-                </Link>
-                
-                <button
-                  onClick={() => scrollToSection("explore-games")}
-                  className="flex items-center justify-between w-full p-4 text-lg font-semibold text-white hover:bg-gray-700 transition-colors rounded-lg text-left"
-                >
-                  <span>Hot Games</span>
-                  <ChevronLeft className="w-5 h-5 rotate-180 text-gray-400" />
-                </button>
-                
-                <Link 
-                  href="/blog"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-between w-full p-4 text-lg font-semibold text-white hover:bg-gray-700 transition-colors rounded-lg"
-                >
-                  <span>Blog</span>
-                  <ChevronLeft className="w-5 h-5 rotate-180 text-gray-400" />
-                </Link>
+                {isHomePage ? (
+                  <>
+                    <Link
+                      href="#about"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-between w-full p-4 text-lg font-semibold text-white hover:bg-gray-700 transition-colors rounded-lg"
+                    >
+                      <span>About</span>
+                      <ChevronLeft className="w-5 h-5 rotate-180 text-gray-400" />
+                    </Link>
+                    
+                    <Link
+                      href="#gameplay"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-between w-full p-4 text-lg font-semibold text-white hover:bg-gray-700 transition-colors rounded-lg"
+                    >
+                      <span>Gameplay</span>
+                      <ChevronLeft className="w-5 h-5 rotate-180 text-gray-400" />
+                    </Link>
+                    
+                    <Link
+                      href="#what-players-say"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-between w-full p-4 text-lg font-semibold text-white hover:bg-gray-700 transition-colors rounded-lg"
+                    >
+                      <span>What Players Say</span>
+                      <ChevronLeft className="w-5 h-5 rotate-180 text-gray-400" />
+                    </Link>
+                    
+                    <Link
+                      href="#faq"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-between w-full p-4 text-lg font-semibold text-white hover:bg-gray-700 transition-colors rounded-lg"
+                    >
+                      <span>FAQ</span>
+                      <ChevronLeft className="w-5 h-5 rotate-180 text-gray-400" />
+                    </Link>
+                  </>
+                ) : (
+                  <Link
+                    href="#what-players-say"
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-between w-full p-4 text-lg font-semibold text-white hover:bg-gray-700 transition-colors rounded-lg"
+                  >
+                    <span>What Players Say</span>
+                    <ChevronLeft className="w-5 h-5 rotate-180 text-gray-400" />
+                  </Link>
+                )}
               </div>
             </div>
           </div>

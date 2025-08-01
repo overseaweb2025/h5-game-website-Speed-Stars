@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import Saber from "@/components/games/Saber"
@@ -22,10 +22,13 @@ export default function GamesLayoutClient({
     initialCollapsed: false,
     onScreenSizeChange: (isSmall, wasSmall) => {
       if (isSmall && !wasSmall) {
+        // 切换到移动端：显示Saber但设置为图标模式
         setIsCollapsed(true)
         setSidebarVisible(true)
       } else if (!isSmall && wasSmall) {
+        // 切换到桌面端：显示Saber且展开
         setSidebarVisible(true)
+        setIsCollapsed(false)
       }
     }
   })
@@ -45,6 +48,14 @@ export default function GamesLayoutClient({
     setIsCollapsed(collapsed)
     setIsHovered(hovered)
   }, [])
+  
+  // 初始化移动端状态 - 显示但为图标模式
+  useEffect(() => {
+    if (isSmallScreen) {
+      setSidebarVisible(true)  // 移动端显示sidebar
+      setIsCollapsed(true)     // 但设置为图标模式
+    }
+  }, [isSmallScreen])
 
   return (
     <main className="bg-gray-900 min-h-screen">
