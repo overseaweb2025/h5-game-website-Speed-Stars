@@ -150,9 +150,9 @@ export default function GamePlayPage() {
                 className="border-none rounded-lg shadow-2xl"
                 allowFullScreen
                 style={{
-                  width: 'calc(100vw - 64px)', // 固定宽度，左右各留32px边距
+                  width: 'calc(100vw - 64px + 300px)', // 固定宽度，左右各留32px边距，增加300px
                   height: 'calc(100vh - 128px)', // 固定高度，上下留足够边距
-                  maxWidth: '1200px', // 最大宽度限制
+                  maxWidth: '1500px', // 最大宽度限制，从1200px增加到1500px
                   maxHeight: '800px', // 最大高度限制
                   minWidth: '320px',
                   minHeight: '240px',

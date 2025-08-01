@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Home, Search } from "lucide-react"
 import { heroData } from "@/data/home/hero-data"
 import { useGamePlayTracker } from "@/hooks/useGamePlayTracker"
@@ -48,6 +49,7 @@ const convertToExtendedGame = (apiGame: APIGame): any => ({
 })
 
 export default function Hero({ game, title, description, reviews, gameData, t }: HeroProps) {
+  const router = useRouter()
   const [iframeHeight, setIframeHeight] = useState("600px")
   const [randomGames, setRandomGames] = useState<APIGame[]>([])
   const [speedStarsReviews, setSpeedStarsReviews] = useState<reviews_comment[]>([])
@@ -112,14 +114,14 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
       let containerWidth
       
       if (width >= 1024) {
-        // Desktop: use game frame width within the 1080px container
-        containerWidth = 1080 - 48 // subtract padding
+        // Desktop: use game frame width within the expanded container (1080 * 1.125 = 1215px)
+        containerWidth = 1215 - 48 + 300 // subtract padding and add 300px
       } else if (width >= 640) {
         // Tablet: use available width minus padding
-        containerWidth = Math.min(width - 64, 1080 - 48)
+        containerWidth = Math.min(width - 64, 1215 - 48 + 300)
       } else {
         // Mobile: use available width minus minimal padding
-        containerWidth = Math.min(width - 16, 1080 - 48)
+        containerWidth = Math.min(width - 16, 1215 - 48 + 300)
       }
       
       // 16:10 aspect ratio for better rectangular game display (more suitable for most games)
@@ -166,7 +168,7 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
             {/* Breadcrumbs Navigation - Above title */}
             {gameData && gameData.breadcrumbs && gameData.breadcrumbs.length > 0 && (
               <div className="flex justify-center mb-4">
-                <div style={{ width: "1494px", maxWidth: "calc(100vw - 32px)" }}>
+                <div className="max-w-[1494px] w-full px-4">
                   <nav aria-label="Breadcrumb">
                     <div className="flex items-center space-x-1 text-sm">
                       {/* Games link */}
@@ -227,7 +229,7 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
             </h1>
 
             {/* Game container with side panels - Desktop layout */}
-            <div className="hidden lg:flex justify-center items-start gap-6 mb-6 mx-auto" style={{ width: "1680px", maxWidth: "calc(100vw - 32px)" }}>
+            <div className="hidden lg:flex justify-center items-start gap-6 mb-6 mx-auto max-w-[1980px] w-full px-4">
               
               {/* Left side panel - Independent */}
               <div 
@@ -266,8 +268,7 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
 
               {/* Main center container - Contains game frame, bottom panel, and all other content */}
               <div 
-                className="flex-shrink-0 p-6"
-                style={{ width: "1466px" }}
+                className="flex-1 min-w-0 p-6 max-w-[1650px] mx-auto"
               >
                 {/* Game frame - Optimized for rectangular game display */}
                 <div
@@ -443,7 +444,7 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
                 }}
               >
                 <div className="p-3">
-                  <h3 className="text-lg font-bold text-white mb-3 text-center">Features</h3>
+                  <h3 className="text-lg font-bold text-white mb-3 text-center"></h3>
                   <div className="grid grid-cols-1 gap-4">
                     {randomGames.length > 0 ? (
                       randomGames.slice(0, 8).map((randomGame, index) => {
@@ -492,9 +493,9 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
             </div>
 
             {/* Mobile/Tablet layout - 统一网格布局 */}
-            <div className="lg:hidden mb-6" style={{ margin: '0 30px' }}>
+            <div className="lg:hidden mb-6 px-4 mx-auto max-w-screen-xl">
               {/* 第一行：固定定位的功能卡片 + 游戏标题卡片 */}
-              <div className="relative mb-5" style={{ width: 'calc(100% - 10px)' }}>
+              <div className="relative mb-5 w-full">
                 <div className="grid grid-cols-3 gap-6">
                   {/* 固定定位的功能卡片 */}
                   <div className="col-span-1 relative">
@@ -510,10 +511,16 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
                         
                         {/* 第二行：2个div，无间隔，中间有分隔线 */}
                         <div className="row-span-1 grid grid-cols-2 gap-0">
-                          <div className="bg-white flex items-center justify-center border-r border-gray-200">
+                          <div 
+                            className="bg-white flex items-center justify-center border-r border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                            onClick={() => router.push('/')}
+                          >
                             <Home className="w-4 h-4 text-blue-500" />
                           </div>
-                          <div className="bg-white flex items-center justify-center">
+                          <div 
+                            className="bg-white flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                            onClick={() => router.push('/search')}
+                          >
                             <Search className="w-4 h-4 text-blue-500" />
                           </div>
                         </div>

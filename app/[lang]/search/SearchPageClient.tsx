@@ -1,8 +1,8 @@
 "use client"
 
-import React, { useState, useEffect, useCallback } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Search, Sparkles, TrendingUp, Clock, Filter } from "lucide-react"
+import React, { useState } from "react"
+import { useRouter } from "next/navigation"
+import { Search, Sparkles, TrendingUp, Filter } from "lucide-react"
 import { SearchBox, SearchResults } from "@/components/search"
 import { useGameData } from "@/hooks/useGameData"
 import { SearchEngine, SearchResult } from "@/components/search/SearchUtils"
@@ -16,14 +16,12 @@ export default function SearchPageClient({ initialQuery = "", t }: SearchPageCli
   const [query, setQuery] = useState(initialQuery)
   const [searchSuggestions, setSearchSuggestions] = useState<string[]>([])
   const [results, setResults] = useState<SearchResult[]>([])
-  const [isLoading, setIsLoading] = useState(false)
   
   const router = useRouter()
-  const searchParams = useSearchParams()
   const { allGames } = useGameData()
 
   // 获取搜索建议
-  const getSearchSuggestions = useCallback((searchQuery: string) => {
+  const getSearchSuggestions = (searchQuery: string) => {
     if (!searchQuery.trim() || allGames.length === 0) {
       setSearchSuggestions([])
       return
@@ -33,12 +31,9 @@ export default function SearchPageClient({ initialQuery = "", t }: SearchPageCli
     const matchedGames = new Set<string>()
 
     allGames.forEach(game => {
-      // 1. 通过游戏标题进行模糊匹配
       if (game.display_name.toLowerCase().includes(query)) {
         matchedGames.add(game.display_name)
       }
-      
-      // 2. 通过游戏分类进行匹配
       if (game.category && game.category.toLowerCase().includes(query)) {
         matchedGames.add(game.display_name)
       }
@@ -46,7 +41,7 @@ export default function SearchPageClient({ initialQuery = "", t }: SearchPageCli
 
     const suggestions = Array.from(matchedGames).slice(0, 8)
     setSearchSuggestions(suggestions)
-  }, [allGames])
+  }
 
   // 处理输入变化
   const handleInputChange = (value: string) => {
@@ -71,17 +66,20 @@ export default function SearchPageClient({ initialQuery = "", t }: SearchPageCli
     setQuery(searchTerm)
     
     // 保存搜索历史
-    const searchHistory = JSON.parse(localStorage.getItem('search-history') || '[]')
-    const newHistory = [searchTerm, ...searchHistory.filter((item: string) => item !== searchTerm)].slice(0, 10)
-    localStorage.setItem('search-history', JSON.stringify(newHistory))
+    try {
+      const searchHistory = JSON.parse(localStorage.getItem('search-history') || '[]')
+      const newHistory = [searchTerm, ...searchHistory.filter((item: string) => item !== searchTerm)].slice(0, 10)
+      localStorage.setItem('search-history', JSON.stringify(newHistory))
+    } catch (error) {
+      console.warn('Failed to save search history:', error)
+    }
     
-    // 跳转到搜索结果页面 - 使用动态路由
+    // 跳转到搜索结果页面
     router.push(`/search/results/${encodeURIComponent(searchTerm)}`)
   }
 
   // 获取热门搜索
   const popularSearches = SearchEngine.getPopularSearches(allGames, 8)
-
 
   return (
     <div className="container mx-auto px-4">
@@ -90,7 +88,7 @@ export default function SearchPageClient({ initialQuery = "", t }: SearchPageCli
       <div className="md:hidden flex items-center gap-2 py-2 -mt-20 border-b border-gray-700/50">
         {/* 返回按钮 */}
         <button 
-          onClick={() => window.history.back()}
+          onClick={() => router.back()}
           className="flex items-center justify-center text-white hover:text-purple-400 transition-colors flex-shrink-0"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -183,8 +181,7 @@ export default function SearchPageClient({ initialQuery = "", t }: SearchPageCli
                     key={index}
                     onClick={() => {
                       const searchResults = SearchEngine.search(term, allGames, {
-                        maxResults: 20,
-                        minScore: 0.2
+                        maxResults: 20
                       })
                       setQuery(term)
                       setResults(searchResults)
