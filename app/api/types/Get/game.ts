@@ -1,3 +1,5 @@
+import { language } from "./language";
+
 // 基础游戏信息
 export interface Game {
     category_name: string | undefined;
@@ -79,6 +81,8 @@ export type GameDetailsResponse =GameDetailsData
 
 // 扩展的游戏详情（包含解析后的数据，用于组件）
 export interface ExtendedGameDetails extends GameDetailsData {
+    iframe_src: any;
+    url: any;
     // 解析后的评分信息
     parsedRating?: GameRating;
     
@@ -144,5 +148,74 @@ export type GameDetailsParser = {
 };
 
 // 向后兼容的类型别名
-export interface GameDetails extends GameDetailsResponse {}
 export interface Game_Category extends Breadcrumb {}
+
+
+
+
+
+
+
+
+
+
+
+//----------------------------------------
+//单个游戏的数据
+export interface game {
+    id:number,
+    display_name:string,
+    name:string,//相当与 slug 动态路由传递的值
+    cover:string
+}
+//游戏list 中 的集合
+export type games = game[]
+//游戏list 中 分类游戏总和
+export interface category {
+    category_id:number,
+    category_name:string,
+    games:games
+}
+
+export type gamelist = category[]
+//多语言版本的games 页面的列表数据
+export type LangGameList = language<gamelist>
+//----------------------------------------
+//进入游戏页面后 所需要的游戏详情数据
+export interface GameDetails {
+  page_title: string;
+  page_description: string;
+  page_keywords: string;
+  breadcrumbs: Breadcrumb[];
+  display_name: string;
+  cover: string;
+  package: Package;
+  rating: string;
+  info: string;
+  technology: string;
+  platforms: string;
+  reviews: Review[];
+  released_at: string;
+  last_updated: string;
+}
+export interface Breadcrumb {
+  name: string;
+  path: string;
+  level: number;
+}
+
+export interface Package {
+  url: string;
+}
+
+export interface Review {
+  email: string;
+  user_name: string;
+  rating: number;
+  content: string;
+  created_at: string;
+}
+//多语言版本的游戏数据(详细数据 多个游戏数据)
+export type LangGameData = language<GameDetails[]>
+
+//---------------------------

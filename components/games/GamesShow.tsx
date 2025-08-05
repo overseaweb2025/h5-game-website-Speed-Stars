@@ -197,7 +197,6 @@ const GameRowSection = ({ title, games, sectionIndex }: { title: string, games: 
     </div>
   )
 }
-
 // GamesShow不再直接接收侧边栏状态，由Layout统一管理
 const GamesShow = () => {
   const { 

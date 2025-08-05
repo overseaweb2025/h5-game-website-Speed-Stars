@@ -27,7 +27,8 @@
       "Bash(node:*)",
       "Bash(cp:*)",
       "Bash(python3:*)",
-      "Bash(claude auth:*)"
+      "Bash(claude auth:*)",
+      "Bash(touch:*)"
     ],
     "deny": []
   }

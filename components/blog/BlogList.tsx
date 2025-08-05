@@ -7,10 +7,12 @@ import CustomPagination from "@/components/ui/custom-pagination"
 import { getPagration } from "@/app/api/blog/index"
 import { postBlog } from "@/app/api/types/Post/blog"
 import { blog } from "@/app/api/types/Get/blog"
+import { useLangBlog } from "@/hooks/LangBlog_value"
+import { Locale } from "@/lib/lang/dictionaraies"
 
 interface BlogListProps {
   t: any
-  lang: string
+  lang: Locale
 }
 
 export default function BlogList({ t, lang }: BlogListProps) {
@@ -18,7 +20,7 @@ export default function BlogList({ t, lang }: BlogListProps) {
   const [currentPage, setCurrentPage] = useState(1) // 默认页码8
   const [totalPages, setTotalPages] = useState(5) // 默认总页数
   const [loading, setLoading] = useState(false)
-
+  const {LangBlog,updataLanguageByLang} = useLangBlog()
   const fetchBlogData = async (page: number) => {
     setLoading(true)
 
@@ -30,7 +32,8 @@ export default function BlogList({ t, lang }: BlogListProps) {
       }
       
       const response = await getPagration(blogParams)
-      
+      console.log('打印数据',response.data.data )
+      updataLanguageByLang(response.data.data,lang)
       // 如果response.data是数组，直接使用；如果是对象包含数组，需要相应调整
       const posts = Array.isArray(response.data?.data) ? response.data.data : Array.isArray(response.data) ? response.data : []
       setBlogPosts(posts)

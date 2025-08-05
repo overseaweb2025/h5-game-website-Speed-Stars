@@ -1,190 +1,298 @@
 "use client"
 
-import Link from "next/link"
-import { useState, useEffect } from "react"
-import { GameCardProps } from "./types"
+import { useState, useRef } from "react"
+import { useGameData } from "@/hooks/useGameData"
+import { getCategoryIcon, addRandomTags } from "./utils"
+import { ExtendedGame } from "./types"
+import GameCard from "./GameCard"
+// Featured Games组件
+const FeaturedGameSection = ({ games }: { games: ExtendedGame[] }) => {
+  const [showControls, setShowControls] = useState(false)
+  const [touched, setTouched] = useState(false)
+  const scrollRef = useRef<HTMLDivElement>(null)
 
-const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false }: GameCardProps) => {
-  const [imageLoaded, setImageLoaded] = useState(false)
-  const [imageError, setImageError] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
-  
-  // 检测移动端状态
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    
-    if (typeof window !== 'undefined') {
-      checkMobile()
-      window.addEventListener('resize', checkMobile)
-      return () => window.removeEventListener('resize', checkMobile)
-    }
-  }, [])
-
-  // 根据size设置不同的尺寸样式 - 移动端尺寸减少1/3
-  const getSizeStyles = () => {
-    
-    switch (size) {
-      case 'tiny':
-        return {
-          width: '100%',
-          minWidth: isMobile ? '53px' : '80px', // 80 * 2/3 = 53
-          height: isMobile ? '53px' : '80px',
-          aspectRatio: '1/1'
-        }
-      case 'small':
-        return {
-          width: '100%',
-          minWidth: isMobile ? '72px' : '140px', // 移动端缩小到72px适应小屏幕
-          height: isMobile ? '72px' : '140px',
-          aspectRatio: '1/1'
-        }
-      case 'medium':
-        return {
-          width: '100%',
-          minWidth: isMobile ? '120px' : '180px', // 180 * 2/3 = 120
-          height: isMobile ? '120px' : '180px',
-          aspectRatio: '1/1'
-        }
-      case 'large':
-        return {
-          width: '100%',
-          minWidth: isMobile ? '150px' : '240px', // 移动端缩小到150px适应小屏幕
-          height: isMobile ? '150px' : '295px', // 移动端缩小到150px适应小屏幕
-          aspectRatio: '1/1' // 移动端也是正方形
-        }
-      case 'horizontal-scroll':
-        return {
-          width: isMobile ? '133px' : '200px', // 200 * 2/3 = 133
-          minWidth: isMobile ? '133px' : '200px',
-          height: isMobile ? '133px' : '200px',
-          aspectRatio: '1/1'
-        }
-      default:
-        return {
-          width: '100%',
-          minWidth: isMobile ? '120px' : '180px', // 180 * 2/3 = 120
-          height: isMobile ? '120px' : '180px',
-          aspectRatio: '1/1'
-        }
+  const handleScroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = 400
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      })
     }
   }
 
-  const sizeStyles = getSizeStyles()
-
-  const handleGameClick = (e: React.MouseEvent) => {
-    // 在首页时，直接跳转到play页面
-    if (isHomepage && game.package?.url) {
-      e.preventDefault()
-      
-      const getCurrentLang = () => {
-        if (typeof window !== 'undefined') {
-          const pathname = window.location.pathname
-          const langMatch = pathname.match(/^\/([a-z]{2})(?:\/|$)/)
-          return langMatch ? langMatch[1] : 'en'
-        }
-        return 'en'
-      }
-      
-      const currentLang = getCurrentLang()
-      const gameUrl = game.package.url
-      const gameTitle = game.display_name
-      const encodedUrl = encodeURIComponent(gameUrl)
-      const encodedTitle = encodeURIComponent(gameTitle)
-      
-      window.location.href = `/${currentLang}/play/${game.name}/${encodedUrl}?title=${encodedTitle}&url=${encodedUrl}`
-    }
-    // 非首页时使用默认的Link跳转逻辑（跳转到游戏内页）
+  const handleMouseEnter = () => {
+    setShowControls(true)
   }
 
-  // 根据是否在首页决定href
-  const getHref = () => {
-    if (isHomepage && game.package?.url) {
-      // 首页时返回空字符串，因为我们会用onClick处理
-      return "#"
-    }
-    return `/game/${game.name}`
+  const handleMouseLeave = () => {
+    setShowControls(false)
+    setTouched(false)
   }
+
+  const handleTouchStart = () => {
+    setShowControls(true)
+    setTouched(true)
+  }
+
+  const shouldShowControls = showControls || touched
 
   return (
-    <Link
-      href={getHref()}
-      className={`group block relative overflow-visible rounded-lg transition-all duration-300 shadow-md hover:shadow-lg ${isHomepage && isMobile ? 'aspect-[3/7]' : 'aspect-square'} ${className}`}
-      style={sizeStyles}
-      onClick={handleGameClick}
-    >
+    <div className="mb-4">
+      <h2 className="text-2xl md:text-3xl font-black text-white mb-4 pop-in">
+        🌟 Featured Games
+      </h2>
+      
+      {/* 整个行区域 - 严格限制在屏幕宽度内 */}
       <div 
-        className="relative w-full h-full bg-gray-800 rounded-[9px] overflow-hidden shadow-md group-hover:shadow-lg transition-shadow duration-300" 
-        style={{ width: '100%', height: '100%' }}
+        className="relative w-full max-w-full bg-gradient-to-r from-gray-800/30 to-gray-900/30 rounded-2xl overflow-hidden backdrop-blur-sm"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
       >
-        {/* 只有当图片存在且不为空时才显示图片 */}
-        {!imageError && (game.cover || game.image) && (game.cover !== '' && game.image !== '') ? (
-          <img
-            src={game.cover || game.image}
-            alt={game.display_name}
-            className={`w-full h-full object-cover transition-all duration-300 group-hover:scale-110 ${
-              imageLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
-            onLoad={() => setImageLoaded(true)}
-            onError={() => {
-              setImageError(true)
-              setImageLoaded(false)
-            }}
-          />
-        ) : null}
+        {/* 左箭头 */}
+        <button
+          onClick={() => handleScroll('left')}
+          className={`absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 hover:bg-white text-gray-800 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-110 ${
+            shouldShowControls ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+          }`}
+        >
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+        </button>
         
-        {/* 占位符 - 当图片不存在、为空字符串、未加载或加载失败时显示 */}
-        {(!imageLoaded || imageError || !(game.cover || game.image) || game.cover === '' || game.image === '') && (
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
-            <div className="text-center text-white">
-              <div className={`mb-2 ${
-                size === 'tiny' ? 'text-lg' :
-                size === 'small' ? 'text-2xl' :
-                'text-4xl'
-              }`}>🎮</div>
-              <div className={`font-medium px-2 ${
-                size === 'tiny' ? 'text-[8px]' :
-                size === 'small' ? 'text-xs' :
-                'text-xs'
-              }`}>
-                {imageError ? (t?.hero?.imageFailedToLoad || 'Image failed to load') : (t?.common?.loading || 'Loading...')}
+        {/* 右箭头 */}
+        <button
+          onClick={() => handleScroll('right')}
+          className={`absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 hover:bg-white text-gray-800 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-110 ${
+            shouldShowControls ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+          }`}
+        >
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+          </svg>
+        </button>
+        
+        {/* 内容区域 - 严格限制在容器内滚动 */}
+        <div 
+          ref={scrollRef} 
+          className="overflow-x-auto scrollbar-hide"
+          style={{ width: '100%', maxWidth: '100%' }}
+        >
+          <div className="flex gap-2 p-2 sm:gap-4 sm:p-4 md:gap-6 md:p-6" style={{ width: 'max-content', minWidth: '100%' }}>
+            <div className="flex-shrink-0">
+              {/* Featured Games 布局：移动端gap-2，桌面端gap-6 */}
+              <div className="grid grid-cols-2 gap-2 sm:gap-4 md:gap-6">
+                {/* 第一个格子：大卡片 */}
+                <div className="col-span-1">
+                  <GameCard game={games[0]} className="shadow-xl hover:shadow-2xl" size="large" />
+                </div>
+                {/* 第二个格子：包含四个小卡片的大div */}
+                <div className="col-span-1">
+                  <div className="grid grid-cols-2 gap-1 sm:gap-2 md:gap-3">
+                    {games.slice(1, 5).map((game, index) => (
+                      <GameCard key={game.id} game={game} className="shadow-lg hover:shadow-xl" size="small" />
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        )}
-        
-        {/* Game title overlay - 在移动端的tiny size不显示title */}
-        {size !== 'tiny' && (
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-2 sm:p-3 rounded-b-[7px]">
-            <h3 className={`text-white font-bold leading-tight drop-shadow-lg ${
-              size === 'large' ? 'text-sm sm:text-base md:text-lg' : 
-              size === 'small' ? 'text-xs sm:text-sm' : 
-              size === 'horizontal-scroll' ? 'text-xs sm:text-sm' :
-              'text-sm'
-            }`}>
-              {game.display_name}
-            </h3>
-          </div>
-        )}
-        
-        {/* Hover overlay */}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 rounded-lg" />
-      </div>
-      
-      {/* Tag badge - moved outside the overflow-hidden container */}
-      {game.tag && (
-        <div className={`absolute -top-1 -left-1 px-1.5 py-0.5 text-[10px] font-bold text-white rounded-[4px] shadow-lg z-10 ${
-          game.tag === 'Hot' ? 'bg-red-500' : 
-          game.tag === 'New' ? 'bg-purple-500' : 
-          game.tag === 'Updated' ? 'bg-blue-500' :
-          'bg-orange-500'
-        }`}>
-          {game.tag}
         </div>
-      )}
-    </Link>
+      </div>
+    </div>
   )
 }
 
-export default GameCard
+// GameRowSection组件
+const GameRowSection = ({ title, games, sectionIndex }: { title: string, games: ExtendedGame[], sectionIndex: number }) => {
+  const [showControls, setShowControls] = useState(false)
+  const [touched, setTouched] = useState(false)
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  const handleScroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = 300
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      })
+    }
+  }
+
+  const handleMouseEnter = () => {
+    setShowControls(true)
+  }
+
+  const handleMouseLeave = () => {
+    setShowControls(false)
+    setTouched(false)
+  }
+
+  const handleTouchStart = () => {
+    setShowControls(true)
+    setTouched(true)
+  }
+
+  const shouldShowControls = showControls || touched
+
+  return (
+    <div className="mb-4">
+      <h2 className="text-2xl md:text-3xl font-black text-white mb-4 pop-in">
+        {title}
+      </h2>
+      
+      {/* 整个行区域 - 严格限制在屏幕宽度内 */}
+      <div 
+        className="relative w-full max-w-full min-h-[200px] bg-gradient-to-r from-gray-800/20 to-gray-900/20 rounded-xl overflow-hidden backdrop-blur-sm"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+      >
+        {/* 左箭头 */}
+        <button
+          onClick={() => handleScroll('left')}
+          className={`absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 hover:bg-white text-gray-800 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-110 ${
+            shouldShowControls ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+          }`}
+        >
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+        </button>
+        
+        {/* 右箭头 */}
+        <button
+          onClick={() => handleScroll('right')}
+          className={`absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 hover:bg-white text-gray-800 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-110 ${
+            shouldShowControls ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+          }`}
+        >
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+          </svg>
+        </button>
+        
+        {/* 内容区域 - 严格限制在容器内滚动 */}
+        <div 
+          ref={scrollRef} 
+          className="overflow-x-auto scrollbar-hide"
+          style={{ width: '100%', maxWidth: '100%' }}
+        >
+          <div className="flex gap-4 p-4 sm:gap-6 sm:p-6" style={{ width: 'max-content', minWidth: '100%' }}>
+            {games.map((game, index) => (
+              <div key={`${sectionIndex}-${game.id}-${index}`} className="flex-shrink-0">
+                <GameCard 
+                  game={game}
+                  className="flex-shrink-0 shadow-lg hover:shadow-xl"
+                  size="horizontal-scroll"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+// GamesShow不再直接接收侧边栏状态，由Layout统一管理
+const GamesShow = () => {
+  const { 
+    data: gameCategories, 
+    loading, 
+    error, 
+    categoriesWithGames, 
+    allGames,
+    refresh 
+  } = useGameData()
+
+  // 根据真实分类数据创建游戏行，只显示有游戏的分类
+  const createGameRows = () => {
+    if (categoriesWithGames.length === 0) return []
+    
+    return categoriesWithGames.map(category => ({
+      title: `${getCategoryIcon(category.category_name)} ${category.category_name}`,
+      games: addRandomTags(category.games),
+      categoryId: category.category_id
+    }))
+  }
+
+  const gameRows = createGameRows()
+  
+  // Featured Games使用所有可用游戏
+  const featuredGames = allGames.length > 0 ? addRandomTags(allGames).slice(0, 5) : []
+  
+  return (
+    <div className="w-full max-w-full overflow-hidden bg-gray-800 backdrop-blur-sm">
+      {/* Page Header */}
+      <div className="text-center py-6 px-4 sm:py-8">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-4 pop-in">
+          🎮 <span className="gradient-text">Game Collection</span>
+        </h1>
+        <p className="text-lg sm:text-xl md:text-2xl text-white/80 max-w-3xl mx-auto px-4">
+          Discover amazing free HTML5 games for endless entertainment
+        </p>
+      </div>
+
+      {/* Main game showcase area - 严格限制宽度不超过容器 */}
+      <div className="w-full max-w-full overflow-hidden px-2 sm:px-4">
+        {/* 调试信息栏 - 只在开发环境显示 */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="bg-gray-800 text-white text-sm p-3 mb-4 rounded-lg">
+            <div className="flex items-center gap-4 flex-wrap">
+              <span>Categories: {categoriesWithGames.length}</span>
+              <span>Games: {allGames.length}</span>
+              <span>Status: {loading ? 'Loading...' : error ? 'Error' : 'Ready'}</span>
+              <button 
+                onClick={refresh}
+                className="bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded text-xs"
+              >
+                Refresh
+              </button>
+            </div>
+          </div>
+        )}
+
+        {loading ? (
+          <div className="flex items-center justify-center h-64">
+            <div className="text-white text-xl">Loading games...</div>
+          </div>
+        ) : error ? (
+          <div className="flex items-center justify-center h-64 flex-col gap-4">
+            <div className="text-red-400 text-xl">{error}</div>
+            <button 
+              onClick={refresh}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+            >
+              Retry
+            </button>
+          </div>
+        ) : (
+          <>
+            {/* Featured Games Section */}
+            {featuredGames.length > 0 && (
+              <FeaturedGameSection 
+                games={featuredGames}
+              />
+            )}
+            
+            {/* Game Rows */}
+            {gameRows.map((row, index) => (
+              row.games.length > 0 && (
+                <GameRowSection
+                  key={index}
+                  title={row.title}
+                  games={row.games}
+                  sectionIndex={index}
+                />
+              )
+            ))}
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default GamesShow

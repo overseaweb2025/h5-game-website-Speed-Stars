@@ -7,25 +7,37 @@ import { Menu, MoreHorizontal, GamepadIcon as GameController, UserCircleIcon, Lo
 import { useSession, signIn, signOut } from "next-auth/react"
 import toast from "react-hot-toast"
 import MobileSidebar from "./mobile-sidebar"
-import LoginModal from "./auth/LoginModal"
-import UserDropdown from "./auth/UserDropdown"
 import LanguageSelector from "./LanguageSelector"
 import { SearchBox } from "./search"
 import { useGameData } from "@/hooks/useGameData"
-
+import { useWebsiteData } from "@/hooks/useWebsiteData"
+import { websiteUtill } from "@/lib/website/websiteUtill"
+import { getNavLanguage } from "@/app/api/nav_language"
+import { useNavgationLanguage } from "@/hooks/Navigation_value/use-navigation-language"
+import { top_navigation } from "@/app/api/types/Get/nav"
+import { langSequence } from "@/lib/lang/utils"
+import {  Locale } from "@/lib/lang/dictionaraies"
+import { useLangGameList } from "@/hooks/LangGamelist_value"
 interface HeaderProps {
   onSidebarToggle?: () => void
   showSidebarToggle?: boolean
   t?:any
+  lang: Locale;
 }
 
-export default function Header({ onSidebarToggle, showSidebarToggle = false ,t}: HeaderProps) {
+export default function Header({ onSidebarToggle, showSidebarToggle = false ,t,lang}: HeaderProps) {
+  
+  
+  
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false)
   const [hasShownLoginSuccess, setHasShownLoginSuccess] = useState(false)
+  const { websiteData} = useWebsiteData();
   const { data: session, status } = useSession()
   const pathname = usePathname()
-  
+  // 获取 nav 的数据
+  const { navState, updateLanguage } = useNavgationLanguage();
+  const {autoGetData} = useLangGameList() 
   // 获取游戏数据用于搜索
   const { allGames } = useGameData()
 
@@ -85,7 +97,14 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t}:
       setHasShownLoginSuccess(true)
     }
   }, [session, status, hasShownLoginSuccess])
-
+  //更新 navgation 的多语言数值
+  useEffect(()=>{
+    // 只更新一次
+    getNavLanguage().then(res=>{
+        updateLanguage(res.data.data)
+      })
+      autoGetData(lang)
+  },[])
   // Reset login success flag when user logs out
   useEffect(() => {
     if (!session && hasShownLoginSuccess) {
@@ -127,6 +146,30 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t}:
     }
   }, [isMoreMenuOpen])
 
+
+  //navigation 首页top 顶部 导航栏信息
+  const MyComponent = ({ navItems }:{navItems:top_navigation[]}) => {
+  return (
+    <>
+       <Link
+         href={createLocalizedLink('/')}
+         className={getLinkClasses("/")}
+       >
+         {t?.header?.home || "Home"}
+       </Link>
+      {navItems.map((item,index) => ( // <--- 注意这里是 map
+        <Link
+          href={createLocalizedLink(item.url)}
+          className={getLinkClasses("/" + item.text)}
+           key={index + item.url}
+        >
+          {item.text}
+        </Link>
+      ))}
+   </>
+  );
+};
+
   return (
     <>
       <header className="bg-gray-900/95 backdrop-blur-sm py-2 sm:py-3 sticky top-0 z-40 border-b border-gray-700 shadow-sm">
@@ -167,8 +210,7 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t}:
               <Link href={createLocalizedLink('/')} className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0 mr-3 sm:mr-6">
               <GameController className="h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 text-purple-400 drop-shadow-lg swing flex-shrink-0" />
                 <span className="text-sm sm:text-lg lg:text-xl xl:text-2xl font-black text-white whitespace-nowrap" style={{fontFamily: 'inherit'}}>
-                  <span className="hidden sm:inline">{t?.header?.gameHubCentral || "GameHub Central"}</span>
-                  <span className="sm:hidden">{t?.header?.gameHub || "GameHub"}</span>
+                 {websiteData &&  websiteUtill(websiteData,'site-name')}
                 </span>
               </Link>
             </div>
@@ -178,24 +220,9 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t}:
               
               {/* Navigation Links */}
               <nav className="flex items-center space-x-2 xl:space-x-4">
-                <Link
-                  href={createLocalizedLink('/')}
-                  className={getLinkClasses("/")}
-                >
-                  {t?.header?.home || "Home"}
-                </Link>
-                <Link
-                  href={createLocalizedLink('/games')}
-                  className={getLinkClasses("/games")}
-                >
-                  {t?.header?.games || "Games"}
-                </Link>
-                <Link
-                  href={createLocalizedLink('/blog')}
-                  className={getLinkClasses("/blog")}
-                >
-                  {t?.header?.blog || "Blog"}
-                </Link>
+                {navState &&   <MyComponent navItems={langSequence(navState?.top_navigation, lang) || []} />
+}
+                
               </nav>
               
               {/* Search Box */}
@@ -284,6 +311,7 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t}:
         onClose={() => setIsSidebarOpen(false)}
         scrollToSection={scrollToSection}
         t={t}
+        lang={lang}
       />
 
     </>

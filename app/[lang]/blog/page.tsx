@@ -3,6 +3,7 @@ import Footer from "@/components/footer"
 import type { Metadata } from "next"
 import BlogList from "@/components/blog/BlogList"
 import { getDictionary } from "@/lib/lang/i18n"
+import { Locale } from "@/lib/lang/dictionaraies"
 export const metadata: Metadata = {
   title: "Speed Stars Blog | Game News, Tips & Updates",
   description:
@@ -31,11 +32,11 @@ export const metadata: Metadata = {
 
 export default async function BlogPage({params}: {params: Promise<{lang: string}>}) {
   const { lang } = await params;
-  const t = await getDictionary(lang as "en" | "zh");
-  
+  const t = await getDictionary(lang as Locale);
+
   return (
     <main className="bg-background">
-      <Header t={t} />
+      <Header t={t} lang={lang as 'en' | 'zh'} />
       <section className="section-padding bg-gray-900 relative overflow-hidden">
         {/* Decorative elements - Mobile optimized */}
         <div className="absolute top-4 left-4 md:top-10 md:left-10 text-4xl md:text-6xl opacity-10 pop-in">📰</div>
@@ -63,7 +64,7 @@ export default async function BlogPage({params}: {params: Promise<{lang: string}
           </div>
 
           {/* API Blog Posts with Pagination */}
-          <BlogList t={t} lang={lang} />
+          <BlogList t={t} lang={lang as Locale} />
 
           {/* Newsletter Signup - Mobile optimized */}
           <div className="card p-6 md:p-8 bg-gradient-to-r from-primary/10 to-accent-3/10 border-4 border-accent text-center">
@@ -86,7 +87,7 @@ export default async function BlogPage({params}: {params: Promise<{lang: string}
         </div>
       </section>
 
-      <Footer t={t} />
+      <Footer t={t} lang={lang as 'en' | 'zh'} />
     </main>
   )
 }

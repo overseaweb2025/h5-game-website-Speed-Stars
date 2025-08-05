@@ -1,6 +1,7 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { getDictionary } from "@/lib/lang/i18n"
+import { getDictionary } from "@/lib/lang/i18n-client"
+import { Locale } from "@/lib/lang/dictionaraies";
 
 // 更新404页面的元数据
 
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   description: "Oops! The page you are looking for does not exist.",
 }
 
-export default async function NotFound({params}: {params: Promise<{lang: string}> | {lang: string} | undefined}) {
+export default async function NotFound({params}: {params: Promise<{lang: Locale}> | {lang: Locale} | undefined}) {
   let lang: "en" | "zh" = "en"; // 默认语言
   
   try {

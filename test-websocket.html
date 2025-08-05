@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .log {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>WebSocket测试页面</h1>
+    
+    <div class="container">
+        <h3>WebSocket连接测试</h3>
+        <button onclick="connectWebSocket()">连接WebSocket</button>
+        <button onclick="disconnectWebSocket()">断开连接</button>
+        <p>状态: <span id="status">未连接</span></p>
+    </div>
+
+    <div class="container">
+        <h3>发送消息</h3>
+        <input type="text" id="messageInput" placeholder="输入消息" value="Hello WebSocket!">
+        <button onclick="sendMessage()">发送消息</button>
+    </div>
+
+    <div class="container">
+        <h3>HTTP请求测试</h3>
+        <button onclick="testHttpGet()">测试GET请求</button>
+        <button onclick="testHttpPost()">测试POST请求</button>
+    </div>
+
+    <div class="container">
+        <h3>日志</h3>
+        <div id="log" class="log"></div>
+        <button onclick="clearLog()">清空日志</button>
+    </div>
+
+    <script>
+        let ws = null;
+
+        function log(message) {
+            const logElement = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logElement.textContent += `[${timestamp}] ${message}\n`;
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        function updateStatus(status) {
+            document.getElementById('status').textContent = status;
+        }
+
+        function connectWebSocket() {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                log('WebSocket已经连接');
+                return;
+            }
+
+            try {
+                ws = new WebSocket('ws://localhost:3000/api/websocket');
+                
+                ws.onopen = function(event) {
+                    log('WebSocket连接已建立');
+                    updateStatus('已连接');
+                };
+
+                ws.onmessage = function(event) {
+                    log('收到消息: ' + event.data);
+                };
+
+                ws.onclose = function(event) {
+                    log('WebSocket连接已关闭');
+                    updateStatus('未连接');
+                };
+
+                ws.onerror = function(error) {
+                    log('WebSocket错误: ' + error);
+                    updateStatus('错误');
+                };
+            } catch (error) {
+                log('连接失败: ' + error.message);
+                updateStatus('错误');
+            }
+        }
+
+        function disconnectWebSocket() {
+            if (ws) {
+                ws.close();
+                ws = null;
+                updateStatus('未连接');
+                log('手动断开WebSocket连接');
+            }
+        }
+
+        function sendMessage() {
+            if (!ws || ws.readyState !== WebSocket.OPEN) {
+                log('WebSocket未连接，无法发送消息');
+                return;
+            }
+
+            const message = document.getElementById('messageInput').value;
+            ws.send(message);
+            log('发送消息: ' + message);
+        }
+
+        async function testHttpGet() {
+            try {
+                log('发送HTTP GET请求到 /api/websocket');
+                const response = await fetch('http://localhost:3000/api/websocket');
+                const data = await response.json();
+                log('HTTP GET响应: ' + JSON.stringify(data, null, 2));
+            } catch (error) {
+                log('HTTP GET请求失败: ' + error.message);
+            }
+        }
+
+        async function testHttpPost() {
+            try {
+                log('发送HTTP POST请求到 /api/websocket');
+                const response = await fetch('http://localhost:3000/api/websocket', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: 'Hello from HTTP POST',
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                const data = await response.json();
+                log('HTTP POST响应: ' + JSON.stringify(data, null, 2));
+            } catch (error) {
+                log('HTTP POST请求失败: ' + error.message);
+            }
+        }
+
+        function clearLog() {
+            document.getElementById('log').textContent = '';
+        }
+
+        // 页面加载完成后的提示
+        window.onload = function() {
+            log('测试页面已加载');
+            log('请先运行: node websocket-server.js');
+            log('然后点击"连接WebSocket"按钮进行测试');
+        };
+    </script>
+</body>
+</html>

@@ -1,7 +1,6 @@
 "use client"
 
-import React, { useState, useEffect, useMemo } from "react"
-import { useParams, useRouter } from "next/navigation"
+import React, { useEffect, useMemo } from "react"
 import { notFound } from "next/navigation"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
@@ -15,14 +14,15 @@ import { useGamePageTimer } from "@/hooks/useGamePageTimer"
 import { gameDetailsParser } from "@/lib/game-utils"
 import { useResponsive } from "@/shared/hooks/useResponsive"
 import { GameRouter } from "@/lib/router"
-
+import {Locale } from '@/lib/lang/dictionaraies'
+import {getGameDetails} from '@/app/api/gameList'
+import { useLangGameDetails } from "@/hooks/LangGameDetails_value"
 interface GamePageClientProps {
   slug: string
+  lang: Locale
 }
 
-export default function GamePageClient({ slug }: GamePageClientProps) {
-  const router = useRouter()
-
+export default function GamePageClient({ slug,lang }: GamePageClientProps) {
   // 响应式屏幕检测
   const { isSmallScreen } = useResponsive({ breakpoint: 1024 })
 
@@ -32,9 +32,9 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
     isLoading: loading,
     error,
     isCached,
-    getGameDetails
   } = useGameDetails(slug)
 
+  const {updataLangGameDetailsByLang} = useLangGameDetails()
   // 游戏历史记录功能
   const { isEnabled } = useGameHistory()
   
@@ -102,15 +102,21 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
     }
   }, [slug, gameData, loading])
 
+  useEffect(()=>{
+    getGameDetails(slug).then(res=>{
+    console.log('获取的游戏详情',res.data.data)
+    updataLangGameDetailsByLang(res.data.data,lang)
+    })
+  },[])
   if (loading) {
     return (
       <main>
-        <Header />
+        <Header lang={lang} />
         <LoadingSpinner 
           text={isCached ? "Loading from cache..." : "Loading game..."} 
           fullScreen 
         />
-        <Footer />
+        <Footer lang={lang} />
       </main>
     )
   }
@@ -121,7 +127,7 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
     if (error.includes('Network') || error.includes('500') || error.includes('Failed to fetch')) {
       return (
         <main>
-          <Header />
+          <Header lang={lang} />
           <div className="min-h-screen bg-background flex items-center justify-center">
             <div className="text-center p-8">
               <div className="text-6xl mb-4">🎮</div>
@@ -145,7 +151,7 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
               </div>
             </div>
           </div>
-          <Footer />
+          <Footer lang={lang} />
         </main>
       )
     }
@@ -157,9 +163,9 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
   if (!gameData && !loading && !error) {
     return (
       <main>
-        <Header />
+        <Header lang={lang} />
         <LoadingSpinner text="Loading game..." fullScreen />
-        <Footer />
+        <Footer lang={lang} />
       </main>
     )
   }
@@ -169,7 +175,7 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
 
   return (
     <main>
-      <Header />
+      <Header lang={lang} />
       {heroGameData && gameData && (
         <Hero game={heroGameData} reviews={gameData.reviews} gameData={gameData} />
       )}
@@ -179,7 +185,7 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
       {/* Game Information Section */}
      
       
-      <Footer />
+      <Footer lang={lang} />
       <GameDetailsCacheDebug />
     </main>
   )

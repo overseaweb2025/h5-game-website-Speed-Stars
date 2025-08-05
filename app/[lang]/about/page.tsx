@@ -215,7 +215,7 @@ export default async function AboutPage({params}: {params: {lang: string}}) {
         </div>
       </section>
 
-      <Footer t={t} />
+      <Footer t={t} lang={lang} />
     </main>
   )
 }

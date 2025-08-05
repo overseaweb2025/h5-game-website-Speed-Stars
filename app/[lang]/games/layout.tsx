@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import { getGamesCanonicalUrl } from "@/lib/seo-utils"
 import { getDictionary } from "@/lib/lang/i18n"
+import {Locale} from '@/lib/lang/dictionaraies'
 import GamesLayoutClient from "./GamesLayoutClient"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -34,8 +35,8 @@ export default async function GamesLayout({
   children: React.ReactNode
   params: { lang: string }
 }) {
-  const lang = params.lang as "en" | "zh";
+  const lang = params.lang as Locale;
   const t = await getDictionary(lang);
   
-  return <GamesLayoutClient t={t}>{children}</GamesLayoutClient>
+  return <GamesLayoutClient t={t} lang={lang}>{children}</GamesLayoutClient>
 }

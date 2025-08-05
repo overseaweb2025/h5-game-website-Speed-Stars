@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import { ChevronDown, Globe, Check } from "lucide-react"
-import { Locale } from "@/lib/lang/i18n"
+import { Locale } from "@/lib/lang/dictionaraies"
 import { getSupportedLocales, getLocaleDisplayName, getLocalizedPath, getLocaleFromPath } from "@/lib/lang/utils"
 
 interface Language {
@@ -183,28 +183,41 @@ export default function LanguageSelector({
         />
       </button>
 
-      {isOpen && (
-        <div className="absolute top-full right-0 mt-2 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-50 min-w-[140px] xl:min-w-[160px] overflow-hidden">
-          {languages.map((language) => (
-            <button
-              key={language.code}
-              onClick={() => handleLanguageChange(language)}
-              className="flex items-center justify-between w-full px-3 xl:px-4 py-2 xl:py-3 text-left text-gray-300 hover:text-white hover:bg-gray-700/50 transition-all text-xs xl:text-sm"
-            >
-              <div className="flex items-center space-x-2">
-                <span className="text-base xl:text-lg">{language.flag}</span>
-                <div className="flex flex-col">
-                  <span className="font-medium">{language.nativeName}</span>
-                  <span className="text-xs text-gray-400">{language.name}</span>
-                </div>
-              </div>
-              {currentLanguage.code === language.code && (
-                <Check className="w-3 h-3 xl:w-4 xl:h-4 text-purple-400 flex-shrink-0" />
-              )}
-            </button>
-          ))}
+{isOpen && (
+  <div className="absolute top-full right-0 mt-2 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-50 min-w-[140px] xl:min-w-[160px] max-h-64 overflow-y-auto">
+    {languages.map((language) => (
+      <button
+        key={language.code}
+        onClick={() => handleLanguageChange(language)}
+        className="flex items-center justify-between w-full px-3 xl:px-4 py-2 xl:py-3 text-left text-gray-300 hover:text-white hover:bg-gray-700/50 transition-all text-xs xl:text-sm"
+      >
+        <div className="flex items-center space-x-2">
+          <span className="text-base xl:text-lg">{language.flag}</span>
+          <div className="flex flex-col">
+            <span className="font-medium">{language.nativeName}</span>
+            <span className="text-xs text-gray-400">{language.name}</span>
+          </div>
         </div>
-      )}
+        {currentLanguage.code === language.code && (
+          <Check className="w-3 h-3 xl:w-4 xl:h-4 text-purple-400 flex-shrink-0" />
+        )}
+      </button>
+    ))}
+    {/* 添加自定义滚动条样式 */}
+    <style jsx>{`
+      div::-webkit-scrollbar {
+        width: 5px;
+      }
+      div::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      div::-webkit-scrollbar-thumb {
+        background-color: rgba(156, 163, 175, 0.3); /* gray-400 with opacity */
+        border-radius: 9999px; /* rounded-full */
+      }
+    `}</style>
+  </div>
+)}
     </div>
   )
 }

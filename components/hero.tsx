@@ -499,29 +499,29 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
                 <div className="grid grid-cols-3 gap-6">
                   {/* 固定定位的功能卡片 */}
                   <div className="col-span-1 relative">
-                    <div className="fixed z-30 bg-white rounded-[9px] shadow-lg transition-shadow duration-300 h-[73px] p-1" style={{ width: 'calc((100vw - 80px) / 3 - 12px)' }}>
+                    <div className="fixed z-30 bg-gray-900 rounded-[9px] shadow-lg transition-shadow duration-300 h-[73px] p-1" style={{ width: 'calc((100vw - 80px) / 3 - 12px)' }}>
                       {/* 2行网格布局 */}
                       <div className="grid grid-rows-2 h-full gap-0">
                         {/* 第一行：占据2个格子 */}
-                        <div className="row-span-1 grid grid-cols-2 gap-0 border-b border-gray-200">
-                          <div className="col-span-2 bg-white flex items-center justify-center">
-                            <span className="text-xs font-semibold text-gray-800">{t?.hero?.gameCenter || "游戏中心"}</span>
+                        <div className="row-span-1 grid grid-cols-2 gap-0 border-b border-gray-600">
+                          <div className="col-span-2 bg-gray-900 flex items-center justify-center">
+                            <span className="text-xs font-semibold text-white">{t?.hero?.gameCenter || "游戏中心"}</span>
                           </div>
                         </div>
                         
                         {/* 第二行：2个div，无间隔，中间有分隔线 */}
                         <div className="row-span-1 grid grid-cols-2 gap-0">
                           <div 
-                            className="bg-white flex items-center justify-center border-r border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                            className="bg-gray-900 flex items-center justify-center border-r border-gray-600 cursor-pointer hover:bg-gray-800 transition-colors duration-200"
                             onClick={() => router.push('/')}
                           >
-                            <Home className="w-4 h-4 text-blue-500" />
+                            <Home className="w-4 h-4 text-white" />
                           </div>
                           <div 
-                            className="bg-white flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                            className="bg-gray-900 flex items-center justify-center cursor-pointer hover:bg-gray-800 transition-colors duration-200"
                             onClick={() => router.push('/search')}
                           >
-                            <Search className="w-4 h-4 text-blue-500" />
+                            <Search className="w-4 h-4 text-white" />
                           </div>
                         </div>
                       </div>
@@ -529,12 +529,12 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
                   </div>
                   
                   <div className="col-span-2">
-                    <div className="bg-white rounded-[9px] px-4 py-3 shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-start h-[73px]">
+                    <div className="bg-gray-900 rounded-[9px] px-4 py-3 shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-start h-[73px]">
                       <div className="text-left">
-                        <h2 className="text-base font-black text-gray-800 leading-tight">
+                        <h2 className="text-base font-black text-white leading-tight">
                           {game ? game.title : (pageTitle || heroData.title.main)}
                         </h2>
-                        <p className="text-xs text-gray-600 mt-1">
+                        <p className="text-xs text-gray-300 mt-1">
                           {t?.hero?.category || "分类名"}: {game?.category || homeData?.data?.category || "Games"}
                         </p>
                       </div>

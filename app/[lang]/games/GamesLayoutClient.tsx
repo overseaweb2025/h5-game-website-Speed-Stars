@@ -5,13 +5,16 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import Saber from "@/components/games/Saber"
 import { useResponsive } from "@/shared/hooks"
+import { Locale } from "@/lib/lang/dictionaraies"
 
 export default function GamesLayoutClient({
   children,
   t,
+  lang
 }: {
   children: React.ReactNode
   t?: any
+  lang:Locale
 }) {
   const [sidebarVisible, setSidebarVisible] = useState(true)
   const [isHovered, setIsHovered] = useState(false)
@@ -63,8 +66,7 @@ export default function GamesLayoutClient({
       <Header 
         showSidebarToggle={true}
         onSidebarToggle={handleToggleButtonClick}
-        t={t}
-      />
+        t={t} lang={lang }      />
 
       {/* Header下方的内容区域 */}
       <div className="flex">
@@ -96,7 +98,7 @@ export default function GamesLayoutClient({
             </div>
             
             {/* Footer */}
-            <Footer t={t} />
+            <Footer t={t} lang={lang} />
           </div>
         </div>
       </div>

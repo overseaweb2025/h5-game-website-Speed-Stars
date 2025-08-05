@@ -7,22 +7,27 @@ import { X, Home, GamepadIcon as GameController, BookOpen, Star, HelpCircle, Mes
 import { useSession, signIn, signOut } from "next-auth/react"
 import toast from "react-hot-toast"
 import LanguageSelector from "./LanguageSelector"
+import { top_navigation } from "@/app/api/types/Get/nav"
+import { useNavgationLanguage } from "@/hooks/Navigation_value/use-navigation-language"
+import { langSequence } from "@/lib/lang/utils"
+import { Locale } from "@/lib/lang/dictionaraies"
 
 interface MobileSidebarProps {
   isOpen: boolean
   onClose: () => void
   scrollToSection: (sectionId: string) => void
   t?: any
+  lang:Locale
 }
 
 type SidebarView = 'main' | 'language'
 
-export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: MobileSidebarProps) {
+export default function MobileSidebar({ isOpen, onClose, scrollToSection, t ,lang}: MobileSidebarProps) {
   const { data: session, status } = useSession()
   const [isAnimating, setIsAnimating] = useState(false)
   const [currentView, setCurrentView] = useState<SidebarView>('main')
   const pathname = usePathname()
-
+  const {navState} = useNavgationLanguage()
   // Get current language from pathname
   const getCurrentLang = () => {
     const pathSegments = pathname.split('/')
@@ -86,24 +91,6 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
       action: () => { window.location.href = createLocalizedLink('/search'); onClose() }
     },
     { 
-      icon: GameController, 
-      label: t?.navigation?.allGames || t?.mobileSidebar?.allGames || "All Games", 
-      path: "/games",
-      action: () => { window.location.href = createLocalizedLink('/games'); onClose() }
-    },
-    { 
-      icon: Zap, 
-      label: t?.navigation?.hotGames || t?.mobileSidebar?.hotGames || "Hot Games", 
-      path: "/", // This is a section on home page
-      action: () => { scrollToSection("explore-games"); onClose() }
-    },
-    { 
-      icon: BookOpen, 
-      label: t?.navigation?.blog || t?.mobileSidebar?.blog || "Blog", 
-      path: "/blog",
-      action: () => { window.location.href = createLocalizedLink('/blog'); onClose() }
-    },
-    { 
       icon: Globe, 
       label: t?.mobileSidebar?.language || t?.common?.language || "Language", 
       path: "",
@@ -112,6 +99,124 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
   ]
 
   if (!isOpen && !isAnimating) return null
+  const Saber = ({ items }:{items:top_navigation[]})=>{
+    return (
+      <div className="flex-1 overflow-y-auto">
+        <nav className="px-6 py-4 space-y-2">
+          {/* 显示系统默认菜单项 */}
+          {menuItems.slice(0, -1).map((item, index) => { // 排除语言选项
+            const isActive = item.path && isActivePath(item.path)
+            return (
+              <button
+                key={`menu-${index}`}
+                onClick={item.action}
+                className={`w-full flex items-center space-x-3 p-3 text-left rounded-xl transition-all duration-200 group hover:scale-[1.02] hover:shadow-md touch-target transform ${
+                  isActive 
+                    ? 'bg-accent/20 border-2 border-accent/30' 
+                    : 'hover:bg-accent/10 border-2 border-transparent'
+                }`}
+              >
+                <item.icon className={`w-5 h-5 transition-colors flex-shrink-0 ${
+                  isActive 
+                    ? 'text-accent' 
+                    : 'text-accent-3 group-hover:text-primary'
+                }`} />
+                <span className={`font-semibold transition-colors text-sm ${
+                  isActive 
+                    ? 'text-accent font-bold' 
+                    : 'text-white group-hover:text-primary'
+                }`}>
+                  {item.label}
+                </span>
+              </button>
+            )
+          })}
+          
+          {/* 如果有API数据，添加分割线 */}
+          {items.length > 0 && (
+            <div className="border-t border-gray-700 my-4 pt-4">
+              <p className="text-gray-400 text-xs px-3 mb-2">API 导航</p>
+            </div>
+          )}
+          
+          {/* 显示API导航项 */}
+          {items.map((item, index) => {
+            const isActive = item.url && isActivePath(item.url)
+            return (
+              <SaberButton 
+                key={`api-${index}`} 
+                item={item} 
+                index={index} 
+                isActive={isActive}
+              />
+            )
+          })}
+          
+          {/* 调试信息 */}
+          <div className="px-3 py-2 text-gray-400 text-xs border-t border-gray-700 mt-4">
+            <p>调试信息:</p>
+            <p>• 当前语言: {lang}</p>
+            <p>• navState: {navState ? '✓ 已加载' : '✗ 未加载'}</p>
+            <p>• API导航数据: {navState?.top_navigation ? '✓ 存在' : '✗ 不存在'}</p>
+            <p>• API导航项数量: {items.length}</p>
+            {items.length > 0 && (
+              <details className="mt-2">
+                <summary className="cursor-pointer">查看API数据</summary>
+                <pre className="text-xs mt-1 bg-gray-800 p-2 rounded overflow-x-auto">
+                  {JSON.stringify(items, null, 2)}
+                </pre>
+              </details>
+            )}
+          </div>
+        </nav>
+      </div>
+    )
+  }
+  const SaberButton = ({item,index,isActive}:{item:top_navigation,index:number,isActive:string|boolean})=>{
+    const handleClick = () => {
+      window.location.href = createLocalizedLink(item.url);
+      onClose();
+    };
+
+    return (
+       <button
+         onClick={handleClick}
+         className={`w-full flex items-center space-x-3 p-3 text-left rounded-xl transition-all duration-200 group hover:scale-[1.02] hover:shadow-md touch-target transform ${
+           isActive 
+             ? 'bg-accent/20 border-2 border-accent/30' 
+             : 'hover:bg-accent/10 border-2 border-transparent'
+         }`}
+       >
+         {/* 显示图标 - 如果有图标URL就显示图片，否则显示默认图标 */}
+         {item.icon ? (
+           <img 
+             src={item.icon} 
+             alt={item.text}
+             className="w-5 h-5 flex-shrink-0 object-contain"
+             onError={(e) => {
+               // 图片加载失败时显示默认图标
+               e.currentTarget.style.display = 'none';
+               e.currentTarget.nextElementSibling?.classList.remove('hidden');
+             }}
+           />
+         ) : null}
+         {/* 备用图标 */}
+         <Star className={`w-5 h-5 transition-colors flex-shrink-0 ${!item.icon ? '' : 'hidden'} ${
+           isActive 
+             ? 'text-accent' 
+             : 'text-accent-3 group-hover:text-primary'
+         }`} />
+         
+         <span className={`font-semibold transition-colors text-sm ${
+           isActive 
+             ? 'text-accent font-bold' 
+             : 'text-white group-hover:text-primary'
+         }`}>
+           {item.text}
+         </span>
+       </button>
+    )
+  }
 
   return (
     <>
@@ -208,37 +313,9 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t }: M
             </div>
 
             {/* Navigation Menu */}
-            <div className="flex-1 overflow-y-auto">
-              <nav className="px-6 py-4 space-y-2">
-                {menuItems.map((item, index) => {
-                  const isActive = item.path && isActivePath(item.path)
-                  return (
-                    <button
-                      key={index}
-                      onClick={item.action}
-                      className={`w-full flex items-center space-x-3 p-3 text-left rounded-xl transition-all duration-200 group hover:scale-[1.02] hover:shadow-md touch-target transform ${
-                        isActive 
-                          ? 'bg-accent/20 border-2 border-accent/30' 
-                          : 'hover:bg-accent/10 border-2 border-transparent'
-                      }`}
-                    >
-                      <item.icon className={`w-5 h-5 transition-colors flex-shrink-0 ${
-                        isActive 
-                          ? 'text-accent' 
-                          : 'text-accent-3 group-hover:text-primary'
-                      }`} />
-                      <span className={`font-semibold transition-colors text-sm ${
-                        isActive 
-                          ? 'text-accent font-bold' 
-                          : 'text-white group-hover:text-primary'
-                      }`}>
-                        {item.label}
-                      </span>
-                    </button>
-                  )
-                })}
-              </nav>
-            </div>
+            {
+              navState &&             <Saber items={langSequence(navState?.top_navigation,lang) || []} />
+            }
 
             {/* Footer */}
             <div className="p-6 border-t-2 border-gray-700/50 bg-gradient-to-r from-gray-800/50 to-gray-900/50 flex-shrink-0">
