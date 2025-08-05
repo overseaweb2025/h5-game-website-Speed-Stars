@@ -1,11 +1,9 @@
 import Header from "@/components/header"
 import Footer from "@/components/footer"
-import Link from "next/link"
 import type { Metadata } from "next"
-import { CalendarDays, MessageSquare, ArrowRight, TrendingUp } from "lucide-react"
-import { blogPosts } from "@/data/blog/blog-data"
+import BlogList from "@/components/blog/BlogList"
 import { getDictionary } from "@/lib/lang/i18n"
-
+import { Locale } from "@/lib/lang/dictionaraies"
 export const metadata: Metadata = {
   title: "Speed Stars Blog | Game News, Tips & Updates",
   description:
@@ -31,17 +29,14 @@ export const metadata: Metadata = {
   canonical: "https://speed-stars.net/blog",
 }
 
-export default async function BlogPage({params}: {params: {lang: string}}) {
-  const lang = params.lang as "en" | "zh";
-  const t = await getDictionary(lang);
-  const featuredPosts = blogPosts.filter((post) => post.featured)
-  const trendingPosts = blogPosts.filter((post) => post.trending)
-  const regularPosts = blogPosts.filter((post) => !post.featured)
+
+export default async function BlogPage({params}: {params: Promise<{lang: string}>}) {
+  const { lang } = await params;
+  const t = await getDictionary(lang as Locale);
 
   return (
     <main className="bg-background">
-      <Header t={t} />
-
+      <Header t={t} lang={lang as Locale} />
       <section className="section-padding bg-gray-900 relative overflow-hidden">
         {/* Decorative elements - Mobile optimized */}
         <div className="absolute top-4 left-4 md:top-10 md:left-10 text-4xl md:text-6xl opacity-10 pop-in">📰</div>
@@ -68,114 +63,14 @@ export default async function BlogPage({params}: {params: {lang: string}}) {
             </p>
           </div>
 
-          {/* Trending Posts Section - Mobile optimized */}
-          {trendingPosts.length > 0 && (
-            <div className="mb-8 md:mb-12">
-              <div className="flex items-center mb-6">
-                <TrendingUp className="h-6 w-6 md:h-8 md:w-8 text-primary mr-2" />
-                <h2 className="text-2xl md:text-3xl font-black text-white">Trending Now</h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                {trendingPosts.slice(0, 3).map((post, index) => (
-                  <Link
-                    key={post.slug}
-                    href={`/blog/${post.slug}`}
-                    className="card hover:scale-105 transition-all pop-in"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <h3 className="text-lg md:text-xl font-black text-white mb-3 line-clamp-2">{post.title}</h3>
-                    <p className="text-gray-200 mb-4 text-sm md:text-base line-clamp-3">{post.excerpt}</p>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* API Blog Posts with Pagination */}
+          <BlogList t={t} lang={lang as Locale} />
 
-          {/* Featured Posts Section - Mobile optimized */}
-          {featuredPosts.length > 0 && (
-            <div className="mb-8 md:mb-12">
-              <h2 className="text-2xl md:text-3xl font-black text-white mb-6">Featured Articles</h2>
-              <div className="space-y-6 md:space-y-8">
-                {featuredPosts.map((post, index) => (
-                  <div
-                    key={post.slug}
-                    className="card p-6 md:p-8 border-4 border-primary rainbow-border shadow-cartoon-xl pop-in"
-                    style={{ animationDelay: `${index * 0.2}s` }}
-                  >
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white mb-4 hover:text-primary transition-colors">
-                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                    </h2>
-                    <p className="text-gray-200 mb-6 text-base md:text-lg leading-relaxed">{post.excerpt}</p>
-                    <div className="flex flex-wrap items-center gap-2 md:gap-4 text-sm text-gray-300 mb-6">
-                      <div className="flex items-center">
-                        <CalendarDays className="h-4 w-4 mr-1.5 text-secondary" />
-                        {post.date}
-                      </div>
-                    </div>
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="inline-flex items-center font-semibold text-primary hover:text-primary-hover transition-colors text-lg touch-target"
-                    >
-                      Read Full Article <ArrowRight className="h-5 w-5 ml-2" />
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Regular Posts Grid - Mobile optimized */}
-          {regularPosts.length > 0 && (
-            <div className="mb-8 md:mb-12">
-              <h2 className="text-2xl md:text-3xl font-black text-white mb-6">Latest Articles</h2>
-              <div className="mobile-grid">
-                {regularPosts.map((post, index) => (
-                  <Link
-                    key={post.slug}
-                    href={`/blog/${post.slug}`}
-                    className="card hover:scale-105 transition-all pop-in"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <h3 className="text-lg md:text-xl font-black text-white mb-3 line-clamp-2">{post.title}</h3>
-                    <p className="text-gray-200 mb-4 text-sm md:text-base line-clamp-3">{post.excerpt}</p>
-                    <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-gray-300 mb-4">
-                      <div className="flex items-center">
-                        <CalendarDays className="h-3 w-3 md:h-4 md:w-4 mr-1 text-secondary" />
-                        {post.date}
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-primary font-semibold text-sm md:text-base">Read More</span>
-                      <ArrowRight className="h-4 w-4 text-primary" />
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Newsletter Signup - Mobile optimized */}
-          <div className="card p-6 md:p-8 bg-gradient-to-r from-primary/10 to-accent-3/10 border-4 border-accent text-center">
-            <h3 className="text-2xl md:text-3xl font-black text-white mb-4">
-              Stay Updated with Official Speed Stars News!
-            </h3>
-            <p className="text-gray-200 mb-6 max-w-2xl mx-auto text-sm md:text-base">
-              Get the latest game updates, strategy guides, and exclusive content delivered straight to your inbox. Join
-              thousands of Speed Stars fans!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="flex-1 px-4 py-3 rounded-full border-2 border-primary/30 focus:border-primary focus:outline-none text-sm md:text-base"
-              />
-              <button className="btn-primary px-6 md:px-8 py-3 whitespace-nowrap touch-target">Subscribe Now!</button>
-            </div>
-          </div>
+      
         </div>
       </section>
 
-      <Footer t={t} />
+      <Footer t={t} lang={lang as Locale} />
     </main>
   )
 }

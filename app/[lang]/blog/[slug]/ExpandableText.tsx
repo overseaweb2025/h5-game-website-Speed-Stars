@@ -29,10 +29,7 @@ export default function ExpandableText({
 
     // Add a small delay to ensure DOM is ready
     const timeoutId = setTimeout(checkOverflow, 100);
-    
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', checkOverflow);
-    }
+
     
     return () => {
       clearTimeout(timeoutId);

@@ -28,7 +28,7 @@ const createAxiosInstance = (): AxiosInstance => {
       // 使用代理处理所有请求
       if (config.baseURL === '/api/proxy') {
         // 构建完整的目标 URL，包括查询参数
-        let originalUrl = `http://www.xingnengyun.com${config.url}`
+        let originalUrl = `${process.env.NEXT_PUBLIC_API_URL}${config.url}`
         
         // 如果有 params，添加到 URL 中
         if (config.params) {

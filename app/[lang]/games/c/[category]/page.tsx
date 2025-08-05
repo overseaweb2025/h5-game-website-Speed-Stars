@@ -6,7 +6,7 @@ import { getDictionary } from "@/lib/lang/i18n"
 type CategoryPageProps = {
   params: {
     category: string
-    lang: string
+    lang: Locale
   }
 }
 
@@ -31,7 +31,7 @@ const extractSEOFromResponse = (response: any): CategorySEO | null => {
 }
 
 // 创建默认SEO信息 - 立即可用，包含分类名称
-const createDefaultSEO = (category: string, lang: string = 'en'): CategorySEO => {
+const createDefaultSEO = (category: string, lang: Locale = 'en'): CategorySEO => {
   const decodedCategory = decodeURIComponent(category)
   
   // 根据语言生成不同的默认文案
@@ -133,9 +133,10 @@ export async function generateMetadata(
 }
 
 import CategoryPageClient from './CategoryPageClient'
+import { Locale } from "@/lib/lang/dictionaraies"
 
 const CategoryPage = async ({ params: { category, lang } }: CategoryPageProps) => {
-  const t = await getDictionary(lang as "en" | "zh");
+  const t = await getDictionary(lang as Locale);
   return <CategoryPageClient category={category} t={t} />
 }
 

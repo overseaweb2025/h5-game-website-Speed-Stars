@@ -7,7 +7,7 @@ import FAQ from "@/components/faq"
 import { getDictionary } from "@/lib/lang/i18n"
 import { fetchHomeGameData, extractSEOFromHomeData } from "@/lib/server-api"
 import { Metadata } from "next"
-
+import { Locale } from "@/lib/lang/dictionaraies"
 export async function generateMetadata({params}: {params: Promise<{lang: string}>}): Promise<Metadata> {
   const { lang } = await params
   
@@ -45,15 +45,16 @@ export async function generateMetadata({params}: {params: Promise<{lang: string}
 
 export default async function Home({params}: {params: Promise<{lang: string}>}) {
   const { lang } = await params;
-  const t = await getDictionary(lang as "en" | "zh");
+  const t = await getDictionary(lang as Locale);
+
   return (
     <main>
-      <Header t={t} />
+      <Header t={t} lang={lang as Locale}/>
       <Hero t={t} />
       <HomepageTestimonials />
       <FAQ t={t} />
       <NavigationArrow isHomePage={true} />
-      <Footer t={t} />
+      <Footer t={t}  lang={lang as Locale}/>
     </main>
   )
 }

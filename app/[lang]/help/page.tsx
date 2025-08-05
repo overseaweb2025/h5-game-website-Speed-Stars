@@ -5,6 +5,7 @@ import { ChevronLeftIcon } from "lucide-react"
 import type { Metadata } from "next"
 import { getDictionary } from "@/lib/lang/i18n"
 import HelpClient from "./HelpClient"
+import { Locale } from "@/lib/lang/dictionaraies"
 
 export const metadata: Metadata = {
   title: "Help Center | GameHub Central - Gaming Support & FAQ",
@@ -24,8 +25,8 @@ export const metadata: Metadata = {
 }
 
 
-export default async function HelpPage({params}: {params: {lang: string}}) {
-  const lang = params.lang as "en" | "zh";
+export default async function HelpPage({params}: {params: {lang: Locale}}) {
+  const lang = params.lang as Locale;
   const t = await getDictionary(lang);
 
   return (

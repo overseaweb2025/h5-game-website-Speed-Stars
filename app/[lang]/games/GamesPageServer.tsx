@@ -1,9 +1,8 @@
-import { getDictionary } from "@/lib/lang/i18n"
 import GamesPageClient from "./GamesPageClient"
+import { Locale } from "@/lib/lang/dictionaraies";
 
-export default async function GamesPageServer({params}: {params: {lang: string}}) {
-  const lang = params.lang as "en" | "zh";
-  const t = await getDictionary(lang);
+export default async function GamesPageServer({params}: {params: {lang: Locale}}) {
+  const lang = params.lang as Locale;
   
-  return <GamesPageClient t={t} />;
+  return <GamesPageClient lang={lang}/>;
 }

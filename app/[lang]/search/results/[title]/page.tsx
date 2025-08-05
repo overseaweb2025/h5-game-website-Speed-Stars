@@ -3,9 +3,10 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { getDictionary } from "@/lib/lang/i18n";
 import SearchResultsClient from "./SearchResultsClient";
+import { Locale } from "@/lib/lang/dictionaraies";
 
 interface SearchResultsPageProps {
-  params: Promise<{ lang: string; title: string }>;
+  params: Promise<{ lang: Locale; title: string }>;
 }
 
 export async function generateMetadata({ params }: SearchResultsPageProps): Promise<Metadata> {

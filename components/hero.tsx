@@ -7,7 +7,7 @@ import { heroData } from "@/data/home/hero-data"
 import { useGamePlayTracker } from "@/hooks/useGamePlayTracker"
 import { useGameData } from "@/hooks/useGameData"
 import { useHomeGameData } from "@/hooks/useHomeGameData"
-import { Game as APIGame, reviews_comment, ExtendedGameDetails } from "@/app/api/types/Get/game"
+import { Game as APIGame, reviews_comment, ExtendedGameDetails, GameDetails } from "@/app/api/types/Get/game"
 import GameCard from "./games/GameCard"
 import { getGameDetails } from "@/app/api/gameList"
 import Testimonials from "@/components/testimonials"
@@ -36,7 +36,7 @@ interface HeroProps {
   title?: string;
   description?: string;
   reviews?: Review[];
-  gameData?: ExtendedGameDetails;
+  gameData?: GameDetails;
   t?: any;
 }
 

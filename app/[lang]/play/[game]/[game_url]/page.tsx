@@ -3,9 +3,10 @@
 import { useEffect, useState, useRef } from 'react'
 import { useParams, useSearchParams, useRouter } from 'next/navigation'
 import { ArrowLeft, RotateCcw, Maximize, RotateCw } from 'lucide-react'
+import { Locale } from '@/lib/lang/dictionaraies'
 
 interface PlayPageParams {
-  lang: string,
+  lang: Locale,
   game: string,
   game_url: string
 }

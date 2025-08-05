@@ -5,7 +5,9 @@ import { useGameData } from "@/hooks/useGameData"
 import { getCategoryIcon, addRandomTags } from "./utils"
 import { ExtendedGame } from "./types"
 import GameCard from "./GameCard"
-
+import { useLangGameList } from "@/hooks/LangGamelist_value"
+import { Locale } from "@/lib/lang/dictionaraies"
+import { games } from "@/app/api/types/Get/game"
 // Featured Games组件
 const FeaturedGameSection = ({ games }: { games: ExtendedGame[] }) => {
   const [showControls, setShowControls] = useState(false)
@@ -107,10 +109,11 @@ const FeaturedGameSection = ({ games }: { games: ExtendedGame[] }) => {
 }
 
 // GameRowSection组件
-const GameRowSection = ({ title, games, sectionIndex }: { title: string, games: ExtendedGame[], sectionIndex: number }) => {
+const GameRowSection = ({ title, games, sectionIndex }: { title: string, games: games, sectionIndex: number }) => {
   const [showControls, setShowControls] = useState(false)
   const [touched, setTouched] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
+
 
   const handleScroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -199,7 +202,7 @@ const GameRowSection = ({ title, games, sectionIndex }: { title: string, games: 
 }
 
 // GamesShow不再直接接收侧边栏状态，由Layout统一管理
-const GamesShow = () => {
+const GamesShow = ({lang}:{lang:Locale}) => {
   const { 
     data: gameCategories, 
     loading, 
@@ -209,6 +212,9 @@ const GamesShow = () => {
     refresh 
   } = useGameData()
 
+  const {getLangGamelistBylang} = useLangGameList()
+  // 多语言自适应 适合的数据
+  const GameList =  getLangGamelistBylang(lang)
   // 根据真实分类数据创建游戏行，只显示有游戏的分类
   const createGameRows = () => {
     if (categoriesWithGames.length === 0) return []
@@ -280,16 +286,11 @@ const GamesShow = () => {
             )}
             
             {/* Game Rows */}
-            {gameRows.map((row, index) => (
-              row.games.length > 0 && (
-                <GameRowSection
-                  key={index}
-                  title={row.title}
-                  games={row.games}
-                  sectionIndex={index}
-                />
-              )
-            ))}
+            {
+              GameList?.map((item,index)=>{
+                if(item.games.length > 0 )return (<GameRowSection key={index} title={item.category_name} games={item.games} sectionIndex={index}  />)
+              })
+            }
           </>
         )}
       </div>

@@ -5,18 +5,21 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import Saber from "@/components/games/Saber"
 import { useResponsive } from "@/shared/hooks"
-
+import { Locale } from "@/lib/lang/dictionaraies"
+import { useLangGameList } from "@/hooks/LangGamelist_value"
 export default function GamesLayoutClient({
   children,
   t,
+  lang
 }: {
   children: React.ReactNode
   t?: any
+  lang?:Locale
 }) {
   const [sidebarVisible, setSidebarVisible] = useState(true)
   const [isHovered, setIsHovered] = useState(false)
   const [sidebarToggleFunction, setSidebarToggleFunction] = useState<(() => void) | null>(null)
-
+  const {autoGetData} = useLangGameList()
   const { isSmallScreen, isCollapsed, setIsCollapsed } = useResponsive({
     breakpoint: 1024,
     initialCollapsed: false,
@@ -56,7 +59,10 @@ export default function GamesLayoutClient({
       setIsCollapsed(true)     // 但设置为图标模式
     }
   }, [isSmallScreen])
-
+  //自动获取gamelist 数据 by lang
+  useEffect(()=>{
+    autoGetData(lang as Locale)
+  },[])
   return (
     <main className="bg-gray-900 min-h-screen">
       {/* Header横跨整个宽度 */}
@@ -64,6 +70,7 @@ export default function GamesLayoutClient({
         showSidebarToggle={true}
         onSidebarToggle={handleToggleButtonClick}
         t={t}
+        lang={lang as Locale}
       />
 
       {/* Header下方的内容区域 */}
@@ -75,7 +82,8 @@ export default function GamesLayoutClient({
           }`}>
             <Saber 
               onSidebarToggle={handleSidebarToggle}
-              onStateChange={handleStateChange}
+              onStateChange={handleStateChange} 
+              lang={lang as Locale}  
             />
           </div>
         )}
@@ -96,7 +104,7 @@ export default function GamesLayoutClient({
             </div>
             
             {/* Footer */}
-            <Footer t={t} />
+            <Footer t={t}          lang={lang as Locale}/>
           </div>
         </div>
       </div>

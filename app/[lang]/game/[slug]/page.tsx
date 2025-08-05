@@ -2,10 +2,11 @@ import { Metadata } from "next";
 import { getGameCanonicalUrl } from "@/lib/seo-utils";
 import { getDictionary } from "@/lib/lang/i18n";
 import GamePageClient from "./GamePageClient";
+import { Locale } from "@/lib/lang/dictionaraies";
 
 // 生成动态元数据 - 简化版，避免服务器端API调用错误
 export async function generateMetadata(
-  { params }: { params: { slug: string; lang: string } }
+  { params }: { params: { slug: string; lang: Locale } }
 ): Promise<Metadata> {
   const slug = params.slug || 'game';
   
@@ -34,8 +35,8 @@ export async function generateMetadata(
   };
 }
 
-export default async function GamePage({ params }: { params: { slug: string; lang: string } }) {
-  const lang = params.lang as "en" | "zh";
+export default async function GamePage({ params }: { params: { slug: string; lang: Locale } }) {
+  const lang = params.lang as Locale;
   const t = await getDictionary(lang);
-  return <GamePageClient slug={params.slug}/>;
+  return <GamePageClient slug={params.slug} lang={lang} t={t}/>;
 }

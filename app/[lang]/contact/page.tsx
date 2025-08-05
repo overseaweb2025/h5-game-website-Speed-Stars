@@ -5,6 +5,7 @@ import { ChevronLeftIcon, MailIcon, PhoneIcon, MapPinIcon, SendIcon, MessageCirc
 import type { Metadata } from "next"
 import { getDictionary } from "@/lib/lang/i18n"
 import ContactForm from "./ContactForm"
+import { Locale } from "@/lib/lang/dictionaraies"
 
 export const metadata: Metadata = {
   title: "Contact Us | GameHub Central - Get in Touch",
@@ -31,8 +32,8 @@ export const metadata: Metadata = {
   canonical: "https://speed-stars.net/contact",
 }
 
-export default async function ContactPage({params}: {params: {lang: string}}) {
-  const lang = params.lang as "en" | "zh";
+export default async function ContactPage({params}: {params: {lang: Locale}}) {
+  const lang = params.lang as Locale;
   const t = await getDictionary(lang);
 
   return (

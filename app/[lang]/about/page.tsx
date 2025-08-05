@@ -4,6 +4,7 @@ import Link from "next/link"
 import { ChevronLeftIcon, GamepadIcon as GameController, StarIcon, UsersIcon, TrophyIcon, HeartIcon } from "lucide-react"
 import type { Metadata } from "next"
 import { getDictionary } from "@/lib/lang/i18n"
+import { Locale } from "@/lib/lang/dictionaraies"
 
 export const metadata: Metadata = {
   title: "About Us | GameHub Central - Free HTML5 Games Platform",
@@ -30,8 +31,8 @@ export const metadata: Metadata = {
   canonical: "https://speed-stars.net/about",
 }
 
-export default async function AboutPage({params}: {params: {lang: string}}) {
-  const lang = params.lang as "en" | "zh";
+export default async function AboutPage({params}: {params: {lang: Locale}}) {
+  const lang = params.lang as Locale;
   const t = await getDictionary(lang);
   return (
     <main className="bg-background">

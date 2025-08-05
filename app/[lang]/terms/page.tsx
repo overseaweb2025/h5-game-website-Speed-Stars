@@ -4,6 +4,7 @@ import Link from "next/link"
 import { ChevronLeftIcon, ScaleIcon, FileTextIcon, AlertTriangleIcon } from "lucide-react"
 import type { Metadata } from "next"
 import { getDictionary } from "@/lib/lang/i18n"
+import { Locale } from "@/lib/lang/dictionaraies"
 
 export const metadata: Metadata = {
   title: "Terms of Service | GameHub Central - Legal Terms & Conditions",
@@ -22,8 +23,8 @@ export const metadata: Metadata = {
   canonical: "https://speed-stars.net/terms",
 }
 
-export default async function TermsPage({params}: {params: {lang: string}}) {
-  const lang = params.lang as "en" | "zh";
+export default async function TermsPage({params}: {params: {lang: Locale}}) {
+  const lang = params.lang as Locale;
   const t = await getDictionary(lang);
   return (
     <main className="bg-background">

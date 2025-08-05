@@ -58,55 +58,7 @@ const shouldFetchData = (): boolean => {
 
 // Fallback本地游戏数据
 const fallbackGameData: CategoryGameList[] = [
-  {
-    category_id: 1,
-    category_name: "Action",
-    games: [
-      { id: 1, name: "speed-stars", display_name: "Speed Stars" },
-      { id: 2, name: "speed-stars-2", display_name: "Speed Stars 2" },
-      { id: 3, name: "crazy-cattle-3d", display_name: "Crazy Cattle 3D" },
-      { id: 4, name: "speed-stars-3", display_name: "Speed Stars 3" },
-      { id: 5, name: "action-hero", display_name: "Action Hero" }
-    ]
-  },
-  {
-    category_id: 2,
-    category_name: "Racing",
-    games: [
-      { id: 6, name: "highway-race", display_name: "Highway Race" },
-      { id: 7, name: "drift-master", display_name: "Drift Master" },
-      { id: 8, name: "street-racer", display_name: "Street Racer" },
-      { id: 9, name: "turbo-speed", display_name: "Turbo Speed" }
-    ]
-  },
-  {
-    category_id: 3,
-    category_name: "Puzzle",
-    games: [
-      { id: 10, name: "block-puzzle", display_name: "Block Puzzle" },
-      { id: 11, name: "word-challenge", display_name: "Word Challenge" },
-      { id: 12, name: "mind-maze", display_name: "Mind Maze" },
-      { id: 13, name: "logic-master", display_name: "Logic Master" }
-    ]
-  },
-  {
-    category_id: 4,
-    category_name: "Adventure",
-    games: [
-      { id: 14, name: "treasure-hunt", display_name: "Treasure Hunt" },
-      { id: 15, name: "jungle-quest", display_name: "Jungle Quest" },
-      { id: 16, name: "mystery-island", display_name: "Mystery Island" }
-    ]
-  },
-  {
-    category_id: 5,
-    category_name: "Sports",
-    games: [
-      { id: 17, name: "soccer-pro", display_name: "Soccer Pro" },
-      { id: 18, name: "basketball-star", display_name: "Basketball Star" },
-      { id: 19, name: "tennis-ace", display_name: "Tennis Ace" }
-    ]
-  }
+
 ]
 
 // 获取游戏数据的函数
@@ -248,7 +200,6 @@ if (typeof window !== 'undefined') {
     scheduleInit()
   } else {
     // 否则等待页面加载完成
-    window.addEventListener('load', scheduleInit, { once: true })
   }
 }
 

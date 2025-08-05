@@ -4,6 +4,7 @@ import Link from "next/link"
 import { ChevronLeftIcon, ShieldIcon, AlertTriangleIcon, FileTextIcon, MailIcon } from "lucide-react"
 import type { Metadata } from "next"
 import { getDictionary } from "@/lib/lang/i18n"
+import { Locale } from "@/lib/lang/dictionaraies"
 
 export const metadata: Metadata = {
   title: "DMCA Policy | GameHub Central - Copyright Protection & Takedown Requests",
@@ -22,8 +23,8 @@ export const metadata: Metadata = {
   canonical: "https://speed-stars.net/dmca",
 }
 
-export default async function DMCAPage({params}: {params: {lang: string}}) {
-  const lang = params.lang as "en" | "zh";
+export default async function DMCAPage({params}: {params: {lang: Locale}}) {
+  const lang = params.lang as Locale;
   const t = await getDictionary(lang);
   return (
     <main className="bg-background">

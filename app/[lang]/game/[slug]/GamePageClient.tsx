@@ -1,11 +1,11 @@
 "use client"
 
-import React, { useState, useEffect, useMemo } from "react"
-import { useParams, useRouter } from "next/navigation"
+import React, { useEffect, useMemo } from "react"
 import { notFound } from "next/navigation"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import Hero from "@/components/hero"
+import GameHero from '@/components/hero/index'
 import NavigationArrow from "@/components/navigation-arrow"
 import LoadingSpinner from "@/shared/components/LoadingSpinner"
 import GameDetailsCacheDebug from "@/components/GameDetailsCacheDebug"
@@ -15,14 +15,16 @@ import { useGamePageTimer } from "@/hooks/useGamePageTimer"
 import { gameDetailsParser } from "@/lib/game-utils"
 import { useResponsive } from "@/shared/hooks/useResponsive"
 import { GameRouter } from "@/lib/router"
-
+import { Locale } from "@/lib/lang/dictionaraies"
+import { useLangGameDetails } from "@/hooks/LangGameDetails_value"
+import { useLangGameList } from "@/hooks/LangGamelist_value"
 interface GamePageClientProps {
   slug: string
+  lang:Locale
+  t:any
 }
 
-export default function GamePageClient({ slug }: GamePageClientProps) {
-  const router = useRouter()
-
+export default function GamePageClient({ slug,lang,t }: GamePageClientProps) {
   // 响应式屏幕检测
   const { isSmallScreen } = useResponsive({ breakpoint: 1024 })
 
@@ -34,7 +36,11 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
     isCached,
     getGameDetails
   } = useGameDetails(slug)
-
+  //游戏详情管理器
+  const {autoGetData,getGameDetailsFromCache} = useLangGameDetails()
+  const gameDetails = getGameDetailsFromCache(lang,slug)
+  const {getLangGamelistBylang,getLangGames} = useLangGameList()
+  const GameList = getLangGames(lang)
   // 游戏历史记录功能
   const { isEnabled } = useGameHistory()
   
@@ -86,31 +92,20 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
       }
     }
   }, [isSmallScreen, gameData, slug])
-
-  useEffect(() => {
-    // 确保在页面加载时获取游戏详情
-    if (slug) {
-      
-      // 如果没有数据且不在加载中，则获取游戏详情
-      if (!gameData && !loading) {
-        getGameDetails(slug).then(data => {
-         
-        }).catch(err => {
-          // Silent error handling
-        })
-      }
-    }
-  }, [slug, gameData, loading])
+  useEffect(()=>{
+    //获取 游戏详情
+    autoGetData(lang,slug)
+  },[])
 
   if (loading) {
     return (
       <main>
-        <Header />
+        <Header lang={lang }/>
         <LoadingSpinner 
           text={isCached ? "Loading from cache..." : "Loading game..."} 
           fullScreen 
         />
-        <Footer />
+        <Footer lang={lang}/>
       </main>
     )
   }
@@ -121,7 +116,7 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
     if (error.includes('Network') || error.includes('500') || error.includes('Failed to fetch')) {
       return (
         <main>
-          <Header />
+          <Header lang={lang }/>
           <div className="min-h-screen bg-background flex items-center justify-center">
             <div className="text-center p-8">
               <div className="text-6xl mb-4">🎮</div>
@@ -145,7 +140,7 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
               </div>
             </div>
           </div>
-          <Footer />
+          <Footer lang={lang } />
         </main>
       )
     }
@@ -157,9 +152,9 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
   if (!gameData && !loading && !error) {
     return (
       <main>
-        <Header />
+        <Header lang={lang }/>
         <LoadingSpinner text="Loading game..." fullScreen />
-        <Footer />
+        <Footer lang={lang }/>
       </main>
     )
   }
@@ -169,18 +164,17 @@ export default function GamePageClient({ slug }: GamePageClientProps) {
 
   return (
     <main>
-      <Header />
-      {heroGameData && gameData && (
-        <Hero game={heroGameData} reviews={gameData.reviews} gameData={gameData} />
-      )}
-      
+      <Header lang={lang }/>
+
+        {/* <Hero game={heroGameData} reviews={gameDetails?.reviews} gameData={gameDetails} />     */}
+        {gameDetails &&  <GameHero t={t} gameDetails={gameDetails} GameList={GameList} />}
       <NavigationArrow isHomePage={false} />
       
       {/* Game Information Section */}
      
       
-      <Footer />
-      <GameDetailsCacheDebug />
+      <Footer lang={lang }/>
+      {/* <GameDetailsCacheDebug /> */}
     </main>
   )
 }

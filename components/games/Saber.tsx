@@ -5,6 +5,8 @@ import { useRouter, usePathname } from "next/navigation"
 import { useGameData } from "@/hooks/useGameData"
 import { getCategoryIcon } from "./utils"
 import { useResponsive } from "@/shared/hooks"
+import { useLangGameList } from "@/hooks/LangGamelist_value"
+import { Locale } from "@/lib/lang/dictionaraies"
 
 // 固定的主要导航项目
 const fixedNavItems = [
@@ -19,10 +21,13 @@ const fixedNavItems = [
 interface SaberProps {
   onSidebarToggle?: (toggleFunction: () => void) => void
   onStateChange?: (sidebarVisible: boolean, isCollapsed: boolean, isHovered: boolean) => void
+  lang:Locale
 }
 
-const Saber = ({ onSidebarToggle, onStateChange }: SaberProps) => {
+const Saber = ({ onSidebarToggle, onStateChange ,lang}: SaberProps) => {
   const { allCategories } = useGameData()
+  const {getLangGamelistBylang} = useLangGameList()
+  const GameList = getLangGamelistBylang(lang)
   const router = useRouter()
   const pathname = usePathname()
   
@@ -156,7 +161,8 @@ const Saber = ({ onSidebarToggle, onStateChange }: SaberProps) => {
 
   // 创建侧边栏分类列表 - 使用所有分类（包括空的）
   const createSidebarCategories = () => {
-    return allCategories.map(category => ({
+    if(GameList)
+    return GameList.map(category => ({
       id: `category-${category.category_id}`,
       icon: getCategoryIcon(category.category_name),
       label: category.category_name,
@@ -230,7 +236,7 @@ const Saber = ({ onSidebarToggle, onStateChange }: SaberProps) => {
                 overflow: 'visible'
               }}
             >
-              {sidebarCategories.map((category) => (
+              {sidebarCategories && sidebarCategories.map((category) => (
                 <div
                   key={category.id}
                   className={`relative group flex items-center h-12 cursor-pointer select-none transition-all duration-200 hover:bg-gray-700/50 touch-manipulation active:bg-gray-600/50 ${

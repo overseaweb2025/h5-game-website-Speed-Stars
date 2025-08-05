@@ -99,7 +99,6 @@ export const useGamePageTimer = ({
 
     // 监听页面卸载
     if (typeof window !== 'undefined') {
-      window.addEventListener('beforeunload', handleBeforeUnload)
     }
 
     return () => {
