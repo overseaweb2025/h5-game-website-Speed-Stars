@@ -1,36 +1,56 @@
 import type { Metadata } from "next";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { getBlogPostBySlug, getAllBlogSlugs } from "@/data/blog/blog-data";
+import { getAllBlogSlugs } from "@/data/blog/blog-data";
 import { getDictionary } from "@/lib/lang/i18n";
 import { Locale } from "@/lib/lang/dictionaraies";
+import { getBlogDetails } from "@/app/api/blog";
 import BlogHero from "./BlogHero";
+
 interface BlogPostPageProps {
   params: Promise<{ slug: string; lang: Locale }>;
 }
 
+export const revalidate = 120;
+
 export async function generateStaticParams() {
   const blogSlugs = getAllBlogSlugs();
-  return blogSlugs.map((slug) => ({ slug }));
+  const languages: Locale[] = ['en', 'zh', 'ru', 'es', 'vi', 'hi', 'fr', 'tl', 'ja', 'ko'];
+  
+  const params = [];
+  for (const slug of blogSlugs) {
+    for (const lang of languages) {
+      params.push({ slug, lang });
+    }
+  }
+  return params;
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug, lang } = await params;
-  const post = getBlogPostBySlug(slug);
   
-  // Skip API call in server-side metadata generation to avoid URL issues
-  // API calls should be done in client components instead
-  if (!post) {
+  try {
+    const response = await getBlogDetails(slug, lang);
+    const post = response?.data?.data;
+    
+    if (!post) {
+      return {
+        title: "Blog Post Not Found - Speed Stars",
+        description: "The requested blog post could not be found.",
+      };
+    }
+    
     return {
-      title: "Blog Post Not Found - Speed Stars",
-      description: "The requested blog post could not be found.",
+      title: `${post.title} - Speed Stars Blog`,
+      description: post.description || post.excerpt,
+    };
+  } catch (error) {
+    console.error('Error fetching blog details for metadata:', error);
+    return {
+      title: "Blog Post - Speed Stars",
+      description: "Speed Stars blog post",
     };
   }
-  
-  return {
-    title: `${post.title} - Speed Stars Blog`,
-    description: post.description || post.excerpt,
-  };
 }
 
 
