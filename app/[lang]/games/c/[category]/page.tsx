@@ -61,7 +61,7 @@ const createDefaultSEO = (category: string, lang: Locale = 'en'): CategorySEO =>
 async function fetchCategorySEOServerSide(category: string): Promise<CategorySEO | null> {
   try {
     // 在服务端环境中，直接调用外部API而不通过代理
-    const url = `https://www.xingnengyun.com/api/v1/game/list?category=${encodeURIComponent(category)}`
+    const url = `${process.env.NEXT_API_URL}/api/v1/game/list?category=${encodeURIComponent(category)}`
     
     const response = await fetch(url, {
       method: 'GET',

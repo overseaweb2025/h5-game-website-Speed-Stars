@@ -4,21 +4,24 @@ import React, { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Search, Sparkles, TrendingUp, Filter } from "lucide-react"
 import { SearchBox, SearchResults } from "@/components/search"
-import { useGameData } from "@/hooks/useGameData"
+import { useLangGameList } from "@/hooks/LangGamelist_value"
 import { SearchEngine, SearchResult } from "@/components/search/SearchUtils"
+import { Locale } from "@/lib/lang/dictionaraies"
 
 interface SearchPageClientProps {
   initialQuery?: string
   t?: any
+  lang: Locale
 }
 
-export default function SearchPageClient({ initialQuery = "", t }: SearchPageClientProps) {
+export default function SearchPageClient({ initialQuery = "", t, lang }: SearchPageClientProps) {
   const [query, setQuery] = useState(initialQuery)
   const [searchSuggestions, setSearchSuggestions] = useState<string[]>([])
   const [results, setResults] = useState<SearchResult[]>([])
   
   const router = useRouter()
-  const { allGames } = useGameData()
+  const { getLangGames } = useLangGameList()
+  const allGames = getLangGames(lang)
 
   // 获取搜索建议
   const getSearchSuggestions = (searchQuery: string) => {

@@ -6,37 +6,16 @@ import { Home, Search } from "lucide-react"
 import { heroData } from "@/data/home/hero-data"
 import { useGamePlayTracker } from "@/hooks/useGamePlayTracker"
 import { useGameData } from "@/hooks/useGameData"
-import { useHomeGameData } from "@/hooks/useHomeGameData"
-import { Game as APIGame, reviews_comment, ExtendedGameDetails, GameDetails } from "@/app/api/types/Get/game"
+import { useHomeLanguage } from "@/hooks/LangHome_value"
+import { Game as APIGame, reviews_comment } from "@/app/api/types/Get/game"
+import { Locale } from "@/lib/lang/dictionaraies"
 import GameCard from "./games/GameCard"
 import { getGameDetails } from "@/app/api/gameList"
-import Testimonials from "@/components/testimonials"
 import { GameRouter } from "@/lib/router"
-interface Game {
-  id: string
-  title: string
-  description: string
-  image: string
-  category: string
-  iframeSrc?: string
-  features?: string[]
-  howToPlay?: string[]
-}
-
-interface Review {
-  user_name: string;
-  rating: number;
-  content: string;
-  email: string;
-  created_at: string;
-}
-
 interface HeroProps {
-  game?: Game;
   title?: string;
   description?: string;
-  reviews?: Review[];
-  gameData?: GameDetails;
+  lang: Locale;
   t?: any;
 }
 
@@ -48,7 +27,7 @@ const convertToExtendedGame = (apiGame: APIGame): any => ({
   image: undefined // 将会生成占位图
 })
 
-export default function Hero({ game, title, description, reviews, gameData, t }: HeroProps) {
+export default function Hero({ title, description, lang, t }: HeroProps) {
   const router = useRouter()
   const [iframeHeight, setIframeHeight] = useState("600px")
   const [randomGames, setRandomGames] = useState<APIGame[]>([])
@@ -57,8 +36,9 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
   // 获取games页面的数据
   const { allGames } = useGameData()
   
-  // 获取首页游戏数据
-  const { homeData, gameUrl, pageTitle, loading: homeDataLoading } = useHomeGameData()
+  // 使用首页语言管理器（只获取数据，不负责获取）
+  const { getHomeInfoByLang } = useHomeLanguage()
+  const homeData = getHomeInfoByLang(lang)
   
   // 生成游戏占位符图片的函数
 
@@ -76,36 +56,33 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
       setRandomGames(prevRandomGames => {
         if (prevRandomGames.length === 0) {
           // 从games页面的数据中随机获取足够多的游戏用于填充各个区域
-          const availableGames = allGames.filter(apiGame => apiGame.name !== game?.id)
-          const shuffled = [...availableGames].sort(() => 0.5 - Math.random())
+          const shuffled = [...allGames].sort(() => 0.5 - Math.random())
           return shuffled
         }
         return prevRandomGames
       })
     }
-  }, [allGames, game?.id])
+  }, [allGames])
 
-  // 在首页时获取speed-stars的评论数据
+  // 获取speed-stars的评论数据（首页专用）
   useEffect(() => {
-    if (!game) { // 只在首页时执行
-      const fetchSpeedStarsReviews = async () => {
-        try {
-          const response = await getGameDetails('speed-stars')
-          if (response?.data?.data?.reviews) {
-            setSpeedStarsReviews(response.data.data.reviews)
-          }
-        } catch (error) {
-          // 即使获取评论失败，也不影响页面其他功能
-          // 设置空数组，避免反复尝试
-          setSpeedStarsReviews([])
+    const fetchSpeedStarsReviews = async () => {
+      try {
+        const response = await getGameDetails('speed-stars')
+        if (response?.data?.data?.reviews) {
+          setSpeedStarsReviews(response.data.data.reviews)
         }
+      } catch (error) {
+        // 即使获取评论失败，也不影响页面其他功能
+        // 设置空数组，避免反复尝试
+        setSpeedStarsReviews([])
       }
-      
-      // 延迟执行，等待游戏数据加载完成
-      const timer = setTimeout(fetchSpeedStarsReviews, 1000)
-      return () => clearTimeout(timer)
     }
-  }, [game])
+    
+    // 延迟执行，等待游戏数据加载完成
+    const timer = setTimeout(fetchSpeedStarsReviews, 1000)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     const updateHeight = () => {
@@ -142,16 +119,16 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
     return () => window.removeEventListener("resize", updateHeight)
   }, [])
 
-  // 初始化游戏追踪
+  // 初始化首页游戏追踪
   useEffect(() => {
-    if (game) {
+    if (homeData?.game) {
       initializeGame({
-        id: game.id,
-        name: game.id, // 使用id作为name
-        displayName: game.title
+        id: homeData.game.package.url || homeData.title || 'speed-stars',
+        name: homeData.game.cover || homeData.title || 'speed-stars',
+        displayName: homeData.title || 'Speed Stars'
       })
     }
-  }, [game, initializeGame])
+  }, [homeData, initializeGame])
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -165,61 +142,12 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
       <div className="container mx-auto px-2 sm:px-4">
         <div className="flex flex-col gap-4">
           <div className="w-full">
-            {/* Breadcrumbs Navigation - Above title */}
-            {gameData && gameData.breadcrumbs && gameData.breadcrumbs.length > 0 && (
-              <div className="flex justify-center mb-4">
-                <div className="max-w-[1494px] w-full px-4">
-                  <nav aria-label="Breadcrumb">
-                    <div className="flex items-center space-x-1 text-sm">
-                      {/* Games link */}
-                      <Link href="/games" className="text-gray-300 hover:text-primary transition-colors cursor-pointer px-2 py-1 rounded hover:bg-white/10">
-                        {t?.navigation?.allGames || "Games"}
-                      </Link>
-                      {gameData.breadcrumbs.map((crumb, index) => {
-                        // Skip the first breadcrumb if it's "Games" to avoid duplication
-                        if (index === 0 && crumb.name.toLowerCase() === 'games') {
-                          return null;
-                        }
-                        
-                        const isLast = index === gameData.breadcrumbs.length - 1;
-                        const categorySlug = crumb.name.toLowerCase().replace(/\s+/g, '-');
-                        
-                        return (
-                          <div key={index} className="flex items-center">
-                            <svg 
-                              className="mx-2 h-4 w-4 text-gray-400" 
-                              fill="currentColor" 
-                              viewBox="0 0 20 20"
-                            >
-                              <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                            </svg>
-                            <span className={isLast ? "text-primary font-semibold px-2 py-1 rounded" : ""}>
-                              {isLast ? (
-                                crumb.name
-                              ) : (
-                                <Link 
-                                  href={`/games/c/${categorySlug}`}
-                                  className="text-gray-300 hover:text-primary transition-colors cursor-pointer px-2 py-1 rounded hover:bg-white/10"
-                                >
-                                  {crumb.name}
-                                </Link>
-                              )}
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </nav>
-                </div>
-              </div>
-            )}
-
             {/* 桌面端显示标题 */}
             <h1 className="hidden lg:block text-5xl md:text-6xl lg:text-7xl text-text font-black mb-4 leading-tight text-center pop-in">
-              {game ? (
-                <span className="gradient-text">{game.title}</span>
-              ) : title ? (
+              {title ? (
                 <span className="gradient-text">{title}</span>
+              ) : homeData?.title ? (
+                <span className="gradient-text">{homeData.title}</span>
               ) : (
                 <>
                   <span className="gradient-text">{heroData.title.main}</span>
@@ -284,11 +212,11 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
                   }}
                 >
                   
-                  {(game?.iframeSrc || gameUrl || heroData.gameIframeSrc) ? (
+                  {(homeData?.game?.package?.url || heroData.gameIframeSrc) ? (
                     <iframe
                       ref={setIframeRef}
-                      src={game?.iframeSrc || gameUrl || heroData.gameIframeSrc}
-                      title={pageTitle || game?.title || t?.hero?.speedStarUnblocked || "Speed Stars Game"}
+                      src={homeData?.game?.package?.url || heroData.gameIframeSrc}
+                      title={homeData?.title || t?.hero?.speedStarUnblocked || "Speed Stars Game"}
                       className="absolute top-0 left-0 w-full h-full border-0"
                       style={{
                         backgroundColor: '#000',
@@ -297,7 +225,7 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
                       allowFullScreen
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                     ></iframe>
-                  ) : homeDataLoading ? (
+                  ) : !homeData ? (
                     <div className="w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
                       <div className="text-center">
                         <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mb-4"></div>
@@ -345,13 +273,13 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
                 </div>
 
                 {/* Features section - 在底部游戏面板下方 */}
-                {!game && homeData?.data && (
+                {homeData?.page_content?.Features && (
                   <div className="mt-6 mb-6">
                     <div className="max-w-4xl mx-auto">
                       <div 
                         className="prose prose-lg max-w-none text-text/80 leading-relaxed [&>h1]:text-text [&>h2]:text-text [&>h3]:text-text [&>h4]:text-text [&>h5]:text-text [&>h6]:text-text [&>p]:text-text/80 [&>ul]:text-text/80 [&>ol]:text-text/80 [&>li]:text-text/80 [&>a]:text-primary [&>a]:hover:text-primary/80 [&>strong]:text-text [&>b]:text-text"
                         dangerouslySetInnerHTML={{
-                          __html: homeData?.data.page_content.Features || ""
+                          __html: homeData.page_content.Features
                         }}
                       />
                     </div>
@@ -373,65 +301,38 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
                   </Link>
                 </div>
 
-                {/* Homepage: Show page_content.about directly below buttons */}
-               {
-                !game && homeData?.data &&(
+                {/* Homepage content sections */}
+                {homeData?.page_content && (
                   <div>
-                  <div className="mt-6 mb-6">
-                    <div className="max-w-4xl mx-auto">
-                      <div 
-                        className="prose prose-lg max-w-none text-text/80 leading-relaxed [&>h1]:text-text [&>h2]:text-text [&>h3]:text-text [&>h4]:text-text [&>h5]:text-text [&>h6]:text-text [&>p]:text-text/80 [&>ul]:text-text/80 [&>ol]:text-text/80 [&>li]:text-text/80 [&>a]:text-primary [&>a]:hover:text-primary/80 [&>strong]:text-text [&>b]:text-text"
-                        dangerouslySetInnerHTML={{
-                          __html: homeData?.data.page_content.About || ""
-                        }}
-                      />
-                    </div>
-                  </div>
+                    {/* About section */}
+                    {homeData.page_content.About && (
+                      <div className="mt-6 mb-6">
+                        <div className="max-w-4xl mx-auto">
+                          <div 
+                            className="prose prose-lg max-w-none text-text/80 leading-relaxed [&>h1]:text-text [&>h2]:text-text [&>h3]:text-text [&>h4]:text-text [&>h5]:text-text [&>h6]:text-text [&>p]:text-text/80 [&>ul]:text-text/80 [&>ol]:text-text/80 [&>li]:text-text/80 [&>a]:text-primary [&>a]:hover:text-primary/80 [&>strong]:text-text [&>b]:text-text"
+                            dangerouslySetInnerHTML={{
+                              __html: homeData.page_content.About
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )}
 
-                  <div className="mt-6 mb-6">
-                    <div className="max-w-4xl mx-auto">
-                      <div 
-                        className="prose prose-lg max-w-none text-text/80 leading-relaxed [&>h1]:text-text [&>h2]:text-text [&>h3]:text-text [&>h4]:text-text [&>h5]:text-text [&>h6]:text-text [&>p]:text-text/80 [&>ul]:text-text/80 [&>ol]:text-text/80 [&>li]:text-text/80 [&>a]:text-primary [&>a]:hover:text-primary/80 [&>strong]:text-text [&>b]:text-text"
-                        dangerouslySetInnerHTML={{
-                          __html: homeData?.data.page_content.Features || ""
-                        }}
-                      />
-                    </div>
+                    {/* Gameplay section */}
+                    {homeData.page_content.Gameplay && (
+                      <div className="mt-6 mb-6">
+                        <div className="max-w-4xl mx-auto">
+                          <div 
+                            className="prose prose-lg max-w-none text-text/80 leading-relaxed [&>h1]:text-text [&>h2]:text-text [&>h3]:text-text [&>h4]:text-text [&>h5]:text-text [&>h6]:text-text [&>p]:text-text/80 [&>ul]:text-text/80 [&>ol]:text-text/80 [&>li]:text-text/80 [&>a]:text-primary [&>a]:hover:text-primary/80 [&>strong]:text-text [&>b]:text-text"
+                            dangerouslySetInnerHTML={{
+                              __html: homeData.page_content.Gameplay
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )}
                   </div>
-
-                    <div className="mt-6 mb-6">
-                    <div className="max-w-4xl mx-auto">
-                      <div 
-                        className="prose prose-lg max-w-none text-text/80 leading-relaxed [&>h1]:text-text [&>h2]:text-text [&>h3]:text-text [&>h4]:text-text [&>h5]:text-text [&>h6]:text-text [&>p]:text-text/80 [&>ul]:text-text/80 [&>ol]:text-text/80 [&>li]:text-text/80 [&>a]:text-primary [&>a]:hover:text-primary/80 [&>strong]:text-text [&>b]:text-text"
-                        dangerouslySetInnerHTML={{
-                          __html: homeData?.data.page_content.Gameplay || ""
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  </div>
-                )
-               }
-
-                {/* Game page: Show game description */}
-                {game && (
-                   <div className="container mx-auto px-4 mt-12 space-y-8">
-                     {/* Game Info HTML Content */}
-                     {game.description && (
-                       <section className="py-8">
-                         <div className="max-w-4xl mx-auto">
-                           <div 
-                             className="prose prose-lg max-w-none text-text/80 leading-relaxed [&>h1]:text-text [&>h2]:text-text [&>h3]:text-text [&>h4]:text-text [&>h5]:text-text [&>h6]:text-text [&>p]:text-text/80 [&>ul]:text-text/80 [&>ol]:text-text/80 [&>li]:text-text/80 [&>a]:text-primary [&>a]:hover:text-primary/80 [&>strong]:text-text [&>b]:text-text"
-                             dangerouslySetInnerHTML={{
-                               __html: game.description
-                             }}
-                           />
-                         </div>
-                       </section>
-                     )}
-                   </div>
-                 )}
+                )}
 
               </div>
 
@@ -532,10 +433,10 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
                     <div className="bg-white rounded-[9px] px-4 py-3 shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-start h-[73px]">
                       <div className="text-left">
                         <h2 className="text-base font-black text-gray-800 leading-tight">
-                          {game ? game.title : (pageTitle || heroData.title.main)}
+                          {homeData?.title || heroData.title.main}
                         </h2>
                         <p className="text-xs text-gray-600 mt-1">
-                          {t?.hero?.category || "分类名"}: {game?.category || homeData?.data?.category || "Games"}
+                          {t?.hero?.category || "分类名"}: {homeData?.game.category || "Games"}
                         </p>
                       </div>
                     </div>
@@ -556,27 +457,22 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
                       width: '100%'
                     }}
                     onClick={() => {
-            
-                      if (gameData) {
-                        // 内页跳转
+                      // 首页跳转到游戏播放页
+                      if (homeData?.game?.package?.url) {
                         GameRouter.toGamePlay(
-                          gameData.gameSlug || "",
-                          gameData.package?.url || "",
-                          gameData.display_name || ""
+                          homeData.title || 'speed-stars',
+                          homeData.game.package.url,
+                          homeData.title || 'Speed Stars'
                         )
-
-                      }else {
-                        //首页跳转
-                        GameRouter.toGamePlay(homeData?.data.title || 'not_name',homeData?.data.game.package.url||'',homeData?.data.title)
                       }
                     }}
                   >
                   
                   {/* 游戏封面图片 */}
-                  {!homeDataLoading ? (
+                  {homeData ? (
                     <img
-                      src={gameData?.cover || homeData?.data.game.cover}
-                      alt={pageTitle || game?.title || t?.hero?.speedStarUnblocked || "Speed Stars Game"}
+                      src={homeData.game?.cover}
+                      alt={homeData.title || t?.hero?.speedStarUnblocked || "Speed Stars Game"}
                       className="absolute top-0 left-0 w-full h-full object-cover"
                       style={{
                         backgroundColor: '#000',
@@ -591,7 +487,7 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
                     />
                   ) : null}
                   
-                  {homeDataLoading ? (
+                  {!homeData ? (
                     <div className="w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
                       <div className="text-center">
                         <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mb-4"></div>
@@ -667,21 +563,17 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
                 })()}
                 
                 {/* 首页移动端：在游戏卡片下方显示page_content内容 */}
-                {!game && homeData?.data && (
-                  <>
-                    {/* About Content */}
-                    <div className="col-span-3 mt-6">
-                      <div className="max-w-4xl mx-auto">
-                        <div 
-                          className="prose prose-lg max-w-none text-text/80 leading-relaxed [&>h1]:text-text [&>h2]:text-text [&>h3]:text-text [&>h4]:text-text [&>h5]:text-text [&>h6]:text-text [&>p]:text-text/80 [&>ul]:text-text/80 [&>ol]:text-text/80 [&>li]:text-text/80 [&>a]:text-primary [&>a]:hover:text-primary/80 [&>strong]:text-text [&>b]:text-text"
-                          dangerouslySetInnerHTML={{
-                            __html: homeData?.data.page_content.About || ""
-                          }}
-                        />
-                      </div>
+                {homeData?.page_content?.About && (
+                  <div className="col-span-3 mt-6">
+                    <div className="max-w-4xl mx-auto">
+                      <div 
+                        className="prose prose-lg max-w-none text-text/80 leading-relaxed [&>h1]:text-text [&>h2]:text-text [&>h3]:text-text [&>h4]:text-text [&>h5]:text-text [&>h6]:text-text [&>p]:text-text/80 [&>ul]:text-text/80 [&>ol]:text-text/80 [&>li]:text-text/80 [&>a]:text-primary [&>a]:hover:text-primary/80 [&>strong]:text-text [&>b]:text-text"
+                        dangerouslySetInnerHTML={{
+                          __html: homeData.page_content.About
+                        }}
+                      />
                     </div>
-
-                  </>
+                  </div>
                 )}
                 
               </div>
@@ -691,16 +583,6 @@ export default function Hero({ game, title, description, reviews, gameData, t }:
           </div>
         </div>
       </div>
-      
-      {/* Only show these sections for game pages (when game prop is provided) */}
- 
-
-      {/* 首页不显示 */}
-      {
-        game && (
-          <Testimonials gameSlug={game?.id} reviews={reviews} />
-        )
-      }
 
     </section>
   )

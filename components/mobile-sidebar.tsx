@@ -89,12 +89,6 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t ,lan
       label: t?.navigation?.search || t?.mobileSidebar?.search || "Search", 
       path: "/search",
       action: () => { window.location.href = createLocalizedLink('/search'); onClose() }
-    },
-    { 
-      icon: Globe, 
-      label: t?.mobileSidebar?.language || t?.common?.language || "Language", 
-      path: "",
-      action: switchToLanguageView
     }
   ]
 
@@ -104,7 +98,7 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t ,lan
       <div className="flex-1 overflow-y-auto">
         <nav className="px-6 py-4 space-y-2">
           {/* 显示系统默认菜单项 */}
-          {menuItems.slice(0, -1).map((item, index) => { // 排除语言选项
+          {menuItems.map((item, index) => {
             const isActive = item.path && isActivePath(item.path)
             return (
               <button
@@ -151,6 +145,19 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t ,lan
               />
             )
           })}
+          
+          {/* 多语言选择器 */}
+          <div className="border-t border-gray-700 my-4 pt-4">
+            <button
+              onClick={switchToLanguageView}
+              className="w-full flex items-center space-x-3 p-3 text-left rounded-xl transition-all duration-200 group hover:scale-[1.02] hover:shadow-md touch-target transform hover:bg-accent/10 border-2 border-transparent"
+            >
+              <Globe className="w-5 h-5 transition-colors flex-shrink-0 text-accent-3 group-hover:text-primary" />
+              <span className="font-semibold transition-colors text-sm text-white group-hover:text-primary">
+                {t?.mobileSidebar?.language || t?.common?.language || "Language"}
+              </span>
+            </button>
+          </div>
           
           {/* 调试信息 */}
           <div className="px-3 py-2 text-gray-400 text-xs border-t border-gray-700 mt-4">
@@ -425,7 +432,7 @@ export default function MobileSidebar({ isOpen, onClose, scrollToSection, t ,lan
         
         <div className="flex-1 overflow-y-auto p-4">
           <nav className="space-y-1.5">
-            {menuItems.slice(0, -1).map((item, index) => ( // Exclude language item for desktop
+            {menuItems.map((item, index) => (
               <button
                 key={index}
                 onClick={item.action}

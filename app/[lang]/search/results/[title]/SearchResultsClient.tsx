@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
-import { useGameData } from "@/hooks/useGameData"
+import { useLangGameList } from "@/hooks/LangGamelist_value"
 import { SearchEngine } from "@/components/search/SearchUtils"
 import { GameRouter } from "@/lib/router"
 import { Search, X, Clock, TrendingUp } from "lucide-react"
+import { Locale } from "@/lib/lang/dictionaraies"
 
 interface SearchResult {
   id: string
@@ -19,9 +20,10 @@ interface SearchResult {
 interface SearchResultsClientProps {
   searchQuery?: string
   t?: any
+  lang: Locale
 }
 
-export default function SearchResultsClient({ searchQuery = "", t }: SearchResultsClientProps) {
+export default function SearchResultsClient({ searchQuery = "", t, lang }: SearchResultsClientProps) {
   const [results, setResults] = useState<SearchResult[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [query, setQuery] = useState(searchQuery || "")
@@ -30,7 +32,8 @@ export default function SearchResultsClient({ searchQuery = "", t }: SearchResul
   const [searchHistory, setSearchHistory] = useState<string[]>([])
   
   const router = useRouter()
-  const { allGames } = useGameData()
+  const { getLangGames } = useLangGameList()
+  const allGames = getLangGames(lang)
   const searchRef = useRef<HTMLDivElement>(null)
 
   // 加载搜索历史

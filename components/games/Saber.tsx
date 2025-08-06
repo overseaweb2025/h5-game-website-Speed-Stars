@@ -31,6 +31,9 @@ const Saber = ({ onSidebarToggle, onStateChange ,lang}: SaberProps) => {
   const router = useRouter()
   const pathname = usePathname()
   
+  // 添加 mounting 状态防止 hydration 错误
+  const [isMounted, setIsMounted] = useState(false)
+  
   // 侧边栏状态管理
   const [sidebarVisible, setSidebarVisible] = useState(true) // 侧边栏是否可见
   const [isHovered, setIsHovered] = useState(false) // 鼠标悬停状态
@@ -142,6 +145,11 @@ const Saber = ({ onSidebarToggle, onStateChange ,lang}: SaberProps) => {
     onStateChange?.(sidebarVisible, isCollapsed, isHovered)
   }, [onStateChange, sidebarVisible, isCollapsed, isHovered])
 
+  // 设置 mounting 状态
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   // 键盘快捷键支持 (E键)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -161,7 +169,7 @@ const Saber = ({ onSidebarToggle, onStateChange ,lang}: SaberProps) => {
 
   // 创建侧边栏分类列表 - 使用所有分类（包括空的）
   const createSidebarCategories = () => {
-    if(GameList)
+    if(!GameList || GameList.length === 0) return []
     return GameList.map(category => ({
       id: `category-${category.category_id}`,
       icon: getCategoryIcon(category.category_name),
@@ -236,7 +244,7 @@ const Saber = ({ onSidebarToggle, onStateChange ,lang}: SaberProps) => {
                 overflow: 'visible'
               }}
             >
-              {sidebarCategories && sidebarCategories.map((category) => (
+              {isMounted && sidebarCategories && sidebarCategories.map((category) => (
                 <div
                   key={category.id}
                   className={`relative group flex items-center h-12 cursor-pointer select-none transition-all duration-200 hover:bg-gray-700/50 touch-manipulation active:bg-gray-600/50 ${
@@ -279,6 +287,7 @@ const Saber = ({ onSidebarToggle, onStateChange ,lang}: SaberProps) => {
                 </div>
               ))}
             </div>
+
           </nav>
         </div>
       </div>

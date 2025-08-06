@@ -6,9 +6,14 @@ import { useState, useEffect, useCallback } from 'react'
 import { game, gamelist, games, LangGameList } from '@/app/api/types/Get/game'
 import { Locale } from '@/lib/lang/dictionaraies'
 import { getGameList } from '@/app/api/gameList'
+import { safeErrorLog } from '@/lib/error-filter'
 
 // 存储 key
 const STORAGE_KEY = 'language-Gamelist-value'
+const TIMESTAMP_KEY = 'language-Gamelist-timestamp'
+
+// 缓存过期时间（5分钟）
+const CACHE_EXPIRY_TIME = 5 * 60 * 1000 // 5分钟
 
 // 默认空状态
 const initialLangGameList: LangGameList = {
@@ -16,9 +21,36 @@ const initialLangGameList: LangGameList = {
   hi: [], fr: [], tl: [], ja: [], ko: []
 }
 
+// 🛠️ 检查缓存是否过期
+function isCacheExpired(): boolean {
+  if (typeof window === 'undefined') return true
+  try {
+    const timestamp = window.localStorage.getItem(TIMESTAMP_KEY)
+    if (!timestamp) return true
+    const lastUpdated = parseInt(timestamp, 10)
+    return Date.now() - lastUpdated > CACHE_EXPIRY_TIME
+  } catch (error) {
+    console.error('[useLangGameList] Failed to check cache expiry:', error)
+    return true
+  }
+}
+
 // 🛠️ 安全读取 localStorage（仅客户端）
 function getStoredLangGameList(): LangGameList {
   if (typeof window === 'undefined') return initialLangGameList
+  
+  // 检查缓存是否过期
+  if (isCacheExpired()) {
+    console.log('[useLangGameList] Cache expired, clearing data')
+    try {
+      window.localStorage.removeItem(STORAGE_KEY)
+      window.localStorage.removeItem(TIMESTAMP_KEY)
+    } catch (error) {
+      console.error('[useLangGameList] Failed to clear expired cache:', error)
+    }
+    return initialLangGameList
+  }
+  
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY)
     return stored ? JSON.parse(stored) : initialLangGameList
@@ -33,6 +65,8 @@ function setStoredLangGameList(data: LangGameList) {
   if (typeof window === 'undefined') return
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+    // 更新时间戳
+    window.localStorage.setItem(TIMESTAMP_KEY, Date.now().toString())
     // 触发 storage 事件（跨标签页同步）
     window.dispatchEvent(new Event('storage'))
   } catch (error) {
@@ -115,33 +149,51 @@ export const useLangGameList = () => {
     clearLangGameList()
   }, [])
 
+  //返回特定 语言的 数据集合
+  const getLangGamelistBylang = useCallback((lang: Locale) => {
+    if(lang === 'en')return state.en
+    if(lang === 'zh')return state.zh
+    if(lang === 'ru')return state.ru
+    if(lang === 'es')return state.es
+    if(lang === 'vi')return state.vi
+    if(lang === 'hi')return state.hi
+    if(lang === 'fr')return state.fr
+    if(lang === 'tl')return state.tl
+    if(lang === 'ja')return state.ja
+    if(lang === 'ko')return state.ko
+  }, [state])
+
   // ✅ 自动获取数据（根据语言）
-  const autoGetData = useCallback((lang: Locale) => {
-    getGameList()
+  const autoGetData = useCallback((lang: Locale, force: boolean = true) => {
+    // 检查缓存是否过期
+    const cacheExpired = isCacheExpired()
+    
+    // 当force为true且缓存未过期时，检查该语言的数据是否已存在
+    if (force && !cacheExpired) {
+      const existingData = getLangGamelistBylang(lang)
+      if (existingData && existingData.length > 0) {
+        console.log(`[useLangGameList] Data for ${lang} already exists and cache is valid, skipping fetch`)
+        return Promise.resolve()
+      }
+    }
+
+    // 如果缓存过期或没有数据，则获取数据
+    if (cacheExpired) {
+      console.log(`[useLangGameList] Cache expired, fetching fresh data for ${lang}`)
+    } else {
+      console.log(`[useLangGameList] Fetching data for ${lang}${!force ? ' (forced fetch)' : ''}`)
+    }
+    
+    return getGameList()
       .then(res => {
         if (res.data?.data) {
           updateLangGameListByLang(lang, res.data.data)
         }
       })
       .catch(err => {
-        console.error('[useLangGameList] Failed to fetch game list:', err)
+        safeErrorLog(err, 'useLangGameList')
       })
-  }, [updateLangGameListByLang])
-
-  //返回特定 语言的 数据集合
-const getLangGamelistBylang = useCallback((lang: Locale) => {
-  if(lang === 'en')return state.en
-  if(lang === 'zh')return state.zh
-  if(lang === 'ru')return state.ru
-  if(lang === 'es')return state.es
-  if(lang === 'vi')return state.vi
-  if(lang === 'hi')return state.hi
-  if(lang === 'fr')return state.fr
-  if(lang === 'tl')return state.tl
-  if(lang === 'ja')return state.ja
-  if(lang === 'ko')return state.ko
-  
-}, []);
+  }, [updateLangGameListByLang, getLangGamelistBylang])
 
 //返回解析后的游戏总和 类型 [{},{}] 对象是game
 const getLangGames = useCallback((lang: Locale) => {

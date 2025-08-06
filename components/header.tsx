@@ -3,21 +3,20 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, MoreHorizontal, GamepadIcon as GameController, UserCircleIcon, LogInIcon, LogOutIcon, Sidebar, ChevronDown } from "lucide-react"
+import { Menu, GamepadIcon as GameController, UserCircleIcon, LogInIcon, LogOutIcon, Sidebar, ChevronDown } from "lucide-react"
 import { useSession, signIn, signOut } from "next-auth/react"
 import toast from "react-hot-toast"
 import MobileSidebar from "./mobile-sidebar"
 import LanguageSelector from "./LanguageSelector"
 import { SearchBox } from "./search"
-import { useGameData } from "@/hooks/useGameData"
 import { useWebsiteData } from "@/hooks/useWebsiteData"
 import { websiteUtill } from "@/lib/website/websiteUtill"
-import { getNavLanguage } from "@/app/api/nav_language"
 import { useNavgationLanguage } from "@/hooks/Navigation_value/use-navigation-language"
 import { top_navigation } from "@/app/api/types/Get/nav"
 import { langSequence } from "@/lib/lang/utils"
-import {  Locale } from "@/lib/lang/dictionaraies"
+import { Locale } from "@/lib/lang/dictionaraies"
 import { useLangGameList } from "@/hooks/LangGamelist_value"
+import DataProvider from "./DataProvider"
 interface HeaderProps {
   onSidebarToggle?: () => void
   showSidebarToggle?: boolean
@@ -36,10 +35,10 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t,l
   const { data: session, status } = useSession()
   const pathname = usePathname()
   // 获取 nav 的数据
-  const { navState, updateLanguage } = useNavgationLanguage();
-  const {autoGetData} = useLangGameList() 
+  const { navState } = useNavgationLanguage();
+  const { getLangGames } = useLangGameList()
   // 获取游戏数据用于搜索
-  const { allGames } = useGameData()
+  const allGames = getLangGames(lang)
 
   // Get current language from pathname
   const getCurrentLang = () => {
@@ -97,14 +96,7 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t,l
       setHasShownLoginSuccess(true)
     }
   }, [session, status, hasShownLoginSuccess])
-  //更新 navgation 的多语言数值
-  useEffect(()=>{
-    // 只更新一次
-    getNavLanguage().then(res=>{
-        updateLanguage(res.data.data)
-      })
-      autoGetData(lang)
-  },[])
+  // 数据获取现在由 DataProvider 组件统一管理
   // Reset login success flag when user logs out
   useEffect(() => {
     if (!session && hasShownLoginSuccess) {
@@ -171,6 +163,9 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t,l
 
   return (
     <>
+      {/* 数据提供者组件 - 统一管理全局数据获取 */}
+      <DataProvider lang={lang} />
+      
       <header className="bg-gray-900/95 backdrop-blur-sm py-2 sm:py-3 sticky top-0 z-40 border-b border-gray-700 shadow-sm">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-full">
           <div className="flex justify-between items-center min-h-[52px] sm:min-h-[56px] w-full">

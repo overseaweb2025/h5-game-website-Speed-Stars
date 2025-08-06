@@ -6,7 +6,6 @@ import Footer from "@/components/footer"
 import Saber from "@/components/games/Saber"
 import { useResponsive } from "@/shared/hooks"
 import { Locale } from "@/lib/lang/dictionaraies"
-import { useLangGameList } from "@/hooks/LangGamelist_value"
 export default function GamesLayoutClient({
   children,
   t,
@@ -19,7 +18,6 @@ export default function GamesLayoutClient({
   const [sidebarVisible, setSidebarVisible] = useState(true)
   const [isHovered, setIsHovered] = useState(false)
   const [sidebarToggleFunction, setSidebarToggleFunction] = useState<(() => void) | null>(null)
-  const {autoGetData} = useLangGameList()
   const { isSmallScreen, isCollapsed, setIsCollapsed } = useResponsive({
     breakpoint: 1024,
     initialCollapsed: false,
@@ -59,10 +57,7 @@ export default function GamesLayoutClient({
       setIsCollapsed(true)     // 但设置为图标模式
     }
   }, [isSmallScreen])
-  //自动获取gamelist 数据 by lang
-  useEffect(()=>{
-    autoGetData(lang as Locale)
-  },[])
+  // 数据获取现在由 Header 中的 DataProvider 统一管理
   return (
     <main className="bg-gray-900 min-h-screen">
       {/* Header横跨整个宽度 */}

@@ -139,11 +139,23 @@ export const useLangBlog= () => {
     clearAllData()
   }, [])
 
-  const autoGetData = useCallback((lang:Locale,form:postBlog) => {
-      getPagration(form).then(res=>{
+  const autoGetData = useCallback((lang:Locale, form:postBlog, force: boolean = true) => {
+      // 当force为true时，检查该语言的数据是否已存在
+      if (force) {
+        const existingData = globalBlogState?.[lang as keyof LangBlog]
+        if (existingData && Object.keys(existingData).length > 0) {
+          console.log(`[useLangBlog] Data for ${lang} already exists, skipping fetch`)
+          return Promise.resolve()
+        }
+      }
+
+      console.log(`[useLangBlog] Fetching data for ${lang}${!force ? ' (forced fetch)' : ''}`)
+      return getPagration(form).then(res=>{
           updataLanguageByLang(res.data.data,lang)
       })
   },[])
+
+  
   // 返回全局变量，因为它始终是最新值
   return { LangBlog: globalBlogState, updateLanguage, clearLanguageData ,autoGetData,updataLanguageByLang}
 }

@@ -182,7 +182,7 @@ const initializeCache = () => {
 }
 
 // 获取游戏详情（从缓存或API）
-const fetchGameDetails = async (slug: string): Promise<ExtendedGameDetails | null> => {
+const fetchGameDetails = async (slug: string, lang: string = 'en'): Promise<ExtendedGameDetails | null> => {
   // 检查是否正在加载
   if (globalGameDetailsState.loading.has(slug)) {
     return null
@@ -203,7 +203,7 @@ const fetchGameDetails = async (slug: string): Promise<ExtendedGameDetails | nul
   updateGlobalState({ loading: newLoading })
   
   try {
-    const response = await getGameDetails(slug)
+    const response = await getGameDetails(slug, lang)
     
     if (response.data && response.data.data) {
       const extendedDetails = gameDetailsParser.toExtendedDetails(response.data.data as any)
@@ -321,12 +321,12 @@ const clearAllCache = () => {
 }
 
 // 预加载游戏详情
-const preloadGameDetails = async (slug: string): Promise<void> => {
-  await fetchGameDetails(slug)
+const preloadGameDetails = async (slug: string, lang: string = 'en'): Promise<void> => {
+  await fetchGameDetails(slug, lang)
 }
 
 // 游戏详情Hook
-export const useGameDetails = (slug?: string) => {
+export const useGameDetails = (slug?: string, lang: string = 'en') => {
   const [updateTrigger, setUpdateTrigger] = useState(0)
   
   // 强制重新渲染的函数
@@ -343,7 +343,7 @@ export const useGameDetails = (slug?: string) => {
     
     // 如果提供了slug且没有数据，自动获取
     if (slug && !globalGameDetailsState.cache.has(slug) && !globalGameDetailsState.loading.has(slug)) {
-      fetchGameDetails(slug)
+      fetchGameDetails(slug, lang)
     }
     
     // 设置定期清理过期缓存
@@ -355,12 +355,12 @@ export const useGameDetails = (slug?: string) => {
       detailsListeners.delete(triggerUpdate)
       clearInterval(cleanupInterval)
     }
-  }, [slug, triggerUpdate])
+  }, [slug, lang, triggerUpdate])
 
   // 获取游戏详情的函数
-  const getGameDetails = useCallback(async (gameSlug: string) => {
-    return await fetchGameDetails(gameSlug)
-  }, [])
+  const getGameDetails = useCallback(async (gameSlug: string, gameLang?: string) => {
+    return await fetchGameDetails(gameSlug, gameLang || lang)
+  }, [lang])
 
   // 获取特定游戏的状态
   const getGameState = useCallback((gameSlug: string) => {

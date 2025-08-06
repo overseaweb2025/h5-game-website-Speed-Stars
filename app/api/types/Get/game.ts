@@ -192,7 +192,7 @@ export interface GameDetails {
   cover: string;
   package: Package;
   rating: string;
-  info: string;
+  introduce: string;
   technology: string;
   platforms: string;
   reviews: Review[];

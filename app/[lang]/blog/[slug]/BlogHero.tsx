@@ -15,7 +15,7 @@ const BlogHero = ({lang,slug,t}:PropHero)=>{
     if(!blog_Details){
       autoGetData(lang,slug)
     }
-  })
+  },[blog_Details])
   return (
     <BlogArticle lang={lang} t={t} slug={slug} blog_Details={blog_Details} />
   )

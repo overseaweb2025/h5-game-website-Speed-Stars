@@ -87,8 +87,15 @@ export const useNavgationLanguage = () => {
     clearAllData()
   }, [])
 
-  const autoGetNavData = useCallback(()=>{
-    getNavLanguage().then(res=>{
+  const autoGetNavData = useCallback((force: boolean = true)=>{
+    // 当force为true时，检查数据是否已存在
+    if (force && globalNavState) {
+      console.log('[useNavgationLanguage] Navigation data already exists, skipping fetch')
+      return Promise.resolve()
+    }
+
+    console.log(`[useNavgationLanguage] Fetching navigation data${!force ? ' (forced fetch)' : ''}`)
+    return getNavLanguage().then(res=>{
       updateNavState(res.data.data)
     })
   },[])
@@ -119,5 +126,5 @@ const getNavValueByLang = useCallback((lang: Locale, isTop_navgation: boolean = 
   }
 }, []);
   // 返回全局变量，因为它始终是最新值
-  return { navState: globalNavState, updateLanguage, clearLanguageData ,autoGetNavData}
+  return { navState: globalNavState, updateLanguage, clearLanguageData ,autoGetNavData, getNavValueByLang}
 }

@@ -27,18 +27,49 @@ const createAxiosInstance = (): AxiosInstance => {
       
       // 使用代理处理所有请求
       if (config.baseURL === '/api/proxy') {
-        // 构建完整的目标 URL，包括查询参数
-        let originalUrl = `${process.env.NEXT_PUBLIC_API_URL}${config.url}`
+        // 验证基础 API URL
+        const baseApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://www.xingnengyun.com'
+        const configUrl = config.url || ''
         
-        // 如果有 params，添加到 URL 中
-        if (config.params) {
-          const urlParams = new URLSearchParams(config.params)
-          originalUrl += `?${urlParams.toString()}`
-          config.params = undefined // 清除原始参数，避免重复添加
+        // 确保 URL 格式正确
+        let originalUrl: string
+        try {
+          // 构建完整的目标 URL，包括查询参数
+          originalUrl = `${baseApiUrl}${configUrl}`
+          
+          // 如果有 params，添加到 URL 中
+          if (config.params && typeof config.params === 'object') {
+            // 过滤掉 undefined 或 null 值
+            const cleanParams = Object.fromEntries(
+              Object.entries(config.params).filter(([_, value]) => 
+                value !== undefined && value !== null && value !== ''
+              )
+            )
+            
+            if (Object.keys(cleanParams).length > 0) {
+              const urlParams = new URLSearchParams(cleanParams)
+              originalUrl += `?${urlParams.toString()}`
+            }
+            config.params = undefined // 清除原始参数，避免重复添加
+          }
+          
+          // 验证构建的 URL 是否有效
+          new URL(originalUrl)
+          
+          config.url = `?url=${encodeURIComponent(originalUrl)}`
+        } catch (error) {
+          console.error('Invalid URL construction:', {
+            baseApiUrl,
+            configUrl,
+            originalUrl: originalUrl || 'undefined',
+            params: config.params,
+            error: error instanceof Error ? error.message : error
+          })
+          
+          // 使用安全的默认URL
+          const fallbackUrl = `${baseApiUrl}/api/v1/game/list`
+          config.url = `?url=${encodeURIComponent(fallbackUrl)}`
         }
-        
-        config.url = `?url=${encodeURIComponent(originalUrl)}`
-        // URL logging removed for production
       }
       
       // 只处理认证相关的请求头 - 检查原始URL而不是代理后的URL

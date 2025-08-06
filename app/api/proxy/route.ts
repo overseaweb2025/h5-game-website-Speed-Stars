@@ -8,6 +8,18 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Missing target URL' }, { status: 400 })
   }
 
+  // 验证目标 URL 是否有效
+  try {
+    new URL(targetUrl)
+  } catch (urlError) {
+    console.error('Invalid target URL:', targetUrl, urlError)
+    return NextResponse.json({ 
+      error: 'Invalid target URL format', 
+      details: urlError instanceof Error ? urlError.message : 'Unknown URL error',
+      receivedUrl: targetUrl
+    }, { status: 400 })
+  }
+
   try {
     // Request logging removed for production
     
@@ -57,6 +69,18 @@ export async function POST(request: NextRequest) {
   
   if (!targetUrl) {
     return NextResponse.json({ error: 'Missing target URL' }, { status: 400 })
+  }
+
+  // 验证目标 URL 是否有效
+  try {
+    new URL(targetUrl)
+  } catch (urlError) {
+    console.error('Invalid target URL:', targetUrl, urlError)
+    return NextResponse.json({ 
+      error: 'Invalid target URL format', 
+      details: urlError instanceof Error ? urlError.message : 'Unknown URL error',
+      receivedUrl: targetUrl
+    }, { status: 400 })
   }
 
   try {

@@ -50,7 +50,7 @@ export default async function Home({params}: {params: Promise<{lang: string}>}) 
   return (
     <main>
       <Header t={t} lang={lang as Locale}/>
-      <Hero t={t} />
+      <Hero t={t} lang={lang as Locale} />
       <HomepageTestimonials />
       <FAQ t={t} />
       <NavigationArrow isHomePage={true} />

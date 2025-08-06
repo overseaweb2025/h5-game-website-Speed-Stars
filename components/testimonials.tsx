@@ -246,12 +246,12 @@ export default function Testimonials({ gameSlug, reviews, t, isHomepage = false 
         setIsSubmitting(true)
         try {
             // 发送评论数据到 API
+            console.log('执行提交操作',{currentGameName,newReview})
             await PublicComment({
                 game_name: currentGameName,
-                rating: newReview.rating,
-                content: newReview.text,
+                rating:    newReview.rating,
+                content:   newReview.text,
             })
-
             // 本地添加刚提交评论显示
             const submittedReview: Testimonial = {
                 name: session.user?.name || session.user?.email || "Anonymous User",

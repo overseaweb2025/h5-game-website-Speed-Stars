@@ -15,7 +15,7 @@ const Breadcrumebs = ({t,gameDetails}:PropBreadcrumebs)=>{
                       <Link href="/games" className="text-gray-300 hover:text-primary transition-colors cursor-pointer px-2 py-1 rounded hover:bg-white/10">
                         {t?.navigation?.allGames || "Games"}
                       </Link>
-                      {gameDetails.breadcrumbs.map((crumb, index) => {
+                      {gameDetails.breadcrumbs&& gameDetails.breadcrumbs.map((crumb, index) => {
                         // Skip the first breadcrumb if it's "Games" to avoid duplication
                         if (index === 0 && crumb.name.toLowerCase() === 'games') {
                           return null;

@@ -23,15 +23,15 @@ export async function generateMetadata({ params }: SearchResultsPageProps): Prom
 export default async function SearchResultsPage({ params }: SearchResultsPageProps) {
   const { lang, title } = await params;
   const decodedTitle = decodeURIComponent(title);
-  const t = await getDictionary(lang as "en" | "zh");
+  const t = await getDictionary(lang);
   
   return (
     <>
-      <Header t={t} />
+      <Header lang={lang} />
       <main className="bg-gradient-to-br from-gray-900 via-black to-gray-900 min-h-screen pt-20">
-        <SearchResultsClient searchQuery={decodedTitle} t={t} />
+        <SearchResultsClient searchQuery={decodedTitle} t={t} lang={lang} />
       </main>
-      <Footer t={t} />
+      <Footer lang={lang} />
     </>
   );
 }

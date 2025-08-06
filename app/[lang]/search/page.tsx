@@ -3,9 +3,10 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { getDictionary } from "@/lib/lang/i18n";
 import SearchPageClient from "./SearchPageClient";
+import { Locale } from "@/lib/lang/dictionaraies";
 
 interface SearchPageProps {
-  params: Promise<{ lang: string }>;
+  params: Promise<{ lang: Locale }>;
   searchParams: Promise<{ q?: string }>;
 }
 
@@ -22,15 +23,15 @@ export async function generateMetadata({ params }: SearchPageProps): Promise<Met
 export default async function SearchPage({ params, searchParams }: SearchPageProps) {
   const { lang } = await params;
   const { q } = await searchParams;
-  const t = await getDictionary(lang as "en" | "zh");
+  const t = await getDictionary(lang);
   
   return (
     <>
-      <Header t={t} />
+      <Header lang={lang} />
       <main className="bg-gradient-to-br from-gray-900 via-black to-gray-900 min-h-screen pt-20">
-        <SearchPageClient initialQuery={q} t={t} />
+        <SearchPageClient initialQuery={q} t={t} lang={lang} />
       </main>
-      <Footer t={t} />
+      <Footer lang={lang} />
     </>
   );
 }

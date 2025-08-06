@@ -4,15 +4,12 @@ import React, { useEffect, useMemo } from "react"
 import { notFound } from "next/navigation"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
-import Hero from "@/components/hero"
 import GameHero from '@/components/hero/index'
 import NavigationArrow from "@/components/navigation-arrow"
 import LoadingSpinner from "@/shared/components/LoadingSpinner"
-import GameDetailsCacheDebug from "@/components/GameDetailsCacheDebug"
 import { useGameDetails } from "@/hooks/useGameDetails"
 import { useGameHistory } from "@/hooks/useGameHistory"
 import { useGamePageTimer } from "@/hooks/useGamePageTimer"
-import { gameDetailsParser } from "@/lib/game-utils"
 import { useResponsive } from "@/shared/hooks/useResponsive"
 import { GameRouter } from "@/lib/router"
 import { Locale } from "@/lib/lang/dictionaraies"
@@ -34,7 +31,6 @@ export default function GamePageClient({ slug,lang,t }: GamePageClientProps) {
     isLoading: loading,
     error,
     isCached,
-    getGameDetails
   } = useGameDetails(slug)
   //游戏详情管理器
   const {autoGetData,getGameDetailsFromCache} = useLangGameDetails()
@@ -44,9 +40,29 @@ export default function GamePageClient({ slug,lang,t }: GamePageClientProps) {
   // 游戏历史记录功能
   const { isEnabled } = useGameHistory()
   
-  // 使用 useMemo 优化 gameInfo 对象，避免无限重新创建
+  // 使用 useMemo 优化 gameInfo 对象，优先使用缓存的 gameDetails 数据
   const gameInfo = useMemo(() => {
-    if (gameData) {
+    // 优先使用缓存的 gameDetails 数据，包含完整的 TDK 信息
+    if (gameDetails) {
+      return {
+        id: gameDetails.name || slug,
+        page_title: gameDetails.page_title,
+        page_description: gameDetails.page_description,
+        page_keywords: gameDetails.page_keywords,
+        name: gameDetails.display_name,
+        slug: slug,
+        image: gameDetails.cover || '/placeholder-game.jpg',
+        category: gameDetails.breadcrumbs?.find(b => b.level === 1)?.name || 'Games',
+        description: gameDetails.info || '',
+        rating: gameDetails.rating,
+        technology: gameDetails.technology,
+        platforms: gameDetails.platforms,
+        released_at: gameDetails.released_at,
+        last_updated: gameDetails.last_updated
+      }
+    }
+    // 回退到原有的 gameData
+    else if (gameData) {
       return {
         id: gameData.gameSlug || slug,
         page_title: gameData.page_title,
@@ -54,11 +70,13 @@ export default function GamePageClient({ slug,lang,t }: GamePageClientProps) {
         page_keywords: gameData.page_keywords,
         name: gameData.display_name,
         slug: slug,
-        image: '/placeholder-game.jpg', // 使用占位图
+        image: '/placeholder-game.jpg',
         category: gameData.categoryInfo?.name || 'Games',
         description: gameData.info || '',
       }
-    } else {
+    } 
+    // 默认占位数据
+    else {
       return {
         id: slug,
         page_title: '',
@@ -66,12 +84,12 @@ export default function GamePageClient({ slug,lang,t }: GamePageClientProps) {
         page_keywords: '',
         name: 'Loading...',
         slug: slug,
-        image: '/placeholder-game.jpg', // 使用占位图
+        image: '/placeholder-game.jpg',
         category: 'Games',
         description: ''
       }
     }
-  }, [gameData, slug])
+  }, [gameDetails, gameData, slug])
   
   // 游戏页面计时器 - 只在有游戏数据且用户已登录时启用
   const gamePageTimer = useGamePageTimer({
@@ -80,18 +98,29 @@ export default function GamePageClient({ slug,lang,t }: GamePageClientProps) {
     enabled: !!gameData && isEnabled // 只有在游戏数据加载完成且用户登录时才启用
   })
 
-  // 移动端自动跳转到play页面的逻辑
-  useEffect(() => {
-    if (isSmallScreen && gameData && typeof window !== 'undefined') {
-      const gameTitle = gameData.display_name || gameData.page_title || 'Game'
-      const gameUrl = gameData.iframe_src || gameData.url
-      
-      // 使用统一的路由工具跳转到play页面
-      if (gameUrl) {
-        GameRouter.toGamePlay(slug, gameUrl, gameTitle)
-      }
-    }
-  }, [isSmallScreen, gameData, slug])
+  // 移动端点击播放按钮时跳转到play页面的逻辑 - 移除自动跳转
+  // useEffect(() => {
+  //   if (isSmallScreen && typeof window !== 'undefined') {
+  //     // 优先使用缓存的 gameDetails 数据
+  //     if (gameDetails) {
+  //       const gameTitle = gameDetails.display_name || gameDetails.page_title || 'Game'
+  //       const gameUrl = gameDetails.package?.url
+        
+  //       if (gameUrl) {
+  //         GameRouter.toGamePlay(slug, gameUrl, gameTitle)
+  //       }
+  //     }
+  //     // 回退到原有的 gameData
+  //     else if (gameData) {
+  //       const gameTitle = gameData.display_name || gameData.page_title || 'Game'
+  //       const gameUrl = gameData.iframe_src || gameData.url
+        
+  //       if (gameUrl) {
+  //         GameRouter.toGamePlay(slug, gameUrl, gameTitle)
+  //       }
+  //     }
+  //   }
+  // }, [isSmallScreen, gameDetails, gameData, slug])
   useEffect(()=>{
     //获取 游戏详情
     autoGetData(lang,slug)
@@ -159,20 +188,13 @@ export default function GamePageClient({ slug,lang,t }: GamePageClientProps) {
     )
   }
 
-  // Convert API data to Hero component format using the parser
-  const heroGameData = gameData ? gameDetailsParser.toHeroGameData(gameData, slug) : null
 
   return (
     <main>
       <Header lang={lang }/>
-
         {/* <Hero game={heroGameData} reviews={gameDetails?.reviews} gameData={gameDetails} />     */}
         {gameDetails &&  <GameHero t={t} gameDetails={gameDetails} GameList={GameList} />}
-      <NavigationArrow isHomePage={false} />
-      
-      {/* Game Information Section */}
-     
-      
+      <NavigationArrow isHomePage={false} />     
       <Footer lang={lang }/>
       {/* <GameDetailsCacheDebug /> */}
     </main>

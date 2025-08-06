@@ -15,16 +15,16 @@ const LeftSide = ({GameList}:PropSide)=>{
               >
                 <div className="p-3">
                   <div className="grid grid-cols-1 gap-4">
-                    {GameList.map((game,index)=>{
-                        return(
-                        <GameCard
-                          key={`left-${game.id}-${index}`}
-                          game={game}
-                          className="w-full"
-                          size="small"
-                          isHomepage={true}
-                        />
-                        )
+                    {GameList.slice(0, 8).map((game, index) => {
+                        return (
+                            <GameCard
+                                key={`left-${game.id}-${index}`}
+                                game={game}
+                                className="w-full"
+                                size="small"
+                                isHomepage={true}
+                            />
+                        );
                     })}
            
                   </div>
