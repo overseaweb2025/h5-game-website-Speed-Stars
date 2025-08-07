@@ -135,8 +135,8 @@
     },
     "games": {
         "title": "Jeux en Ligne Gratuits - Speed Stars",
-"description": "Jouez à une immense collection de jeux en ligne gratuits sur Speed Stars. Des aventures pleines d'action aux puzzles stimulants, trouvez instantanément votre prochain jeu préféré.",
-"keywords": "jeux en ligne gratuits, jeux par navigateur, jeux HTML5, jeux d'action, jeux de puzzle, jeux de sport, jeux de course, speed stars, jouer à des jeux en ligne",
+        "description": "Jouez à une immense collection de jeux en ligne gratuits sur Speed Stars. Des aventures pleines d'action aux puzzles stimulants, trouvez instantanément votre prochain jeu préféré.",
+        "keywords": "jeux en ligne gratuits, jeux par navigateur, jeux HTML5, jeux d'action, jeux de puzzle, jeux de sport, jeux de course, speed stars, jouer à des jeux en ligne",
         "gameCollection": "🎮 Collection de Jeux",
         "html5Game": "Jeu HTML5",
         "playNow": "Jouer Maintenant →",
@@ -398,19 +398,6 @@
         "dmcaPolicyTitle": "Politique DMCA",
         "dmcaDescription": "Conformité à la loi DMCA (Digital Millennium Copyright Act) et procédures de retrait"
     },
-    "user": {
-        "pleaseSignInToViewProfile": "Veuillez vous connecter pour voir votre profil",
-        "gamesPlayed": "Jeux joués",
-        "playTime": "Temps de jeu",
-        "level": "Niveau",
-        "achievements": "Succès",
-        "commentHistory": "Historique des commentaires",
-        "recentActivity": "Activité récente",
-        "quickStats": "Statistiques rapides",
-        "gamingMaster": "Maître du jeu",
-        "casualPlayer": "Joueur occasionnel",
-        "speedRunner": "Speed Runner"
-    },
     "gameCard": {
         "freeOnlineGame": "Jeu en ligne gratuit",
         "playGameOnlineDescription": "Jouez à {gameName} en ligne gratuitement. Profitez de ce jeu de navigateur passionnant sans téléchargement requis.",
@@ -536,6 +523,9 @@
         "speedStars": "Speed Stars"
     },
     "user": {
+        "title": "Profil du Joueur - Fusion Games",
+"description": "Consultez le profil d'un joueur pour voir son activité, ses succès, ses statistiques et ses jeux préférés. Connectez-vous avec vos amis et concourez pour les meilleurs scores sur notre plateforme.",
+"keywords": "profil de joueur, profil de jeu, statistiques du joueur, succès de jeu, communauté de jeux en ligne, tableau de bord utilisateur, activité de jeu, classements d'amis",
         "profile": "Profil",
         "loading": "Chargement...",
         "pleaseSignIn": "Veuillez vous connecter pour voir votre profil",

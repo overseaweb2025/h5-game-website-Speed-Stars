@@ -9,7 +9,7 @@ interface PageParams {
   slug: string;
 }
 //ISR 优化
-export const revalidate = 120;
+export const revalidate = 240;
 
 export async function generateStaticParams() {
   const languages: Locale[] = localesArrary
@@ -33,6 +33,8 @@ export async function generateStaticParams() {
 }
 export async function generateMetadata({params}: {params: Promise<{lang: Locale,slug:string}>}): Promise<Metadata> {
   const { lang,slug } = await params
+    const canonicalUrl = `${process.env.CANONICAL_DOMAIN}/${lang}/game/${slug}`
+
   try {
     // Fetch home game data for SEO metadata
     const res = await getGameDetails(slug, lang)
@@ -42,6 +44,9 @@ export async function generateMetadata({params}: {params: Promise<{lang: Locale,
       title: homeData.page_title || "Speed Stars - Racing Game",
       description: homeData.page_description || "Play Speed Stars racing game online",
       keywords: homeData.page_keywords || "speed stars, racing game, online game",
+      alternates: {
+        canonical: canonicalUrl,
+      },
       openGraph: {
         title:  homeData.page_title,
         description: homeData.page_description,
@@ -59,7 +64,10 @@ export async function generateMetadata({params}: {params: Promise<{lang: Locale,
     return {
       title: "Speed Stars - Racing Game",
       description: "Play Speed Stars racing game online",
-      keywords: "speed stars, racing game, online game"
+      keywords: "speed stars, racing game, online game",
+      alternates: {
+        canonical: canonicalUrl,
+      },
     }
   }
 }

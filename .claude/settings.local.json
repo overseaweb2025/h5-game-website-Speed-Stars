@@ -27,7 +27,8 @@
       "Bash(node:*)",
       "Bash(cp:*)",
       "Bash(python3:*)",
-      "Bash(pnpm run:*)"
+      "Bash(pnpm run:*)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }

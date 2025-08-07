@@ -42,17 +42,19 @@ export default function DesktopHero({
       </h1>
 
       {/* Game container with side panels - Desktop layout */}
-      <div className="hidden lg:flex justify-center items-start gap-6 mb-6 mx-auto max-w-[1980px] w-full px-4">
+      <div className="hidden lg:flex justify-center items-start gap-6 xl:gap-3 mb-6 mx-auto max-w-[1980px] w-full px-4">
         
-        {/* Left side panel */}
-        <SidePanel 
-          randomGames={randomGames}
-          side="left"
-          t={t}
-        />
+        {/* Left side panel - 仅在超大屏幕显示 */}
+        <div className="hidden xl:block">
+          <SidePanel 
+            randomGames={randomGames}
+            side="left"
+            t={t}
+          />
+        </div>
 
-        {/* Main center container */}
-        <div className="flex-1 min-w-0 p-6 max-w-[1650px] mx-auto">
+        {/* Main center container - lg屏幕下增加1/5宽度 */}
+        <div className="flex-1 min-w-0 p-6 lg:w-[120%] lg:max-w-none xl:w-auto xl:max-w-[1650px] mx-auto">
           {/* Game frame */}
           <GameFrame 
             homeData={homeData}
@@ -73,12 +75,14 @@ export default function DesktopHero({
           <ActionButtons scrollToSection={scrollToSection} />
         </div>
 
-        {/* Right side panel */}
-        <SidePanel 
-          randomGames={randomGames}
-          side="right"
-          t={t}
-        />
+        {/* Right side panel - 仅在超大屏幕显示 */}
+        <div className="hidden xl:block">
+          <SidePanel 
+            randomGames={randomGames}
+            side="right"
+            t={t}
+          />
+        </div>
 
       </div>
     </div>

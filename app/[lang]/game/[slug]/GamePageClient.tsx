@@ -35,7 +35,7 @@ export default function GamePageClient({ slug,lang,t }: GamePageClientProps) {
   //游戏详情管理器
   const {autoGetData,getGameDetailsFromCache} = useLangGameDetails()
   const gameDetails = getGameDetailsFromCache(lang,slug)
-  const {getLangGamelistBylang,getLangGames} = useLangGameList()
+  const {getLangGamelistBylang,getLangGames, autoGetData: autoGetGameList} = useLangGameList()
   const GameList = getLangGames(lang)
   // 游戏历史记录功能
   const { isEnabled } = useGameHistory()
@@ -124,7 +124,9 @@ export default function GamePageClient({ slug,lang,t }: GamePageClientProps) {
   useEffect(()=>{
     //获取 游戏详情
     autoGetData(lang,slug)
-  },[])
+    //获取 游戏列表数据 (用于左右侧面板)
+    autoGetGameList(lang)
+  },[lang])
 
   if (loading) {
     return (

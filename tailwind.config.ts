@@ -122,6 +122,8 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+        require('@tailwindcss/typography'), // 添加这一行
+  ],
 }
 export default config

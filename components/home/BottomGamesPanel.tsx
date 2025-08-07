@@ -20,7 +20,7 @@ export default function BottomGamesPanel({ randomGames, t }: BottomGamesPanelPro
   return (
     <div className="bg-gradient-to-r from-accent-3/20 via-primary/20 to-secondary/20 border-3 border-accent-4/30 cartoon-shadow mb-6 rounded-xl p-4">
       <h2 className="text-lg font-bold text-white mb-4">{t?.hero?.discoverMoreGames || "Discover More Games"}</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
         {randomGames.length > 0 ? (
           randomGames.slice(0, 4).map((randomGame, index) => (
             <GameCard

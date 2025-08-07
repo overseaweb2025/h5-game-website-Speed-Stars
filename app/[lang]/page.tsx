@@ -9,7 +9,7 @@ import { Metadata } from "next"
 import { Locale, localesArrary } from "@/lib/lang/dictionaraies"
 import { getGameHome } from "../api/game/index"
 
-export const revalidate = 60;
+export const revalidate = 320;
 export async function generateStaticParams() {
     const languages: Locale[] = localesArrary;
     const params: { lang: Locale }[] = [];
@@ -24,7 +24,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({params}: {params: Promise<{lang: string}>}): Promise<Metadata> {
   const { lang } = await params
-  
+  const canonicalUrl = `${process.env.CANONICAL_DOMAIN}/${lang}`
+
   try {
     // Fetch home game data for SEO metadata
     const res = await getGameHome(lang)
@@ -33,6 +34,9 @@ export async function generateMetadata({params}: {params: Promise<{lang: string}
       title: homeData.title,
       description: homeData?.description,
       keywords: homeData?.keywords,
+      alternates: {
+        canonical: canonicalUrl,
+      },
       openGraph: {
         title:  homeData?.title,
         description: homeData?.description,

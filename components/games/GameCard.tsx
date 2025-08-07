@@ -9,63 +9,101 @@ const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false
   const [imageError, setImageError] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   
-  // 检测移动端状态
+  // 检测屏幕尺寸状态
+  const [screenSize, setScreenSize] = useState<'xs' | 'sm' | 'md' | 'lg' | 'xl'>('md')
+  
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+    const checkScreenSize = () => {
+      const width = window.innerWidth
+      if (width < 480) {
+        setScreenSize('xs')
+        setIsMobile(true)
+      } else if (width < 640) {
+        setScreenSize('sm')
+        setIsMobile(true)
+      } else if (width < 768) {
+        setScreenSize('md')
+        setIsMobile(true)
+      } else if (width < 1024) {
+        setScreenSize('lg')
+        setIsMobile(false)
+      } else {
+        setScreenSize('xl')
+        setIsMobile(false)
+      }
     }
     
     if (typeof window !== 'undefined') {
-      checkMobile()
-      window.addEventListener('resize', checkMobile)
-      return () => window.removeEventListener('resize', checkMobile)
+      checkScreenSize()
+      window.addEventListener('resize', checkScreenSize)
+      return () => window.removeEventListener('resize', checkScreenSize)
     }
   }, [])
 
-  // 根据size设置不同的尺寸样式 - 移动端尺寸减少1/3
+  // 根据size和屏幕尺寸设置不同的尺寸样式
   const getSizeStyles = () => {
+    // 根据屏幕尺寸获取缩放比例
+    const getScale = () => {
+      switch (screenSize) {
+        case 'xs': return 0.5  // 480px以下，卡片大小为原来的50%
+        case 'sm': return 0.65 // 480-640px，卡片大小为原来的65%
+        case 'md': return 0.8  // 640-768px，卡片大小为原来的80%
+        case 'lg': return 0.9  // 768-1024px，卡片大小为原来的90%
+        case 'xl': return 1.0  // 1024px以上，原始大小
+        default: return 1.0
+      }
+    }
+    
+    const scale = getScale()
     
     switch (size) {
       case 'tiny':
+        const tinySize = Math.max(40, Math.floor(80 * scale)) // 最小40px
         return {
           width: '100%',
-          minWidth: isMobile ? '53px' : '80px', // 80 * 2/3 = 53
-          height: isMobile ? '53px' : '80px',
+          minWidth: `${tinySize}px`,
+          height: `${tinySize}px`,
           aspectRatio: '1/1'
         }
       case 'small':
+        const smallSize = Math.max(50, Math.floor(140 * scale)) // 最小50px
         return {
           width: '100%',
-          minWidth: isMobile ? '72px' : '140px', // 移动端缩小到72px适应小屏幕
-          height: isMobile ? '72px' : '140px',
+          minWidth: `${smallSize}px`,
+          height: `${smallSize}px`,
           aspectRatio: '1/1'
         }
       case 'medium':
+        const mediumSize = Math.max(80, Math.floor(180 * scale)) // 最小80px
         return {
           width: '100%',
-          minWidth: isMobile ? '120px' : '180px', // 180 * 2/3 = 120
-          height: isMobile ? '120px' : '180px',
+          minWidth: `${mediumSize}px`,
+          height: `${mediumSize}px`,
           aspectRatio: '1/1'
         }
       case 'large':
+        const largeWidth = Math.max(120, Math.floor(240 * scale)) // 最小120px
+        // 在特色游戏布局中，使用flex布局让高度自适应
         return {
           width: '100%',
-          minWidth: isMobile ? '150px' : '240px', // 移动端缩小到150px适应小屏幕
-          height: isMobile ? '150px' : '295px', // 移动端缩小到150px适应小屏幕
-          aspectRatio: '1/1' // 移动端也是正方形
+          minWidth: `${largeWidth}px`,
+          height: '100%', // 使用100%高度，让它填充父容器
+          aspectRatio: 'auto' // 取消固定比例，让它适应容器
         }
       case 'horizontal-scroll':
+        const horizontalSize = Math.max(80, Math.floor(200 * scale)) // 最小80px
         return {
-          width: isMobile ? '133px' : '200px', // 200 * 2/3 = 133
-          minWidth: isMobile ? '133px' : '200px',
-          height: isMobile ? '133px' : '200px',
+          width: `${horizontalSize}px`,
+          minWidth: `${horizontalSize}px`,
+          height: `${horizontalSize}px`,
           aspectRatio: '1/1'
         }
       default:
+        const defaultSize = Math.max(80, Math.floor(180 * scale)) // 最小80px
         return {
           width: '100%',
-          minWidth: isMobile ? '120px' : '180px', // 180 * 2/3 = 120
-          height: isMobile ? '120px' : '180px',
+          minWidth: `${defaultSize}px`,
+          height: `${defaultSize}px`,
           aspectRatio: '1/1'
         }
     }
@@ -138,14 +176,19 @@ const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false
         {(!imageLoaded || imageError || !(game.cover || game.image) || game.cover === '' || game.image === '') && (
           <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
             <div className="text-center text-white">
-              <div className={`mb-2 ${
+              <div className={`mb-1 ${
+                screenSize === 'xs' ? 'text-sm' :
+                screenSize === 'sm' ? 'text-base' :
                 size === 'tiny' ? 'text-lg' :
-                size === 'small' ? 'text-2xl' :
-                'text-4xl'
+                size === 'small' ? 'text-xl' :
+                'text-2xl'
               }`}>🎮</div>
-              <div className={`font-medium px-2 ${
-                size === 'tiny' ? 'text-[8px]' :
-                size === 'small' ? 'text-xs' :
+              <div className={`font-medium px-1 ${
+                screenSize === 'xs' ? 'text-[6px]' :
+                screenSize === 'sm' ? 'text-[7px]' :
+                screenSize === 'md' ? 'text-[8px]' :
+                size === 'tiny' ? 'text-[9px]' :
+                size === 'small' ? 'text-[10px]' :
                 'text-xs'
               }`}>
                 {imageError ? (t?.hero?.imageFailedToLoad || 'Image failed to load') : (t?.common?.loading || 'Loading...')}

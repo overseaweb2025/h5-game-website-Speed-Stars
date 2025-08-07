@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react"
 import { Locale } from "@/lib/lang/dictionaraies"
-import { useGameData } from "@/hooks/useGameData"
+import { useLangGameList } from "@/hooks/LangGamelist_value"
 import { useHomeLanguage } from "@/hooks/LangHome_value"
-import { Game as APIGame, reviews_comment } from "@/app/api/types/Get/game"
+import { Game as APIGame, reviews_comment, game } from "@/app/api/types/Get/game"
 import { getGameDetails } from "@/app/api/game"
 import DesktopHero from "./DesktopHero"
 import MobileHero from "./MobileHero"
@@ -18,22 +18,28 @@ interface HomeHeroProps {
 
 export default function HomeHero({ title, description, lang, t }: HomeHeroProps) {
   const [iframeHeight, setIframeHeight] = useState("600px")
-  const [randomGames, setRandomGames] = useState<APIGame[]>([])
+  const [randomGames, setRandomGames] = useState<game[]>([])
   const [speedStarsReviews, setSpeedStarsReviews] = useState<reviews_comment[]>([])
   
-  // 获取games页面的数据
-  const { allGames } = useGameData()
+  // 使用useLangGameList获取多语言游戏数据
+  const { getLangGames, getLangGamelistBylang, autoGetData } = useLangGameList()
+  const allGames = getLangGames(lang)
   
   // 使用首页语言管理器（只获取数据，不负责获取）
   const { getHomeInfoByLang } = useHomeLanguage()
   const homeData = getHomeInfoByLang(lang)
+
+  // 初始化游戏数据获取
+  useEffect(() => {
+    autoGetData(lang)
+  }, [lang, autoGetData])
 
   // 获取随机游戏数据 - 只在allGames首次加载时执行一次
   useEffect(() => {
     if (allGames.length > 0) {
       setRandomGames(prevRandomGames => {
         if (prevRandomGames.length === 0) {
-          // 从games页面的数据中随机获取足够多的游戏用于填充各个区域
+          // 从多语言游戏数据中随机获取足够多的游戏用于填充各个区域
           const shuffled = [...allGames].sort(() => 0.5 - Math.random())
           return shuffled
         }
@@ -122,6 +128,7 @@ export default function HomeHero({ title, description, lang, t }: HomeHeroProps)
           <MobileHero
             homeData={homeData}
             t={t}
+            lang={lang}
           />
         </div>
       </div>

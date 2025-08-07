@@ -2,10 +2,12 @@
 
 import { getProviders, signIn, getSession, getCsrfToken } from "next-auth/react"
 import { useState, useEffect } from "react"
+import { useParams } from "next/navigation"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import Link from "next/link"
 import { ChevronLeftIcon, LogInIcon } from "lucide-react"
+import { Locale } from "@/lib/lang/dictionaraies"
 import type { Metadata } from "next"
 
 interface Provider {
@@ -17,6 +19,8 @@ interface Provider {
 }
 
 export default function SignInPage() {
+  const params = useParams()
+  const lang = (params?.lang as Locale) || 'en'
   const [providers, setProviders] = useState<Record<string, Provider> | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -54,21 +58,21 @@ export default function SignInPage() {
   if (loading) {
     return (
       <main className="bg-background min-h-screen">
-        <Header />
+        <Header lang={lang} />
         <div className="flex items-center justify-center min-h-screen">
           <div className="card cartoon-shadow border-4 border-primary p-8 text-center">
             <div className="text-4xl mb-4">⏳</div>
             <p className="text-xl font-black text-text">Loading...</p>
           </div>
         </div>
-        <Footer />
+        <Footer lang={lang} />
       </main>
     )
   }
 
   return (
     <main className="bg-background min-h-screen">
-      <Header />
+      <Header lang={lang} />
 
       <section className="py-12 md:py-16 bg-white relative overflow-hidden min-h-screen flex items-center">
         {/* Decorative elements */}

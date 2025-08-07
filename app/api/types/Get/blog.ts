@@ -15,6 +15,7 @@ export interface blogDetails {
     keywords:string;
     summary:string;
     content:string;
+    structured_data:string;
     alternate:string[]
     editor:{
         name:string;

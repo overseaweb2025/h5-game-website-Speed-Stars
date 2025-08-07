@@ -68,10 +68,10 @@ export default async function BlogPage({params}: {params: Promise<{lang: string}
         <div className="container mx-auto container-padding">
           <div className="text-center mb-8 md:mb-12">
             <h1 className="text-3xl md:text-4xl lg:text-6xl font-black mb-4 pop-in text-white">
-              Speed Stars <span className="gradient-text">Official Blog</span>
+              <span className="gradient-text">{t.blog?.officialBlog || "Speed Stars Official Blog"}</span>
             </h1>
             <p className="text-lg md:text-xl lg:text-2xl text-gray-200 max-w-3xl mx-auto">
-              Your official source for Speed Stars news, game strategies, and the latest in unblocked gaming!
+              {t.blog?.officialSource || "Your official source for Speed Stars news, game strategies, and the latest in unblocked gaming!"}
             </p>
           </div>
 

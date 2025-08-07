@@ -12,8 +12,22 @@ const loadToast = async () => {
   return toastModule
 }
 
+// 定义允许显示toast的类型
+type AllowedToastType = 'login' | 'games' | 'blog'
+
+// 检查是否应该显示toast
+const shouldShowToast = (category?: AllowedToastType): boolean => {
+  if (!category) return false
+  return ['login', 'games', 'blog'].includes(category)
+}
+
 // Simple toast function that uses react-hot-toast with custom styling
-const showToast = async (message: string, type: 'success' | 'error' = 'error') => {
+const showToast = async (message: string, type: 'success' | 'error' = 'error', category?: AllowedToastType) => {
+  // 只处理登录和games/blog数据获取的toast
+  if (!shouldShowToast(category)) {
+    return // 静默忽略其他类型的toast
+  }
+
   if (typeof window !== 'undefined') {
     const toast = await loadToast()
     if (toast) {
@@ -68,9 +82,23 @@ const createWelcomeMessage = (userName: string) => {
   return `Welcome back, ${userName}! 🎮`
 }
 
-// 主要显示的方法
+// 主要显示的方法 - 只处理登录和games/blog数据获取
 export const toast = {
-  success: (message: string) => showToast(message, 'success'),
-  error: (message: string) => showToast(message, 'error'),
-  welcome: (userName: string) => showToast(createWelcomeMessage(userName), 'success'),
+  success: (message: string, category?: AllowedToastType) => showToast(message, 'success', category),
+  error: (message: string, category?: AllowedToastType) => showToast(message, 'error', category),
+  welcome: (userName: string) => showToast(createWelcomeMessage(userName), 'success', 'login'),
+  // 专用方法，确保使用正确的类型
+  login: {
+    success: (message: string) => showToast(message, 'success', 'login'),
+    error: (message: string) => showToast(message, 'error', 'login'),
+    welcome: (userName: string) => showToast(createWelcomeMessage(userName), 'success', 'login'),
+  },
+  games: {
+    success: (message: string) => showToast(message, 'success', 'games'),
+    error: (message: string) => showToast(message, 'error', 'games'),
+  },
+  blog: {
+    success: (message: string) => showToast(message, 'success', 'blog'),
+    error: (message: string) => showToast(message, 'error', 'blog'),
+  }
 }

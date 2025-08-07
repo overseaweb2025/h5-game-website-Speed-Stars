@@ -27,7 +27,7 @@ export default async function SearchResultsPage({ params }: SearchResultsPagePro
   
   return (
     <>
-      <Header lang={lang} />
+      <Header t={t} lang={lang} />
       <main className="bg-gradient-to-br from-gray-900 via-black to-gray-900 min-h-screen pt-20">
         <SearchResultsClient searchQuery={decodedTitle} t={t} lang={lang} />
       </main>

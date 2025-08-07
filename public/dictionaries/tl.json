@@ -799,6 +799,9 @@
         "email": "Email"
     },
     "user": {
+        "title": "Profile ng Manlalaro - Playtopia",
+"description": "Tingnan ang profile ng isang manlalaro upang makita ang kanilang aktibidad sa paglalaro, mga achievement, stats, at mga paboritong laro. Kumonekta sa mga kaibigan at makipagkumpetensya sa matataas na score sa aming platform.",
+"keywords": "profile ng user, profile ng laro, stats ng manlalaro, mga achievement sa laro, online gaming community, user dashboard, aktibidad sa laro, leaderboards ng kaibigan",
         "pleaseSignInToViewProfile": "Paki-sign in upang tingnan ang iyong profile",
         "gamesPlayed": "Mga Larong Nilaro",
         "playTime": "Oras ng Paglalaro",

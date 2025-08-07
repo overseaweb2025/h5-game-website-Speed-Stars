@@ -19,6 +19,26 @@ const convertToExtendedGame = (apiGame: APIGame): any => ({
 
 export default function SidePanel({ randomGames, side, t }: SidePanelProps) {
   const isRight = side === 'right'
+  
+  // 确保左右侧面板游戏不重复且数量均衡
+  const getSidePanelGames = () => {
+    if (randomGames.length === 0) return []
+    
+    const totalGames = randomGames.length
+    const targetCount = 8
+    const halfCount = Math.floor(targetCount / 2) // 4个
+    
+    if (isRight) {
+      // 右侧取后半部分游戏
+      const startIndex = Math.min(halfCount, totalGames - targetCount)
+      return randomGames.slice(startIndex, startIndex + targetCount)
+    } else {
+      // 左侧取前半部分游戏
+      return randomGames.slice(0, Math.min(targetCount, totalGames))
+    }
+  }
+  
+  const sidePanelGames = getSidePanelGames()
 
   return (
     <div 
@@ -31,8 +51,8 @@ export default function SidePanel({ randomGames, side, t }: SidePanelProps) {
       <div className="p-3">
         {isRight && <h3 className="text-lg font-bold text-white mb-3 text-center"></h3>}
         <div className="grid grid-cols-1 gap-4">
-          {randomGames.length > 0 ? (
-            randomGames.slice(0, 8).map((randomGame, index) => {
+          {sidePanelGames.length > 0 ? (
+            sidePanelGames.map((randomGame, index) => {
               const gameData = convertToExtendedGame(randomGame)
               
               // 为右侧面板添加标签

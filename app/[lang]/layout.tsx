@@ -6,6 +6,7 @@ import ScrollToTop from "@/components/scroll-to-top"
 import { Toaster } from 'react-hot-toast'
 import Providers from "@/components/providers"
 import ExternalScripts from "@/components/external-scripts"
+import NotificationBar from "@/components/notification-bar"
 import { getCanonicalDomain } from "@/lib/seo-utils"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -206,6 +207,7 @@ export default function RootLayout({
         <Providers>
           <ScrollToTop />
           {children}
+          <NotificationBar />
           <Toaster
           position="top-right"
           reverseOrder={false}

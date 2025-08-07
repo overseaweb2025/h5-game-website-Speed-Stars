@@ -163,8 +163,8 @@
     },
     "games": {
         "title": "免费在线游戏 - Speed Stars",
-"description": "在 Speed Stars 畅玩海量免费在线游戏。从动感十足的冒险到烧脑的解谜，即刻找到您的下一款心爱游戏。",
-"keywords": "免费在线游戏, 网页游戏, HTML5游戏, 动作游戏, 解谜游戏, 体育游戏, 赛车游戏, speed stars, 在线玩游戏",
+        "description": "在 Speed Stars 畅玩海量免费在线游戏。从动感十足的冒险到烧脑的解谜，即刻找到您的下一款心爱游戏。",
+        "keywords": "免费在线游戏, 网页游戏, HTML5游戏, 动作游戏, 解谜游戏, 体育游戏, 赛车游戏, speed stars, 在线玩游戏",
         "gameCollection": "🎮 游戏合集",
         "html5Game": "HTML5 游戏",
         "playNow": "立即玩 →",
@@ -743,19 +743,6 @@
         "privacyPolicy": "隐私政策",
         "helpCenter": "帮助中心"
     },
-    "user": {
-        "pleaseSignInToViewProfile": "请登录以查看您的个人资料",
-        "gamesPlayed": "已玩游戏",
-        "playTime": "游戏时间",
-        "level": "等级",
-        "achievements": "成就",
-        "commentHistory": "评论历史",
-        "recentActivity": "最近活动",
-        "quickStats": "快速统计",
-        "gamingMaster": "游戏大师",
-        "casualPlayer": "休闲玩家",
-        "speedRunner": "速通玩家"
-    },
     "gameCard": {
         "freeOnlineGame": "免费在线游戏",
         "playGameOnlineDescription": "免费在线玩 {gameName}。享受这款无需下载的精彩浏览器游戏。",
@@ -953,6 +940,9 @@
         "contactUs": "联系我们"
     },
     "user": {
+        "title": "玩家个人资料 - 玩趣平台",
+        "description": "在我们的平台上查看玩家资料，了解其游戏活动、成就、统计数据和喜爱游戏。与朋友们联系并一较高下，争夺高分。",
+        "keywords": "用户资料, 游戏档案, 玩家统计, 游戏成就, 在线游戏社区, 用户面板, 游戏活动, 好友排行榜",
         "profile": "个人资料",
         "loading": "加载中...",
         "pleaseSignIn": "请登录查看您的个人资料",

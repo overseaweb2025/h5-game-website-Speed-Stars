@@ -1,11 +1,12 @@
 "use client"
 
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useParams } from "next/navigation"
 import { Suspense } from "react"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import Link from "next/link"
 import { ChevronLeftIcon, AlertTriangleIcon, RefreshCwIcon } from "lucide-react"
+import { Locale } from "@/lib/lang/dictionaraies"
 
 const errorMessages: Record<string, string> = {
   Configuration: "There is a problem with the server configuration.",
@@ -181,9 +182,12 @@ function AuthErrorContent() {
 }
 
 export default function AuthErrorPage() {
+  const params = useParams()
+  const lang = (params?.lang as Locale) || 'en'
+  
   return (
     <main className="bg-background min-h-screen">
-      <Header />
+      <Header lang={lang} />
       <Suspense fallback={
         <div className="flex items-center justify-center min-h-screen">
           <div className="card cartoon-shadow border-4 border-primary p-8 text-center">

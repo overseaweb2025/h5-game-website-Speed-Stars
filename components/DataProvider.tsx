@@ -28,6 +28,11 @@ export default function DataProvider({ lang }: DataProviderProps) {
   const { autoGetHomeData, getHomeInfoByLang } = useHomeLanguage()
 
   useEffect(() => {
+    // 防止重复执行的标记
+    if (typeof window !== 'undefined' && window.__DATA_PROVIDER_LOADED) {
+      return
+    }
+    
     // 只执行一次数据获取
     const fetchCriticalData = async () => {
       const maxRetries = 3
@@ -133,8 +138,13 @@ export default function DataProvider({ lang }: DataProviderProps) {
       }
     }
 
+    // 标记已开始执行
+    if (typeof window !== 'undefined') {
+      window.__DATA_PROVIDER_LOADED = true
+    }
+    
     fetchCriticalData()
-  }, []) // 空依赖数组，确保只执行一次
+  }, [lang]) // 添加lang依赖，但用全局标记防止重复执行
 
   // 这个组件不渲染任何内容，只负责数据获取
   return null

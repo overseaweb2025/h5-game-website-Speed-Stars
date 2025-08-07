@@ -163,8 +163,8 @@
     },
     "games": {
         "title": "Free Online Games - Speed Stars",
-"description": "Play a huge collection of free online games at Speed Stars. From action-packed adventures to brain-teasing puzzles, find your next favorite game instantly.",
-"keywords": "free online games, browser games, HTML5 games, action games, puzzle games, sports games, racing games, speed stars, play games online",
+        "description": "Play a huge collection of free online games at Speed Stars. From action-packed adventures to brain-teasing puzzles, find your next favorite game instantly.",
+        "keywords": "free online games, browser games, HTML5 games, action games, puzzle games, sports games, racing games, speed stars, play games online",
         "gameCollection": "🎮 Game Collection",
         "html5Game": "HTML5 Game",
         "playNow": "Play Now →",
@@ -825,19 +825,6 @@
         "phone": "Phone",
         "email": "Email"
     },
-    "user": {
-        "pleaseSignInToViewProfile": "Please sign in to view your profile",
-        "gamesPlayed": "Games Played",
-        "playTime": "Play Time",
-        "level": "Level",
-        "achievements": "Achievements",
-        "commentHistory": "Comment History",
-        "recentActivity": "Recent Activity",
-        "quickStats": "Quick Stats",
-        "gamingMaster": "Gaming Master",
-        "casualPlayer": "Casual Player",
-        "speedRunner": "Speed Runner"
-    },
     "gameCard": {
         "freeOnlineGame": "Free Online Game",
         "playGameOnlineDescription": "Play {gameName} online for free. Enjoy this exciting browser game with no downloads required.",
@@ -1035,6 +1022,9 @@
         "contactUs": "Contact Us"
     },
     "user": {
+        "title": "User Profile - Apex Arcade",
+"description": "View a player's profile to see their gaming activity, achievements, stats, and favorite games. Connect with friends and compete for high scores on our platform.",
+"keywords": "user profile, gaming profile, player stats, game achievements, online gaming community, user dashboard, gaming activity, friend leaderboards",
         "profile": "Profile",
         "loading": "Loading...",
         "pleaseSignIn": "Please sign in to view your profile",

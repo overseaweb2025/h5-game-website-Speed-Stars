@@ -398,19 +398,6 @@
         "dmcaPolicyTitle": "Política DMCA",
         "dmcaDescription": "Cumplimiento de la Ley de Derechos de Autor del Milenio Digital y procedimientos de retirada"
     },
-    "user": {
-        "pleaseSignInToViewProfile": "Por favor, inicia sesión para ver tu perfil",
-        "gamesPlayed": "Juegos Jugados",
-        "playTime": "Tiempo de Juego",
-        "level": "Nivel",
-        "achievements": "Logros",
-        "commentHistory": "Historial de Comentarios",
-        "recentActivity": "Actividad Reciente",
-        "quickStats": "Estadísticas Rápidas",
-        "gamingMaster": "Maestro del Juego",
-        "casualPlayer": "Jugador Casual",
-        "speedRunner": "Corredor Rápido"
-    },
     "gameCard": {
         "freeOnlineGame": "Juego Online Gratis",
         "playGameOnlineDescription": "Juega {gameName} online gratis. Disfruta de este emocionante juego de navegador sin necesidad de descargas.",
@@ -536,6 +523,9 @@
         "speedStars": "Speed Stars"
     },
     "user": {
+        "title": "Perfil de Jugador - Nova Play",
+"description": "Explora el perfil de un jugador para ver su actividad, logros, estadísticas y juegos favoritos. Conéctate con amigos y compite por las mejores puntuaciones en nuestra plataforma.",
+"keywords": "perfil de jugador, perfil de juego, estadísticas del jugador, logros, comunidad de juegos online, panel de usuario, actividad de juego, tablas de clasificación de amigos",
         "profile": "Perfil",
         "loading": "Cargando...",
         "pleaseSignIn": "Por favor inicia sesión para ver tu perfil",

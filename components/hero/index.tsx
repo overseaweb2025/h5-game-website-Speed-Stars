@@ -75,14 +75,20 @@ const hero = ({ t, game, gameDetails, GameList, pageTitle, lang, isPublishing }:
                         />
                         
                         {/* Desktop Layout - Three column layout with sidebars */}
-                        <div className="hidden lg:flex justify-center items-start gap-12 mb-6 mx-auto max-w-[2400px] w-full px-4">
-                            <LeftSide GameList={GameList} />
+                        <div className="hidden lg:flex justify-center items-start gap-12 xl:gap-6 mb-6 mx-auto max-w-[2400px] w-full px-4">
+                            {/* Left side panel - 仅在超大屏幕显示 */}
+                            <div className="hidden xl:block">
+                                <LeftSide GameList={GameList} />
+                            </div>
                             <MainCenterContainer 
                                 gameDetails={gameDetails} 
                                 GameList={GameList} 
                                 t={t}
                             />
-                            <RightSide GameList={GameList} t={t} />
+                            {/* Right side panel - 仅在超大屏幕显示 */}
+                            <div className="hidden xl:block">
+                                <RightSide GameList={GameList} t={t} />
+                            </div>
                         </div>
                         
                         {/* Mobile/Tablet Layout */}

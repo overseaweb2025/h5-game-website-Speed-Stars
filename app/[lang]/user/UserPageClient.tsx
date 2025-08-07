@@ -261,7 +261,7 @@ export default function UserPageClient({ lang, t }: UserPageClientProps) {
             {[
               { id: 'overview', label: t?.user?.overview || 'Overview', icon: UserCircleIcon },
               { id: 'history', label: t?.user?.gameHistory || 'Game History', icon: ClockIcon },
-              { id: 'comments', label: t?.user?.comments || 'Comments', icon: MessageCircleIcon }
+              // { id: 'comments', label: t?.user?.comments || 'Comments', icon: MessageCircleIcon }
             ].map(tab => {
               const Icon = tab.icon
               return (

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useGameData } from "@/hooks/useGameData"
 import { getCategoryIcon, addRandomTags } from "./utils"
 import { ExtendedGame } from "./types"
@@ -8,8 +8,9 @@ import GameCard from "./GameCard"
 import { useLangGameList } from "@/hooks/LangGamelist_value"
 import { Locale } from "@/lib/lang/dictionaraies"
 import { games } from "@/app/api/types/Get/game"
-// Featured Games组件
-const FeaturedGameSection = ({ games }: { games: ExtendedGame[] }) => {
+import { getDictionary } from "@/lib/lang/utils"
+// 横向特色游戏区域组件 - 带标题，多组5个游戏的横向排版
+const HorizontalFeaturedGames = ({ gameGroups, t }: { gameGroups: ExtendedGame[][], t?: any }) => {
   const [showControls, setShowControls] = useState(false)
   const [touched, setTouched] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -40,10 +41,15 @@ const FeaturedGameSection = ({ games }: { games: ExtendedGame[] }) => {
 
   const shouldShowControls = showControls || touched
 
+  if (!gameGroups || gameGroups.length === 0) {
+    return null
+  }
+
   return (
-    <div className="mb-4">
+    <div className="mb-6">
+      {/* 特色游戏标题 */}
       <h2 className="text-2xl md:text-3xl font-black text-white mb-4 pop-in">
-        🌟 Featured Games
+        🌟 {t?.games?.featuredGames || "Featured Games"}
       </h2>
       
       {/* 整个行区域 - 严格限制在屏幕宽度内 */}
@@ -83,24 +89,33 @@ const FeaturedGameSection = ({ games }: { games: ExtendedGame[] }) => {
           className="overflow-x-auto scrollbar-hide"
           style={{ width: '100%', maxWidth: '100%' }}
         >
-          <div className="flex gap-2 p-2 sm:gap-4 sm:p-4 md:gap-6 md:p-6" style={{ width: 'max-content', minWidth: '100%' }}>
-            <div className="flex-shrink-0">
-              {/* Featured Games 布局：移动端gap-2，桌面端gap-6 */}
-              <div className="grid grid-cols-2 gap-2 sm:gap-4 md:gap-6">
-                {/* 第一个格子：大卡片 */}
-                <div className="col-span-1">
-                  <GameCard game={games[0]} className="shadow-xl hover:shadow-2xl" size="large" />
-                </div>
-                {/* 第二个格子：包含四个小卡片的大div */}
-                <div className="col-span-1">
-                  <div className="grid grid-cols-2 gap-1 sm:gap-2 md:gap-3">
-                    {games.slice(1, 5).map((game, index) => (
-                      <GameCard key={game.id} game={game} className="shadow-lg hover:shadow-xl" size="small" />
-                    ))}
+          <div className="flex gap-4 p-4 sm:gap-6 sm:p-6 md:gap-8 md:p-8" style={{ width: 'max-content', minWidth: '100%' }}>
+            {gameGroups.map((games, groupIndex) => {
+              // 安全检查：确保games数组存在且至少有5个游戏
+              if (!games || !Array.isArray(games) || games.length < 5) {
+                return null
+              }
+              
+              return (
+                <div key={`featured-group-${groupIndex}`} className="flex-shrink-0">
+                  {/* 每组5个游戏的特色布局：1大+4小，确保左右高度一致 */}
+                  <div className="grid grid-cols-2 gap-2 sm:gap-4 md:gap-6 items-stretch">
+                    {/* 第一个格子：大卡片，高度与右侧保持一致 */}
+                    <div className="col-span-1 flex">
+                      <GameCard game={games[0]} className="shadow-xl hover:shadow-2xl w-full" size="large" />
+                    </div>
+                    {/* 第二个格子：包含四个小卡片的大div，高度与左侧保持一致 */}
+                    <div className="col-span-1 flex flex-col">
+                      <div className="grid grid-cols-2 gap-1 sm:gap-2 md:gap-3 h-full">
+                        {games.slice(1, 5).map((game, index) => (
+                          <GameCard key={`${groupIndex}-${game.id || index}`} game={game} className="shadow-lg hover:shadow-xl h-full" size="small" />
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              )
+            })}
           </div>
         </div>
       </div>
@@ -202,7 +217,7 @@ const GameRowSection = ({ title, games, sectionIndex }: { title: string, games: 
 }
 
 // GamesShow不再直接接收侧边栏状态，由Layout统一管理
-const GamesShow = ({lang}:{lang:Locale}) => {
+const GamesShow = ({lang, t}:{lang:Locale, t?: any}) => {
   const { 
     data: gameCategories, 
     loading, 
@@ -212,9 +227,19 @@ const GamesShow = ({lang}:{lang:Locale}) => {
     refresh 
   } = useGameData()
 
-  const {getLangGamelistBylang} = useLangGameList()
+  const {getLangGamelistBylang, getLangGames, autoGetGameList} = useLangGameList()
   // 多语言自适应 适合的数据
   const GameList =  getLangGamelistBylang(lang)
+  // 获取真实的游戏数组用于特色游戏展示
+  const realGames = getLangGames(lang)
+  
+  // 监听语言变化，自动刷新缓存数据
+  useEffect(() => {
+    if (lang) {
+      // 自动获取新语言的游戏列表数据（从缓存）
+      autoGetGameList(lang)
+    }
+  }, [lang, autoGetGameList])
   // 根据真实分类数据创建游戏行，只显示有游戏的分类
   const createGameRows = () => {
     if (categoriesWithGames.length === 0) return []
@@ -228,8 +253,34 @@ const GamesShow = ({lang}:{lang:Locale}) => {
 
   const gameRows = createGameRows()
   
-  // Featured Games使用所有可用游戏
-  const featuredGames = allGames.length > 0 ? addRandomTags(allGames).slice(0, 5) : []
+  // Featured Games传递多组5个一组的数据
+  const createFeaturedGameGroups = () => {
+    // 安全检查：确保realGames存在且是有效数组
+    if (!realGames || !Array.isArray(realGames) || realGames.length === 0) {
+      return []
+    }
+    
+    const groups = []
+    const groupSize = 5
+    const maxGroups = Math.floor(realGames.length / groupSize) // 计算可以分成多少组
+    
+    for (let i = 0; i < maxGroups; i++) {
+      const startIndex = i * groupSize
+      const gameSlice = realGames.slice(startIndex, startIndex + groupSize)
+      
+      // 只要有游戏数据就处理，确保是真实游戏数据
+      if (gameSlice.length === groupSize) {
+        const group = addRandomTags(gameSlice)
+        if (group && group.length > 0) {
+          groups.push(group)
+        }
+      }
+    }
+    
+    return groups
+  }
+  
+  const featuredGameGroups = createFeaturedGameGroups()
   
   return (
     <div className="w-full max-w-full overflow-hidden bg-gray-800 backdrop-blur-sm">
@@ -278,12 +329,8 @@ const GamesShow = ({lang}:{lang:Locale}) => {
           </div>
         ) : (
           <>
-            {/* Featured Games Section */}
-            {featuredGames.length > 0 && (
-              <FeaturedGameSection 
-                games={featuredGames}
-              />
-            )}
+            {/* 横向特色游戏区域 - 带标题，多组5个游戏横向排版 */}
+            <HorizontalFeaturedGames gameGroups={featuredGameGroups} t={t} />
             
             {/* Game Rows */}
             {GameList && GameList.some(item => item.games.length > 0) ? (

@@ -1,7 +1,7 @@
 // hooks/useLangGameList.ts
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-
+import {CATEGORIES_DATA}from '@/data/games/zh-games'
 // 假设这些类型已定义
 import { game, gamelist, games, LangGameList } from '@/app/api/types/Get/game'
 import { Locale } from '@/lib/lang/dictionaraies'

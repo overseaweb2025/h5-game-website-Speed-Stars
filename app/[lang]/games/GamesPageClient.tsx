@@ -6,10 +6,11 @@ import { Locale } from "@/lib/lang/dictionaraies"
 
 interface GamesPageClientProps {
   lang:Locale
+  t?: any
 }
 
-export default function GamesPageClient({ lang }: GamesPageClientProps) {
+export default function GamesPageClient({ lang, t }: GamesPageClientProps) {
   return (
-    <GamesShow lang={lang} />
+    <GamesShow lang={lang} t={t} />
   )
 }

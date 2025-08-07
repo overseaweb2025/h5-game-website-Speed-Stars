@@ -14,7 +14,7 @@ interface PropMainCenter {
 
 const MainCenterContainer = ({ gameDetails, GameList, t }: PropMainCenter) => {
     return (
-        <div className="flex-1 min-w-0 p-6 max-w-[1650px] mx-auto">
+        <div className="flex-1 min-w-0 p-6 lg:w-[120%] lg:max-w-none xl:w-auto xl:max-w-[1650px] mx-auto">
             <IframeGame gameDetails={gameDetails} t={t} />
             <BootomGames GameList={GameList} t={t} />
             <ActionButtons />

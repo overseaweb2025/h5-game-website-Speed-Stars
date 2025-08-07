@@ -7,8 +7,6 @@ import { Locale } from "@/lib/lang/dictionaraies";
 import { getBlogDetails } from "@/app/api/blog";
 import BlogHero from "./BlogHero";
 import {localesArrary} from '@/lib/lang/dictionaraies'
-import LinkTags from './LinkTags'
-import Head from 'next/head';
 interface BlogPostPageProps {
   params: Promise<{ slug: string; lang: Locale }>;
 }
@@ -67,10 +65,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   
   return (
     <>
-    <Head>
-          <link rel="alternate" hrefLang='x-default' href={`https://${process.env.CANONICAL_DOMAIN}/en/blog/${slug}`}  />
-    </Head>
-
       <Header t={t} lang = {lang as Locale}/>
       
       <BlogHero lang={lang as Locale} slug={slug} t={t}/>

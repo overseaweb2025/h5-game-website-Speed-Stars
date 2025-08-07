@@ -215,7 +215,7 @@ export default function Footer({ t, lang }: FooterProps) {
         <div className="pt-6 border-t border-gray-600/30 text-center text-gray-300">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
-              <p>&copy; {currentYear} GameHub Central. {t?.footer?.allRightsReserved}</p>
+              <p>&copy; {currentYear} {websiteData && websiteUtill(websiteData,'site-name')}. {t?.footer?.allRightsReserved}</p>
             </div>
 
             <div className="flex items-center space-x-4">

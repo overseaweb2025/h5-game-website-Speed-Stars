@@ -4,39 +4,35 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Home, Search, Info } from "lucide-react"
 import { GameRouter } from "@/lib/router"
-import { useGameData } from "@/hooks/useGameData"
+import { useLangGameList } from "@/hooks/LangGamelist_value"
 import GameCard from "@/components/games/GameCard"
 import { heroData } from "@/data/home/hero-data"
-import { Game as APIGame } from "@/app/api/types/Get/game"
+import { Game as APIGame, game } from "@/app/api/types/Get/game"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Locale } from "@/lib/lang/dictionaraies"
 
 interface MobileHeroProps {
   homeData?: any
   t?: any
+  lang: Locale
 }
 
-// 辅助函数：将 APIGame 转换为 ExtendedGame
-const convertToExtendedGame = (apiGame: APIGame): any => ({
-  id: apiGame.id,
-  name: apiGame.name,
-  display_name: apiGame.display_name,
+// 辅助函数：将 game 转换为 ExtendedGame
+const convertToExtendedGame = (gameItem: game): any => ({
+  id: gameItem.id,
+  name: gameItem.name,
+  display_name: gameItem.display_name,
   image: undefined // 将会生成占位图
 })
 
-export default function MobileHero({ homeData, t }: MobileHeroProps) {
+export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
   const router = useRouter()
-  const { categoriesWithGames } = useGameData()
+  const { getLangGames, getLangGamelistBylang } = useLangGameList()
   const [showTitleDialog, setShowTitleDialog] = useState(false)
   const [selectedTitle, setSelectedTitle] = useState('')
 
-  // 获取游戏数据，避免显示"2 Player"分类，优先选择其他分类
-  const filteredCategories = categoriesWithGames.filter(category => 
-    category.category_name.toLowerCase() !== '2 player'
-  )
-  const selectedCategory = filteredCategories.length > 0 ? filteredCategories[0] : categoriesWithGames[0]
-  
-  // 收集所有游戏用于显示30个
-  const allAvailableGames = categoriesWithGames.flatMap(category => category.games || [])
+  // 获取多语言游戏数据
+  const allAvailableGames = getLangGames(lang)
   const gamesToShow = allAvailableGames.slice(0, 30)
 
   return (

@@ -7,6 +7,24 @@ interface PropSide {
 }
 
 const RightSide = ({ GameList, t }: PropSide) => {
+    // 确保右侧面板显示后半部分游戏，与左侧不重复
+    const getRightSideGames = () => {
+        if (!GameList || GameList.length === 0) return []
+        const targetCount = 8
+        const totalGames = GameList.length
+        
+        if (totalGames <= targetCount) {
+            // 如果游戏总数不够16个，右侧复用游戏但跳过前几个
+            const skipCount = Math.min(4, Math.floor(totalGames / 2))
+            return GameList.slice(skipCount, skipCount + Math.min(targetCount, totalGames - skipCount))
+        }
+        
+        // 右侧从第8个开始取游戏，确保与左侧不重复
+        const startIndex = targetCount
+        return GameList.slice(startIndex, startIndex + targetCount)
+    }
+    
+    const rightSideGames = getRightSideGames()
     return (
         <div 
             className="bg-gradient-to-r from-accent-3/20 via-primary/20 to-secondary/20 border-3 border-accent-4/30 cartoon-shadow flex-shrink-0"
@@ -18,8 +36,8 @@ const RightSide = ({ GameList, t }: PropSide) => {
             <div className="p-3">
                 <h3 className="text-lg font-bold text-white mb-3 text-center"></h3>
                 <div className="grid grid-cols-1 gap-4">
-                    {GameList.length > 0 ? (
-                        GameList.slice(0, 8).map((game, index) => {
+                    {rightSideGames.length > 0 ? (
+                        rightSideGames.map((game, index) => {
                             const tags = ['New', 'Hot', 'Top rated'];
                             const taggedGame = {
                                 ...game,

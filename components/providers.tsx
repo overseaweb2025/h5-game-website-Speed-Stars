@@ -44,13 +44,13 @@ function TokenManager() {
               token_tool.saveToken(res.data.data.token)
               // 只在第一次成功获取token时显示欢迎提示
               if (processedSessionRef.current !== sessionId) {
-                toast.welcome(session.user.name || 'User')
+                toast.login.welcome(session.user.name || 'User')
               }
             }
           }).catch(error => {
             // 只在真正的登录失败时显示错误，避免路由切换时重复显示
             if (processedSessionRef.current !== sessionId) {
-              toast.error('Login failed, please try again')
+              toast.login.error('Login failed, please try again')
             }
           })
         }
