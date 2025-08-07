@@ -4,8 +4,6 @@ import { getDictionary } from "@/lib/lang/i18n";
 import CategoryPageClient from './CategoryPageClient';
 import { Locale, localesArrary } from "@/lib/lang/dictionaraies";
 import { getClassNameGames, getGameList } from "@/app/api/game/index";
-import { games } from "@/app/api/types/Get/game";
-
 // 为页面组件和 generateMetadata 定义明确的参数类型
 interface CategoryPageProps {
   params: {
@@ -15,31 +13,35 @@ interface CategoryPageProps {
 }
 
 // ISR 优化：设置重新验证时间
-export const revalidate = 1;
+export const revalidate = 120;
 
-// generateStaticParams 用于在构建时生成所有可能的路由参数
 export async function generateStaticParams() {
   const languages: Locale[] = localesArrary;
   const params: { category: string; lang: Locale }[] = [];
+
+  // 使用 Promise.all() 并行发起所有语言的 API 请求
+  const allGameListPromises = languages.map(lang => getGameList(lang));
   
-  // 1. 获取所有语言下所有唯一的分类名称
+  // 等待所有请求完成，并捕获结果
+  const results = await Promise.all(allGameListPromises);
+
   const allCategorySlugs = new Set<string>();
-  for (const lang of languages) {
-    const res = await getGameList(lang);
-    const gamelist = res.data.data;
-    if (gamelist) {
-      for (const category of gamelist) {
+
+  // 遍历所有请求结果，提取唯一的分类名称
+  results.forEach(res => {
+    // 确保请求成功且数据存在
+    if (res?.data?.data) {
+      for (const category of res.data.data) {
         if (category.category_name) {
           allCategorySlugs.add(category.category_name);
         }
       }
     }
-  }
+  });
 
-  // 2. 结合所有分类和语言生成 params 数组
+  // 结合所有分类和语言生成 params 数组
   for (const categorySlug of allCategorySlugs) {
     for (const lang of languages) {
-      // 注意：这里只返回了 category 和 lang，因为这是 URL 中存在的参数
       params.push({ category: categorySlug, lang });
     }
   }
