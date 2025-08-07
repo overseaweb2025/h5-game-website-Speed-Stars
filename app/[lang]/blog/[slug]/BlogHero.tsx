@@ -1,7 +1,7 @@
 import { Locale } from "@/lib/lang/dictionaraies"
 import BlogArticle from './BlogArticle'
 import { getBlogDetails } from "@/app/api/blog/index"
-
+import LinkTags from "./LinkTags"
 interface PropHero {
     lang: Locale
     slug: string
@@ -11,10 +11,13 @@ interface PropHero {
 const BlogHero = async ({ lang, slug, t }: PropHero) => {
   const res = await getBlogDetails(slug, lang)
   const blog_Details = res?.data?.data
-  
   // 检查文章是否存在且支持当前语言
   if (blog_Details && blog_Details.alternate && Array.isArray(blog_Details.alternate) && blog_Details.alternate.includes(lang)) {
-    return <BlogArticle lang={lang} t={t} slug={slug} blog_Details={blog_Details} />
+    return (
+      <>
+      <BlogArticle lang={lang} t={t} slug={slug} blog_Details={blog_Details} />
+      </>
+    )
   } else {
     // 文章不存在或不支持当前语言，显示未找到页面
     return (

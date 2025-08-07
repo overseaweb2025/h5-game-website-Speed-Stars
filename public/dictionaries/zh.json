@@ -162,6 +162,9 @@
         "customizeRunnerDetails": "用各种服装和颜色定制你的跑步者，让您在赛道上脱颖而出"
     },
     "games": {
+        "title": "免费在线游戏 - Speed Stars",
+"description": "在 Speed Stars 畅玩海量免费在线游戏。从动感十足的冒险到烧脑的解谜，即刻找到您的下一款心爱游戏。",
+"keywords": "免费在线游戏, 网页游戏, HTML5游戏, 动作游戏, 解谜游戏, 体育游戏, 赛车游戏, speed stars, 在线玩游戏",
         "gameCollection": "🎮 游戏合集",
         "html5Game": "HTML5 游戏",
         "playNow": "立即玩 →",
@@ -368,6 +371,9 @@
         "returnToHome": "返回主页"
     },
     "blog": {
+        "title": "Speed Stars 博客: 游戏新闻、技巧与更新 | 免费在线游戏",
+        "description": "在 Speed Stars 博客保持领先。获取最新的游戏新闻、专业技巧、策略指南和平台更新，以获得更佳的游戏体验。",
+        "keywords": "免费在线游戏博客, 游戏新闻, 游戏技巧, 游戏策略, HTML5游戏, 未屏蔽的游戏, 免费游戏评论, 游戏更新, Speed Stars博客",
         "speedStarsBlog": "速度之星博客 | 游戏新闻、技巧与更新",
         "officialBlog": "速度之星官方博客",
         "officialSource": "您的速度之星新闻、游戏策略和最新无阻碍游戏的官方来源！",

@@ -134,6 +134,9 @@
         "customizeRunnerDetails": "Personaliza a tu corredor con varios atuendos y colores para destacar en la pista"
     },
     "games": {
+        "title": "Juegos Online Gratis - Speed Stars",
+"description": "Juega una gran colección de juegos online gratis en Speed Stars. Desde aventuras llenas de acción hasta rompecabezas, ¡encuentra tu próximo juego favorito al instante!",
+"keywords": "juegos online gratis, juegos de navegador, juegos HTML5, juegos de acción, juegos de puzles, juegos de deportes, juegos de carreras, speed stars, jugar juegos online",
         "gameCollection": "🎮 Colección de Juegos",
         "html5Game": "Juego HTML5",
         "playNow": "Jugar Ahora →",
@@ -332,6 +335,9 @@
         "returnToHome": "Volver a Inicio"
     },
     "blog": {
+        "title": "Blog Speed Stars: Noticias, Consejos y Actualizaciones | Juegos Gratis",
+"description": "Mantente a la vanguardia con el blog de Speed Stars. Obtén noticias, consejos de expertos, guías de estrategia y actualizaciones para tu experiencia.",
+"keywords": "blog de juegos online gratis, noticias de juegos, consejos de juegos, estrategias de juego, juegos HTML5, juegos desbloqueados, reseñas de juegos gratis, blog de Speed Stars",
         "speedStarsBlog": "Blog de Speed Stars | Noticias, Consejos y Actualizaciones de Juegos",
         "officialBlog": "Blog Oficial de Speed Stars",
         "officialSource": "¡Tu fuente oficial de noticias de Speed Stars, estrategias de juego y lo último en juegos desbloqueados!",

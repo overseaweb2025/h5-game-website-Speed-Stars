@@ -11,14 +11,26 @@ interface PageParams {
 //ISR 优化
 export const revalidate = 120;
 
-// 暂时禁用静态生成以避免构建时的网络问题
-export const dynamic = 'force-dynamic';
-
 export async function generateStaticParams() {
-    // 在构建时返回空数组，使用动态生成
-    return [];
-}
+  const languages: Locale[] = localesArrary
+  const res = await getGameList("en"); // 假设获取任意语言的列表即可
+  const gameListResponse  = res.data.data
+  const Slugs:string[] = []
+  gameListResponse.map(gamelist=>{
+    if(gamelist.games.length>0)
+    gamelist.games.map(game=>{
+      Slugs.push(game.name)
+    })
+  })
+  const params = [];
 
+  for (const lang of languages) {
+    for (const slug of Slugs)
+    params.push({ slug, lang });
+  }
+  
+  return params;
+}
 export async function generateMetadata({params}: {params: Promise<{lang: Locale,slug:string}>}): Promise<Metadata> {
   const { lang,slug } = await params
   try {
@@ -26,11 +38,10 @@ export async function generateMetadata({params}: {params: Promise<{lang: Locale,
     const res = await getGameDetails(slug, lang)
     const homeData = res.data.data
 
-    console.log('GameDetialsData',homeData)
     return {
-      title: homeData.page_title,
-      description: homeData.page_description,
-      keywords: homeData.page_keywords,
+      title: homeData.page_title || "Speed Stars - Racing Game",
+      description: homeData.page_description || "Play Speed Stars racing game online",
+      keywords: homeData.page_keywords || "speed stars, racing game, online game",
       openGraph: {
         title:  homeData.page_title,
         description: homeData.page_description,

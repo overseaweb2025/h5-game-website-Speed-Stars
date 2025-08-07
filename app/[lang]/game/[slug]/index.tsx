@@ -8,8 +8,6 @@ interface PropPage {
 }
 const gamePage = async ({slug,lang}:PropPage)=>{
 
-    const t = await getDictionary(lang);
-
     return (<GamePage params={{slug: slug,lang: lang}}/>)
 }
 

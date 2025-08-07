@@ -3,14 +3,22 @@ import { getGamesCanonicalUrl } from "@/lib/seo-utils"
 import { getDictionary } from "@/lib/lang/i18n"
 import GamesLayoutClient from "./GamesLayoutClient"
 import { Locale } from "@/lib/lang/dictionaraies"
+interface PropMetadata {
+  params: {
+    lang: Locale;
+  };
+}
+export async function generateMetadata({params }:PropMetadata): Promise<Metadata> {
+  const { lang } = params; // 从 params 中解构 lang
+  const canonicalUrl = `${process.env.CANONICAL_DOMAIN}/${lang}/games`
 
-export async function generateMetadata(): Promise<Metadata> {
-  const canonicalUrl = getGamesCanonicalUrl()
-  
+  const t = await getDictionary(lang as Locale);
+
+
   return {
-    title: "Free Online Games - Speed Stars",
-    description: "Play hundreds of free online games including action, puzzle, sports, and racing games. No downloads required, play instantly in your browser!",
-    keywords: "free online games, browser games, HTML5 games, action games, puzzle games, sports games, racing games, speed stars",
+    title: t.games.title,
+    description:t.games.description ,
+    keywords: t.games.keywords,
     alternates: {
       canonical: canonicalUrl,
     },

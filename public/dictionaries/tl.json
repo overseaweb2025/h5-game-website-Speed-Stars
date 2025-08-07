@@ -135,6 +135,9 @@
         "customizeRunnerDetails": "I-customize ang iyong runner na may iba't ibang outfits at kulay upang mamukod-tangi sa track"
     },
     "games": {
+        "title": "Libreng Online Games - Speed Stars",
+"description": "Maglaro ng malaking koleksyon ng libreng online games sa Speed Stars. Mula sa mga adventure na puno ng aksyon hanggang sa mga puzzle, hanapin ang iyong susunod na paboritong laro kaagad.",
+"keywords": "libreng online games, browser games, HTML5 games, action games, puzzle games, sports games, racing games, speed stars, maglaro online",
         "gameCollection": "🎮 Koleksyon ng Laro",
         "html5Game": "HTML5 na Laro",
         "playNow": "Maglaro Ngayon →",
@@ -341,6 +344,9 @@
         "returnToHome": "Bumalik sa Home"
     },
     "blog": {
+        "title": "Speed Stars Blog: Balita, Tips at Updates | Libreng Online Games",
+"description": "Manatiling nangunguna sa Speed Stars Blog. Kunin ang pinakabagong balita sa laro, mga pro tips, gabay sa diskarte, at mga update para sa mas mahusay na karanasan.",
+"keywords": "blog ng libreng online games, balita sa laro, tips sa paglalaro, diskarte sa laro, HTML5, unblocked na laro, pagsusuri sa laro, update, blog ng Speed Stars",
         "speedStarsBlog": "Speed Stars Blog | Game News, Tips & Updates",
         "officialBlog": "Opisyal na Blog ng Speed Stars",
         "officialSource": "Ang iyong opisyal na source para sa balita ng Speed Stars, mga diskarte sa laro, at ang pinakabago sa unblocked gaming!",

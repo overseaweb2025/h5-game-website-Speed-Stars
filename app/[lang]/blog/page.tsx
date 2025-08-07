@@ -3,30 +3,42 @@ import Footer from "@/components/footer"
 import type { Metadata } from "next"
 import BlogList from "@/components/blog/BlogList"
 import { getDictionary } from "@/lib/lang/i18n"
-import { Locale } from "@/lib/lang/dictionaraies"
-export const metadata: Metadata = {
-  title: "Speed Stars Blog | Game News, Tips & Updates",
-  description:
-    "Stay updated with the latest news, game tips, strategies, and announcements from Speed Stars. Your go-to source for all things HTML5 gaming!",
-  keywords: "Speed Stars blog, game news, HTML5 gaming tips, game updates, unblocked games blog, game strategies",
-  openGraph: {
-    title: "Speed Stars Blog | Game News, Tips & Updates",
-    description:
-      "Stay updated with the latest news, game tips, strategies, and announcements from Speed Stars. Your go-to source for all things HTML5 gaming!",
-    url: "https://speed-stars.net/blog",
-    siteName: "Speed Stars",
-    images: [
-      {
-        url: "https://speed-stars.net/images/blog-og.png",
-        width: 1200,
-        height: 630,
-        alt: "Speed Stars Blog",
+import { Locale,localesArrary } from "@/lib/lang/dictionaraies"
+
+
+interface BlogPageProps {
+  params:{
+    lang:Locale
+  }
+}
+export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
+  const domain = process.env.CANONICAL_DOMAIN; // 您的网站域名
+  const { lang } = params;
+
+  const t = await getDictionary(lang as Locale);
+
+   // 使用 reduce 动态生成 languages 对象
+  const alternateLanguages = localesArrary.reduce((acc, locale) => {
+    // 确保 locale 和 domain 变量存在
+    acc[locale] = `${domain}/${locale}/blog`;
+    return acc;
+  }, {} as Record<string, string>); // 加上类型断言以符合 TypeScript 要求
+
+
+  return {
+    title: t.blog.title,
+    description: t.blog.description,
+    keywords: t.blog.keywords,
+    alternates: {
+      // Canonical URL 应该包含语言路径
+      canonical: `${domain}/${lang}/blog`, 
+      // 可选：设置多语言链接
+      languages: {
+        ...alternateLanguages,
+        'x-default': `${domain}/en/blog`, // 'x-default' 通常作为备选，可以单独设置
       },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  canonical: "https://speed-stars.net/blog",
+    },
+  };
 }
 
 

@@ -16,7 +16,7 @@ const BootomGames =  ({GameList,t}:PropSide)=>{
                           key={`discover-${randomGame.id}-${index}`}
                           game={randomGame}
                           className="w-full"
-                          size="medium"
+                          size="small"
                           isHomepage={true}
                         />
                       ))

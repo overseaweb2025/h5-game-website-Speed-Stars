@@ -162,6 +162,9 @@
         "customizeRunnerDetails": "Customize your runner with various outfits and colors to stand out on the track"
     },
     "games": {
+        "title": "Free Online Games - Speed Stars",
+"description": "Play a huge collection of free online games at Speed Stars. From action-packed adventures to brain-teasing puzzles, find your next favorite game instantly.",
+"keywords": "free online games, browser games, HTML5 games, action games, puzzle games, sports games, racing games, speed stars, play games online",
         "gameCollection": "🎮 Game Collection",
         "html5Game": "HTML5 Game",
         "playNow": "Play Now →",
@@ -368,6 +371,9 @@
         "returnToHome": "Return to Home"
     },
     "blog": {
+        "title": "Speed Stars Blog: Game News, Tips & Updates | Free Online Games",
+"description": "Stay ahead with the Speed Stars Blog. Get the latest game news, pro tips, strategy guides, and platform updates for a better gaming experience.",
+"keywords": "free online games blog, game news, gaming tips, game strategies, HTML5 games, unblocked games, free game reviews, game updates, Speed Stars blog",
         "speedStarsBlog": "Speed Stars Blog | Game News, Tips & Updates",
         "officialBlog": "Speed Stars Official Blog",
         "officialSource": "Your official source for Speed Stars news, game strategies, and the latest in unblocked gaming!",
