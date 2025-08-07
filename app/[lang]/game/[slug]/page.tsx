@@ -11,22 +11,12 @@ interface PageParams {
 //ISR 优化
 export const revalidate = 120;
 
+// 暂时禁用静态生成以避免构建时的网络问题
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
-    const languages: Locale[] = localesArrary;
-    const params: { slug: string; lang: Locale }[] = [];
-
-    // 为每种语言调用一次 API
-    for (const lang of languages) {
-        const res = await getGameList(lang);
-        const gamelist = res.data.data;
-        gamelist.map(catogry=>{
-          catogry.games.map(item=>{
-            params.push({slug:item.name,lang})
-          })
-        })
-    }
-
-    return params;
+    // 在构建时返回空数组，使用动态生成
+    return [];
 }
 
 export async function generateMetadata({params}: {params: Promise<{lang: Locale,slug:string}>}): Promise<Metadata> {

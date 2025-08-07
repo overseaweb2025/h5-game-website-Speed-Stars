@@ -2,18 +2,14 @@ import api from '../index'
 import { ApiResponse } from '../types';
 import { GameList,GameDetails, HomeGameData, gamelist, Game } from '../types/Get/game';
 
-export const getGameList = async (lang?: string) => {
-  try {
-    return await api.get<ApiResponse<gamelist>>('/api/v1/game/list', {
-      params: {
-        lang
-      }
-    });
-  } catch (error) {
-    // 确保在请求失败时也能返回一个可序列化的对象，以避免构建中断
-    return null; // 或者返回一个表示错误的空对象
-  }
-};
+export const getGameList = (lang?:string) => {
+
+  return api.get<ApiResponse<gamelist>>('/api/v1/game/list',{
+    params:{
+      lang
+    }
+  });
+}
 //获取分类页的所有消息
 export const getGameCategory = (category:string)=>{
 
