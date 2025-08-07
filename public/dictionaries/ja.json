@@ -43,6 +43,8 @@
         "blog": "ブログ"
     },
     "hero": {
+        "gameCenter": "ゲームセンター",
+        "gameTitle": "ゲームタイトル",
         "comingSoon": "近日公開！",
         "awesomeGameAvailableSoon": "この素晴らしいゲームは近日中に利用可能になります。",
         "discoverMoreGames": "他のゲームを見つける",

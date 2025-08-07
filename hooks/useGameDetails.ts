@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from 'react'
-import { getGameDetails } from '@/app/api/gameList'
+import { getGameDetails } from '@/app/api/game'
 import { ExtendedGameDetails } from '@/app/api/types/Get/game'
 import { gameDetailsParser } from '@/lib/game-utils'
 import { gamesData } from '@/data/games/games-data'

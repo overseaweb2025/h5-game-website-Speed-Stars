@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from 'react'
-import { getGameCategory } from '@/app/api/gameList'
+import { getGameCategory } from '@/app/api/game'
 import { CategorySEO } from '@/app/api/types/Get/game'
 
 export interface CachedCategorySEO {

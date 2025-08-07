@@ -6,16 +6,16 @@ import { getDictionary } from "@/lib/lang/i18n";
 import { Locale } from "@/lib/lang/dictionaraies";
 import { getBlogDetails } from "@/app/api/blog";
 import BlogHero from "./BlogHero";
-
+import {localesArrary} from '@/lib/lang/dictionaraies'
 interface BlogPostPageProps {
   params: Promise<{ slug: string; lang: Locale }>;
 }
 
-export const revalidate = 120;
+export const revalidate = 300;
 
 export async function generateStaticParams() {
   const blogSlugs = getAllBlogSlugs();
-  const languages: Locale[] = ['en', 'zh', 'ru', 'es', 'vi', 'hi', 'fr', 'tl', 'ja', 'ko'];
+  const languages: Locale[] = localesArrary
   
   const params = [];
   for (const slug of blogSlugs) {
@@ -29,28 +29,20 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug, lang } = await params;
   
-  try {
-    const response = await getBlogDetails(slug, lang);
-    const post = response?.data?.data;
-    
-    if (!post) {
-      return {
-        title: "Blog Post Not Found - Speed Stars",
-        description: "The requested blog post could not be found.",
-      };
-    }
-    
+  const response = await getBlogDetails(slug, lang);
+  const post = response?.data?.data;
+  
+  if (!post) {
     return {
-      title: `${post.title} - Speed Stars Blog`,
-      description: post.description || post.excerpt,
-    };
-  } catch (error) {
-    console.error('Error fetching blog details for metadata:', error);
-    return {
-      title: "Blog Post - Speed Stars",
-      description: "Speed Stars blog post",
+      title: "Blog Post Not Found - Speed Stars",
+      description: "The requested blog post could not be found.",
     };
   }
+  
+  return {
+    title: `${post.title}`,
+    description: post.description,
+  };
 }
 
 

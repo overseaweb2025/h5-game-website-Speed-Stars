@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
 import { PublicComment } from "@/app/api/comment/index"
-import { getGameDetails } from "@/app/api/gameList"
+import { getGameDetails } from "@/app/api/game"
 import { reviews_comment } from "@/app/api/types/Get/game"
 import { useSession } from "next-auth/react"
 

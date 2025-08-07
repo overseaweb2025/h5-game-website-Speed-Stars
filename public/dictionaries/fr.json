@@ -41,6 +41,8 @@
         "toggleSidebarDescription": "Basculer la barre latérale entre le mode complet et le mode icône"
     },
     "hero": {
+        "gameCenter": "Centre de Jeu",
+        "gameTitle": "Titre du Jeu",
         "comingSoon": "Bientôt disponible !",
         "awesomeGameAvailableSoon": "Ce jeu génial sera bientôt disponible.",
         "discoverMoreGames": "Découvrir Plus de Jeux",
@@ -341,7 +343,7 @@
         "readFullArticle": "Lire l'article complet",
         "subscribeNow": "S'abonner maintenant !",
         "blogPostNotFound": "Article de Blog Introuvable - Speed Stars",
-        "requestedBlogPostNotFound": "L'article de blog demandé n'a pas pu être trouvé.",
+        "requestedBlogPostNotFound": "L'article de blog demandé n'a pas pu être trouvé ou n'est pas disponible dans votre langue.",
         "backToBlog": "Retour au blog",
         "backToAllPosts": "Retour à tous les articles",
         "comments": "Commentaires"
@@ -526,5 +528,39 @@
     "meta": {
         "iconText": "S",
         "speedStars": "Speed Stars"
+    },
+    "user": {
+        "profile": "Profil",
+        "loading": "Chargement...",
+        "pleaseSignIn": "Veuillez vous connecter pour voir votre profil",
+        "signIn": "Se connecter",
+        "gamer": "Joueur",
+        "joined": "Rejoint le",
+        "gamesPlayed": "Jeux joués",
+        "playTime": "Temps de jeu",
+        "level": "Niveau",
+        "achievements": "Réalisations",
+        "overview": "Aperçu",
+        "gameHistory": "Historique des jeux",
+        "comments": "Commentaires",
+        "recentActivity": "Activité récente",
+        "quickStats": "Statistiques rapides",
+        "commentsWritten": "Commentaires écrits",
+        "currentLevel": "Niveau actuel",
+        "gameHistoryDisabled": "Historique des jeux désactivé",
+        "noGameHistoryYet": "Aucun historique de jeux encore",
+        "gameHistoryDisabledDesc": "Veuillez vous connecter pour suivre votre historique de jeux et voir les statistiques détaillées.",
+        "noGameHistoryDesc": "Commencez à jouer pour construire votre historique de jeux ! Les jeux auxquels vous jouez pendant plus de 30 secondes seront automatiquement sauvegardés ici.",
+        "historyTrackingNote": "Le suivi de l'historique n'est disponible que pour les utilisateurs connectés.",
+        "played": "Joué",
+        "duration": "Durée",
+        "playAgain": "Rejouer",
+        "commentHistory": "Historique des commentaires",
+        "showMore": "Afficher plus",
+        "showLess": "Afficher moins",
+        "page": "Page",
+        "of": "sur",
+        "previous": "Précédent",
+        "next": "Suivant"
     }
 }

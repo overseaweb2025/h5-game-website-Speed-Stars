@@ -30,48 +30,106 @@ export default function DataProvider({ lang }: DataProviderProps) {
   useEffect(() => {
     // 只执行一次数据获取
     const fetchCriticalData = async () => {
-      try {
-        // 1. 检查并获取游戏列表数据
-        const existingGameData = getLangGamelistBylang(lang)
-        if (!existingGameData || existingGameData.length === 0) {
-          console.log(`[DataProvider] Fetching game list data for ${lang}`)
-          await getGameListData(lang, true) // force = true 表示检查缓存
-        } else {
-          console.log(`[DataProvider] Game list data for ${lang} already exists, skipping fetch`)
-        }
+      const maxRetries = 3
+      const retryDelay = 1000 // 1秒
 
-        // 2. 检查并获取导航数据
-        if (!navState || !navState.top_navigation || navState.top_navigation.length === 0) {
-          console.log(`[DataProvider] Fetching navigation data`)
-          const navResponse = await getNavLanguage()
-          if (navResponse.data?.data) {
-            updateLanguage(navResponse.data.data)
+      // 带重试的API请求函数
+      const fetchWithRetry = async (fetchFn: () => Promise<any>, name: string, retryCount = 0): Promise<any> => {
+        try {
+          return await fetchFn()
+        } catch (error: any) {
+          console.error(`[DataProvider] Error fetching ${name} (attempt ${retryCount + 1}):`, error)
+          
+          // 如果是500错误且还有重试次数，则重试
+          if (error?.response?.status === 500 && retryCount < maxRetries) {
+            console.log(`[DataProvider] Retrying ${name} in ${retryDelay}ms... (${retryCount + 1}/${maxRetries})`)
+            await new Promise(resolve => setTimeout(resolve, retryDelay))
+            return fetchWithRetry(fetchFn, name, retryCount + 1)
           }
-        } else {
-          console.log(`[DataProvider] Navigation data already exists, skipping fetch`)
+          
+          // 最终失败时记录错误但不中断其他请求
+          safeErrorLog(error, `DataProvider-${name}`)
+          return null
         }
+      }
 
-        // 3. 检查并获取首页数据
-        const existingHomeData = getHomeInfoByLang(lang)
-        if (!existingHomeData) {
-          console.log(`[DataProvider] Fetching home data for ${lang}`)
-          await autoGetHomeData(true, lang) // force = true 表示检查缓存
-        } else {
-          console.log(`[DataProvider] Home data for ${lang} already exists, skipping fetch`)
+      try {
+        // 使用 Promise.allSettled 避免一个失败影响其他请求
+        const results = await Promise.allSettled([
+          // 1. 检查并获取游戏列表数据
+          (async () => {
+            const existingGameData = getLangGamelistBylang(lang)
+            if (!existingGameData || existingGameData.length === 0) {
+              console.log(`[DataProvider] Fetching game list data for ${lang}`)
+              return fetchWithRetry(
+                () => getGameListData(lang, true),
+                'GameListData'
+              )
+            } else {
+              console.log(`[DataProvider] Game list data for ${lang} already exists, skipping fetch`)
+              return Promise.resolve(null)
+            }
+          })(),
+
+          // 2. 检查并获取导航数据
+          (async () => {
+            if (!navState || !navState.top_navigation || navState.top_navigation.length === 0) {
+              console.log(`[DataProvider] Fetching navigation data`)
+              const navResponse = await fetchWithRetry(
+                () => getNavLanguage(),
+                'NavigationData'
+              )
+              if (navResponse?.data?.data) {
+                updateLanguage(navResponse.data.data)
+              }
+              return navResponse
+            } else {
+              console.log(`[DataProvider] Navigation data already exists, skipping fetch`)
+              return Promise.resolve(null)
+            }
+          })(),
+
+          // 3. 检查并获取首页数据
+          (async () => {
+            const existingHomeData = getHomeInfoByLang(lang)
+            if (!existingHomeData) {
+              console.log(`[DataProvider] Fetching home data for ${lang}`)
+              return fetchWithRetry(
+                () => autoGetHomeData(true, lang),
+                'HomeData'
+              )
+            } else {
+              console.log(`[DataProvider] Home data for ${lang} already exists, skipping fetch`)
+              return Promise.resolve(null)
+            }
+          })()
+        ])
+
+        // 检查结果并记录
+        const gameListResult = results[0]
+        const navResult = results[1] 
+        const homeResult = results[2]
+
+        console.log(`[DataProvider] Data fetch results for ${lang}:`, {
+          gameList: gameListResult.status,
+          navigation: navResult.status,
+          home: homeResult.status
+        })
+
+        // 如果所有请求都失败，显示降级提示
+        const allFailed = results.every(result => result.status === 'rejected')
+        if (allFailed) {
+          console.warn('[DataProvider] All API requests failed, using cached/default data')
+          // 可以在这里触发降级逻辑或用户提示
         }
 
       } catch (error) {
-        // 使用统一的错误过滤工具
-        const shouldShowToUser = safeErrorLog(error, 'DataProvider')
+        // 这里捕获的是Promise.allSettled之外的错误（应该很少发生）
+        const shouldShowToUser = safeErrorLog(error, 'DataProvider-Critical')
         
         if (shouldShowToUser) {
-          // 只有后端API错误和网络错误才会到这里
-          // 可以在这里添加用户友好的错误提示
-          // 例如: toast.error('网络连接失败，请稍后重试')
-          
-          console.log('[DataProvider] This error should be shown to user via toast')
+          console.error('[DataProvider] Critical error in data fetching:', error)
         }
-        // Unity 错误和其他被过滤的错误不会显示给用户
       }
     }
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { getGameHome } from '@/app/api/gameList'
+import { getGameHome } from '@/app/api/game'
 import { Locale } from '@/lib/lang/dictionaraies'
 import { HomeGameInfo, LangHomeInfo } from '@/app/api/types/Get/home'
 import { safeErrorLog } from '@/lib/error-filter'
@@ -7,8 +7,8 @@ import { safeErrorLog } from '@/lib/error-filter'
 const STORAGE_KEY = 'language-home-value'
 const TIMESTAMP_KEY = 'language-home-timestamp'
 
-// 首页缓存过期时间（1小时）
-const HOME_CACHE_EXPIRY_TIME = 60 * 60 * 1000 // 1小时
+// 首页缓存过期时间（5分钟）
+const HOME_CACHE_EXPIRY_TIME = 5 * 60 * 1000 // 5分钟
 
 // 🛠️ 检查首页缓存是否过期
 function isHomeCacheExpired(): boolean {

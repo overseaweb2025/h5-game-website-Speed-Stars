@@ -286,11 +286,25 @@ const GamesShow = ({lang}:{lang:Locale}) => {
             )}
             
             {/* Game Rows */}
-            {
-              GameList?.map((item,index)=>{
+            {GameList && GameList.some(item => item.games.length > 0) ? (
+              GameList.map((item,index)=>{
                 if(item.games.length > 0 )return (<GameRowSection key={index} title={item.category_name} games={item.games} sectionIndex={index}  />)
               })
-            }
+            ) : (
+              <div className="flex items-center justify-center h-64 flex-col gap-4">
+                <div className="text-6xl">🎮</div>
+                <div className="text-white text-2xl font-bold">No Games Available</div>
+                <div className="text-white/60 text-center max-w-md">
+                  We're working hard to bring you amazing games. Check back soon for new additions!
+                </div>
+                <button 
+                  onClick={refresh}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"
+                >
+                  Refresh Games
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>

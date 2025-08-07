@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from 'react'
 // 假设这些类型已定义
 import { game, gamelist, games, LangGameList } from '@/app/api/types/Get/game'
 import { Locale } from '@/lib/lang/dictionaraies'
-import { getGameList } from '@/app/api/gameList'
+import { getGameList } from '@/app/api/game'
 import { safeErrorLog } from '@/lib/error-filter'
 
 // 存储 key

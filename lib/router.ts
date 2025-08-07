@@ -5,14 +5,56 @@
  * 提供项目中所有页面跳转的统一管理
  */
 
-// 获取当前语言
+// 获取语言偏好的优先级：URL路径 > Cookie > 浏览器设置 > 默认
 export const getCurrentLang = (): string => {
   if (typeof window !== 'undefined') {
+    // 1. 优先从 URL 路径获取语言
     const pathname = window.location.pathname
     const langMatch = pathname.match(/^\/([a-z]{2})(?:\/|$)/)
-    return langMatch ? langMatch[1] : 'en'
+    if (langMatch) {
+      return langMatch[1]
+    }
+    
+    // 2. 从 Cookie 获取用户偏好语言
+    const cookieLang = getCookieValue('preferred-language')
+    if (cookieLang && isValidLanguage(cookieLang)) {
+      return cookieLang
+    }
+    
+    // 3. 从浏览器语言设置获取
+    const browserLang = navigator.language?.toLowerCase()
+    if (browserLang) {
+      // 检查完整匹配
+      if (isValidLanguage(browserLang)) {
+        return browserLang
+      }
+      // 检查语言前缀 (如 zh-CN -> zh)
+      const langPrefix = browserLang.split('-')[0]
+      if (isValidLanguage(langPrefix)) {
+        return langPrefix
+      }
+    }
   }
-  return 'en'
+  
+  return 'en' // 默认语言
+}
+
+// 辅助函数：获取 Cookie 值
+function getCookieValue(name: string): string | null {
+  if (typeof window === 'undefined') return null
+  
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) {
+    return parts.pop()?.split(';').shift() || null
+  }
+  return null
+}
+
+// 辅助函数：验证语言代码有效性
+function isValidLanguage(lang: string): boolean {
+  const supportedLangs = ['en', 'zh', 'ru', 'es', 'vi', 'hi', 'fr', 'tl', 'ja', 'ko']
+  return supportedLangs.includes(lang)
 }
 
 // 构建带语言前缀的路径

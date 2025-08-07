@@ -9,11 +9,24 @@ import { websiteUtill } from "@/lib/website/websiteUtill"
 import { useNavgationLanguage } from "@/hooks/Navigation_value/use-navigation-language"
 import { contentMessage, footer_nav, top_navigation } from "@/app/api/types/Get/nav"
 import { langSequence, langSequence_footernavigation } from "@/lib/lang/utils"
-import {Locale } from '@/lib/lang/dictionaraies'
+import {Locale, localesArrary } from '@/lib/lang/dictionaraies'
 
 interface FooterProps {
   t?: any; // 更好的类型是 t: Dictionary
   lang: Locale;
+}
+
+export const revalidate = 20000;
+export async function generateStaticParams() {
+    const languages: Locale[] = localesArrary;
+    const params: { lang: Locale }[] = [];
+
+    // 为每种语言调用一次 API
+    for (const lang of languages) {
+          params.push({ lang });
+    }
+
+    return params;
 }
 
 export default function Footer({ t, lang }: FooterProps) {

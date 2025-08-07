@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { getGameList } from '@/app/api/gameList'
+import { getGameList } from '@/app/api/game'
 import { GameList, CategoryGameList } from '@/app/api/types/Get/game'
 
 interface GameDataState {

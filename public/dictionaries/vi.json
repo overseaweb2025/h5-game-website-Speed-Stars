@@ -43,6 +43,8 @@
         "blog": "Blog"
     },
     "hero": {
+        "gameCenter": "Trung Tâm Game",
+        "gameTitle": "Tiêu Đề Game",
         "comingSoon": "Coming Soon!",
         "awesomeGameAvailableSoon": "This awesome game will be available soon.",
         "discoverMoreGames": "Discover More Games",

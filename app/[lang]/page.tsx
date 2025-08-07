@@ -5,32 +5,44 @@ import NavigationArrow from "@/components/navigation-arrow"
 import HomepageTestimonials from "@/components/homepage-testimonials"
 import FAQ from "@/components/faq"
 import { getDictionary } from "@/lib/lang/i18n"
-import { fetchHomeGameData, extractSEOFromHomeData } from "@/lib/server-api"
 import { Metadata } from "next"
-import { Locale } from "@/lib/lang/dictionaraies"
+import { Locale, localesArrary } from "@/lib/lang/dictionaraies"
+import { getGameHome } from "../api/game/index"
+
+export const revalidate = 60;
+export async function generateStaticParams() {
+    const languages: Locale[] = localesArrary;
+    const params: { lang: Locale }[] = [];
+
+    // 为每种语言调用一次 API
+    for (const lang of languages) {
+          params.push({ lang });
+    }
+
+    return params;
+}
+
 export async function generateMetadata({params}: {params: Promise<{lang: string}>}): Promise<Metadata> {
   const { lang } = await params
   
   try {
     // Fetch home game data for SEO metadata
-    const homeData = await fetchHomeGameData()
-    const seoData = extractSEOFromHomeData(homeData)
-
-    console.log('homedata',homeData)
+    const res = await getGameHome(lang)
+    const homeData = res.data.data
     return {
-      title: homeData?.data.title,
-      description: homeData?.data.description,
-      keywords: homeData?.data.keywords,
+      title: homeData.title,
+      description: homeData?.description,
+      keywords: homeData?.keywords,
       openGraph: {
-        title:  homeData?.data.title,
-        description: homeData?.data.description,
+        title:  homeData?.title,
+        description: homeData?.description,
         type: 'website',
-        locale: lang === 'zh' ? 'zh_CN' : 'en_US',
+        locale: lang,
       },
       twitter: {
         card: 'summary_large_image',
-        title: homeData?.data.title,
-        description: homeData?.data.description,
+        title: homeData?.title,
+        description: homeData?.description,
       }
     }
   } catch (error) {

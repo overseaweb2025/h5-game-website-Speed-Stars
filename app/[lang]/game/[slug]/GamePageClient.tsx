@@ -53,7 +53,7 @@ export default function GamePageClient({ slug,lang,t }: GamePageClientProps) {
         slug: slug,
         image: gameDetails.cover || '/placeholder-game.jpg',
         category: gameDetails.breadcrumbs?.find(b => b.level === 1)?.name || 'Games',
-        description: gameDetails.info || '',
+        description: gameDetails.introduce || '',
         rating: gameDetails.rating,
         technology: gameDetails.technology,
         platforms: gameDetails.platforms,

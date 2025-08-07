@@ -1,12 +1,13 @@
 "use client"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Home, Search } from "lucide-react"
+import { Home, Search, Info } from "lucide-react"
 import { GameDetails, game, games } from "@/app/api/types/Get/game"
 import { useGameData } from "@/hooks/useGameData"
 import { useHomeGameData } from "@/hooks/useHomeGameData"
 import { GameRouter } from "@/lib/router"
 import GameCard from "../games/GameCard"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
 interface MobileLayoutProps {
   t: any
@@ -27,6 +28,8 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
   const router = useRouter()
   const { homeData, loading: homeDataLoading } = useHomeGameData()
   const { categoriesWithGames } = useGameData()
+  const [showTitleDialog, setShowTitleDialog] = useState(false)
+  const [selectedTitle, setSelectedTitle] = useState('')
 
   return (
     <div className="lg:hidden mb-6 px-4 mx-auto max-w-screen-xl">
@@ -35,22 +38,22 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
         <div className="grid grid-cols-3 gap-6">
           {/* Fixed function cards */}
           <div className="col-span-1 relative">
-            <div className="fixed z-30 bg-white rounded-[9px] shadow-lg transition-shadow duration-300 h-[73px] p-1" style={{ width: 'calc((100vw - 80px) / 3 - 12px)' }}>
+            <div className="fixed z-30 bg-gray-800 border border-gray-700 rounded-[9px] shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-shadow duration-300 h-[73px] p-1" style={{ width: 'calc((100vw - 80px) / 3 - 12px)' }}>
               <div className="grid grid-rows-2 h-full gap-0">
-                <div className="row-span-1 grid grid-cols-2 gap-0 border-b border-gray-200">
-                  <div className="col-span-2 bg-white flex items-center justify-center">
-                    <span className="text-xs font-semibold text-gray-800">{t?.hero?.gameCenter || "游戏中心"}</span>
+                <div className="row-span-1 grid grid-cols-2 gap-0 border-b border-gray-600">
+                  <div className="col-span-2 bg-gray-800 flex items-center justify-center">
+                    <span className="text-xs font-semibold text-white">{t?.hero?.gameCenter || "游戏中心"}</span>
                   </div>
                 </div>
                 <div className="row-span-1 grid grid-cols-2 gap-0">
                   <div 
-                    className="bg-white flex items-center justify-center border-r border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                    className="bg-gray-800 flex items-center justify-center border-r border-gray-600 cursor-pointer hover:bg-gray-700 transition-colors duration-200"
                     onClick={() => router.push('/')}
                   >
                     <Home className="w-4 h-4 text-blue-500" />
                   </div>
                   <div 
-                    className="bg-white flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                    className="bg-gray-800 flex items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors duration-200"
                     onClick={() => router.push('/search')}
                   >
                     <Search className="w-4 h-4 text-blue-500" />
@@ -61,15 +64,38 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
           </div>
           
           <div className="col-span-2">
-            <div className="bg-white rounded-[9px] px-4 py-3 shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center justify-start h-[73px]">
-              <div className="text-left">
-                <h2 className="text-base font-black text-gray-800 leading-tight">
+            <div className="bg-gray-800 border border-gray-700 rounded-[9px] px-4 py-3 shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-shadow duration-300 flex items-center justify-between h-[73px]">
+              <div className="text-left flex-1">
+                <h2 
+                  className="text-base font-black text-white leading-tight cursor-pointer hover:text-blue-400 transition-colors"
+                  style={{
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                  }}
+                  onClick={() => {
+                    const title = game ? (game.display_name || game.name) : (gameDetails ? (gameDetails.display_name || gameDetails.title) : (pageTitle || "Game Center"))
+                    setSelectedTitle(title)
+                    setShowTitleDialog(true)
+                  }}
+                  title={game ? (game.display_name || game.name) : (gameDetails ? (gameDetails.display_name || gameDetails.title) : (pageTitle || "Game Center"))}
+                >
                   {game ? (game.display_name || game.name) : (gameDetails ? (gameDetails.display_name || gameDetails.title) : (pageTitle || "Game Center"))}
                 </h2>
-                <p className="text-xs text-gray-600 mt-1">
+                <p className="text-xs text-gray-300 mt-1">
                   {t?.hero?.category || "分类名"}: {game?.category || gameDetails?.category || homeData?.data?.category || "Games"}
                 </p>
               </div>
+              <Info 
+                className="w-4 h-4 text-gray-400 cursor-pointer hover:text-blue-400 transition-colors ml-2 flex-shrink-0"
+                onClick={() => {
+                  const title = game ? (game.display_name || game.name) : (gameDetails ? (gameDetails.display_name || gameDetails.title) : (pageTitle || "Game Center"))
+                  setSelectedTitle(title)
+                  setShowTitleDialog(true)
+                }}
+              />
             </div>
           </div>
         </div>
@@ -82,9 +108,9 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
         <div className="col-span-3">
           <div
             id="game-frame-mobile-full"
-            className="relative w-full rounded-[9px] overflow-hidden shadow-lg hover:shadow-xl bg-black cursor-pointer group"
+            className="relative w-full rounded-[9px] overflow-hidden border border-gray-700 shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 bg-black cursor-pointer group"
             style={{ 
-              aspectRatio: '5/4',
+              aspectRatio: '3/2', // 宽高比为1.5:1
               width: '100%'
             }}
             onClick={() => {
@@ -177,7 +203,7 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
               ) : (
                 Array.from({ length: 30 }, (_, index) => (
                   <div key={`fallback-${index}`} className="col-span-1">
-                    <div className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-[9px] border border-gray-600/50 p-2 aspect-square flex items-center justify-center">
+                    <div className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-[9px] border border-gray-700 shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 p-2 aspect-square flex items-center justify-center transition-shadow duration-300">
                       <div className="text-center">
                         <div className="text-lg mb-1">🎮</div>
                         <div className="text-white text-xs font-medium">{t?.hero?.gameNumber?.replace('{index}', (index + 1).toString()) || `Game ${index + 1}`}</div>
@@ -191,6 +217,20 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
         })()}
         
       </div>
+      
+      {/* 标题弹窗 */}
+      <Dialog open={showTitleDialog} onOpenChange={setShowTitleDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-bold">{t?.hero?.gameTitle || "游戏标题"}</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+              {selectedTitle}
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

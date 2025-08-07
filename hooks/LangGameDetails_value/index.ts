@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { GameDetails, LangGameData } from '@/app/api/types/Get/game'
 import { Locale } from '@/lib/lang/dictionaraies'
-import { getGameDetails } from '@/app/api/gameList'
+import { getGameDetails } from '@/app/api/game'
 import { shouldForceRefresh } from '@/lib/cache-utils'
 
 const STORAGE_KEY = 'language-GameDetails-value'

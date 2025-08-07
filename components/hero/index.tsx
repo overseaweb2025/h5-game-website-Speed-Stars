@@ -30,12 +30,12 @@ const hero = ({ t, game, gameDetails, GameList, pageTitle, lang, isPublishing }:
     const { clearSpecificGameCache, autoGetData } = useLangGameDetails()
     
     // 集成评论缓存管理
-    const gameSlug = gameDetails?.name || gameDetails?.gameSlug
+    const gameSlug = gameDetails?.name || gameDetails?.display_name
     useCommentCacheManager({ gameSlug, lang })
     
     // 发布时清空对应游戏的缓存，确保刷新时重新获取最新数据
     useEffect(() => {
-        const gameSlug = gameDetails?.name || gameDetails?.gameSlug
+        const gameSlug = gameDetails?.name || gameDetails?.display_name
         
         if (!lang || !gameSlug) return
         

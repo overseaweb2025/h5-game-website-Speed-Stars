@@ -12,24 +12,28 @@ const BlogHeader = ({ blogDetails }: { blogDetails: blogDetails }) => {
       <article className="max-w-4xl mx-auto">
         {/* Article Header */}
         <header className="mb-6 md:mb-12">
-          {/* Title */}
+          {/* Title - H1 */}
           <div className="mb-4 md:mb-6">
-            <ExpandableText 
-              className="text-2xl md:text-4xl lg:text-6xl font-black text-white leading-tight"
-              maxLines={2}
-            >
-              {blogDetails.title}
-            </ExpandableText>
+            <h1 className="text-2xl md:text-4xl lg:text-6xl font-black text-white leading-tight">
+              <ExpandableText 
+                className=""
+                maxLines={2}
+              >
+                {blogDetails.title}
+              </ExpandableText>
+            </h1>
           </div>
 
-          {/* Excerpt */}
+          {/* Excerpt - H2 */}
           <div className="mb-4 md:mb-8">
-            <ExpandableText 
-              className="text-sm md:text-xl lg:text-2xl text-gray-300 leading-relaxed font-light"
-              maxLines={2}
-            >
-              {blogDetails.summary}
-            </ExpandableText>
+            <h2 className="text-sm md:text-xl lg:text-2xl text-gray-300 leading-relaxed font-light">
+              <ExpandableText 
+                className=""
+                maxLines={2}
+              >
+                {blogDetails.summary}
+              </ExpandableText>
+            </h2>
           </div>
 
           {/* Meta Information */}

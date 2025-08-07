@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
-import { getGameList } from "@/app/api/gameList/index"
+import { getGameList } from "@/app/api/game/index"
 import { useState, useEffect, useRef } from "react"
 import type { GameList, Game } from "@/app/api/types/Get/game"
 

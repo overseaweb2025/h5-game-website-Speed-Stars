@@ -31,7 +31,7 @@ export default function BlogList({ t, lang }: BlogListProps) {
         page: page.toString()
       }
       
-      const response = await getPagration(blogParams)
+      const response = await getPagration(blogParams,lang)
       console.log('打印数据',response.data.data )
       updataLanguageByLang(response.data.data,lang)
       // 如果response.data是数组，直接使用；如果是对象包含数组，需要相应调整

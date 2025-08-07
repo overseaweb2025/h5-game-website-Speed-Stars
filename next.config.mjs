@@ -9,6 +9,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // 修复 Jest worker 错误
+  experimental: {
+    workerThreads: false,
+    cpus: 1
+  },
   async headers() {
     return [
       {

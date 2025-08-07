@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Oops! The page you are looking for does not exist.",
 }
 
-export default async function NotFound({params}: {params: Promise<{lang: string}> | {lang: string} | undefined}) {
+export default async function NotFound({params}: {params?: Promise<{lang: string}> | {lang: string}}) {
   let lang: "en" | "zh" = "en"; // 默认语言
   
   try {
@@ -20,6 +20,7 @@ export default async function NotFound({params}: {params: Promise<{lang: string}
     }
   } catch (error) {
     // 如果参数解析失败，使用默认语言
+    console.error("Error resolving params in NotFound component:", error);
     lang = "en";
   }
   

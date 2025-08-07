@@ -5,6 +5,24 @@ import { getPagration } from '@/app/api/blog'
 import { postBlog } from '@/app/api/types/Post/blog'
 
 const STORAGE_KEY = 'language-blog-value'
+const TIMESTAMP_KEY = 'language-blog-timestamp'
+
+// 缓存过期时间（5分钟）
+const CACHE_EXPIRY_TIME = 5 * 60 * 1000 // 5分钟
+
+// 🛠️ 检查缓存是否过期
+function isCacheExpired(): boolean {
+  if (typeof window === 'undefined') return true
+  try {
+    const timestamp = window.localStorage.getItem(TIMESTAMP_KEY)
+    if (!timestamp) return true
+    const lastUpdated = parseInt(timestamp, 10)
+    return Date.now() - lastUpdated > CACHE_EXPIRY_TIME
+  } catch (error) {
+    console.error('[useLangBlog] Failed to check cache expiry:', error)
+    return true
+  }
+}
 
 // 1. 全局状态存储 blog 页面的每一条blog 数据
 let globalBlogState: LangBlog | null = {
@@ -28,11 +46,14 @@ const updateNavState = (newState: Partial<LangBlog>) => {
   // 合并新状态
   globalBlogState = { ...globalBlogState, ...newState } as LangBlog
   
-  // 保存到 localStorage
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(globalBlogState))
-  } catch (error) {
-    console.error("Failed to save state to localStorage:", error)
+  // 保存到 localStorage 并更新时间戳
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(globalBlogState))
+      localStorage.setItem(TIMESTAMP_KEY, Date.now().toString())
+    } catch (error) {
+      console.error("Failed to save state to localStorage:", error)
+    }
   }
   
   // 通知所有监听器
@@ -45,10 +66,13 @@ const updateNavState = (newState: Partial<LangBlog>) => {
  */
 const clearAllData = () => {
   globalBlogState = null
-  try {
-    localStorage.removeItem(STORAGE_KEY)
-  } catch (error) {
-    console.error("Failed to remove data from localStorage:", error)
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.removeItem(STORAGE_KEY)
+      localStorage.removeItem(TIMESTAMP_KEY)
+    } catch (error) {
+      console.error("Failed to remove data from localStorage:", error)
+    }
   }
   langBlog.forEach(listener => listener())
 }
@@ -64,16 +88,28 @@ export const useLangBlog= () => {
 
   useEffect(() => {
     // 首次加载时，尝试从 localStorage 获取数据
-    if (globalBlogState === null) {
-      try {
-        const storedState = localStorage.getItem(STORAGE_KEY)
-        if (storedState) {
-          globalBlogState = JSON.parse(storedState)
-          // 首次加载时也需要触发一次渲染
-          setTriggerUpdate(c => c + 1) 
+    if (globalBlogState === null && typeof window !== 'undefined') {
+      // 检查缓存是否过期
+      if (isCacheExpired()) {
+        console.log('[useLangBlog] Cache expired, clearing data')
+        try {
+          localStorage.removeItem(STORAGE_KEY)
+          localStorage.removeItem(TIMESTAMP_KEY)
+        } catch (error) {
+          console.error('[useLangBlog] Failed to clear expired cache:', error)
         }
-      } catch (error) {
-        console.error("Failed to load state from localStorage:", error)
+      } else {
+        try {
+          const storedState = localStorage.getItem(STORAGE_KEY)
+          if (storedState) {
+            globalBlogState = JSON.parse(storedState)
+            // 首次加载时也需要触发一次渲染
+            setTriggerUpdate(c => c + 1) 
+            console.log('[useLangBlog] Loaded blog data from cache')
+          }
+        } catch (error) {
+          console.error("Failed to load state from localStorage:", error)
+        }
       }
     }
 
@@ -140,20 +176,33 @@ export const useLangBlog= () => {
   }, [])
 
   const autoGetData = useCallback((lang:Locale, form:postBlog, force: boolean = true) => {
-      // 当force为true时，检查该语言的数据是否已存在
-      if (force) {
+      // 检查缓存是否过期
+      const cacheExpired = isCacheExpired()
+      
+      // 当force为true且缓存未过期时，检查该语言的数据是否已存在
+      if (force && !cacheExpired) {
         const existingData = globalBlogState?.[lang as keyof LangBlog]
         if (existingData && Object.keys(existingData).length > 0) {
-          console.log(`[useLangBlog] Data for ${lang} already exists, skipping fetch`)
+          console.log(`[useLangBlog] Data for ${lang} already exists and cache is valid, skipping fetch`)
           return Promise.resolve()
         }
       }
 
-      console.log(`[useLangBlog] Fetching data for ${lang}${!force ? ' (forced fetch)' : ''}`)
+      // 如果缓存过期或没有数据，则获取数据
+      if (cacheExpired) {
+        console.log(`[useLangBlog] Cache expired, fetching fresh data for ${lang}`)
+      } else {
+        console.log(`[useLangBlog] Fetching data for ${lang}${!force ? ' (forced fetch)' : ''}`)
+      }
+      
       return getPagration(form).then(res=>{
-          updataLanguageByLang(res.data.data,lang)
+          if (res?.data?.data) {
+            updataLanguageByLang(res.data.data,lang)
+          }
+      }).catch(error => {
+          console.error(`[useLangBlog] Failed to fetch blog data for ${lang}:`, error)
       })
-  },[])
+  },[updataLanguageByLang])
 
   
   // 返回全局变量，因为它始终是最新值

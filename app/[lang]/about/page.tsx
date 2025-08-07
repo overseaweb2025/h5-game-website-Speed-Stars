@@ -36,7 +36,7 @@ export default async function AboutPage({params}: {params: {lang: Locale}}) {
   const t = await getDictionary(lang);
   return (
     <main className="bg-background">
-      <Header t={t} />
+      <Header t={t}  lang={lang}/>
 
       <section className="py-12 md:py-16 bg-gray-900 relative overflow-hidden">
         {/* Decorative elements */}
@@ -216,7 +216,7 @@ export default async function AboutPage({params}: {params: {lang: Locale}}) {
         </div>
       </section>
 
-      <Footer t={t} />
+      <Footer t={t}  lang={lang} />
     </main>
   )
 }

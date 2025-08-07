@@ -82,7 +82,7 @@ class HomeDataManager {
 
     try {
       // 动态导入避免服务端渲染问题
-      const { getGameHome } = await import('@/app/api/gameList')
+      const { getGameHome } = await import('@/app/api/game')
       const response = await getGameHome()
       const homeData = response.data
 

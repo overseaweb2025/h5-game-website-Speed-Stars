@@ -50,8 +50,8 @@ const gameData = [
 
 const SimpleGameCards = () => {
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+    <div className="p-6 bg-gray-900 min-h-screen">
+      <h2 className="text-3xl font-bold text-center mb-8 text-white">
         🎮 Game Collection
       </h2>
       
@@ -60,7 +60,7 @@ const SimpleGameCards = () => {
         {gameData.map((game) => (
           <div 
             key={game.id}
-            className="group relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden hover:scale-105"
+            className="group relative bg-gray-800 border border-gray-700 rounded-xl shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-all duration-300 overflow-hidden hover:scale-105"
           >
             {/* Game Image */}
             <div className="relative w-full aspect-square overflow-hidden">
@@ -101,11 +101,11 @@ const SimpleGameCards = () => {
             
             {/* Game Info */}
             <div className="p-4">
-              <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-1">
+              <h3 className="text-lg font-bold text-white mb-2 line-clamp-1">
                 {game.display_name}
               </h3>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">HTML5 Game</span>
+                <span className="text-sm text-gray-300">HTML5 Game</span>
                 <button className="text-blue-600 hover:text-blue-800 font-semibold text-sm transition-colors">
                   Play Now →
                 </button>
@@ -117,7 +117,7 @@ const SimpleGameCards = () => {
       
       {/* Load More Button */}
       <div className="text-center mt-8">
-        <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors shadow-lg hover:shadow-xl">
+        <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg border border-gray-700 shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-all duration-300">
           Load More Games
         </button>
       </div>

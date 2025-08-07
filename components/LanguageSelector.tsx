@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation"
 import { ChevronDown, Globe, Check } from "lucide-react"
 import { Locale } from "@/lib/lang/dictionaraies"
 import { getSupportedLocales, getLocaleDisplayName, getLocalizedPath, getLocaleFromPath } from "@/lib/lang/utils"
+import { LanguageStateManager } from "@/lib/language-state-manager"
 
 interface Language {
   code: Locale
@@ -67,13 +68,24 @@ export default function LanguageSelector({
   const handleLanguageChange = (language: Language) => {
     setIsOpen(false)
     
-    // 获取新的本地化路径并导航
-    const newPath = getLocalizedPath(pathname, language.code)
-    router.push(newPath)
-    
-    // 调用回调函数（用于关闭侧边栏等）
-    if (onLanguageChange) {
-      onLanguageChange()
+    try {
+      // 使用语言状态管理器设置语言（会自动处理 Cookie）
+      LanguageStateManager.setCurrentLanguage(language.code)
+      
+      // 获取语言切换的目标路径
+      const newPath = LanguageStateManager.getLanguageSwitchPath(language.code, pathname)
+      
+      // 使用 replace 而不是 push 避免历史记录堆积
+      router.replace(newPath)
+      
+      console.log(`[LanguageSelector] Switched to ${language.code}, path: ${newPath}`)
+      
+      // 调用回调函数（用于关闭侧边栏等）
+      if (onLanguageChange) {
+        onLanguageChange()
+      }
+    } catch (error) {
+      console.error('[LanguageSelector] Error changing language:', error)
     }
   }
 

@@ -8,6 +8,8 @@ export interface FilteredError {
   isBackendError: boolean
   isUnityError: boolean
   isNetworkError: boolean
+  isServerError: boolean
+  isRetryableError: boolean
   originalError: any
 }
 
@@ -82,6 +84,39 @@ export function isBackendAPIError(error: any): boolean {
 }
 
 /**
+ * 检查错误是否为服务器内部错误（500系列）
+ */
+export function isServerError(error: any): boolean {
+  const status = error?.response?.status || error?.status
+  return status >= 500 && status < 600
+}
+
+/**
+ * 检查错误是否为可重试的错误
+ */
+export function isRetryableError(error: any): boolean {
+  const status = error?.response?.status || error?.status
+  
+  // 500、502、503、504、429 错误可以重试
+  const retryableStatusCodes = [500, 502, 503, 504, 429]
+  if (status && retryableStatusCodes.includes(status)) {
+    return true
+  }
+  
+  // 网络错误和超时错误可以重试
+  if (isNetworkError(error)) {
+    return true
+  }
+  
+  // 连接重置错误可以重试
+  if (error?.code === 'ECONNRESET' || error?.code === 'ECONNABORTED') {
+    return true
+  }
+  
+  return false
+}
+
+/**
  * 综合错误过滤函数
  */
 export function filterError(error: any): FilteredError {
@@ -89,6 +124,8 @@ export function filterError(error: any): FilteredError {
     isBackendError: isBackendAPIError(error),
     isUnityError: isUnityRelatedError(error),
     isNetworkError: isNetworkError(error),
+    isServerError: isServerError(error),
+    isRetryableError: isRetryableError(error),
     originalError: error
   }
 }
@@ -101,8 +138,14 @@ export function safeErrorLog(error: any, context: string = '') {
   const filtered = filterError(error)
   
   if (filtered.isBackendError) {
-    console.error(`[${context}] Backend API Error:`, error)
-    return true // 返回true表示应该显示给用户
+    if (filtered.isServerError) {
+      console.error(`[${context}] Server Error (${error?.response?.status}):`, error)
+      // 500错误建议用户稍后重试，不需要立即显示toast
+      return false 
+    } else {
+      console.error(`[${context}] Backend API Error:`, error)
+      return true // 其他后端错误显示给用户
+    }
   } else if (filtered.isUnityError) {
     if (process.env.NODE_ENV === 'development') {
       console.warn(`[${context}] Unity WebGL Error (filtered):`, error)
@@ -115,4 +158,42 @@ export function safeErrorLog(error: any, context: string = '') {
     console.error(`[${context}] Unknown Error:`, error)
     return true // 未知错误默认显示给用户
   }
+}
+
+/**
+ * 获取用户友好的错误消息
+ */
+export function getUserFriendlyErrorMessage(error: any, lang: 'zh' | 'en' = 'en'): string {
+  const filtered = filterError(error)
+  const status = error?.response?.status || error?.status
+  
+  if (filtered.isServerError) {
+    if (lang === 'zh') {
+      switch (status) {
+        case 500: return '服务器内部错误，请稍后重试'
+        case 502: return '网关错误，服务暂时不可用'
+        case 503: return '服务不可用，请稍后重试'
+        case 504: return '请求超时，请稍后重试'
+        default: return '服务器错误，请稍后重试'
+      }
+    } else {
+      switch (status) {
+        case 500: return 'Internal server error, please try again later'
+        case 502: return 'Bad gateway, service temporarily unavailable'
+        case 503: return 'Service unavailable, please try again later'
+        case 504: return 'Gateway timeout, please try again later'
+        default: return 'Server error, please try again later'
+      }
+    }
+  }
+  
+  if (filtered.isNetworkError) {
+    return lang === 'zh' ? '网络连接失败，请检查网络设置' : 'Network connection failed, please check your connection'
+  }
+  
+  if (filtered.isBackendError) {
+    return lang === 'zh' ? '请求失败，请稍后重试' : 'Request failed, please try again later'
+  }
+  
+  return lang === 'zh' ? '发生未知错误' : 'Unknown error occurred'
 }

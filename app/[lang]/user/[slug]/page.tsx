@@ -8,8 +8,9 @@ import Footer from "@/components/footer"
 import { getUserBySlug, StaticUserData } from "@/data/users/users-data"
 import { getUserGameHistory, getUserGameStats, formatGameHistoryForDisplay } from "@/utils/gameHistoryUtils"
 import { UserCircleIcon, GamepadIcon, HeartIcon, MessageCircleIcon, ClockIcon, StarIcon, TrophyIcon, CalendarIcon, ShareIcon, EyeIcon } from "lucide-react"
+import { Locale } from "@/lib/lang/dictionaraies"
 
-export default function UserProfilePage() {
+export default function UserProfilePage({lang}:{lang:Locale}) {
   const { data: session } = useSession()
   const params = useParams()
   const slug = params.slug as string
@@ -74,11 +75,11 @@ export default function UserProfilePage() {
   if (loading) {
     return (
       <main className="bg-background min-h-screen">
-        <Header />
+        <Header  lang={lang as Locale}/>
         <div className="flex items-center justify-center h-64">
           <div className="text-white text-xl">Loading user profile...</div>
         </div>
-        <Footer />
+        <Footer  lang={lang as Locale}/>
       </main>
     )
   }
@@ -145,7 +146,7 @@ export default function UserProfilePage() {
 
   return (
     <main className="bg-background min-h-screen">
-      <Header />
+        <Header  lang={lang as Locale}/>
       
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Profile Notice */}
@@ -474,7 +475,7 @@ export default function UserProfilePage() {
         </div>
       </div>
 
-      <Footer />
+      <Footer  lang={lang as Locale}/>
     </main>
   )
 }

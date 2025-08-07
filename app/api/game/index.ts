@@ -1,6 +1,6 @@
 import api from '../index'
 import { ApiResponse } from '../types';
-import { GameList,GameDetails, HomeGameData, gamelist } from '../types/Get/game';
+import { GameList,GameDetails, HomeGameData, gamelist, Game } from '../types/Get/game';
 
 export const getGameList = (lang?:string) => {
 
@@ -18,6 +18,15 @@ export const getGameCategory = (category:string)=>{
 export const getGameDetails = (name: string,lang:string = 'en') => {
   // Use local proxy route which handles fallback to local data
   return api.get<ApiResponse<GameDetails>>(`/api/v1/game`,{params:{name,lang}});
+}
+
+//按类获取数据
+export const getClassNameGames = (category:string,lang:string = 'en')=>{
+  return api.get<ApiResponse<Game[]>>('/api/v1/game/list',{
+    params:{
+    category,lang   
+    }
+  })
 }
 
 //获取首页得信息

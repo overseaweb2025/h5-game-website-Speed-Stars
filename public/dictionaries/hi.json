@@ -43,6 +43,8 @@
         "blog": "ब्लॉग"
     },
     "hero": {
+        "gameCenter": "गेम सेंटर",
+        "gameTitle": "गेम का शीर्षक",
         "comingSoon": "जल्द ही आ रहा है!",
         "awesomeGameAvailableSoon": "यह शानदार खेल जल्द ही उपलब्ध होगा।",
         "discoverMoreGames": "अधिक खेल खोजें",

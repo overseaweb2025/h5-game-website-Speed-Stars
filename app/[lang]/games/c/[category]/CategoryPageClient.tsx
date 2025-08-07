@@ -1,57 +1,19 @@
 "use client"
 
 import { useEffect, useState } from 'react'
-import GameListCard from "./gamelist_card/index"
-import { useCategorySEO } from '@/hooks/useCategorySEO'
-import { CategorySEO } from '@/app/api/types/Get/game'
+import { CategorySEO, games } from '@/app/api/types/Get/game'
+import GameCard from '@/components/games/GameCard'
 
 interface CategoryPageClientProps {
   category: string
   t?: any
+  games:games
 }
 
-export default function CategoryPageClient({ category, t }: CategoryPageClientProps) {
+export default function CategoryPageClient({ category, t ,games}: CategoryPageClientProps) {
   const decodedCategory = decodeURIComponent(category)
   const [seoData, setSeoData] = useState<CategorySEO | null>(null)
   
-  // 使用SEO状态管理器
-  const {
-    data: cachedSEO,
-    isLoading: seoLoading,
-    error: seoError,
-    getCategorySEO,
-    isCached
-  } = useCategorySEO(category)
-
-  useEffect(() => {
-    // 如果有缓存数据，直接使用
-    if (cachedSEO) {
-      setSeoData(cachedSEO)
-    } else if (!seoLoading) {
-      // 如果没有缓存数据且不在加载中，获取SEO数据
-      getCategorySEO(category).then(data => {
-        if (data) {
-          setSeoData(data)
-        }
-      }).catch(err => {
-        // 设置默认SEO数据
-        setSeoData({
-          page_title: `${decodedCategory} Games - Free Online Games`,
-          page_description: `Play free ${decodedCategory.toLowerCase()} games online. Enjoy our collection of ${decodedCategory.toLowerCase()} games with no downloads required.`,
-          page_keywords: `${decodedCategory}, games, online games, free games, browser games, ${decodedCategory.toLowerCase()} games`
-        })
-      })
-    }
-  }, [category, cachedSEO, seoLoading, getCategorySEO, decodedCategory])
-
-  // 动态页面描述，优先使用API的SEO数据
-  const getPageDescription = () => {
-    if (seoData?.page_description) {
-      return seoData.page_description
-    }
-    return `Our free online ${decodedCategory.toLowerCase()} games include classic 2D platform games, cartoony adventures, and a range of strategy and 3D titles.`
-  }
-
   return (
     <div className="min-h-screen bg-gray-900">
       <div className="py-8 px-4">
@@ -60,33 +22,41 @@ export default function CategoryPageClient({ category, t }: CategoryPageClientPr
             <h1 className="text-3xl md:text-4xl font-black text-white mb-4">
               🎮 {decodedCategory} {t?.games?.games || "Games"}
             </h1>
-            <p className="text-gray-400 text-sm md:text-base mb-6">
-              {seoData?.page_description || `${t?.seo?.categoryGamesDescription?.replace('{category}', decodedCategory) || `Play free ${decodedCategory.toLowerCase()} games online. Enjoy our collection of ${decodedCategory.toLowerCase()} games with no downloads required.`}`}
-            </p>
+            {seoData?.page_description && (
+              <p className="text-gray-400 text-sm md:text-base mb-6">
+                {seoData.page_description}
+              </p>
+            )}
             
             <h2 className="text-2xl md:text-3xl font-black text-white mb-4">
               🌟 {t?.games?.featuredGames || "Featured"} {decodedCategory} {t?.games?.games || "Games"}
             </h2>
             
-            {/* 开发环境显示SEO调试信息 */}
-            {process.env.NODE_ENV === 'development' && (
-              <div className="mt-4 p-3 bg-gray-800 rounded-lg text-xs text-gray-300">
-                <div className="mb-2">
-                  <strong>SEO Debug:</strong>
+            {/* 游戏展示区域 */}
+            <div className="w-full">
+              {games && games.length > 0 ? (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                  {games.map((item, index) => (
+                    <div key={`${item.id}-${index}`} className="aspect-square">
+                      <GameCard 
+                        game={item}
+                        className="w-full h-full shadow-lg hover:shadow-xl"
+                        size="horizontal-scroll"
+                      />
+                    </div>
+                  ))}
                 </div>
-                <div>Status: {seoLoading ? 'Loading...' : seoError ? 'Error' : 'Ready'}</div>
-                <div>Cached: {isCached ? 'Yes' : 'No'}</div>
-                {seoData && (
-                  <div className="mt-2">
-                    <div>Title: {seoData.page_title || 'Not set'}</div>
-                    <div>Description: {seoData.page_description ? seoData.page_description.substring(0, 100) + '...' : 'Not set'}</div>
-                    <div>Keywords: {seoData.page_keywords || 'Not set'}</div>
+              ) : (
+                <div className="flex items-center justify-center h-64 flex-col gap-4">
+                  <div className="text-6xl">🎮</div>
+                  <div className="text-white text-2xl font-bold">No Games Available</div>
+                  <div className="text-white/60 text-center max-w-md">
+                    Sorry, there are no games available in this category at the moment. Check back soon for new additions!
                   </div>
-                )}
-              </div>
-            )}
+                </div>
+              )}
+            </div>
           </div>
-          <GameListCard category={category} />
         </div>
       </div>
     </div>
