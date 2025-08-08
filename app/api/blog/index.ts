@@ -11,7 +11,7 @@ export const getPagration = (form: postBlog,lang:Locale = 'en') => { // 如果�
     } });
 }
 export const getBlogDetails =  (name: string, lang: Locale) => {
-    const path = lang === 'en' ? `/blog/${name}` : `/${lang}/blog/${name}`
+   const path = lang !== 'en' ?  `/${lang}/blog/${slug}` : `/blog/${slug}`
    return api.get<ApiResponse<blogDetails>>('/api/v1/post',{params:{
     name:path
    }})
