@@ -137,13 +137,29 @@ const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false
   }
 
   // 根据是否在首页决定href
-  const getHref = () => {
-    if (isHomepage && game.package?.url) {
-      // 首页时返回空字符串，因为我们会用onClick处理
-      return "#"
+// GameCard.tsx
+
+const getHref = () => {
+    // 获取当前语言的函数
+    const getCurrentLang = () => {
+        if (typeof window !== 'undefined') {
+            const pathname = window.location.pathname
+            // 匹配路径中的第一个两字母语言代码
+            const langMatch = pathname.match(/^\/([a-z]{2})(?:\/|$)/)
+            return langMatch ? langMatch[1] : 'en'
+        }
+        return 'en'
     }
-    return `/game/${game.name}`
-  }
+
+    const currentLang = getCurrentLang()
+
+    if (isHomepage && game.package?.url) {
+        return "#"
+    }
+    
+    // 修改这里：直接返回完整的带语言前缀的路径
+    return `/${currentLang}/game/${game.name}`
+}
 
   return (
     <Link
