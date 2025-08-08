@@ -8,6 +8,7 @@ import GameCard from "./GameCard"
 import { useLangGameList } from "@/hooks/LangGamelist_value"
 import { Locale } from "@/lib/lang/dictionaraies"
 import { games } from "@/app/api/types/Get/game"
+
 // 横向特色游戏区域组件 - 带标题，多组5个游戏的横向排版
 const HorizontalFeaturedGames = ({ gameGroups, t, lang }: { gameGroups: ExtendedGame[][], t?: any, lang: Locale }) => {
   const [showControls, setShowControls] = useState(false)
@@ -88,7 +89,8 @@ const HorizontalFeaturedGames = ({ gameGroups, t, lang }: { gameGroups: Extended
           className="overflow-x-auto scrollbar-hide"
           style={{ width: '100%', maxWidth: '100%' }}
         >
-          <div className="flex gap-4 p-4 sm:gap-6 sm:p-6 md:gap-8 md:p-8" style={{ width: 'max-content', minWidth: '100%' }}>
+          {/* 使用 w-max 确保 flex 容器足够宽，以容纳所有游戏组而不换行 */}
+          <div className="flex gap-4 p-4 sm:gap-6 sm:p-6 md:gap-8 md:p-8 w-max">
             {gameGroups.map((games, groupIndex) => {
               // 安全检查：确保games数组存在且至少有5个游戏
               if (!games || !Array.isArray(games) || games.length < 5) {
@@ -98,16 +100,16 @@ const HorizontalFeaturedGames = ({ gameGroups, t, lang }: { gameGroups: Extended
               return (
                 <div key={`featured-group-${groupIndex}`} className="flex-shrink-0">
                   {/* 每组5个游戏的特色布局：1大+4小，确保左右高度一致 */}
-                  <div className="grid grid-cols-2 gap-2 sm:gap-4 md:gap-6 items-stretch">
-                    {/* 第一个格子：大卡片，高度与右侧保持一致 */}
-                    <div className="col-span-1 flex">
-                      <GameCard game={games[0]}  className="shadow-xl hover:shadow-2xl w-full" size="large" lang={lang} />
+                  <div className="flex gap-2 sm:gap-4 md:gap-6 items-stretch" style={{ minHeight: '280px', height: '280px' }}>
+                    {/* 第一个格子：大卡片，使用 flex-1 占据一半宽度 */}
+                    <div className="flex-1 flex">
+                      <GameCard game={games[0]} className="shadow-xl hover:shadow-2xl w-full h-full" size="large" lang={lang} />
                     </div>
-                    {/* 第二个格子：包含四个小卡片的大div，高度与左侧保持一致 */}
-                    <div className="col-span-1 flex flex-col">
+                    {/* 第二个格子：包含四个小卡片的大div，与左侧相同高度，使用 flex-1 占据另一半宽度 */}
+                    <div className="flex-1 flex flex-col">
                       <div className="grid grid-cols-2 gap-1 sm:gap-2 md:gap-3 h-full">
                         {games.slice(1, 5).map((game, index) => (
-                          <GameCard key={`${groupIndex}-${game.id || index}`} game={game} className="shadow-lg hover:shadow-xl h-full" size="small" lang={lang} />
+                          <GameCard key={`${groupIndex}-${game.id || index}`} game={game} className="shadow-lg hover:shadow-xl w-full h-full" size="small" lang={lang} />
                         ))}
                       </div>
                     </div>
@@ -127,7 +129,6 @@ const GameRowSection = ({ title, games, sectionIndex, lang }: { title: string, g
   const [showControls, setShowControls] = useState(false)
   const [touched, setTouched] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
-
 
   const handleScroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -198,7 +199,7 @@ const GameRowSection = ({ title, games, sectionIndex, lang }: { title: string, g
           className="overflow-x-auto scrollbar-hide"
           style={{ width: '100%', maxWidth: '100%' }}
         >
-          <div className="flex gap-4 p-4 sm:gap-6 sm:p-6" style={{ width: 'max-content', minWidth: '100%' }}>
+          <div className="flex gap-4 p-4 sm:gap-6 sm:p-6" style={{ width: 'max-content', minWidth: 'fit-content' }}>
             {games.map((game, index) => (
               <div key={`${sectionIndex}-${game.id}-${index}`} className="flex-shrink-0">
                 <GameCard 
@@ -240,6 +241,7 @@ const GamesShow = ({lang, t}:{lang:Locale, t?: any}) => {
       autoGetData(lang)
     }
   }, [lang, autoGetData])
+  
   // 根据真实分类数据创建游戏行，只显示有游戏的分类
   const createGameRows = () => {
     if (categoriesWithGames.length === 0) return []
