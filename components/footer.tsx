@@ -36,27 +36,8 @@ export default function Footer({ t, lang }: FooterProps) {
   const { websiteData} = useWebsiteData();
   // 获取 nav 的数据
   const { navState, updateLanguage } = useNavgationLanguage();
-
-  // Get current language from pathname
-  const getCurrentLang = () => {
-    const pathSegments = pathname.split('/').filter(Boolean)
-    if (pathSegments.length > 0) {
-      const firstSegment = pathSegments[0]
-      if (['zh', 'de', 'es', 'fr'].includes(firstSegment)) {
-        return firstSegment
-      }
-    }
-    return 'en'
-  }
   
   // Create localized link
-  const createLocalizedLink = (path: string) => {
-    const currentLang = getCurrentLang()
-    if (currentLang === 'en') {
-      return path
-    }
-    return `/${currentLang}${path}`
-  }
   
   // Helper function to check if link is active
   const isActiveLink = (href: string) => {
@@ -118,7 +99,7 @@ export default function Footer({ t, lang }: FooterProps) {
         items.map((item,index)=>{
           return (
           <li key={index}>
-            <Link href={createLocalizedLink(item.href)} className={getFooterLinkClasses(item.text)}>
+            <Link href={`/${lang}/${item.href}`} className={getFooterLinkClasses(item.text)}>
               {item.text}
             </Link>
           </li>
