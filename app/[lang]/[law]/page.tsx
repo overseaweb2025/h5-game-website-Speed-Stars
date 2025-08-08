@@ -2,6 +2,8 @@ import { getNavLanguage } from "@/app/api/nav_language";
 import { Locale, localesArrary } from "@/lib/lang/dictionaraies";
 import { getLawPageValue } from "@/app/api/law";
 import {NotFoundhtmlCode} from './htmlcode'
+import { notFound } from "next/navigation";
+
 interface propLaw {
   lang: Locale;
   law: string;
@@ -16,43 +18,55 @@ export async function generateStaticParams() {
 
     const res = await getNavLanguage();
     const laws = res.data.data;
+    const footerNav = laws.footer_nav;
 
+    // 遍历所有语言，确保生成所有可能的路由
     for (const lang of languages) {
-      for (const law of laws.footer_nav.en) {
-        for (const slug of law.content) {
-          const cleanSlug = slug.text.replace(/^\//, '');
-          // Skip invalid slugs
+      // 检查 footerNav[lang] 是否存在
+      const lawSlugs = footerNav[lang];
+      if (!lawSlugs) {
+        console.warn(`No law slugs found for language: ${lang}`);
+        continue;
+      }
+
+      for (const lawItem of lawSlugs) {
+        for (const slugContent of lawItem.content) {
+          const cleanSlug = slugContent.text.replace(/^\//, '');
+
+          // 跳过无效 slug
           if (!cleanSlug || cleanSlug.trim() === '') continue;
-          // Encode the slug to handle spaces and special characters
+
+          // 编码 slug 以处理空格和特殊字符
           const encodedSlug = encodeURIComponent(cleanSlug);
           params.push({ lang: lang, law: encodedSlug });
-          
         }
       }
     }
+
     return params;
   } catch (error) {
     console.error('Error generating static params for law pages:', error);
-    // Return empty array to prevent build failure
+    // 返回空数组以防止构建失败，但应在构建时发出警告
     return [];
   }
 }
 
-// LawPage 组件现在将是你的主页面内容
-// 它需要接收 params 来获取 'law' 的值，并获取相应的 HTML
+// LawPage 组件保持不变，因为它已经能够正确处理 params
 const LawPage = async ({ params }: { params: { lang: Locale; law: string } }) => {
   try {
     const { lang, law } = params;
-    // Decode the law parameter to handle encoded characters
+    // 解码 law 参数以处理编码字符
     const decodedLaw = decodeURIComponent(law);
     // 通过获取 api 接口数据进行强制渲染 getLawPageValue(law)
     const res = await getLawPageValue(decodedLaw);
     let htmlCode = res.data.data.content;
-    if(htmlCode === '' || htmlCode === null || htmlCode === undefined){
-      htmlCode = NotFoundhtmlCode;
+
+    if (!htmlCode) {
+      // 如果没有内容，则抛出 notFound 错误，Next.js 会渲染 404 页面
+      notFound();
     }
+
     return (
-      // 使用 flexbox 和 min-h-screen 来居中对齐内容
       <div className="flex justify-center min-h-screen p-4">
         <div 
           className="prose prose-invert text-left mx-auto w-full max-w-4xl"
@@ -62,16 +76,9 @@ const LawPage = async ({ params }: { params: { lang: Locale; law: string } }) =>
     );
   } catch (error) {
     console.error('Error rendering law page:', error);
-    return (
-      <div className="flex justify-center min-h-screen p-4">
-        <div className="prose prose-invert text-left mx-auto w-full max-w-4xl">
-          <h1>Page Not Found</h1>
-          <p>The requested page could not be loaded.</p>
-        </div>
-      </div>
-    );
+    // 如果 API 调用失败，也渲染 404
+    notFound();
   }
 };
-
 
 export default LawPage;
