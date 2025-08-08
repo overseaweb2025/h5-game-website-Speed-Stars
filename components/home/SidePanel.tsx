@@ -7,17 +7,20 @@ interface SidePanelProps {
   randomGames: APIGame[]
   side: 'left' | 'right'
   t?: any
+  lang?: string
 }
 
-// 辅助函数：将 APIGame 转换为 ExtendedGame
-const convertToExtendedGame = (apiGame: APIGame): any => ({
+// 辅助函数：将 APIGame 转换为 GameCard 需要的格式
+const convertToGameCardFormat = (apiGame: APIGame): any => ({
   id: apiGame.id,
   name: apiGame.name,
   display_name: apiGame.display_name,
-  image: undefined // 将会生成占位图
+  cover: apiGame.cover || undefined,
+  image: apiGame.image || undefined,
+  package: apiGame.package || undefined
 })
 
-export default function SidePanel({ randomGames, side, t }: SidePanelProps) {
+export default function SidePanel({ randomGames, side, t, lang = 'en' }: SidePanelProps) {
   const isRight = side === 'right'
   
   // 确保左右侧面板游戏不重复且数量均衡
@@ -25,12 +28,11 @@ export default function SidePanel({ randomGames, side, t }: SidePanelProps) {
     if (randomGames.length === 0) return []
     
     const totalGames = randomGames.length
-    const targetCount = 8
-    const halfCount = Math.floor(targetCount / 2) // 4个
+    const targetCount = 6
     
     if (isRight) {
       // 右侧取后半部分游戏
-      const startIndex = Math.min(halfCount, totalGames - targetCount)
+      const startIndex = Math.floor(totalGames / 2)
       return randomGames.slice(startIndex, startIndex + targetCount)
     } else {
       // 左侧取前半部分游戏
@@ -49,11 +51,10 @@ export default function SidePanel({ randomGames, side, t }: SidePanelProps) {
       }}
     >
       <div className="p-3">
-        {isRight && <h3 className="text-lg font-bold text-white mb-3 text-center"></h3>}
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 gap-3">
           {sidePanelGames.length > 0 ? (
             sidePanelGames.map((randomGame, index) => {
-              const gameData = convertToExtendedGame(randomGame)
+              const gameData = convertToGameCardFormat(randomGame)
               
               // 为右侧面板添加标签
               if (isRight) {
@@ -68,36 +69,34 @@ export default function SidePanel({ randomGames, side, t }: SidePanelProps) {
                   className="w-full"
                   size="small"
                   isHomepage={true}
+                  t={t}
+                  lang={lang}
                 />
               )
             })
           ) : (
             // Default placeholder cards when no game data
-            Array.from({ length: 8 }, (_, index) => {
+            Array.from({ length: 6 }, (_, index) => {
               const tags = ['New', 'Hot', 'Top rated'];
               const tag = isRight ? tags[index % 3] : undefined;
               
+              const placeholderGame = {
+                id: `placeholder-${side}-${index}`,
+                name: `placeholder-game-${index}`,
+                display_name: t?.common?.loading || "Loading...",
+                tag: tag
+              }
+              
               return (
-                <div 
-                  key={`${side}-placeholder-${index}`} 
-                  className={`${isRight ? 'relative' : ''} bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-lg border border-gray-600/50 p-2 aspect-square flex items-center justify-center`}
-                >
-                  <div className="text-center">
-                    <div className="text-3xl mb-1">🎮</div>
-                    <div className="text-white text-xs font-medium">{t?.common?.loading || "Loading..."}</div>
-                  </div>
-                  
-                  {/* Tag badge for right panel */}
-                  {isRight && tag && (
-                    <div className={`absolute -top-1 -left-1 px-2 py-0.5 text-xs font-bold text-white rounded-[6px] shadow-lg z-10 ${
-                      tag === 'Hot' ? 'bg-red-500' : 
-                      tag === 'New' ? 'bg-purple-500' : 
-                      'bg-blue-500'
-                    }`}>
-                      {tag}
-                    </div>
-                  )}
-                </div>
+                <GameCard
+                  key={`${side}-placeholder-${index}`}
+                  game={placeholderGame}
+                  className="w-full"
+                  size="small"
+                  isHomepage={true}
+                  t={t}
+                  lang={lang}
+                />
               );
             })
           )}

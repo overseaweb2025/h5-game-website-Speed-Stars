@@ -523,6 +523,7 @@
         "speedStars": "Speed Stars"
     },
     "user": {
+        "overview": "resumen",
         "title": "Perfil de Jugador - Nova Play",
 "description": "Explora el perfil de un jugador para ver su actividad, logros, estadísticas y juegos favoritos. Conéctate con amigos y compite por las mejores puntuaciones en nuestra plataforma.",
 "keywords": "perfil de jugador, perfil de juego, estadísticas del jugador, logros, comunidad de juegos online, panel de usuario, actividad de juego, tablas de clasificación de amigos",

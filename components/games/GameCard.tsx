@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import { GameCardProps } from "./types"
 
 const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false, lang = 'en' }: GameCardProps) => {
+
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
@@ -113,16 +114,12 @@ const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false
   const sizeStyles = getSizeStyles()
 
   const handleGameClick = (e: React.MouseEvent) => {
-    // 在首页时，直接跳转到play页面
+    // 在首页时，直接跳转到游戏详情页面
     if (isHomepage && game.package?.url && isClient) {
       e.preventDefault()
       
-      const gameUrl = game.package.url
-      const gameTitle = game.display_name
-      const encodedUrl = encodeURIComponent(gameUrl)
-      const encodedTitle = encodeURIComponent(gameTitle)
-      
-      window.location.href = `/${lang}/play/${game.name}/${encodedUrl}?title=${encodedTitle}&url=${encodedUrl}`
+      // 跳转到游戏详情页面
+      window.location.href = `/${lang}/game/${game.name}`
     }
     // 非首页时使用默认的Link跳转逻辑（跳转到游戏内页）
   }
@@ -131,11 +128,7 @@ const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false
 // GameCard.tsx
 
 const getHref = () => {
-    if (isHomepage && game.package?.url) {
-        return "#"
-    }
-    
-    // 使用传入的 lang 参数，避免hydration mismatch
+    // 统一跳转到游戏详情页面
     return `/${lang}/game/${game.name}`
 }
 
@@ -153,7 +146,7 @@ const getHref = () => {
         {/* 只有当图片存在且不为空时才显示图片 */}
         {!imageError && (game.cover || game.image) && (game.cover !== '' && game.image !== '') ? (
           <img
-            src={game.cover || game.image}
+            src={game.cover }
             alt={game.display_name}
             className={`w-full h-full object-cover transition-all duration-300 group-hover:scale-110 ${
               imageLoaded ? 'opacity-100' : 'opacity-0'

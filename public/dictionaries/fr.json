@@ -524,8 +524,8 @@
     },
     "user": {
         "title": "Profil du Joueur - Fusion Games",
-"description": "Consultez le profil d'un joueur pour voir son activité, ses succès, ses statistiques et ses jeux préférés. Connectez-vous avec vos amis et concourez pour les meilleurs scores sur notre plateforme.",
-"keywords": "profil de joueur, profil de jeu, statistiques du joueur, succès de jeu, communauté de jeux en ligne, tableau de bord utilisateur, activité de jeu, classements d'amis",
+        "description": "Consultez le profil d'un joueur pour voir son activité, ses succès, ses statistiques et ses jeux préférés. Connectez-vous avec vos amis et concourez pour les meilleurs scores sur notre plateforme.",
+        "keywords": "profil de joueur, profil de jeu, statistiques du joueur, succès de jeu, communauté de jeux en ligne, tableau de bord utilisateur, activité de jeu, classements d'amis",
         "profile": "Profil",
         "loading": "Chargement...",
         "pleaseSignIn": "Veuillez vous connecter pour voir votre profil",

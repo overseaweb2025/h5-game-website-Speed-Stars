@@ -1,13 +1,14 @@
 "use client"
 
 import { heroData } from "@/data/home/hero-data"
-import SidePanel from "./SidePanel"
 import GameFrame from "./GameFrame"
-import BottomGamesPanel from "./BottomGamesPanel"
 import ContentSections from "./ContentSections"
 import ActionButtons from "./ActionButtons"
 import { Game as APIGame } from "@/app/api/types/Get/game"
-
+import LeftSide from "../hero/LeftSide"
+import RightSide from "../hero/RightSide"
+import BootomGames from "../hero/BootonGames"
+import { Locale } from "@/lib/lang/dictionaraies"
 interface DesktopHeroProps {
   title?: string
   homeData?: any
@@ -15,6 +16,7 @@ interface DesktopHeroProps {
   iframeHeight: string
   scrollToSection: (sectionId: string) => void
   t?: any
+  lang?: string
 }
 
 export default function DesktopHero({ 
@@ -23,7 +25,8 @@ export default function DesktopHero({
   randomGames, 
   iframeHeight, 
   scrollToSection, 
-  t 
+  t,
+  lang = 'en'
 }: DesktopHeroProps) {
   return (
     <div className="w-full">
@@ -46,11 +49,8 @@ export default function DesktopHero({
         
         {/* Left side panel - 仅在超大屏幕显示 */}
         <div className="hidden xl:block">
-          <SidePanel 
-            randomGames={randomGames}
-            side="left"
-            t={t}
-          />
+
+          <LeftSide GameList={randomGames}/>
         </div>
 
         {/* Main center container - lg屏幕下增加1/5宽度 */}
@@ -63,8 +63,8 @@ export default function DesktopHero({
           />
 
           {/* Bottom games panel */}
-          <BottomGamesPanel 
-            randomGames={randomGames}
+          <BootomGames 
+            GameList={randomGames}
             t={t}
           />
 
@@ -77,11 +77,7 @@ export default function DesktopHero({
 
         {/* Right side panel - 仅在超大屏幕显示 */}
         <div className="hidden xl:block">
-          <SidePanel 
-            randomGames={randomGames}
-            side="right"
-            t={t}
-          />
+           <RightSide GameList={randomGames}/>
         </div>
 
       </div>

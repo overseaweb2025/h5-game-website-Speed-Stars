@@ -801,6 +801,7 @@
         "email": "Email"
     },
     "user": {
+        "overview": "tổng quan",
         "title": "Hồ sơ Người chơi - PlayGround",
 "description": "Xem hồ sơ của người chơi để xem hoạt động chơi game, thành tích, số liệu thống kê và trò chơi yêu thích của họ. Kết nối với bạn bè và cạnh tranh để giành điểm cao trên nền tảng của chúng tôi.",
 "keywords": "hồ sơ người dùng, hồ sơ game, chỉ số người chơi, thành tích game, cộng đồng game online, bảng điều khiển người dùng, hoạt động game, bảng xếp hạng bạn bè",

@@ -3,13 +3,13 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Home, Search, Info } from "lucide-react"
-import { GameRouter } from "@/lib/router"
 import { useLangGameList } from "@/hooks/LangGamelist_value"
 import GameCard from "@/components/games/GameCard"
 import { heroData } from "@/data/home/hero-data"
 import { Game as APIGame, game } from "@/app/api/types/Get/game"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Locale } from "@/lib/lang/dictionaraies"
+import FullscreenGameModal from "./FullscreenGaameModal" // Import the new component
 
 interface MobileHeroProps {
   homeData?: any
@@ -17,23 +17,31 @@ interface MobileHeroProps {
   lang: Locale
 }
 
-// 辅助函数：将 game 转换为 ExtendedGame
-const convertToExtendedGame = (gameItem: game): any => ({
-  id: gameItem.id,
-  name: gameItem.name,
-  display_name: gameItem.display_name,
-  image: undefined // 将会生成占位图
-})
-
 export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
   const router = useRouter()
   const { getLangGames, getLangGamelistBylang } = useLangGameList()
   const [showTitleDialog, setShowTitleDialog] = useState(false)
   const [selectedTitle, setSelectedTitle] = useState('')
+  
+  // New state for the full-screen game modal
+  const [isGameModalOpen, setIsGameModalOpen] = useState(false);
+  const [modalGame, setModalGame] = useState({ title: '', url: '' });
 
   // 获取多语言游戏数据
   const allAvailableGames = getLangGames(lang)
   const gamesToShow = allAvailableGames.slice(0, 30)
+
+  // New function to handle opening the game modal
+  const handlePlayGame = () => {
+    // Check if homeData and game URL exist before opening
+    if (homeData && homeData.game?.package?.url) {
+      setModalGame({
+        title: homeData.title || heroData.title.main,
+        url: homeData.game.package.url,
+      });
+      setIsGameModalOpen(true);
+    }
+  };
 
   return (
     <div className="lg:hidden mb-6 px-4 mx-auto max-w-screen-xl">
@@ -121,16 +129,8 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
               aspectRatio: '3/2', // 宽高比为1.5:1
               width: '100%'
             }}
-            onClick={() => {
-              // 首页跳转到游戏播放页
-              if (homeData?.game?.package?.url) {
-                GameRouter.toGamePlay(
-                  homeData.title || 'speed-stars',
-                  homeData.game.package.url,
-                  homeData.title || 'Speed Stars'
-                )
-              }
-            }}
+            // Add the new onClick handler here
+            onClick={handlePlayGame} 
           >
           
           {/* 游戏封面图片 */}
@@ -152,25 +152,7 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
             />
           ) : null}
           
-          {!homeData ? (
-            <div className="w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-              <div className="text-center">
-                <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mb-4"></div>
-                <h3 className="text-2xl font-black text-text mb-2">{t?.hero?.loadingGame || "Loading Game..."}</h3>
-                <p className="text-text/80">{t?.hero?.pleaseWait || "Please wait..."}</p>
-              </div>
-            </div>
-          ) : (
-            <div className="w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-6xl mb-4">🎮</div>
-                <h3 className="text-3xl font-black text-text mb-2">{t?.hero?.comingSoon || "Coming Soon!"}</h3>
-                <p className="text-text/80 text-lg">{t?.hero?.awesomeGameAvailableSoon || "This awesome game will be available soon."}</p>
-              </div>
-            </div>
-          )}
-          
-          {/* 蒙板和播放按钮 */}
+          {/* 蒙板和播放按钮 (your existing code) */}
           <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center transition-all duration-300 group-hover:bg-opacity-30">
             {/* 白色圆圈包围的三角播放按钮 */}
             <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg mb-4 transform transition-all duration-300 group-hover:scale-110">
@@ -181,7 +163,8 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
               {t?.hero?.startGame || "开始游戏"}
             </p>
           </div>
-        </div>
+          
+          </div>
         </div>
 
         {/* 第三行开始：30个游戏卡片 - 每行3个 */}
@@ -189,7 +172,7 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
           gamesToShow.map((game, index) => (
             <div key={`mobile-featured-${game.id}-${index}`} className="col-span-1">
               <GameCard
-                game={convertToExtendedGame(game)}
+                game={game}
                 className="w-full aspect-square"
                 size="tiny"
                 isHomepage={true}
@@ -197,19 +180,7 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
               />
             </div>
           ))
-        ) : (
-          // Fallback cards when no data is available
-          Array.from({ length: 30 }, (_, index) => (
-            <div key={`fallback-${index}`} className="col-span-1">
-              <div className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-[9px] border border-gray-600/50 p-2 aspect-square flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-lg mb-1">🎮</div>
-                  <div className="text-white text-xs font-medium">{t?.hero?.gameNumber?.replace('{index}', (index + 1).toString()) || `Game ${index + 1}`}</div>
-                </div>
-              </div>
-            </div>
-          ))
-        )}
+        ) : null}
         
         {/* 首页移动端：在游戏卡片下方显示page_content内容 */}
         {homeData?.page_content?.About && (
@@ -240,6 +211,14 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* The new FullscreenGameModal component */}
+      <FullscreenGameModal
+        title={modalGame.title}
+        url={modalGame.url}
+        isOpen={isGameModalOpen}
+        onClose={() => setIsGameModalOpen(false)}
+      />
     </div>
   )
 }

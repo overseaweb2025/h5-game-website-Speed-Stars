@@ -163,24 +163,27 @@ export const useLangGameList = () => {
   }, [state])
 
   // ✅ 自动获取数据（根据语言）
-  const autoGetData = useCallback((lang: Locale, force: boolean = true) => {
+  const autoGetData = useCallback((lang: Locale, force: boolean = false) => {
     // 检查缓存是否过期
     const cacheExpired = isCacheExpired()
     
-    // 当force为true且缓存未过期时，检查该语言的数据是否已存在
-    if (force && !cacheExpired) {
-      const existingData = getLangGamelistBylang(lang)
-      if (existingData && existingData.length > 0) {
-        console.log(`[useLangGameList] Data for ${lang} already exists and cache is valid, skipping fetch`)
-        return Promise.resolve()
-      }
+    // 检查该语言的数据是否已存在
+    const existingData = getLangGamelistBylang(lang)
+    const hasExistingData = existingData && existingData.length > 0
+    
+    // 只有在强制刷新或缓存过期或没有数据时才获取
+    if (!force && !cacheExpired && hasExistingData) {
+      console.log(`[useLangGameList] Data for ${lang} already exists and cache is valid, skipping fetch`)
+      return Promise.resolve()
     }
 
-    // 如果缓存过期或没有数据，则获取数据
+    // 获取数据的情况说明
     if (cacheExpired) {
       console.log(`[useLangGameList] Cache expired, fetching fresh data for ${lang}`)
+    } else if (!hasExistingData) {
+      console.log(`[useLangGameList] No existing data for ${lang}, fetching...`)
     } else {
-      console.log(`[useLangGameList] Fetching data for ${lang}${!force ? ' (forced fetch)' : ''}`)
+      console.log(`[useLangGameList] Forced fetch for ${lang}`)
     }
     
     return getGameList()

@@ -77,22 +77,6 @@ export class GameRouter {
     }
   }
 
-  /**
-   * 跳转到游戏播放页（移动端）
-   */
-  static toGamePlay(gameSlug: string, gameUrl: string, gameTitle?: string, lang?: string): void {
-    const encodedUrl = encodeURIComponent(gameUrl)
-    const encodedTitle = gameTitle ? encodeURIComponent(gameTitle) : ''
-    
-    let path = buildLangPath(`/play/${gameSlug}/${encodedUrl}`, lang)
-    if (encodedTitle) {
-      path += `?title=${encodedTitle}`
-    }
-    
-    if (typeof window !== 'undefined') {
-      window.location.href = path
-    }
-  }
 
   /**
    * 跳转到游戏分类页
@@ -196,8 +180,6 @@ export const useAppRouter = () => {
   return {
     // 游戏相关
     toGameDetail: (gameSlug: string, lang?: string) => GameRouter.toGameDetail(gameSlug, lang),
-    toGamePlay: (gameSlug: string, gameUrl: string, gameTitle?: string, lang?: string) => 
-      GameRouter.toGamePlay(gameSlug, gameUrl, gameTitle, lang),
     toGameCategory: (categorySlug: string, lang?: string) => GameRouter.toGameCategory(categorySlug, lang),
     toAllGames: (lang?: string) => GameRouter.toAllGames(lang),
     

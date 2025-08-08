@@ -8,6 +8,7 @@ import { useHomeGameData } from "@/hooks/useHomeGameData"
 import { GameRouter } from "@/lib/router"
 import GameCard from "../games/GameCard"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import FullscreenGameModal from "@/components/home/FullscreenGaameModal" // 1. Import the modal component
 
 interface MobileLayoutProps {
   t: any
@@ -30,6 +31,25 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
   const { categoriesWithGames } = useGameData()
   const [showTitleDialog, setShowTitleDialog] = useState(false)
   const [selectedTitle, setSelectedTitle] = useState('')
+
+  // 2. New state for the full-screen game modal
+  const [isGameModalOpen, setIsGameModalOpen] = useState(false)
+  const [modalGame, setModalGame] = useState({ title: '', url: '' })
+
+  // 3. New function to handle opening the game modal
+  const handlePlayGame = () => {
+    // Determine the game details based on props, prioritizing gameDetails > game > homeData
+    const gameToPlay = gameDetails || game || homeData?.data?.game;
+    const gameUrl = gameToPlay?.package?.url;
+
+    if (gameUrl) {
+      setModalGame({
+        title: gameToPlay.display_name || gameToPlay.name || pageTitle || "Game",
+        url: gameUrl
+      });
+      setIsGameModalOpen(true);
+    }
+  };
 
   return (
     <div className="lg:hidden mb-6 px-4 mx-auto max-w-screen-xl">
@@ -113,21 +133,8 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
               aspectRatio: '3/2', // 宽高比为1.5:1
               width: '100%'
             }}
-            onClick={() => {
-              if (gameDetails) {
-                GameRouter.toGamePlay(
-                  gameDetails.gameSlug || "",
-                  gameDetails.package?.url || "",
-                  gameDetails.display_name || ""
-                )
-              } else {
-                GameRouter.toGamePlay(
-                  homeData?.data.title || 'not_name',
-                  homeData?.data.game.package.url || '',
-                  homeData?.data.title || ''
-                )
-              }
-            }}
+            // 4. Attach the onClick handler to the main div
+            onClick={handlePlayGame}
           >
             
             {/* Game cover image */}
@@ -148,6 +155,7 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
               />
             ) : null}
             
+            {/* Fallback/Loading UI - your existing code */}
             {homeDataLoading ? (
               <div className="w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
                 <div className="text-center">
@@ -193,7 +201,7 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
                 gamesToShow.map((gameItem, index) => (
                   <div key={`mobile-featured-${gameItem.id}-${index}`} className="col-span-1">
                     <GameCard
-                      game={convertToExtendedGame(gameItem)}
+                      game={gameItem}
                       className="w-full aspect-square"
                       size="tiny"
                       isHomepage={true}
@@ -218,7 +226,7 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
         
       </div>
       
-      {/* 标题弹窗 */}
+      {/* Title Dialog */}
       <Dialog open={showTitleDialog} onOpenChange={setShowTitleDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -231,6 +239,14 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
           </div>
         </DialogContent>
       </Dialog>
+      
+      {/* 5. Render the new full-screen modal component */}
+      <FullscreenGameModal
+        title={modalGame.title}
+        url={modalGame.url}
+        isOpen={isGameModalOpen}
+        onClose={() => setIsGameModalOpen(false)}
+      />
     </div>
   )
 }

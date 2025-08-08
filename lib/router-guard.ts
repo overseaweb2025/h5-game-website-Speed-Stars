@@ -113,18 +113,6 @@ export const createSafeRouter = () => {
       RouterGuard.safeNavigate(path, lang || currentLanguage)
     },
     
-    toGamePlay: (gameSlug: string, gameUrl: string, gameTitle?: string, lang?: Locale) => {
-      const encodedUrl = encodeURIComponent(gameUrl)
-      const encodedTitle = gameTitle ? encodeURIComponent(gameTitle) : ''
-      
-      let path = `/play/${gameSlug}/${encodedUrl}`
-      if (encodedTitle) {
-        path += `?title=${encodedTitle}`
-      }
-      
-      RouterGuard.safeNavigate(path, lang || currentLanguage)
-    },
-    
     toGameCategory: (categorySlug: string, lang?: Locale) => {
       const path = `/games/c/${categorySlug}`
       RouterGuard.safeNavigate(path, lang || currentLanguage)
