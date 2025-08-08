@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { localesArrary } from '@/lib/lang/dictionaraies';
-
+import { useLangGameList } from '@/hooks/LangGamelist_value'; 
 // 验证请求的密钥，防止恶意清除缓存
 const REVALIDATE_SECRET = process.env.REVALIDATE_SECRET;
 
@@ -30,5 +30,25 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ revalidated: true, now: Date.now() });
   } catch (err) {
     return NextResponse.json({ message: 'Error revalidating' }, { status: 500 });
+  }
+}
+
+
+export async function POST(request: NextRequest) {
+  // 从请求头中获取密钥
+  const secret = request.headers.get('x-revalidate-secret');
+
+  // 1. 检查密钥是否匹配
+  if (secret !== REVALIDATE_SECRET) {
+    return NextResponse.json({ message: 'Invalid secret' }, { status: 401 });
+  }
+
+
+
+  try {
+    console.log('执行自动获取')
+    return NextResponse.json({ revalidated: true, now: Date.now() });
+  } catch (err) {
+    return NextResponse.json({ message: err }, { status: 500 });
   }
 }

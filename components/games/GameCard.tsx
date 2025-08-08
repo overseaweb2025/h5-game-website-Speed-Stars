@@ -4,15 +4,18 @@ import Link from "next/link"
 import { useState, useEffect } from "react"
 import { GameCardProps } from "./types"
 
-const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false }: GameCardProps) => {
+const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false, lang = 'en' }: GameCardProps) => {
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isClient, setIsClient] = useState(false)
   
   // 检测屏幕尺寸状态
   const [screenSize, setScreenSize] = useState<'xs' | 'sm' | 'md' | 'lg' | 'xl'>('md')
   
   useEffect(() => {
+    setIsClient(true)
+    
     const checkScreenSize = () => {
       const width = window.innerWidth
       if (width < 480) {
@@ -33,11 +36,9 @@ const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false
       }
     }
     
-    if (typeof window !== 'undefined') {
-      checkScreenSize()
-      window.addEventListener('resize', checkScreenSize)
-      return () => window.removeEventListener('resize', checkScreenSize)
-    }
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    return () => window.removeEventListener('resize', checkScreenSize)
   }, [])
 
   // 根据size和屏幕尺寸设置不同的尺寸样式
@@ -113,28 +114,15 @@ const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false
 
   const handleGameClick = (e: React.MouseEvent) => {
     // 在首页时，直接跳转到play页面
-    if (isHomepage && game.package?.url) {
+    if (isHomepage && game.package?.url && isClient) {
       e.preventDefault()
       
-      const getCurrentLang = () => {
-        if (typeof window !== 'undefined') {
-          const pathname = window.location.pathname
-          const pathSegments = pathname.split('/')
-          const currentLang = pathSegments[1]
-          // Import localesArrary directly in the function to avoid dependency issues
-          const supportedLocales = ['en', 'zh', 'ru', 'es', 'vi', 'hi', 'fr', 'tl', 'ja', 'ko']
-          return supportedLocales.includes(currentLang) ? currentLang : 'en'
-        }
-        return 'en'
-      }
-      
-      const currentLang = getCurrentLang()
       const gameUrl = game.package.url
       const gameTitle = game.display_name
       const encodedUrl = encodeURIComponent(gameUrl)
       const encodedTitle = encodeURIComponent(gameTitle)
       
-      window.location.href = `/${currentLang}/play/${game.name}/${encodedUrl}?title=${encodedTitle}&url=${encodedUrl}`
+      window.location.href = `/${lang}/play/${game.name}/${encodedUrl}?title=${encodedTitle}&url=${encodedUrl}`
     }
     // 非首页时使用默认的Link跳转逻辑（跳转到游戏内页）
   }
@@ -143,27 +131,12 @@ const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false
 // GameCard.tsx
 
 const getHref = () => {
-    // 获取当前语言的函数
-    const getCurrentLang = () => {
-        if (typeof window !== 'undefined') {
-            const pathname = window.location.pathname
-            const pathSegments = pathname.split('/')
-            const currentLang = pathSegments[1]
-            // Import localesArrary directly in the function to avoid dependency issues
-            const supportedLocales = ['en', 'zh', 'ru', 'es', 'vi', 'hi', 'fr', 'tl', 'ja', 'ko']
-            return supportedLocales.includes(currentLang) ? currentLang : 'en'
-        }
-        return 'en'
-    }
-
-    const currentLang = getCurrentLang()
-
     if (isHomepage && game.package?.url) {
         return "#"
     }
     
-    // 修改这里：直接返回完整的带语言前缀的路径
-    return `/${currentLang}/game/${game.name}`
+    // 使用传入的 lang 参数，避免hydration mismatch
+    return `/${lang}/game/${game.name}`
 }
 
   return (

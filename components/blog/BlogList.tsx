@@ -66,28 +66,28 @@ export default function BlogList({ t, lang }: BlogListProps) {
   return (
     <div className="mb-8 md:mb-12">
       <h2 className="text-2xl md:text-3xl font-black text-white mb-6">{t?.blog?.latestArticles }</h2>
-          <div className="space-y-6 md:space-y-8">
+          <div className="space-y-4 md:space-y-8">
             {blogPosts.map((post, index) => (
               <div
                 key={post.name || index}
-                className="card p-6 md:p-8 border-4 border-primary rainbow-border shadow-cartoon-xl pop-in"
+                className="card p-4 sm:p-6 md:p-8 border-4 border-primary rainbow-border shadow-cartoon-xl pop-in max-h-[260px] sm:max-h-none overflow-hidden"
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white mb-4 hover:text-primary transition-colors">
+                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-black text-white mb-2 sm:mb-4 hover:text-primary transition-colors line-clamp-2 leading-tight">
                   <Link href={`/${lang}/blog/${post.name}`}>{post.title}</Link>
                 </h2>
-                <p className="text-gray-200 mb-6 text-base md:text-lg leading-relaxed">{post.summary}</p>
-                <div className="flex flex-wrap items-center gap-2 md:gap-4 text-sm text-gray-300 mb-6">
+                <p className="text-gray-200 mb-4 sm:mb-6 text-sm sm:text-base md:text-lg leading-relaxed line-clamp-3">{post.summary}</p>
+                <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs sm:text-sm text-gray-300 mb-3 sm:mb-6">
                   <div className="flex items-center">
-                    <CalendarDays className="h-4 w-4 mr-1.5 text-secondary" />
-                    {new Date().toLocaleDateString()}
+                    <CalendarDays className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-1.5 text-secondary" />
+                    <span className="text-xs sm:text-sm">{new Date().toLocaleDateString()}</span>
                   </div>
                 </div>
                 <Link
                   href={`/${lang}/blog/${post.name}`}
-                  className="inline-flex items-center font-semibold text-primary hover:text-primary-hover transition-colors text-lg touch-target"
+                  className="inline-flex items-center font-semibold text-primary hover:text-primary-hover transition-colors text-sm sm:text-base md:text-lg touch-target"
                 >
-                  {t?.blog?.readMore || "Read Full Article"} <ArrowRight className="h-5 w-5 ml-2" />
+                  {t?.blog?.readMore || "Read Full Article"} <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 ml-1 sm:ml-2" />
                 </Link>
               </div>
             ))}

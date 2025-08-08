@@ -59,24 +59,27 @@ const BlogHeader = ({ blogDetails }: { blogDetails: blogDetails }) => {
 
       {/* Article Content */}
       <div className="bg-gray-900/80 rounded-3xl p-4 md:p-8 lg:p-12 border border-gray-700/50 backdrop-blur-sm shadow-2xl">
-        <div 
-          className="prose prose-xl max-w-none 
-            prose-headings:text-white prose-headings:font-bold prose-headings:mb-6 prose-headings:mt-8
-            prose-h2:text-3xl prose-h2:text-purple-300 prose-h2:border-b prose-h2:border-gray-700 prose-h2:pb-3
-            prose-h3:text-2xl prose-h3:text-blue-300
-            prose-h4:text-xl prose-h4:text-green-300
-            prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-6
-            prose-strong:text-purple-400 prose-strong:font-semibold
-            prose-ul:text-gray-300 prose-ol:text-gray-300 
-            prose-li:mb-2 prose-li:leading-relaxed
-            prose-blockquote:border-l-4 prose-blockquote:border-purple-500 prose-blockquote:bg-gray-800/50 prose-blockquote:p-4 prose-blockquote:rounded-r-lg prose-blockquote:text-gray-300
-            prose-code:text-purple-300 prose-code:bg-gray-800 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm
-            prose-pre:bg-gray-800 prose-pre:border prose-pre:border-gray-600 prose-pre:rounded-lg
-            prose-a:text-purple-400 prose-a:hover:text-purple-300 prose-a:no-underline prose-a:font-medium
-            prose-img:rounded-lg prose-img:shadow-lg
-            first:prose-p:text-xl first:prose-p:text-gray-200 first:prose-p:font-medium"
-          dangerouslySetInnerHTML={{ __html: blogDetails.content }}
-        />
+        <div   className="prose prose-xl max-w-none 
+             prose-headings:text-white prose-headings:font-bold prose-headings:mb-6 prose-headings:mt-8
+             prose-h2:text-3xl prose-h2:text-purple-300 prose-h2:border-b prose-h2:border-gray-700 prose-h2:pb-3
+             prose-h3:text-2xl prose-h3:text-blue-300
+             prose-h4:text-xl prose-h4:text-green-300
+             prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-6
+             prose-strong:text-purple-400 prose-strong:font-semibold
+             prose-ul:text-gray-300 prose-ol:text-gray-300 
+             prose-li:mb-2 prose-li:leading-relaxed
+             prose-blockquote:border-l-4 prose-blockquote:border-purple-500 prose-blockquote:bg-gray-800/50 prose-blockquote:p-4 prose-blockquote:rounded-r-lg prose-blockquote:text-gray-300
+             prose-code:text-purple-300 prose-code:bg-gray-800 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm
+             prose-pre:bg-gray-800 prose-pre:border prose-pre:border-gray-600 prose-pre:rounded-lg
+             prose-a:text-purple-400 prose-a:hover:text-purple-300 prose-a:no-underline prose-a:font-medium
+             prose-img:rounded-lg prose-img:shadow-lg
+             first:prose-p:text-xl first:prose-p:text-gray-200 first:prose-p:font-medium
+             
+             prose-table:text-gray-300 prose-table:border-collapse prose-table:w-full
+             prose-th:bg-gray-800 prose-th:text-white prose-th:p-4 prose-th:border-b prose-th:border-gray-700
+             prose-td:p-4 prose-td:border-b prose-td:border-gray-700 prose-td:text-gray-300"
+  dangerouslySetInnerHTML={{ __html: blogDetails.content }}
+/>
       </div>
     </>
   );

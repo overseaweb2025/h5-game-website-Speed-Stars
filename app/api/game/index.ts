@@ -2,7 +2,7 @@ import api from '../index'
 import { ApiResponse } from '../types';
 import { GameList,GameDetails, HomeGameData, gamelist, Game } from '../types/Get/game';
 
-export const getGameList = (lang?:string) => {
+export const getGameList = (lang:string = 'en') => {
 
   return api.get<ApiResponse<gamelist>>('/api/v1/game/list',{
     params:{

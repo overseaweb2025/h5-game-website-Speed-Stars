@@ -1,3 +1,4 @@
+import {NotBlogData} from '@/data/blog/notBlog'
 interface PropGameHTML{
     description:string
 }
@@ -9,9 +10,9 @@ const GameHTML = ({description}:PropGameHTML)=>{
                  <section className="py-8">
                    <div className="max-w-4xl mx-auto">
                      <div 
-                       className="prose prose-invert text-left mx-auto w-full max-w-4xl"
+                       className="prose prose-invert  text-left mx-auto w-full max-w-4xl"
                        dangerouslySetInnerHTML={{
-                         __html: description
+                         __html: description || NotBlogData
                        }}
                      />
                    </div>

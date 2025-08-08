@@ -8,9 +8,8 @@ import GameCard from "./GameCard"
 import { useLangGameList } from "@/hooks/LangGamelist_value"
 import { Locale } from "@/lib/lang/dictionaraies"
 import { games } from "@/app/api/types/Get/game"
-import { getDictionary } from "@/lib/lang/utils"
 // 横向特色游戏区域组件 - 带标题，多组5个游戏的横向排版
-const HorizontalFeaturedGames = ({ gameGroups, t }: { gameGroups: ExtendedGame[][], t?: any }) => {
+const HorizontalFeaturedGames = ({ gameGroups, t, lang }: { gameGroups: ExtendedGame[][], t?: any, lang: Locale }) => {
   const [showControls, setShowControls] = useState(false)
   const [touched, setTouched] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -102,13 +101,13 @@ const HorizontalFeaturedGames = ({ gameGroups, t }: { gameGroups: ExtendedGame[]
                   <div className="grid grid-cols-2 gap-2 sm:gap-4 md:gap-6 items-stretch">
                     {/* 第一个格子：大卡片，高度与右侧保持一致 */}
                     <div className="col-span-1 flex">
-                      <GameCard game={games[0]} className="shadow-xl hover:shadow-2xl w-full" size="large" />
+                      <GameCard game={games[0]}  className="shadow-xl hover:shadow-2xl w-full" size="large" lang={lang} />
                     </div>
                     {/* 第二个格子：包含四个小卡片的大div，高度与左侧保持一致 */}
                     <div className="col-span-1 flex flex-col">
                       <div className="grid grid-cols-2 gap-1 sm:gap-2 md:gap-3 h-full">
                         {games.slice(1, 5).map((game, index) => (
-                          <GameCard key={`${groupIndex}-${game.id || index}`} game={game} className="shadow-lg hover:shadow-xl h-full" size="small" />
+                          <GameCard key={`${groupIndex}-${game.id || index}`} game={game} className="shadow-lg hover:shadow-xl h-full" size="small" lang={lang} />
                         ))}
                       </div>
                     </div>
@@ -124,7 +123,7 @@ const HorizontalFeaturedGames = ({ gameGroups, t }: { gameGroups: ExtendedGame[]
 }
 
 // GameRowSection组件
-const GameRowSection = ({ title, games, sectionIndex }: { title: string, games: games, sectionIndex: number }) => {
+const GameRowSection = ({ title, games, sectionIndex, lang }: { title: string, games: games, sectionIndex: number, lang: Locale }) => {
   const [showControls, setShowControls] = useState(false)
   const [touched, setTouched] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -206,6 +205,7 @@ const GameRowSection = ({ title, games, sectionIndex }: { title: string, games: 
                   game={game}
                   className="flex-shrink-0 shadow-lg hover:shadow-xl"
                   size="horizontal-scroll"
+                  lang={lang}
                 />
               </div>
             ))}
@@ -330,12 +330,12 @@ const GamesShow = ({lang, t}:{lang:Locale, t?: any}) => {
         ) : (
           <>
             {/* 横向特色游戏区域 - 带标题，多组5个游戏横向排版 */}
-            <HorizontalFeaturedGames gameGroups={featuredGameGroups} t={t} />
+            <HorizontalFeaturedGames gameGroups={featuredGameGroups} t={t} lang={lang} />
             
             {/* Game Rows */}
             {GameList && GameList.some(item => item.games.length > 0) ? (
               GameList.map((item,index)=>{
-                if(item.games.length > 0 )return (<GameRowSection key={index} title={item.category_name} games={item.games} sectionIndex={index}  />)
+                if(item.games.length > 0 )return (<GameRowSection key={index} title={item.category_name} games={item.games} sectionIndex={index} lang={lang} />)
               })
             ) : (
               <div className="flex items-center justify-center h-64 flex-col gap-4">

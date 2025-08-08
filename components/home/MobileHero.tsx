@@ -39,7 +39,7 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
     <div className="lg:hidden mb-6 px-4 mx-auto max-w-screen-xl">
       {/* 第一行：固定定位的功能卡片 + 游戏标题卡片 */}
       <div className="relative mb-5 w-full">
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-3 md:gap-6">
           {/* 固定定位的功能卡片 */}
           <div className="col-span-1 relative">
             <div className="fixed z-30 bg-gray-900 border border-gray-700 rounded-[9px] shadow-lg shadow-black/20 transition-shadow duration-300 h-[73px] p-1" style={{ width: 'calc((100vw - 80px) / 3 - 12px)' }}>
@@ -109,8 +109,8 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
         </div>
       </div>
 
-      {/* 统一3列网格布局，间距4，圆角8px */}
-      <div className="grid grid-cols-3 gap-4">
+      {/* 统一3列网格布局，增加间距避免重合 */}
+      <div className="grid grid-cols-3 gap-3 md:gap-4">
         
         {/* 第二行：完整尺寸内嵌游戏 - 占据3格 */}
         <div className="col-span-3">
@@ -193,6 +193,7 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
                 className="w-full aspect-square"
                 size="tiny"
                 isHomepage={true}
+                lang={lang}
               />
             </div>
           ))

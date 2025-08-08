@@ -41,18 +41,31 @@ export default function DataProvider({ lang }: DataProviderProps) {
       // 带重试的API请求函数
       const fetchWithRetry = async (fetchFn: () => Promise<any>, name: string, retryCount = 0): Promise<any> => {
         try {
-          return await fetchFn()
+          const result = await fetchFn()
+          console.log(`[DataProvider] Successfully fetched ${name}`)
+          return result
         } catch (error: any) {
-          console.error(`[DataProvider] Error fetching ${name} (attempt ${retryCount + 1}):`, error)
+          const errorStatus = error?.response?.status
+          console.error(`[DataProvider] Error fetching ${name} (attempt ${retryCount + 1}):`, {
+            status: errorStatus,
+            message: error?.message,
+            url: error?.config?.url
+          })
           
-          // 如果是500错误且还有重试次数，则重试
-          if (error?.response?.status === 500 && retryCount < maxRetries) {
-            console.log(`[DataProvider] Retrying ${name} in ${retryDelay}ms... (${retryCount + 1}/${maxRetries})`)
-            await new Promise(resolve => setTimeout(resolve, retryDelay))
+          // 检查是否为可重试的错误
+          const isRetryable = errorStatus === 500 || errorStatus === 502 || errorStatus === 503 || 
+                             errorStatus === 504 || errorStatus === 429 || !errorStatus
+          
+          if (isRetryable && retryCount < maxRetries) {
+            // 指数退避重试策略
+            const delay = retryDelay * Math.pow(2, retryCount)
+            console.log(`[DataProvider] Retrying ${name} in ${delay}ms... (${retryCount + 1}/${maxRetries})`)
+            await new Promise(resolve => setTimeout(resolve, delay))
             return fetchWithRetry(fetchFn, name, retryCount + 1)
           }
           
           // 最终失败时记录错误但不中断其他请求
+          console.warn(`[DataProvider] Final failure for ${name} after ${retryCount + 1} attempts:`, error?.message)
           safeErrorLog(error, `DataProvider-${name}`)
           return null
         }
@@ -63,49 +76,67 @@ export default function DataProvider({ lang }: DataProviderProps) {
         const results = await Promise.allSettled([
           // 1. 检查并获取游戏列表数据
           (async () => {
-            const existingGameData = getLangGamelistBylang(lang)
-            if (!existingGameData || existingGameData.length === 0) {
-              console.log(`[DataProvider] Fetching game list data for ${lang}`)
-              return fetchWithRetry(
-                () => getGameListData(lang, true),
-                'GameListData'
-              )
-            } else {
-              console.log(`[DataProvider] Game list data for ${lang} already exists, skipping fetch`)
-              return Promise.resolve(null)
+            try {
+              const existingGameData = getLangGamelistBylang(lang)
+              if (!existingGameData || existingGameData.length === 0) {
+                console.log(`[DataProvider] Fetching game list data for ${lang}`)
+                const result = await fetchWithRetry(
+                  () => getGameListData(lang, true),
+                  'GameListData'
+                )
+                return result
+              } else {
+                console.log(`[DataProvider] Game list data for ${lang} already exists, skipping fetch`)
+                return Promise.resolve({ cached: true })
+              }
+            } catch (error) {
+              console.error(`[DataProvider] Game list data fetch wrapper error:`, error)
+              return null
             }
           })(),
 
           // 2. 检查并获取导航数据
           (async () => {
-            if (!navState || !navState.top_navigation || navState.top_navigation.length === 0) {
-              console.log(`[DataProvider] Fetching navigation data`)
-              const navResponse = await fetchWithRetry(
-                () => getNavLanguage(),
-                'NavigationData'
-              )
-              if (navResponse?.data?.data) {
-                updateLanguage(navResponse.data.data)
+            try {
+              if (!navState || !navState.top_navigation || navState.top_navigation.length === 0) {
+                console.log(`[DataProvider] Fetching navigation data`)
+                const navResponse = await fetchWithRetry(
+                  () => getNavLanguage(),
+                  'NavigationData'
+                )
+                if (navResponse?.data?.data) {
+                  updateLanguage(navResponse.data.data)
+                  console.log(`[DataProvider] Navigation data updated successfully`)
+                }
+                return navResponse
+              } else {
+                console.log(`[DataProvider] Navigation data already exists, skipping fetch`)
+                return Promise.resolve({ cached: true })
               }
-              return navResponse
-            } else {
-              console.log(`[DataProvider] Navigation data already exists, skipping fetch`)
-              return Promise.resolve(null)
+            } catch (error) {
+              console.error(`[DataProvider] Navigation data fetch wrapper error:`, error)
+              return null
             }
           })(),
 
           // 3. 检查并获取首页数据
           (async () => {
-            const existingHomeData = getHomeInfoByLang(lang)
-            if (!existingHomeData) {
-              console.log(`[DataProvider] Fetching home data for ${lang}`)
-              return fetchWithRetry(
-                () => autoGetHomeData(true, lang),
-                'HomeData'
-              )
-            } else {
-              console.log(`[DataProvider] Home data for ${lang} already exists, skipping fetch`)
-              return Promise.resolve(null)
+            try {
+              const existingHomeData = getHomeInfoByLang(lang)
+              if (!existingHomeData) {
+                console.log(`[DataProvider] Fetching home data for ${lang}`)
+                const result = await fetchWithRetry(
+                  () => autoGetHomeData(true, lang),
+                  'HomeData'
+                )
+                return result
+              } else {
+                console.log(`[DataProvider] Home data for ${lang} already exists, skipping fetch`)
+                return Promise.resolve({ cached: true })
+              }
+            } catch (error) {
+              console.error(`[DataProvider] Home data fetch wrapper error:`, error)
+              return null
             }
           })()
         ])
@@ -115,17 +146,43 @@ export default function DataProvider({ lang }: DataProviderProps) {
         const navResult = results[1] 
         const homeResult = results[2]
 
+        const successCount = results.filter(result => result.status === 'fulfilled' && result.value).length
+        const failureCount = results.filter(result => result.status === 'rejected').length
+        const cachedCount = results.filter(result => 
+          result.status === 'fulfilled' && result.value?.cached === true
+        ).length
+
         console.log(`[DataProvider] Data fetch results for ${lang}:`, {
+          successful: successCount,
+          failed: failureCount, 
+          cached: cachedCount,
           gameList: gameListResult.status,
           navigation: navResult.status,
           home: homeResult.status
         })
 
-        // 如果所有请求都失败，显示降级提示
-        const allFailed = results.every(result => result.status === 'rejected')
-        if (allFailed) {
-          console.warn('[DataProvider] All API requests failed, using cached/default data')
+        // 记录详细的失败信息
+        results.forEach((result, index) => {
+          const names = ['GameList', 'Navigation', 'Home']
+          if (result.status === 'rejected') {
+            console.error(`[DataProvider] ${names[index]} request failed:`, result.reason)
+          }
+        })
+
+        // 如果所有请求都失败（不包括缓存命中），显示降级提示
+        const allNewRequestsFailed = results.every(result => 
+          result.status === 'rejected' || result.value?.cached === true
+        )
+        
+        if (allNewRequestsFailed && failureCount > 0) {
+          console.warn('[DataProvider] All new API requests failed, using cached/default data')
           // 可以在这里触发降级逻辑或用户提示
+          if (typeof window !== 'undefined') {
+            // 可选：显示离线模式提示
+            console.log('[DataProvider] App running in offline/cached mode')
+          }
+        } else if (successCount > 0) {
+          console.log(`[DataProvider] Successfully fetched ${successCount} data sources`)
         }
 
       } catch (error) {
@@ -144,7 +201,7 @@ export default function DataProvider({ lang }: DataProviderProps) {
     }
     
     fetchCriticalData()
-  }, [lang]) // 添加lang依赖，但用全局标记防止重复执行
+  }, []) // 添加lang依赖，但用全局标记防止重复执行
 
   // 这个组件不渲染任何内容，只负责数据获取
   return null

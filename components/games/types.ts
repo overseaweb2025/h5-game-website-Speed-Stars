@@ -12,4 +12,5 @@ export interface GameCardProps {
   size?: 'tiny' | 'small' | 'medium' | 'large' | 'horizontal-scroll'
   t?: any
   isHomepage?: boolean  // 新增：用于区分是否在首页使用
+  lang?: string  // 新增：传入语言参数避免hydration mismatch
 }

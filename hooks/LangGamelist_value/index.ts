@@ -1,7 +1,6 @@
 // hooks/useLangGameList.ts
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import {CATEGORIES_DATA}from '@/data/games/zh-games'
 // 假设这些类型已定义
 import { game, gamelist, games, LangGameList } from '@/app/api/types/Get/game'
 import { Locale } from '@/lib/lang/dictionaraies'
@@ -13,7 +12,7 @@ const STORAGE_KEY = 'language-Gamelist-value'
 const TIMESTAMP_KEY = 'language-Gamelist-timestamp'
 
 // 缓存过期时间（5分钟）
-const CACHE_EXPIRY_TIME = 5 * 60 * 1000 // 5分钟
+const CACHE_EXPIRY_TIME = 3 * 60 * 1000 // 5分钟
 
 // 默认空状态
 const initialLangGameList: LangGameList = {

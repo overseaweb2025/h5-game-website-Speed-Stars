@@ -26,36 +26,39 @@ export async function generateStaticParams() {
   return params;
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: BlogPostPageProps) {
   const { slug, lang } = await params;
-
+  try{
   const response = await getBlogDetails(slug, lang);
   const post = response?.data?.data;
 
-  if (!post) {
-    // ... 如果 post 不存在，返回默认的 metadata
-  }
 
+  const domain = process.env.CANONICAL_DOMAIN
   // 关键修正：确保 alternatesLinks 永远是数组，即使 post.alternate 不存在
   const alternatesLinks = (post?.alternate || []).map(locale => ({
     hreflang: locale,
-    url: `${process.env.CANONICAL_DOMAIN}/${locale}/blog/${slug}`,
+    url: `${domain}/${locale}/blog/${slug}`,
+
   }));
 
   return {
     title: `${post?.title}`,
     description: post?.description,
     alternates: {
-      canonical: `${process.env.CANONICAL_DOMAIN}/${lang}/blog/${slug}`,
+      canonical: `${domain}/${lang}/blog/${slug}`,
       languages: {
         ...alternatesLinks.reduce((acc, curr) => ({
           ...acc,
           [curr.hreflang]: curr.url,
         }), {}),
-        'x-default': `${process.env.CANONICAL_DOMAIN}/en/blog/${slug}`,
+        'x-default': `${domain}/en/blog/${slug}`,
       },
     },
   };
+}catch(er){
+  return null
+}
+
 }
 
 
