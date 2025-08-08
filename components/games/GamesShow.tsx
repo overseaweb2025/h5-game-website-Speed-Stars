@@ -227,7 +227,7 @@ const GamesShow = ({lang, t}:{lang:Locale, t?: any}) => {
     refresh 
   } = useGameData()
 
-  const {getLangGamelistBylang, getLangGames, autoGetGameList} = useLangGameList()
+  const {getLangGamelistBylang, getLangGames, autoGetData} = useLangGameList()
   // 多语言自适应 适合的数据
   const GameList =  getLangGamelistBylang(lang)
   // 获取真实的游戏数组用于特色游戏展示
@@ -237,9 +237,9 @@ const GamesShow = ({lang, t}:{lang:Locale, t?: any}) => {
   useEffect(() => {
     if (lang) {
       // 自动获取新语言的游戏列表数据（从缓存）
-      autoGetGameList(lang)
+      autoGetData(lang)
     }
-  }, [lang, autoGetGameList])
+  }, [lang, autoGetData])
   // 根据真实分类数据创建游戏行，只显示有游戏的分类
   const createGameRows = () => {
     if (categoriesWithGames.length === 0) return []

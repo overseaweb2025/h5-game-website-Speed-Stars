@@ -23,15 +23,14 @@ const BlogHero = async ({ lang, slug, t }: PropHero) => {
     if (blog_Details.structured_data) {
         unescapedData = unescapeStructuredData(blog_Details.structured_data);
     }
-    console.log('da',unescapedData)
+    console.log('data:',unescapedData)
     
     return (
       <>
         {/* 只有当 unescapedData 存在时才渲染 */}
         {unescapedData && (
             <>
-                <JsonLdScript data={{ __html: unescapedData.breadcrumb }} />
-                <JsonLdScript data={{ __html: unescapedData.blog }} />
+                <JsonLdScript data={unescapedData } />
             </>
         )}
         <BlogArticle lang={lang} t={t} slug={slug} blog_Details={blog_Details} />
