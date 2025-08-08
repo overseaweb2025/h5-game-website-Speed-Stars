@@ -187,14 +187,14 @@ const getHref = () => {
         {/* Game title overlay - 在移动端的tiny size不显示title */}
         {size !== 'tiny' && (
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-2 sm:p-3 rounded-b-[7px]">
-            <h3 className={`text-white font-bold leading-tight drop-shadow-lg ${
+            <p className={`text-white font-bold leading-tight drop-shadow-lg ${
               size === 'large' ? 'text-sm sm:text-base md:text-lg' : 
               size === 'small' ? 'text-xs sm:text-sm' : 
               size === 'horizontal-scroll' ? 'text-xs sm:text-sm' :
               'text-sm'
             }`}>
               {game.display_name}
-            </h3>
+            </p>
           </div>
         )}
         
