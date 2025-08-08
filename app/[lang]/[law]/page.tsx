@@ -57,11 +57,14 @@ const LawPage = async ({ params }: { params: { lang: Locale; law: string } }) =>
     const { lang, law } = params;
     // 解码 law 参数以处理编码字符
     const decodedLaw = decodeURIComponent(law);
+    console.log('Law page params:', { lang, law, decodedLaw });
+    
     // 通过获取 api 接口数据进行强制渲染 getLawPageValue(law)
     const res = await getLawPageValue(decodedLaw);
     let htmlCode = res.data.data.content;
 
     if (!htmlCode) {
+      console.log('No HTML content found for law:', decodedLaw);
       // 如果没有内容，则抛出 notFound 错误，Next.js 会渲染 404 页面
       notFound();
     }
@@ -76,6 +79,16 @@ const LawPage = async ({ params }: { params: { lang: Locale; law: string } }) =>
     );
   } catch (error) {
     console.error('Error rendering law page:', error);
+    
+    // Check if it's a 404 error specifically
+    if (error && typeof error === 'object' && 'response' in error) {
+      const axiosError = error as any;
+      if (axiosError.response?.status === 404) {
+        console.log('Law page not found (404), rendering not-found page');
+        notFound();
+      }
+    }
+    
     // 如果 API 调用失败，也渲染 404
     notFound();
   }

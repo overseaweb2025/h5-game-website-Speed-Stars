@@ -4,10 +4,18 @@ import api from ".."
 import { ApiResponse } from "../types"
 import { public_writing } from "../types/Get/public_writing"
 
-export const getLawPageValue = (law:string)=>{
-    return api.get<ApiResponse<public_writing>>('/api/v1/page',{
-        params:{
-            name:law
-        }
-    })
+export const getLawPageValue = async (law:string)=>{
+    try {
+        console.log('Requesting law page with parameter:', law);
+        const response = await api.get<ApiResponse<public_writing>>('/api/v1/page',{
+            params:{
+                name:law
+            }
+        });
+        console.log('Law page API response:', response.data);
+        return response;
+    } catch (error) {
+        console.error('Law page API error:', error);
+        throw error;
+    }
 }
