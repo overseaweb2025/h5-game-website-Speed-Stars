@@ -193,11 +193,11 @@ export default function GamePageClient({ slug,lang,t }: GamePageClientProps) {
 
   return (
     <main>
-      <Header lang={lang }/>
+      <Header lang={lang } t={t}/>
         {/* <Hero game={heroGameData} reviews={gameDetails?.reviews} gameData={gameDetails} />     */}
         {gameDetails &&  <GameHero t={t} gameDetails={gameDetails} GameList={GameList} />}
       <NavigationArrow isHomePage={false} />     
-      <Footer lang={lang }/>
+      <Footer lang={lang }  t={t}/>
       {/* <GameDetailsCacheDebug /> */}
     </main>
   )

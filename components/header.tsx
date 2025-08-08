@@ -56,8 +56,9 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t,l
   // Get current language from pathname
   const getCurrentLang = () => {
     const pathSegments = pathname.split('/')
-    const lang = pathSegments[1]
-    return (lang === 'en' || lang === 'zh') ? lang : 'en'
+    const currentLang = pathSegments[1]
+    // Check if the current language is in our supported locales list
+    return localesArrary.includes(currentLang as Locale) ? currentLang : 'en'
   }
 
   // Create localized link

@@ -18,7 +18,7 @@ interface BlogListProps {
 export default function BlogList({ t, lang }: BlogListProps) {
   const [blogPosts, setBlogPosts] = useState<blog[]>([])
   const [currentPage, setCurrentPage] = useState(1) // 默认页码8
-  const [totalPages, setTotalPages] = useState(5) // 默认总页数
+  const [totalPages, setTotalPages] = useState(10) // 默认总页数
   const [loading, setLoading] = useState(false)
   const {LangBlog,updataLanguageByLang} = useLangBlog()
   const fetchBlogData = async (page: number) => {
@@ -66,9 +66,6 @@ export default function BlogList({ t, lang }: BlogListProps) {
   return (
     <div className="mb-8 md:mb-12">
       <h2 className="text-2xl md:text-3xl font-black text-white mb-6">{t?.blog?.latestArticles }</h2>
-      
-      {blogPosts.length > 0 ? (
-        <>
           <div className="space-y-6 md:space-y-8">
             {blogPosts.map((post, index) => (
               <div
@@ -95,18 +92,16 @@ export default function BlogList({ t, lang }: BlogListProps) {
               </div>
             ))}
           </div>
-          
+          {blogPosts.length <=0 && 
+            <div className="text-center py-12">
+               <p className="text-gray-400 text-lg">{t?.search?.noResults || "No blog data available"}</p>
+            </div>
+            }
           <CustomPagination 
             currentPage={currentPage} 
             totalPages={totalPages} 
             onPageChange={handlePageChange}
-          />
-        </>
-      ) : (
-        <div className="text-center py-12">
-          <p className="text-gray-400 text-lg">{t?.search?.noResults || "No blog data available"}</p>
-        </div>
-      )}
+          />      
     </div>
   )
 }

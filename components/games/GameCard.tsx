@@ -119,8 +119,11 @@ const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false
       const getCurrentLang = () => {
         if (typeof window !== 'undefined') {
           const pathname = window.location.pathname
-          const langMatch = pathname.match(/^\/([a-z]{2})(?:\/|$)/)
-          return langMatch ? langMatch[1] : 'en'
+          const pathSegments = pathname.split('/')
+          const currentLang = pathSegments[1]
+          // Import localesArrary directly in the function to avoid dependency issues
+          const supportedLocales = ['en', 'zh', 'ru', 'es', 'vi', 'hi', 'fr', 'tl', 'ja', 'ko']
+          return supportedLocales.includes(currentLang) ? currentLang : 'en'
         }
         return 'en'
       }
@@ -144,9 +147,11 @@ const getHref = () => {
     const getCurrentLang = () => {
         if (typeof window !== 'undefined') {
             const pathname = window.location.pathname
-            // 匹配路径中的第一个两字母语言代码
-            const langMatch = pathname.match(/^\/([a-z]{2})(?:\/|$)/)
-            return langMatch ? langMatch[1] : 'en'
+            const pathSegments = pathname.split('/')
+            const currentLang = pathSegments[1]
+            // Import localesArrary directly in the function to avoid dependency issues
+            const supportedLocales = ['en', 'zh', 'ru', 'es', 'vi', 'hi', 'fr', 'tl', 'ja', 'ko']
+            return supportedLocales.includes(currentLang) ? currentLang : 'en'
         }
         return 'en'
     }
