@@ -185,7 +185,7 @@ export default function GamePageClient({ slug,lang,t }: GamePageClientProps) {
       <main>
         <Header lang={lang }/>
           <div>
-            <LoadingSpinner text="No game data available..." fullScreen noData />
+            <LoadingSpinner text="No game data available... please refresh page" fullScreen noData />
           </div>
         <Footer lang={lang }/>
       </main>
