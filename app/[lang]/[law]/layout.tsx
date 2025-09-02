@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { getNavLanguage } from "@/app/api/nav_language";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
