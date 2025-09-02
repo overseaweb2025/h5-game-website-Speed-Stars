@@ -180,17 +180,18 @@ export default function GamePageClient({ slug,lang,t }: GamePageClientProps) {
   }
 
   // 如果没有数据但也没有错误，且不在加载中，显示加载状态
-  if (!gameData && !loading && !error) {
-    return (
-      <main>
-        <Header lang={lang }/>
-          <div>
-            <LoadingSpinner text="No game data available... please refresh page" fullScreen noData />
-          </div>
-        <Footer lang={lang }/>
-      </main>
-    )
-  }
+  // if (!gameData && !error) {
+  //   console.log(gameData, loading, error)
+  //   return (
+  //     <main>
+  //       <Header lang={lang }/>
+  //         <div>
+  //           <LoadingSpinner text="No game data available... please refresh page" fullScreen noData />
+  //         </div>
+  //       <Footer lang={lang }/>
+  //     </main>
+  //   )
+  // }
 
 
   return (

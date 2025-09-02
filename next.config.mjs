@@ -14,6 +14,11 @@ const nextConfig = {
     workerThreads: false,
     cpus: 1
   },
+  output: 'standalone',
+  experimental: {
+    appDir: false,       // 避免长路径问题
+    forceSwcTransforms: true
+  },
   async headers() {
     return [
       {
