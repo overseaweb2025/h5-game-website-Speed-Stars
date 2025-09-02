@@ -18,7 +18,7 @@ interface BlogListProps {
 export default function BlogList({ t, lang }: BlogListProps) {
   const [blogPosts, setBlogPosts] = useState<blog[]>([])
   const [currentPage, setCurrentPage] = useState(1) // 默认页码8
-  const [totalPages, setTotalPages] = useState(10) // 默认总页数
+  const [totalPages, setTotalPages] = useState(1) // 默认总页数
   const [loading, setLoading] = useState(false)
   const {LangBlog,updataLanguageByLang} = useLangBlog()
   const fetchBlogData = async (page: number) => {
@@ -27,16 +27,19 @@ export default function BlogList({ t, lang }: BlogListProps) {
     try {
       const blogParams: postBlog = {
         directory: "/blog",
-        per_page: '5',
+        per_page: '12',
         page: page.toString()
       }
       
       const response = await getPagration(blogParams,lang)
-      console.log('打印数据',response.data.data )
       updataLanguageByLang(response.data.data,lang)
       // 如果response.data是数组，直接使用；如果是对象包含数组，需要相应调整
       const posts = Array.isArray(response.data?.data) ? response.data.data : Array.isArray(response.data) ? response.data : []
       setBlogPosts(posts)
+
+      if (response.data?.meta?.total) {
+        setTotalPages(Math.ceil(response.data?.meta?.total / 12))
+      }
     } catch (error) {
       setBlogPosts([])
     } finally {
