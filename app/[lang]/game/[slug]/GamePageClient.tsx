@@ -184,7 +184,9 @@ export default function GamePageClient({ slug,lang,t }: GamePageClientProps) {
     return (
       <main>
         <Header lang={lang }/>
-        <LoadingSpinner text="Loading game..." fullScreen />
+          <div>
+            <LoadingSpinner text="No game data available..." fullScreen noData />
+          </div>
         <Footer lang={lang }/>
       </main>
     )

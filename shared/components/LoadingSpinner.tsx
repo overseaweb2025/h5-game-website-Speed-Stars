@@ -4,12 +4,14 @@ interface LoadingSpinnerProps {
   size?: 'small' | 'medium' | 'large'
   text?: string
   fullScreen?: boolean
+  noData?: boolean
 }
 
 const LoadingSpinner = ({ 
   size = 'medium', 
   text = 'Loading...', 
-  fullScreen = false 
+  fullScreen = false,
+  noData
 }: LoadingSpinnerProps) => {
   const sizeClasses = {
     small: 'h-8 w-8',
@@ -24,7 +26,7 @@ const LoadingSpinner = ({
   return (
     <div className={containerClasses}>
       <div className="text-center">
-        <div className={`animate-spin rounded-full border-b-2 border-primary mx-auto mb-4 ${sizeClasses[size]}`}></div>
+        {!noData && <div className={`animate-spin rounded-full border-b-2 border-primary mx-auto mb-4 ${sizeClasses[size]}`}></div>}
         <p className="text-text/80">{text}</p>
       </div>
     </div>
