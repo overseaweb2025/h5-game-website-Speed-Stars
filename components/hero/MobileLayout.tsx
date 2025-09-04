@@ -9,6 +9,7 @@ import { GameRouter } from "@/lib/router"
 import GameCard from "../games/GameCard"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import FullscreenGameModal from "@/components/home/FullscreenGaameModal" // 1. Import the modal component
+import GamePage from "./GamePage"
 
 interface MobileLayoutProps {
   t: any
@@ -247,6 +248,7 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
         isOpen={isGameModalOpen}
         onClose={() => setIsGameModalOpen(false)}
       />
+      <GamePage description={gameDetails.introduce} />
     </div>
   )
 }
