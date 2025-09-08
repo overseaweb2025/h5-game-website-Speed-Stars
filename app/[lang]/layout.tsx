@@ -105,7 +105,6 @@ const getGameStructuredData = () => {
 // 生成动态metadata
 const generateMetadata = (): Metadata => {
   const domain = getCanonicalDomain()
-  
   return {
     metadataBase: new URL(domain),
     title: "Speed Stars: Play Free Online Games!",
@@ -115,6 +114,17 @@ const generateMetadata = (): Metadata => {
       "Speed Stars, free online games, browser games, HTML5 games, running games, physics games, puzzle games, action games, gaming platform",
     alternates: {
       canonical: domain,
+      languages: {
+        en: "https://gameplaystop.com",
+        zh: "https://gameplaystop.com/zh",
+        ru: "https://gameplaystop.com/ru",
+        es: "https://gameplaystop.com/es",
+        hi: "https://gameplaystop.com/hi",
+        fr: "https://gameplaystop.com/fr",
+        ja: "https://gameplaystop.com/ja",
+        ko: "https://gameplaystop.com/ko",
+        "x-default": "https://gameplaystop.com"
+      }
     },
     openGraph: {
       title: "Speed Stars: Play Free Online Games!",
@@ -174,6 +184,7 @@ export default function RootLayout({
         <link rel="icon" href="/placeholder-logo.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/placeholder-logo.png" />
         <link rel="manifest" href="/manifest.json" />
+        <link rel="manifest" href="/manifest.json" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="theme-color" content="#ff006e" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,31 +220,31 @@ export default function RootLayout({
           {children}
           <NotificationBar />
           <Toaster
-          position="top-right"
-          reverseOrder={false}
-          gutter={8}
-          toastOptions={{
-            duration: 4000,
-            style: {
-              background: '#363636',
-              color: '#fff',
-            },
-            success: {
-              duration: 3000,
-              iconTheme: {
-                primary: '#4aed88',
-                secondary: '#fff',
-              },
-            },
-            error: {
+            position="top-right"
+            reverseOrder={false}
+            gutter={8}
+            toastOptions={{
               duration: 4000,
-              iconTheme: {
-                primary: '#ff4b4b',
-                secondary: '#fff',
+              style: {
+                background: '#363636',
+                color: '#fff',
               },
-            },
-          }}
-        />
+              success: {
+                duration: 3000,
+                iconTheme: {
+                  primary: '#4aed88',
+                  secondary: '#fff',
+                },
+              },
+              error: {
+                duration: 4000,
+                iconTheme: {
+                  primary: '#ff4b4b',
+                  secondary: '#fff',
+                },
+              },
+            }}
+          />
         </Providers>
         <ExternalScripts />
       </body>

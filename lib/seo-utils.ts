@@ -4,7 +4,7 @@
  * 获取canonical域名
  */
 export const getCanonicalDomain = (): string => {
-  return process.env.CANONICAL_DOMAIN || 'https://speed-stars.net'
+  return process.env.CANONICAL_DOMAIN || 'https://gameplaystop.com'
 }
 
 /**

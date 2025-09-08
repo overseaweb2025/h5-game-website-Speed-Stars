@@ -8,24 +8,28 @@ import { getDictionary } from "@/lib/lang/i18n"
 import { Metadata } from "next"
 import { Locale, localesArrary } from "@/lib/lang/dictionaraies"
 import { getGameHome } from "../api/game/index"
+import { getCanonicalDomain } from "@/lib/seo-utils"
 
 export const revalidate = 320;
 export async function generateStaticParams() {
-    const languages: Locale[] = localesArrary;
-    const params: { lang: Locale }[] = [];
+  const languages: Locale[] = localesArrary;
+  const params: { lang: Locale }[] = [];
 
-    // 为每种语言调用一次 API
-    for (const lang of languages) {
-          params.push({ lang });
-    }
+  // 为每种语言调用一次 API
+  for (const lang of languages) {
+    params.push({ lang });
+  }
 
-    return params;
+  return params;
 }
 
-export async function generateMetadata({params}: {params: Promise<{lang: string}>}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
-  const canonicalUrl = `${process.env.CANONICAL_DOMAIN}/${lang}`
+  const domain = getCanonicalDomain()
 
+  const canonicalUrl = `${domain}/${lang}`
+
+  console.log(canonicalUrl)
   try {
     // Fetch home game data for SEO metadata
     const res = await getGameHome(lang)
@@ -36,9 +40,20 @@ export async function generateMetadata({params}: {params: Promise<{lang: string}
       keywords: homeData?.keywords,
       alternates: {
         canonical: canonicalUrl,
+        languages: {
+          en: "https://gameplaystop.com",
+          zh: "https://gameplaystop.com/zh",
+          ru: "https://gameplaystop.com/ru",
+          es: "https://gameplaystop.com/es",
+          hi: "https://gameplaystop.com/hi",
+          fr: "https://gameplaystop.com/fr",
+          ja: "https://gameplaystop.com/ja",
+          ko: "https://gameplaystop.com/ko",
+          "x-default": "https://gameplaystop.com"
+        }
       },
       openGraph: {
-        title:  homeData?.title,
+        title: homeData?.title,
         description: homeData?.description,
         type: 'website',
         locale: lang,
@@ -59,18 +74,18 @@ export async function generateMetadata({params}: {params: Promise<{lang: string}
   }
 }
 
-export default async function Home({params}: {params: Promise<{lang: string}>}) {
+export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const t = await getDictionary(lang as Locale);
 
   return (
     <main>
-      <Header t={t} lang={lang as Locale}/>
+      <Header t={t} lang={lang as Locale} />
       <Hero t={t} lang={lang as Locale} />
       <HomepageTestimonials />
       <FAQ t={t} />
       <NavigationArrow isHomePage={true} />
-      <Footer t={t}  lang={lang as Locale}/>
+      <Footer t={t} lang={lang as Locale} />
     </main>
   )
 }

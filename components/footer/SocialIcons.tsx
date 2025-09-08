@@ -35,7 +35,7 @@ export default function SocialIcons({ t, websiteData }: SocialIconsProps) {
     const icons: JSX.Element[] = [];
     websiteData.social.forEach((items, index)=>{
       icons.push(
-        <Iconponents key={`${items.name}-${index}`} iconName={items.name} url={items.value} />
+        <Iconponents key={`${items.name || ''}-${index}`} iconName={items.name || ''} url={items.value || ''} />
       )
     })
    

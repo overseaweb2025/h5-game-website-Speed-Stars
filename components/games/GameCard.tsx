@@ -115,11 +115,11 @@ const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false
 
   const handleGameClick = (e: React.MouseEvent) => {
     // 在首页时，直接跳转到游戏详情页面
-    if (isHomepage && game.package?.url && isClient) {
+    if (isHomepage && game?.package?.url && isClient) {
       e.preventDefault()
       
       // 跳转到游戏详情页面
-      window.location.href = `/${lang}/game/${game.name}`
+      window.location.href = `/${lang}/game/${game?.name}`
     }
     // 非首页时使用默认的Link跳转逻辑（跳转到游戏内页）
   }
@@ -129,7 +129,7 @@ const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false
 
 const getHref = () => {
     // 统一跳转到游戏详情页面
-    return `/${lang}/game/${game.name}`
+    return `/${lang}/game/${game?.name}`
 }
 
   return (
@@ -144,10 +144,10 @@ const getHref = () => {
         style={{ width: '100%', height: '100%' }}
       >
         {/* 只有当图片存在且不为空时才显示图片 */}
-        {!imageError && (game.cover || game.image) && (game.cover !== '' && game.image !== '') ? (
+        {!imageError && (game?.cover || game?.image) && (game?.cover !== '' && game?.image !== '') ? (
           <img
-            src={game.cover }
-            alt={game.display_name}
+            src={game?.cover }
+            alt={game?.display_name}
             className={`w-full h-full object-cover transition-all duration-300 group-hover:scale-110 ${
               imageLoaded ? 'opacity-100' : 'opacity-0'
             }`}
@@ -160,7 +160,7 @@ const getHref = () => {
         ) : null}
         
         {/* 占位符 - 当图片不存在、为空字符串、未加载或加载失败时显示 */}
-        {(!imageLoaded || imageError || !(game.cover || game.image) || game.cover === '' || game.image === '') && (
+        {(!imageLoaded || imageError || !(game?.cover || game?.image) || game?.cover === '' || game?.image === '') && (
           <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
             <div className="text-center text-white">
               <div className={`mb-1 ${
@@ -193,7 +193,7 @@ const getHref = () => {
               size === 'horizontal-scroll' ? 'text-xs sm:text-sm' :
               'text-sm'
             }`}>
-              {game.display_name}
+              {game?.display_name}
             </p>
           </div>
         )}
@@ -203,14 +203,14 @@ const getHref = () => {
       </div>
       
       {/* Tag badge - moved outside the overflow-hidden container */}
-      {game.tag && (
+      {game?.tag && (
         <div className={`absolute -top-1 -left-1 px-1.5 py-0.5 text-[10px] font-bold text-white rounded-[4px] shadow-lg z-10 ${
-          game.tag === 'Hot' ? 'bg-red-500' : 
-          game.tag === 'New' ? 'bg-purple-500' : 
-          game.tag === 'Updated' ? 'bg-blue-500' :
+          game?.tag === 'Hot' ? 'bg-red-500' : 
+          game?.tag === 'New' ? 'bg-purple-500' : 
+          game?.tag === 'Updated' ? 'bg-blue-500' :
           'bg-orange-500'
         }`}>
-          {game.tag}
+          {game?.tag}
         </div>
       )}
     </Link>
