@@ -1,4 +1,5 @@
 import { logger } from "./logger"
+import { getCanonicalDomain } from "@/lib/seo-utils"
 
 // 测试特定URL的状态
 async function testUrl(url: string) {
@@ -16,7 +17,7 @@ async function testUrl(url: string) {
 
 // 测试主函数
 async function main() {
-  const baseUrl = "https://speed-stars.net"
+  const baseUrl = getCanonicalDomain()
 
   // 测试几个关键URL
   await testUrl(`${baseUrl}/`)

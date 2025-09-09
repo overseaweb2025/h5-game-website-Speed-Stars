@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next"
 import { fetchHomeGameData } from "@/lib/server-api"
 import { getSupportedLocales, getLocalizedPath } from "@/lib/lang/utils"
+import { getCanonicalDomain } from "@/lib/seo-utils"
 
 // Fetch game data from API
 async function getGamesList() {
@@ -73,7 +74,7 @@ async function getGameCategories() {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://speed-stars.net"
+  const baseUrl = getCanonicalDomain()
   const currentDate = new Date()
   const supportedLocales = getSupportedLocales()
   const games = await getGamesList()

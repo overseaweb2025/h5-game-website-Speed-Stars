@@ -5,10 +5,11 @@ import fetch from "node-fetch"
 import { SitemapStream, streamToPromise } from "sitemap"
 import { Readable } from "stream"
 import { createGzip } from "zlib"
+import { getCanonicalDomain } from "@/lib/seo-utils"
 
 // 配置项
 const CONFIG = {
-  baseUrl: "https://speed-stars.net",
+  baseUrl: getCanonicalDomain(),
   outputPath: path.join(process.cwd(), "public"),
   maxDepth: 5, // 最大爬取深度
   concurrency: 5, // 并发请求数
@@ -185,7 +186,7 @@ async function generateSitemap(): Promise<void> {
     .filter(([, { status }]) => status === 200)
     .map(([url, { lastModified }]) => ({
       url,
-      lastmod: lastModified ? new Date(lastModified).toISOString() : new Date().toISOString(),
+      lastmod: new Date().toISOString(),
       changefreq: getChangefreq(url),
       priority: getPriority(url),
     }))

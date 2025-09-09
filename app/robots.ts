@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next"
+import { getCanonicalDomain } from "@/lib/seo-utils"
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://speed-stars.net"
+  const baseUrl = getCanonicalDomain()
 
   return {
     rules: [

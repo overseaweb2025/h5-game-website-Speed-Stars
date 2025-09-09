@@ -37,7 +37,7 @@ const getWebsiteStructuredData = () => {
         "@type": "ContactPoint",
         telephone: "+16070231235",
         contactType: "customer service",
-        email: "support@speed-stars.net",
+        email: `support@${domain}`,
       },
       address: {
         "@type": "PostalAddress",
