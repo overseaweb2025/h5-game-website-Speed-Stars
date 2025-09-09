@@ -302,12 +302,12 @@ export default function Testimonials({ gameSlug, reviews, t, isHomepage = false 
         <section id="testimonials" className="pb-3 md:pb-7 pt-8 md:pt-12 bg-gray-900/50 rounded-3xl">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-8">
-                    <p className="text-4xl md:text-5xl font-black text-white mb-4 pop-in text-shadow-lg">
+                    <h2 className="text-4xl md:text-5xl font-black text-white mb-4 pop-in text-shadow-lg">
                         {t?.testimonials?.whatPlayersSay || "What Players Say"}
-                    </p>
-                    <p className="text-xl text-gray-200 max-w-2xl mx-auto font-semibold">
+                    </h2>
+                    <h4 className="text-xl text-gray-200 max-w-2xl mx-auto font-semibold">
                         {t?.testimonials?.dontJustTakeOurWord || "Don't just take our word for it - hear from our happy players!"}
-                    </p>
+                    </h4>
                 </div>
 
                 <div style={{ margin: '0 30px' }}> {/* 保持这个外边距 div */}

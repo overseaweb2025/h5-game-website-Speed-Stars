@@ -11,7 +11,7 @@ interface CategoryPageClientProps {
 }
 
 export default function CategoryPageClient({ category, t ,games}: CategoryPageClientProps) {
-  const decodedCategory = decodeURIComponent(category)
+  const decodedCategory = category
   const [seoData, setSeoData] = useState<CategorySEO | null>(null)
   
   return (

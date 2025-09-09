@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
   const canonicalUrl = `${domain}/${lang}`
 
-  console.log(canonicalUrl)
+  // console.log(canonicalUrl)
   try {
     // Fetch home game data for SEO metadata
     const res = await getGameHome(lang)

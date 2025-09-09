@@ -144,23 +144,18 @@ const getHref = () => {
         style={{ width: '100%', height: '100%' }}
       >
         {/* 只有当图片存在且不为空时才显示图片 */}
-        {!imageError && (game?.cover || game?.image) && (game?.cover !== '' && game?.image !== '') ? (
+        {(game?.cover || game?.image) && (game?.cover !== '' && game?.image !== '') ? (
           <img
             src={game?.cover }
             alt={game?.display_name}
             className={`w-full h-full object-cover transition-all duration-300 group-hover:scale-110 ${
-              imageLoaded ? 'opacity-100' : 'opacity-0'
+              (game?.cover || game?.image) && (game?.cover !== '' && game?.image !== '') ? 'opacity-100' : 'opacity-0'
             }`}
-            onLoad={() => setImageLoaded(true)}
-            onError={() => {
-              setImageError(true)
-              setImageLoaded(false)
-            }}
           />
         ) : null}
         
         {/* 占位符 - 当图片不存在、为空字符串、未加载或加载失败时显示 */}
-        {(!imageLoaded || imageError || !(game?.cover || game?.image) || game?.cover === '' || game?.image === '') && (
+        {(!(game?.cover || game?.image) || game?.cover === '' || game?.image === '') && (
           <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
             <div className="text-center text-white">
               <div className={`mb-1 ${
