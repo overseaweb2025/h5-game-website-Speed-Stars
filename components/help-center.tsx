@@ -1,11 +1,14 @@
 import Link from "next/link"
 import { ExternalLink, CheckCircle, AlertTriangle, Zap, Cpu, Wrench } from "lucide-react"
+import { getCanonicalDomain } from "@/lib/seo-utils"
 
 interface HelpCenterProps {
   t?: any;
 }
 
 export default function HelpCenter({ t }: HelpCenterProps = {}) {
+const domain = getCanonicalDomain()
+
   return (
     <section id="help-center" className="py-8 md:py-12 bg-white relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
@@ -35,12 +38,12 @@ export default function HelpCenter({ t }: HelpCenterProps = {}) {
             <span className="font-bold text-secondary">free</span> using{" "}
             <span className="font-bold text-primary">Speed Stars</span>' official tools at{" "}
             <Link
-              href="https://speed-stars.net"
+              href={domain}
               className="text-accent-3 font-bold hover:underline flex items-center inline-flex"
               target="_blank"
               rel="noopener noreferrer"
             >
-              speed-stars.net
+              {domain}
               <ExternalLink className="h-4 w-4 ml-1" />
             </Link>
             .
