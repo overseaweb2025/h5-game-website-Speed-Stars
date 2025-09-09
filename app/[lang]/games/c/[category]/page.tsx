@@ -3,7 +3,9 @@ import { Metadata } from "next";
 import { getDictionary } from "@/lib/lang/i18n";
 import CategoryPageClient from './CategoryPageClient';
 import { Locale, localesArrary } from "@/lib/lang/dictionaraies";
-import { getClassNameGames, getGameList } from "@/app/api/game/index";
+import { getClassNameGames, getGameHome, getGameList } from "@/app/api/game/index";
+import { decodeWithDashSpaceReversible } from "@/utils/utils"
+
 
 // 验证分类 slug 是否有效
 function isValidCategorySlug(slug: string): boolean {
@@ -26,11 +28,37 @@ function isValidCategorySlug(slug: string): boolean {
   return true;
 }
 
+
+
 // 为页面组件和 generateMetadata 定义明确的参数类型
-interface CategoryPageProps {
-  params: {
-    lang: Locale;
-    category: string;
+export async function generateMetadata({ params }: any): Promise<Metadata> {
+  const { category, lang } = await params
+  // const res = await getGameHome(lang)
+  const res: any = await getClassNameGames(category, lang);
+
+  const dataTDK = {
+    title: res.data.category.page_title,
+    description: res.data.category.page_description,
+    keywords: res.data.category.page_keywords.split(","),
+  }
+
+  return {
+    title: dataTDK.title,
+    description: dataTDK.description,
+    keywords: dataTDK.keywords,
+    // 可选：当接口缺失关键内容时，临时 noindex
+    robots: (!dataTDK || !dataTDK.title || !dataTDK.description) ? { index: false, follow: true } : { index: true, follow: true },
+    // 也可以顺带填充 openGraph/twitter，避免重复写：
+    openGraph: {
+      title: dataTDK.title,
+      description: dataTDK.description,
+      type: "website",
+    },
+    twitter: {
+      card: "summary",
+      title: dataTDK.title,
+      description: dataTDK.description,
+    },
   };
 }
 
@@ -48,7 +76,6 @@ export async function generateStaticParams() {
 // 页面组件，负责在服务器端获取数据并传递给客户端组件
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { category, lang } = params;
-
   // 验证分类是否有效
   if (!isValidCategorySlug(category)) {
     // 返回404或重定向到游戏列表页面
@@ -62,9 +89,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     // 优化点：在页面组件内部获取数据
     const res = await getClassNameGames(category, lang);
     const gamelist = res.data.data;
+    // console.log(gamelist)
     return (
       <CategoryPageClient 
-        category={category} 
+        category={decodeWithDashSpaceReversible(category)} 
         t={t} 
         games={gamelist} 
       />
@@ -75,7 +103,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       console.warn(`Rate limited for category ${category}, returning empty games list`);
       return (
         <CategoryPageClient 
-          category={category} 
+          category={decodeWithDashSpaceReversible(category)} 
           t={t} 
           games={[]} 
         />

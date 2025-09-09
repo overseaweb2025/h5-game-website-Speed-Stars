@@ -11,6 +11,17 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import FullscreenGameModal from "@/components/home/FullscreenGaameModal" // 1. Import the modal component
 import GamePage from "./GamePage"
 
+function shiftHeadingLevels(html: string): string {
+  // 从 h5 到 h1 依次替换，避免 <h1> 先被替换成 <h2> 再被误替换成 <h3>
+  for (let level = 5; level >= 1; level--) {
+    const next = level + 1;
+    const openTag = new RegExp(`<h${level}([^>]*)>`, "gi");
+    const closeTag = new RegExp(`</h${level}>`, "gi");
+    html = html.replace(openTag, `<h${next}$1>`).replace(closeTag, `</h${next}>`);
+  }
+  return html;
+}
+
 interface MobileLayoutProps {
   t: any
   game?: game
@@ -161,7 +172,7 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
               <div className="w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mb-4"></div>
-                  <h3 className="text-2xl font-black text-text mb-2">{t?.hero?.loadingGame || "Loading Game..."}</h3>
+                  <p className="text-2xl font-black text-text mb-2">{t?.hero?.loadingGame || "Loading Game..."}</p>
                   <p className="text-text/80">{t?.hero?.pleaseWait || "Please wait..."}</p>
                 </div>
               </div>
@@ -169,7 +180,7 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
               <div className="w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-6xl mb-4">🎮</div>
-                  <h3 className="text-3xl font-black text-text mb-2">{t?.hero?.comingSoon || "Coming Soon!"}</h3>
+                  <p className="text-3xl font-black text-text mb-2">{t?.hero?.comingSoon || "Coming Soon!"}</p>
                   <p className="text-text/80 text-lg">{t?.hero?.awesomeGameAvailableSoon || "This awesome game will be available soon."}</p>
                 </div>
               </div>
@@ -248,7 +259,7 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
         isOpen={isGameModalOpen}
         onClose={() => setIsGameModalOpen(false)}
       />
-      <GamePage description={gameDetails.introduce} />
+      <GamePage description={shiftHeadingLevels(gameDetails.introduce)} />
     </div>
   )
 }

@@ -67,16 +67,11 @@ export default function FAQ({ t }: FAQProps = {}) {
                 aria-controls={`faq-answer-${index}`}
               >
                 <span itemProp="name">{faq.question}</span>
-                {openIndex === index ? (
-                  <ChevronUp className="h-5 w-5 text-primary" />
-                ) : (
-                  <ChevronDown className="h-5 w-5 text-gray-300" />
-                )}
               </button>
 
               <div
                 id={`faq-answer-${index}`}
-                className={`mt-2 text-gray-200 ${openIndex === index ? "block" : "hidden"}`}
+                className={`mt-2 text-gray-200 `}
                 itemScope
                 itemProp="acceptedAnswer"
                 itemType="https://schema.org/Answer"
