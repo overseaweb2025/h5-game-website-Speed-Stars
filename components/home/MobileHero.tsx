@@ -10,6 +10,8 @@ import { Game as APIGame, game } from "@/app/api/types/Get/game"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Locale } from "@/lib/lang/dictionaraies"
 import FullscreenGameModal from "./FullscreenGaameModal" // Import the new component
+import { replaceHeadingsWithP } from "@/utils/utils"
+
 
 interface MobileHeroProps {
   homeData?: any
@@ -82,7 +84,7 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
           <div className="col-span-2">
             <div className="bg-gray-900 border border-gray-700 rounded-[9px] px-4 py-3 shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-shadow duration-300 flex items-center justify-between h-[73px]">
               <div className="text-left flex-1">
-                <h2 
+                <p 
                   className="text-base font-black text-white leading-tight cursor-pointer hover:text-blue-400 transition-colors"
                   style={{
                     display: '-webkit-box',
@@ -99,7 +101,7 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
                   title={homeData?.title || heroData.title.main}
                 >
                   {homeData?.title || heroData.title.main}
-                </h2>
+                </p>
                 <p className="text-xs text-gray-400 mt-1">
                   {t?.hero?.category || "分类名"}: {homeData?.game?.category || "Games"}
                 </p>
@@ -189,13 +191,12 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
               <div 
                 className="prose prose-lg max-w-none text-text/80 leading-relaxed [&>h1]:text-text [&>h2]:text-text [&>h3]:text-text [&>h4]:text-text [&>h5]:text-text [&>h6]:text-text [&>p]:text-text/80 [&>ul]:text-text/80 [&>ol]:text-text/80 [&>li]:text-text/80 [&>a]:text-primary [&>a]:hover:text-primary/80 [&>strong]:text-text [&>b]:text-text"
                 dangerouslySetInnerHTML={{
-                  __html: homeData.page_content.About
+                  __html: replaceHeadingsWithP(homeData.page_content.About)
                 }}
               />
             </div>
           </div>
         )}
-        
       </div>
       
       {/* 标题弹窗 */}

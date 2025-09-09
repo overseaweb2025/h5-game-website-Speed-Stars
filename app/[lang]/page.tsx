@@ -83,7 +83,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <Header t={t} lang={lang as Locale} />
       <Hero t={t} lang={lang as Locale} />
       <HomepageTestimonials />
-      <FAQ t={t} />
+      {/* <FAQ t={t} /> */}
       <NavigationArrow isHomePage={true} />
       <Footer t={t} lang={lang as Locale} />
     </main>
