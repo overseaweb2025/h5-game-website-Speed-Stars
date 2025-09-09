@@ -2,18 +2,16 @@ import type { MetadataRoute } from "next"
 import { fetchHomeGameData } from "@/lib/server-api"
 import { getSupportedLocales, getLocalizedPath } from "@/lib/lang/utils"
 import { getCanonicalDomain } from "@/lib/seo-utils"
-import { getGameList } from "@/app/api/game/index";
 
 // Fetch game data from API
 async function getGamesList() {
   try {
-    const data = await getGameList('en')
-    console.log(data)
-    if (data?.data.length) {
+    const homeData = await fetchHomeGameData()
+    if (homeData?.data?.data) {
       const games: Array<{ name: string; updated_at?: string; category?: string }> = []
       
       // Extract games from categories
-      data.data.forEach((category: any) => {
+      homeData.data.data.forEach((category: any) => {
         if (category.games) {
           category.games.forEach((game: any) => {
             if (game.name && !games.find(g => g.name === game.name)) {
@@ -33,16 +31,17 @@ async function getGamesList() {
     console.warn('Failed to fetch games list for sitemap, using fallback data')
   }
   
-  // return [
-  //   { name: 'speed-stars', category: 'racing' },
-  //   { name: 'speed-stars-2', category: 'racing' },
-  //   { name: 'crazy-cattle-3d', category: 'action' },
-  //   { name: 'puzzle-quest', category: 'puzzle' },
-  //   { name: 'adventure-run', category: 'adventure' },
-  //   { name: 'bubble-pop', category: 'puzzle' },
-  //   { name: 'word-master', category: 'puzzle' },
-  //   { name: 'space-shooter', category: 'action' }
-  // ]
+  // Fallback games if API fails
+  return [
+    { name: 'speed-stars', category: 'racing' },
+    { name: 'speed-stars-2', category: 'racing' },
+    { name: 'crazy-cattle-3d', category: 'action' },
+    { name: 'puzzle-quest', category: 'puzzle' },
+    { name: 'adventure-run', category: 'adventure' },
+    { name: 'bubble-pop', category: 'puzzle' },
+    { name: 'word-master', category: 'puzzle' },
+    { name: 'space-shooter', category: 'action' }
+  ]
 }
 
 // Fetch game categories
@@ -63,15 +62,15 @@ async function getGameCategories() {
     console.warn('Failed to fetch categories for sitemap, using fallback data')
   }
   
-  // // Fallback categories
-  // return [
-  //   { slug: 'racing', name: 'Racing' },
-  //   { slug: 'action', name: 'Action' },
-  //   { slug: 'puzzle', name: 'Puzzle' },
-  //   { slug: 'adventure', name: 'Adventure' },
-  //   { slug: 'sports', name: 'Sports' },
-  //   { slug: 'arcade', name: 'Arcade' }
-  // ]
+  // Fallback categories
+  return [
+    { slug: 'racing', name: 'Racing' },
+    { slug: 'action', name: 'Action' },
+    { slug: 'puzzle', name: 'Puzzle' },
+    { slug: 'adventure', name: 'Adventure' },
+    { slug: 'sports', name: 'Sports' },
+    { slug: 'arcade', name: 'Arcade' }
+  ]
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -80,7 +79,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supportedLocales = getSupportedLocales()
   const games = await getGamesList()
   const categories = await getGameCategories()
-  console.log(categories)
+  
   const urls: MetadataRoute.Sitemap = []
 
   // Generate URLs for each supported language
