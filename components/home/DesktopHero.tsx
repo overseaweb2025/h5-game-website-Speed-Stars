@@ -31,7 +31,7 @@ export default function DesktopHero({
   return (
     <div className="w-full">
       {/* 桌面端显示标题 */}
-      <h1 className="hidden lg:block text-5xl md:text-6xl lg:text-7xl text-text font-black mb-4 leading-tight text-center pop-in">
+      <p className="hidden lg:block text-5xl md:text-6xl lg:text-7xl text-text font-black mb-4 leading-tight text-center pop-in">
         {title ? (
           <span className="gradient-text">{title}</span>
         ) : homeData?.title ? (
@@ -42,7 +42,7 @@ export default function DesktopHero({
             <span className="text-accent-2 text-stroke">{heroData.title.subtitle}</span>
           </>
         )}
-      </h1>
+      </p>
 
       {/* Game container with side panels - Desktop layout */}
       <div className="hidden lg:flex justify-center items-start gap-6 xl:gap-3 mb-6 mx-auto max-w-[1980px] w-full px-4">

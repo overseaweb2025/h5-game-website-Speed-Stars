@@ -10,17 +10,7 @@ import GameCard from "../games/GameCard"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import FullscreenGameModal from "@/components/home/FullscreenGaameModal" // 1. Import the modal component
 import GamePage from "./GamePage"
-
-function shiftHeadingLevels(html: string): string {
-  // 从 h5 到 h1 依次替换，避免 <h1> 先被替换成 <h2> 再被误替换成 <h3>
-  for (let level = 5; level >= 1; level--) {
-    const next = level + 1;
-    const openTag = new RegExp(`<h${level}([^>]*)>`, "gi");
-    const closeTag = new RegExp(`</h${level}>`, "gi");
-    html = html.replace(openTag, `<h${next}$1>`).replace(closeTag, `</h${next}>`);
-  }
-  return html;
-}
+import { replaceHeadingsWithP } from "@/utils/utils"
 
 interface MobileLayoutProps {
   t: any
@@ -259,7 +249,7 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
         isOpen={isGameModalOpen}
         onClose={() => setIsGameModalOpen(false)}
       />
-      <GamePage description={shiftHeadingLevels(gameDetails.introduce)} />
+      <GamePage description={replaceHeadingsWithP(gameDetails.introduce)} />
     </div>
   )
 }

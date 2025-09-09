@@ -4,6 +4,8 @@ import type { Metadata } from "next"
 import BlogList from "@/components/blog/BlogList"
 import { getDictionary } from "@/lib/lang/i18n"
 import { Locale,localesArrary } from "@/lib/lang/dictionaraies"
+import { getWebsite } from '@/app/api/website';
+import { websiteUtill } from "@/lib/website/websiteUtill"
 
 
 interface BlogPageProps {
@@ -45,7 +47,9 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
 export default async function BlogPage({params}: {params: Promise<{lang: string}>}) {
   const { lang } = await params;
   const t = await getDictionary(lang as Locale);
-
+  const response = await getWebsite();
+  const data = response.data.data;
+  const siteName = websiteUtill(data,'site-name')
   return (
     <main className="bg-background">
       <Header t={t} lang={lang as Locale} />
@@ -68,10 +72,10 @@ export default async function BlogPage({params}: {params: Promise<{lang: string}
         <div className="container mx-auto container-padding">
           <div className="text-center mb-8 md:mb-12">
             <h1 className="text-3xl md:text-4xl lg:text-6xl font-black mb-4 pop-in text-white">
-              <span className="gradient-text">{t.blog?.officialBlog || "Speed Stars Official Blog"}</span>
+              <span className="gradient-text">{`${siteName} Official Blog`}</span>
             </h1>
             <p className="text-lg md:text-xl lg:text-2xl text-gray-200 max-w-3xl mx-auto">
-              {t.blog?.officialSource || "Your official source for Speed Stars news, game strategies, and the latest in unblocked gaming!"}
+              {`Your official source for ${siteName} news, game strategies, and the latest in unblocked gaming!`}
             </p>
           </div>
 

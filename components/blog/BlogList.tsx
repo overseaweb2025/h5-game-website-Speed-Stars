@@ -81,10 +81,10 @@ export default function BlogList({ t, lang }: BlogListProps) {
                 </h2>
                 <p className="text-gray-200 mb-4 sm:mb-6 text-sm sm:text-base md:text-lg leading-relaxed line-clamp-3">{post.summary}</p>
                 <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs sm:text-sm text-gray-300 mb-3 sm:mb-6">
-                  <div className="flex items-center">
+                  {/* <div className="flex items-center">
                     <CalendarDays className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-1.5 text-secondary" />
                     <span className="text-xs sm:text-sm">{new Date().toLocaleDateString()}</span>
-                  </div>
+                  </div> */}
                 </div>
                 <Link
                   href={`/${lang}/blog/${post.name}`}

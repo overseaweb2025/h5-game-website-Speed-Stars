@@ -655,3 +655,15 @@ textarea:focus {
     transform: translateX(-8px);
   }
 }
+
+.prose {
+  a {
+    color: inherit !important;
+  }
+  p {
+    color: #fff !important;
+  }
+  strong {
+    color: inherit !important;
+  }
+}
