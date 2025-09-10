@@ -60,7 +60,7 @@ const LawPage = async ({ params }: { params: { lang: Locale; law: string } }) =>
     console.log('Law page params:', { lang, law, decodedLaw });
     
     // 通过获取 api 接口数据进行强制渲染 getLawPageValue(law)
-    const res = await getLawPageValue(decodedLaw);
+    const res = await getLawPageValue(decodedLaw, lang);
     let htmlCode = res.data.data.content;
 
     if (!htmlCode) {

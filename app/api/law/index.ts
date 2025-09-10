@@ -4,12 +4,13 @@ import api from ".."
 import { ApiResponse } from "../types"
 import { public_writing } from "../types/Get/public_writing"
 
-export const getLawPageValue = async (law:string)=>{
+export const getLawPageValue = async (law:string, lang: string)=>{
     try {
         console.log('Requesting law page with parameter:', law);
         const response = await api.get<ApiResponse<public_writing>>('/api/v1/page',{
             params:{
-                name:law
+                name:law,
+                lang
             }
         });
         console.log('Law page API response:', response.data);
