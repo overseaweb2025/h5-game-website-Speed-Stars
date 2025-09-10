@@ -12,7 +12,16 @@ const HOME_CACHE_EXPIRY_TIME = 5 * 60 * 1000 // 5分钟
 
 // 🛠️ 检查首页缓存是否过期
 function isHomeCacheExpired(): boolean {
-  return true
+  if (typeof window === 'undefined') return true
+  try {
+    const timestamp = window.localStorage.getItem(TIMESTAMP_KEY)
+    if (!timestamp) return true
+    const lastUpdated = parseInt(timestamp, 10)
+    return Date.now() - lastUpdated > HOME_CACHE_EXPIRY_TIME
+  } catch (error) {
+    console.error('[useHomeLanguage] Failed to check cache expiry:', error)
+    return true
+  }
 }
 
 // 1. 全局状态存储

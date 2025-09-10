@@ -10,7 +10,7 @@ interface CachedWebsiteData {
 }
 
 const CACHE_KEY = 'websiteData';
-const CACHE_DURATION = 1 * 60 * 10 * 1000; // 24 hours in milliseconds
+const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 export function useWebsiteData() {
   const [websiteData, setWebsiteData] = useState<website | null>(null);
