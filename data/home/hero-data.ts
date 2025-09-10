@@ -16,16 +16,16 @@ export interface HeroData {
 
 export const heroData: HeroData = {
   title: {
-    main: "Speed Star unblocked",
-    subtitle: ": Running Game"
+    main: "",
+    subtitle: ""
   },
-  gameIframeSrc: "https://speedstars2.io/game/speed-stars/",
+  gameIframeSrc: "",
   buttons: {
     primary: "Play Online for Free!",
     secondary: "Explore Games"
   },
   description: {
-    main: "Experience the exhilaration of high-stakes sprinting in this free online game.",
-    sub: "Play unblocked on any device with no downloads required!"
+    main: "",
+    sub: ""
   }
 };
