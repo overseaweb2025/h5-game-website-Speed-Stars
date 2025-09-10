@@ -12,14 +12,6 @@ export default function ExternalScripts() {
         crossOrigin="anonymous"
         strategy="afterInteractive"
       />
-
-      {/* Plausible Analytics */}
-      <Script
-        defer
-        data-domain="gamehub-central.net"
-        src="https://plausible.io/js/script.file-downloads.hash.outbound-links.pageview-props.revenue.tagged-events.js"
-        strategy="afterInteractive"
-      />
       
       <Script
         id="plausible-init"
