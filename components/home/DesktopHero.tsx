@@ -32,16 +32,8 @@ export default function DesktopHero({
     <div className="w-full">
       {/* 桌面端显示标题 */}
       <p className="hidden lg:block text-5xl md:text-6xl lg:text-7xl text-text font-black mb-4 leading-tight text-center pop-in">
-        {title ? (
-          <span className="gradient-text">{title}</span>
-        ) : homeData?.title ? (
-          <span className="gradient-text">{homeData.title}</span>
-        ) : (
-          <>
-            <span className="gradient-text">{heroData.title.main}</span>
-            <span className="text-accent-2 text-stroke">{heroData.title.subtitle}</span>
-          </>
-        )}
+        <span className="gradient-text">{title || ''}</span>
+        <span className="gradient-text">{homeData?.title}</span>
       </p>
 
       {/* Game container with side panels - Desktop layout */}
