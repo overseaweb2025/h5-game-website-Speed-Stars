@@ -656,14 +656,19 @@ textarea:focus {
   }
 }
 
-.prose {
+.content_warp {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  strong,
+  li {
+    color: #fff !important
+  }
   a {
-    color: inherit !important;
-  }
-  p {
-    color: #fff !important;
-  }
-  strong {
-    color: inherit !important;
+    color: #a98ddb !important
   }
 }

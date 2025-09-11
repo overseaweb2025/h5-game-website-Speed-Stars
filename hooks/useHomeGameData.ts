@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import homeDataManager, { HomeDataStore } from '@/lib/home-data-store'
-import { HomeGameData } from '@/app/api/types/Get/game'
+import { Locale } from '@/lib/lang/dictionaraies'
 
-export const useHomeGameData = () => {
+export const useHomeGameData = (lang: Locale) => {
   const [store, setStore] = useState<HomeDataStore>(homeDataManager.getState())
 
   useEffect(() => {
@@ -14,32 +14,35 @@ export const useHomeGameData = () => {
     })
 
     // 预加载数据（如果缓存无效）
-    homeDataManager.preloadData()
+    if (lang) {
+      homeDataManager.preloadData(lang)
+    }
 
     return unsubscribe
-  }, [])
+  }, [lang])
 
   // 手动刷新数据
   const refreshData = async () => {
-    return await homeDataManager.fetchHomeData()
+    if (!lang) return null
+    return await homeDataManager.fetchHomeData(lang)
   }
 
   // 清除缓存
-  const clearCache = () => {
-    homeDataManager.clearCache()
+  const clearCache = (specificLang?: Locale) => {
+    homeDataManager.clearCache(specificLang || lang)
   }
 
-  const homeData = store.data
-  const seoData = homeDataManager.getSEOData()
+  const homeData = store.data[lang]?.data || null
+  const seoData = lang ? homeDataManager.getSEOData(lang) : null
 
   return {
     homeData,
     loading: store.isLoading,
     error: store.error,
-    lastFetched: store.lastFetched,
+    lastFetched: store.data[lang]?.lastFetched || null,
     
     // 便捷的获取方法
-    gameUrl: homeDataManager.getGameUrl(),
+    gameUrl: lang ? homeDataManager.getGameUrl(lang) : null,
     pageTitle: seoData?.title,
     pageDescription: seoData?.description,
     pageKeywords: seoData?.keywords,

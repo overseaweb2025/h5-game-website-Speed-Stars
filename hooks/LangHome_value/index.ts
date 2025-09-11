@@ -141,21 +141,23 @@ export const useHomeLanguage = () => {
     clearAllData()
   }, [])
 
-  const autoGetHomeData = useCallback((force: boolean = true, lang: Locale = 'en') => {
-    // 检查缓存是否过期
-    const cacheExpired = isHomeCacheExpired()
-    
-    // 当force为true且缓存未过期时，检查数据是否已存在
-    if (force && !cacheExpired && globalHomeState && globalHomeState[lang]) {
-      console.log(`[useHomeLanguage] Home data for ${lang} already exists and cache is valid, skipping fetch`)
-      return Promise.resolve()
+  const autoGetHomeData = useCallback((lang: Locale, force: boolean = false) => {
+    const cacheExpired = isHomeCacheExpired();
+    const dataExists = globalHomeState && globalHomeState[lang];
+
+    // 如果不强制刷新，并且数据存在且缓存有效，则跳过
+    if (!force && dataExists && !cacheExpired) {
+      console.log(`[useHomeLanguage] Home data for ${lang} exists and cache is valid, skipping fetch.`);
+      return Promise.resolve();
     }
 
-    // 如果缓存过期或没有数据，则获取数据
-    if (cacheExpired) {
-      console.log(`[useHomeLanguage] Home cache expired, fetching fresh data for ${lang}`)
-    } else {
-      console.log(`[useHomeLanguage] Fetching home data for ${lang}${!force ? ' (forced fetch)' : ''}`)
+    // 打印获取数据的原因
+    if (force) {
+      console.log(`[useHomeLanguage] Force fetching home data for ${lang}.`);
+    } else if (!dataExists) {
+      console.log(`[useHomeLanguage] No home data for ${lang}, fetching.`);
+    } else if (cacheExpired) {
+      console.log(`[useHomeLanguage] Home cache expired, fetching fresh data for ${lang}.`);
     }
     
     return getGameHome(lang).then(res => {

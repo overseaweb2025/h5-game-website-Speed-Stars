@@ -11,13 +11,13 @@ export default function ContentSections({ homeData }: ContentSectionsProps) {
   return (
     <div>
       {/* Features section */}
-      {homeData.page_content.Features && (
-        <div className="mt-6 mb-6">
+      {homeData.page_content.game_intro && (
+        <div className="mt-6 mb-6 content_warp">
           <div className="max-w-4xl mx-auto">
             <div 
               className={className}
               dangerouslySetInnerHTML={{
-                __html: homeData.page_content.Features
+                __html: homeData.page_content.game_intro
               }}
             />
           </div>
@@ -26,7 +26,7 @@ export default function ContentSections({ homeData }: ContentSectionsProps) {
 
       {/* About section */}
       {homeData.page_content.About && (
-        <div className="mt-6 mb-6">
+        <div className="mt-6 mb-6 content_warp">
           <div className="max-w-4xl mx-auto">
             <div 
               className={className}
