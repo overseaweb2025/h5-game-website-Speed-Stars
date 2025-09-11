@@ -1,22 +1,26 @@
 "use client"
 
 import { HomeGameData } from '@/app/api/types/Get/game'
+import { Locale } from './lang/dictionaraies'
 
 // 首页数据状态管理器
-interface HomeDataStore {
+interface LanguageCache {
   data: HomeGameData | null
+  lastFetched: number | null
+}
+
+interface HomeDataStore {
+  data: Partial<Record<Locale, LanguageCache>>
   isLoading: boolean
   error: string | null
-  lastFetched: number | null
   cacheExpiry: number // 3分钟缓存
 }
 
 class HomeDataManager {
   private store: HomeDataStore = {
-    data: null,
+    data: {},
     isLoading: false,
     error: null,
-    lastFetched: null,
     cacheExpiry: 3 * 60 * 1000 // 3分钟
   }
 
@@ -46,21 +50,22 @@ class HomeDataManager {
     this.notify()
   }
 
-  // 检查缓存是否有效
-  private isCacheValid(): boolean {
-    if (!this.store.data || !this.store.lastFetched) {
+  // 检查特定语言的缓存是否有效
+  private isCacheValid(lang: Locale): boolean {
+    const langCache = this.store.data[lang]
+    if (!langCache || !langCache.data || !langCache.lastFetched) {
       return false
     }
     
     const now = Date.now()
-    return (now - this.store.lastFetched) < this.store.cacheExpiry
+    return (now - langCache.lastFetched) < this.store.cacheExpiry
   }
 
   // 获取首页数据（带缓存）
-  async fetchHomeData(): Promise<HomeGameData | null> {
+  async fetchHomeData(lang: Locale): Promise<HomeGameData | null> {
     // 如果缓存有效，直接返回缓存数据
-    if (this.isCacheValid() && this.store.data) {
-      return this.store.data
+    if (this.isCacheValid(lang)) {
+      return this.store.data[lang]!.data
     }
 
     // 如果正在加载，等待加载完成
@@ -68,7 +73,7 @@ class HomeDataManager {
       return new Promise((resolve) => {
         const checkLoading = () => {
           if (!this.store.isLoading) {
-            resolve(this.store.data)
+            resolve(this.store.data[lang]?.data || null)
           } else {
             setTimeout(checkLoading, 100)
           }
@@ -83,15 +88,20 @@ class HomeDataManager {
     try {
       // 动态导入避免服务端渲染问题
       const { getGameHome } = await import('@/app/api/game')
-      const response = await getGameHome()
+      const response = await getGameHome(lang)
       const homeData = response.data
 
-      // 更新缓存
+      // 更新特定语言的缓存
       this.setState({
-        data: homeData,
+        data: {
+          ...this.store.data,
+          [lang]: {
+            data: homeData,
+            lastFetched: Date.now()
+          }
+        },
         isLoading: false,
         error: null,
-        lastFetched: Date.now()
       })
 
       return homeData
@@ -108,29 +118,35 @@ class HomeDataManager {
   }
 
   // 清除缓存
-  clearCache() {
-    this.setState({
-      data: null,
-      lastFetched: null,
-      error: null
-    })
+  clearCache(lang?: Locale) {
+    if (lang) {
+      const newData = { ...this.store.data }
+      delete newData[lang]
+      this.setState({ data: newData })
+    } else {
+      this.setState({
+        data: {},
+        lastFetched: null,
+        error: null
+      })
+    }
   }
 
   // 预加载数据
-  preloadData() {
-    if (!this.isCacheValid() && !this.store.isLoading) {
-      this.fetchHomeData()
+  preloadData(lang: Locale) {
+    if (!this.isCacheValid(lang) && !this.store.isLoading) {
+      this.fetchHomeData(lang)
     }
   }
 
   // 获取游戏URL
-  getGameUrl(): string | null {
-    return this.store.data?.data?.game?.package?.url || null
+  getGameUrl(lang: Locale): string | null {
+    return this.store.data[lang]?.data?.data?.game?.package?.url || null
   }
 
   // 获取SEO数据
-  getSEOData() {
-    const data = this.store.data?.data
+  getSEOData(lang: Locale) {
+    const data = this.store.data[lang]?.data?.data
     if (!data) return null
 
     return {

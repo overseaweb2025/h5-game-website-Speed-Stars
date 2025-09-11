@@ -22,17 +22,19 @@ export default function HomeHero({ title, description, lang, t }: HomeHeroProps)
   const [speedStarsReviews, setSpeedStarsReviews] = useState<reviews_comment[]>([])
   
   // 使用useLangGameList获取多语言游戏数据
-  const { getLangGames, getLangGamelistBylang, autoGetData } = useLangGameList()
+  const { getLangGames, getLangGamelistBylang, autoGetData: autoGetGameListData } = useLangGameList()
   const allGames = getLangGames(lang)
   
-  // 使用首页语言管理器（只获取数据，不负责获取）
-  const { getHomeInfoByLang } = useHomeLanguage()
+  // 使用首页语言管理器
+  const { getHomeInfoByLang, autoGetHomeData } = useHomeLanguage()
   const homeData = getHomeInfoByLang(lang)
 
   // 初始化游戏数据获取
   useEffect(() => {
-    autoGetData(lang)
-  }, [lang, autoGetData])
+    // 同时获取首页核心数据和游戏列表数据
+    autoGetHomeData(lang)
+    autoGetGameListData(lang)
+  }, [lang, autoGetHomeData, autoGetGameListData])
 
   // 获取随机游戏数据 - 只在allGames首次加载时执行一次
   useEffect(() => {
