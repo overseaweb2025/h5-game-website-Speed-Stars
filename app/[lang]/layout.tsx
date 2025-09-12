@@ -16,11 +16,10 @@ const inter = Inter({ subsets: ["latin"] })
 const getWebsiteStructuredData = () => {
   const domain = getCanonicalDomain()
   return {
-    "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Speed Stars",
+    name: "Free Game",
     url: domain,
-    description: "Speed Stars - Your ultimate destination for free online games. Discover hundreds of games including running, physics, puzzle, and action games. Play now!",
+    description: "Free Game - Your ultimate destination for free online games. Discover hundreds of games including running, physics, puzzle, and action games. Play now!",
     potentialAction: {
       "@type": "SearchAction",
       target: `${domain}/search?q={search_term_string}`,
@@ -28,7 +27,7 @@ const getWebsiteStructuredData = () => {
     },
     publisher: {
       "@type": "Organization",
-      name: "Speed Stars",
+      name: "Free Game",
       url: domain,
       logo: {
         "@type": "ImageObject",
@@ -49,21 +48,15 @@ const getWebsiteStructuredData = () => {
         addressCountry: "US",
       },
     },
-    sameAs: [
-      "https://facebook.com/speedstars",
-      "https://twitter.com/speedstars",
-      "https://instagram.com/speedstars",
-      "https://youtube.com/@speedstars",
-    ],
   }
 }
 
 const getGameStructuredData = () => {
   const domain = getCanonicalDomain()
   return {
-    "@context": "https://schema.org",
+    "@context": "",
     "@type": "VideoGame",
-    name: "Speed Stars Games",
+    name: "Free Games",
     description: "Free online games platform featuring physics, puzzle, action and adventure games",
     url: `${domain}/games`,
     genre: ["Sports", "Racing", "Physics"],
@@ -74,11 +67,10 @@ const getGameStructuredData = () => {
       "@type": "Offer",
       price: "0",
       priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
     },
     publisher: {
       "@type": "Organization",
-      name: "Speed Stars",
+      name: "Free Game",
       url: domain,
       logo: {
         "@type": "ImageObject",

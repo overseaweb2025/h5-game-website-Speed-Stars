@@ -150,9 +150,9 @@ class HomeDataManager {
     if (!data) return null
 
     return {
-      title: data.game?.page_title || data.title || "Speed Stars - Racing Game",
-      description: data.game?.page_description || data.description || "Play Speed Stars racing game online",
-      keywords: data.game?.page_keywords || data.keywords || "speed stars, racing game, online game",
+      title: data.game?.page_title || data.title || "Free Game",
+      description: data.game?.page_description || data.description || "Play Free Game racing game online",
+      keywords: data.game?.page_keywords || data.keywords || "Free Game, racing game, online game",
       category: data.game?.category || "Action",
       aboutContent: data.page_content?.About || ""
     }

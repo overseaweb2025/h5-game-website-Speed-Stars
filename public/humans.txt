@@ -1,6 +1,6 @@
 /* TEAM */
 Developer: Speed Stars Development Team
-Contact: support@speed-stars.net
+Contact: 
 Location: California, USA
 
 /* SITE */
@@ -22,7 +22,7 @@ More games coming soon!
 
 /* CONTACT */
 Website: https://speed-stars.net
-Email: support@speed-stars.net
+Email: 
 Phone: +16070231235
 Address: 36 Central Avenue, California, USA
 

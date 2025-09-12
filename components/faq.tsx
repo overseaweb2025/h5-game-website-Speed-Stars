@@ -51,14 +51,13 @@ export default function FAQ({ t }: FAQProps = {}) {
           <p className="text-gray-200 max-w-2xl mx-auto font-medium">{t?.faq?.findAnswers || "Find answers to common questions about Speed Stars"}</p>
         </div>
 
-        <div className="max-w-3xl mx-auto" itemScope itemType="https://schema.org/FAQPage">
+        <div className="max-w-3xl mx-auto" itemScope >
           {faqs.map((faq, index) => (
             <div
               key={index}
               className="border-b border-gray-600/50 py-3"
               itemScope
               itemProp="mainEntity"
-              itemType="https://schema.org/Question"
             >
               <button
                 className="flex justify-between items-center w-full text-left font-bold text-lg text-white"
@@ -74,7 +73,6 @@ export default function FAQ({ t }: FAQProps = {}) {
                 className={`mt-2 text-gray-200 `}
                 itemScope
                 itemProp="acceptedAnswer"
-                itemType="https://schema.org/Answer"
               >
                 <p itemProp="text">{faq.answer}</p>
               </div>

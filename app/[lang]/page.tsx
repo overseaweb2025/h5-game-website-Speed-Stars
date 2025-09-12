@@ -30,46 +30,37 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const canonicalUrl = `${domain}/${lang}`
 
   // console.log(canonicalUrl)
-  try {
-    // Fetch home game data for SEO metadata
-    const res = await getGameHome(lang)
-    const homeData = res.data.data
-    return {
-      title: homeData.title,
-      description: homeData?.description,
-      keywords: homeData?.keywords,
-      alternates: {
-        canonical: canonicalUrl,
-        languages: {
-          en: domain,
-          zh: `${domain}/zh`,
-          ru: `${domain}/ru`,
-          es: `${domain}/es`,
-          hi: `${domain}/hi`,
-          fr: `${domain}/fr`,
-          ja: `${domain}/ja`,
-          ko: `${domain}/ko`,
-          "x-default": domain
-        }
-      },
-      openGraph: {
-        title: homeData?.title,
-        description: homeData?.description,
-        type: 'website',
-        locale: lang,
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title: homeData?.title,
-        description: homeData?.description,
+  // Fetch home game data for SEO metadata
+  const res = await getGameHome(lang)
+  const homeData = res.data.data
+  return {
+    title: homeData.title || 'Free Game',
+    description: homeData?.description || 'Free Game',
+    keywords: homeData?.keywords || 'Free Game',
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        en: domain,
+        zh: `${domain}/zh`,
+        ru: `${domain}/ru`,
+        es: `${domain}/es`,
+        hi: `${domain}/hi`,
+        fr: `${domain}/fr`,
+        ja: `${domain}/ja`,
+        ko: `${domain}/ko`,
+        "x-default": domain
       }
-    }
-  } catch (error) {
-    // Fallback metadata if API fails
-    return {
-      title: "Speed Stars - Racing Game",
-      description: "Play Speed Stars racing game online",
-      keywords: "speed stars, racing game, online game"
+    },
+    openGraph: {
+      title: homeData?.title,
+      description: homeData?.description,
+      type: 'website',
+      locale: lang,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: homeData?.title,
+      description: homeData?.description,
     }
   }
 }

@@ -41,9 +41,9 @@ export async function generateMetadata({params}: {params: Promise<{lang: Locale,
     const homeData = res.data.data
 
     return {
-      title: homeData.page_title || "Speed Stars - Racing Game",
-      description: homeData.page_description || "Play Speed Stars racing game online",
-      keywords: homeData.page_keywords || "speed stars, racing game, online game",
+      title: homeData.page_title || "Free Game",
+      description: homeData.page_description || "Play Free Game racing game online",
+      keywords: homeData.page_keywords || "free Game, racing game, online game",
       alternates: {
         canonical: canonicalUrl,
       },
@@ -62,9 +62,9 @@ export async function generateMetadata({params}: {params: Promise<{lang: Locale,
   } catch (error) {
     // Fallback metadata if API fails
     return {
-      title: "Speed Stars - Racing Game",
-      description: "Play Speed Stars racing game online",
-      keywords: "speed stars, racing game, online game",
+      title: "Free Game",
+      description: "Play free Game racing game online",
+      keywords: "free game, racing game, online game",
       alternates: {
         canonical: canonicalUrl,
       },

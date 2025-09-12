@@ -69,9 +69,9 @@ const CommentCard = ({ testimonial, t }: CommentCardProps) => (
     <div
         className="bg-gray-800/80 backdrop-blur-sm border-2 border-gray-700/50 p-4 md:p-6 flex flex-col rounded-[9px] hover:border-purple-500/50 transition-all m-0"
         itemScope
-        itemType="https://schema.org/Review"
+        
     >
-        <div itemProp="itemReviewed" itemScope itemType="https://schema.org/Game">
+        <div itemProp="itemReviewed" itemScope >
             <meta itemProp="name" content={testimonial.game || "Speed Stars Game Collection"} />
             <meta itemProp="applicationCategory" content="Game" />
         </div>
@@ -83,7 +83,7 @@ const CommentCard = ({ testimonial, t }: CommentCardProps) => (
             >
                 {getInitials(testimonial.name)}
             </div>
-            <div itemProp="author" itemScope itemType="https://schema.org/Person">
+            <div itemProp="author" itemScope >
                 <h3 className="font-black text-base md:text-lg text-white" itemProp="name">
                     {testimonial.name}
                 </h3>
@@ -94,7 +94,7 @@ const CommentCard = ({ testimonial, t }: CommentCardProps) => (
             </div>
         </div>
 
-        <div className="flex mb-3" itemProp="reviewRating" itemScope itemType="https://schema.org/Rating">
+        <div className="flex mb-3" itemProp="reviewRating" itemScope >
             {[...Array(5)].map((_, i) => (
                 <Star
                     key={i}
@@ -128,9 +128,9 @@ const MoreCommentCard = ({ testimonial, t, indexOffset = 0 }: CommentCardProps &
         // className={`bg-gray-800/80 backdrop-blur-sm border-2 border-gray-700/50 p-4 md:p-5 flex-shrink-0 w-[calc(100vw-2.5rem)] max-w-[280px] md:w-auto flex flex-col rounded-2xl hover:border-purple-500/50 transition-all snap-start ${!isHomepage ? 'pop-in hover:shadow-cartoon-lg hover:-rotate-1' : ''}`}
         // style={{ animationDelay: `${(indexOffset) * 0.1}s` }}
         itemScope
-        itemType="https://schema.org/Review"
+        
     >
-        <div itemProp="itemReviewed" itemScope itemType="https://schema.org/Game">
+        <div itemProp="itemReviewed" itemScope >
             <meta itemProp="name" content={testimonial.game || "Speed Stars Game Collection"} />
             <meta itemProp="applicationCategory" content="Game" />
         </div>
@@ -142,7 +142,7 @@ const MoreCommentCard = ({ testimonial, t, indexOffset = 0 }: CommentCardProps &
             >
                 {getInitials(testimonial.name)}
             </div>
-            <div itemProp="author" itemScope itemType="https://schema.org/Person">
+            <div itemProp="author" itemScope >
                 <h3 className="font-bold text-base text-white" itemProp="name">
                     {testimonial.name}
                 </h3>
@@ -163,7 +163,7 @@ const MoreCommentCard = ({ testimonial, t, indexOffset = 0 }: CommentCardProps &
             </div>
         </div>
 
-        <div itemProp="reviewRating" itemScope itemType="https://schema.org/Rating">
+        <div itemProp="reviewRating" itemScope >
             <meta itemProp="ratingValue" content={testimonial.rating.toString()} />
             <meta itemProp="bestRating" content="5" />
         </div>
@@ -349,9 +349,9 @@ export default function Testimonials({ gameSlug, reviews, t, isHomepage = false 
                                         className="bg-gray-800/80 backdrop-blur-sm border-2 border-gray-700/50 p-4 md:p-6 flex flex-col pop-in hover:shadow-cartoon-lg transition-all hover:rotate-1 rounded-[9px] hover:border-purple-500/50 m-0"
                                         style={{ animationDelay: `${index * 0.1}s` }}
                                         itemScope
-                                        itemType="https://schema.org/Review"
+                                        
                                     >
-                                        <div itemProp="itemReviewed" itemScope itemType="https://schema.org/Game">
+                                        <div itemProp="itemReviewed" itemScope >
                                             <meta itemProp="name" content={testimonial.game || "Speed Stars Game Collection"} />
                                             <meta itemProp="applicationCategory" content="Game" />
                                         </div>
@@ -363,7 +363,7 @@ export default function Testimonials({ gameSlug, reviews, t, isHomepage = false 
                                             >
                                                 {getInitials(testimonial.name)}
                                             </div>
-                                            <div itemProp="author" itemScope itemType="https://schema.org/Person">
+                                            <div itemProp="author" itemScope >
                                                 <h3 className="font-black text-base md:text-lg text-white" itemProp="name">
                                                     {testimonial.name}
                                                 </h3>
@@ -373,7 +373,7 @@ export default function Testimonials({ gameSlug, reviews, t, isHomepage = false 
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className="flex mb-3" itemProp="reviewRating" itemScope itemType="https://schema.org/Rating">
+                                        <div className="flex mb-3" itemProp="reviewRating" itemScope >
                                             {[...Array(5)].map((_, i) => (
                                                 <Star
                                                     key={i}
@@ -404,9 +404,9 @@ export default function Testimonials({ gameSlug, reviews, t, isHomepage = false 
                                         className="bg-gray-800/80 backdrop-blur-sm border-2 border-gray-700/50 p-4 md:p-5 flex-shrink-0 w-[calc(100vw-2.5rem)] max-w-[280px] md:w-auto flex flex-col pop-in hover:shadow-cartoon-lg transition-all hover:-rotate-1 snap-start rounded-[9px] hover:border-purple-500/50 m-0"
                                         style={{ animationDelay: `${(index + 4) * 0.1}s` }}
                                         itemScope
-                                        itemType="https://schema.org/Review"
+                                        
                                     >
-                                        <div itemProp="itemReviewed" itemScope itemType="https://schema.org/Game">
+                                        <div itemProp="itemReviewed" itemScope >
                                             <meta itemProp="name" content={testimonial.game || "Speed Stars Game Collection"} />
                                             <meta itemProp="applicationCategory" content="Game" />
                                         </div>
@@ -418,7 +418,7 @@ export default function Testimonials({ gameSlug, reviews, t, isHomepage = false 
                                             >
                                                 {getInitials(testimonial.name)}
                                             </div>
-                                            <div itemProp="author" itemScope itemType="https://schema.org/Person">
+                                            <div itemProp="author" itemScope >
                                                 <h3 className="font-bold text-base text-white" itemProp="name">
                                                     {testimonial.name}
                                                 </h3>
@@ -438,7 +438,7 @@ export default function Testimonials({ gameSlug, reviews, t, isHomepage = false 
                                                 </div>
                                             </div>
                                         </div>
-                                        <div itemProp="reviewRating" itemScope itemType="https://schema.org/Rating">
+                                        <div itemProp="reviewRating" itemScope >
                                             <meta itemProp="ratingValue" content={testimonial.rating.toString()} />
                                             <meta itemProp="bestRating" content="5" />
                                         </div>
