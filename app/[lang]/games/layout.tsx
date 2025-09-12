@@ -3,35 +3,37 @@ import { getGamesCanonicalUrl } from "@/lib/seo-utils"
 import { getDictionary } from "@/lib/lang/i18n"
 import GamesLayoutClient from "./GamesLayoutClient"
 import { Locale } from "@/lib/lang/dictionaraies"
+import { getGameHome } from "@/app/api/game"
+
 interface PropMetadata {
   params: {
     lang: Locale;
   };
 }
-export async function generateMetadata({params }:PropMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: PropMetadata): Promise<Metadata> {
   const { lang } = params; // 从 params 中解构 lang
   const canonicalUrl = `${process.env.CANONICAL_DOMAIN}/${lang}/games`
 
   const t = await getDictionary(lang as Locale);
-
-
+  const res = await getGameHome(lang)
+  const homeData = res.data.data
   return {
-    title: t.games.title,
-    description:t.games.description ,
-    keywords: t.games.keywords,
+    title: homeData.title,
+    description: homeData?.description,
+    keywords: homeData?.keywords,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: "Free Online Games - Speed Stars",
-      description: "Play hundreds of free online games including action, puzzle, sports, and racing games. No downloads required, play instantly in your browser!",
+      title: homeData?.title,
+      description: homeData?.description,
       type: 'website',
       url: canonicalUrl,
     },
     twitter: {
       card: 'summary_large_image',
-      title: "Free Online Games - Speed Stars",
-      description: "Play hundreds of free online games including action, puzzle, sports, and racing games. No downloads required, play instantly in your browser!",
+      title: homeData?.title,
+      description: homeData?.description,
     }
   }
 }
