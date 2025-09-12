@@ -85,7 +85,7 @@ export default function DiagnosticTool({ t }: DiagnosticToolProps = {}) {
         status: "warning",
         message: t?.diagnostic?.networkRestrictionDetected || "Network Restriction Detected",
         solution:
-          "Your network may be blocking game resources. Try using mobile data (4G/5G) instead, or use Speed Stars Proxy service to bypass restrictions.",
+          "Your network may be blocking game resources. Try using mobile data (4G/5G) instead, or use  Proxy service to bypass restrictions.",
       })
     } else if (userAnswers.error === "Game is very slow/laggy") {
       setResult({
@@ -104,7 +104,7 @@ export default function DiagnosticTool({ t }: DiagnosticToolProps = {}) {
     } else {
       setResult({
         status: "success",
-        message: t?.diagnostic?.setupShouldBeCompatible || "Your setup should be compatible with Speed Stars games",
+        message: t?.diagnostic?.setupShouldBeCompatible || "Your setup should be compatible with  games",
         solution:
           "If you're still experiencing issues, try clearing your browser cache, restarting your device, or contacting our support team with details about your specific problem.",
       })
@@ -120,7 +120,7 @@ export default function DiagnosticTool({ t }: DiagnosticToolProps = {}) {
   return (
     <div className="card p-6 shadow-cartoon-lg mt-8">
       <h3 className="text-2xl font-black mb-4 text-center">
-        <span className="gradient-text">{t?.diagnostic?.speedStarsGameDiagnostic || "Speed Stars Game Diagnostic Tool"}</span>
+        <span className="gradient-text">{t?.diagnostic?.speedStarsGameDiagnostic || " Game Diagnostic Tool"}</span>
       </h3>
 
       {result ? (

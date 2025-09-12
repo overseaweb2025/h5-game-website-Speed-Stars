@@ -11,10 +11,10 @@ export default function GameplaySection({ t }: GameplaySectionProps = {}) {
       <div className="container mx-auto px-4">
         <div className="text-center mb-6">
           <h2 className="text-white mb-2 font-black text-shadow-lg">
-            {t?.gameplaySection?.speedStarsGameplay || "Speed Stars Gameplay"}
+            {t?.gameplaySection?.speedStarsGameplay || " Gameplay"}
           </h2>
           <p className="text-gray-200 max-w-3xl mx-auto text-lg font-medium">
-            Speed Stars is a rhythm racing game in which players aim to conquer the championship. Master the track, one
+             is a rhythm racing game in which players aim to conquer the championship. Master the track, one
             step at a time, where every millisecond counts!
           </p>
         </div>
@@ -24,7 +24,7 @@ export default function GameplaySection({ t }: GameplaySectionProps = {}) {
             <div className="relative rounded-xl overflow-hidden shadow-xl">
               <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/speed-stars-256-WkiY3oyGGYwPUIiBOFmpVGgoN2Y4vu.webp"
-                alt={t?.hero?.speedStarUnblocked || "Speed Stars gameplay showing runners racing on a red track with time display"}
+                alt={t?.hero?.speedStarUnblocked || " gameplay showing runners racing on a red track with time display"}
                 width={800}
                 height={450}
                 className="w-full h-auto"
@@ -36,7 +36,7 @@ export default function GameplaySection({ t }: GameplaySectionProps = {}) {
             <h3 className="text-2xl font-bold mb-3 text-white">Race Against the Clock</h3>
             <p className="mb-3 text-gray-200">
               Every race is a test of precision and timing. Watch your split times, perfect your rhythm, and shave
-              milliseconds off your personal best. In Speed Stars, the difference between victory and defeat can be just
+              milliseconds off your personal best. In , the difference between victory and defeat can be just
               0.055 seconds!
             </p>
             <p className="text-gray-200">
@@ -103,12 +103,12 @@ export default function GameplaySection({ t }: GameplaySectionProps = {}) {
               <Users className="mr-2 text-primary h-6 w-6" /> {t?.gameplaySection?.representYourCountry || "Represent Your Country"}
             </h3>
             <p className="mb-3 text-gray-200">
-              One of the unique features in Speed Stars is the ability to represent your country in competitions. Choose
+              One of the unique features in  is the ability to represent your country in competitions. Choose
               your nation and race to bring home glory. Whether you're challenging your friends or climbing the global
               leaderboard, the international pride adds a competitive edge.
             </p>
             <p className="text-gray-200">
-              With its blend of chaotic action, hilarious animation, and competitive gameplay, Speed Stars is both
+              With its blend of chaotic action, hilarious animation, and competitive gameplay,  is both
               addicting and entertaining. You'll find yourself returning time and again to beat your own time and
               experience the thrill of perfectly timed runs.
             </p>

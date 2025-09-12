@@ -686,7 +686,7 @@ const ShowGameList = () => {
 
         <div className="text-center mt-12 md:mt-16">
           <Link href="/#game-frame" className="btn-primary text-xl md:text-2xl jello">
-            Play Speed Stars Now!
+            Play  Now!
           </Link>
         </div>
       </div>

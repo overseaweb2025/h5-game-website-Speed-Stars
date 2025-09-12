@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: SearchResultsPageProps): Prom
   const decodedTitle = decodeURIComponent(title);
   
   return {
-    title: `Search Results for "${decodedTitle}" - Speed Stars`,
+    title: `Search Results for "${decodedTitle}" - `,
     description: `Search results for ${decodedTitle}. Find your favorite games instantly with our powerful search engine.`,
     keywords: "game search, search results, find games, online games, browser games",
   };

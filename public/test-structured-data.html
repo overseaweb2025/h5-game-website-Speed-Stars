@@ -3,25 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speed Stars - Structured Data Test</title>
+    <title> - Structured Data Test</title>
 </head>
 <body>
     <!-- Test Review with Fixed Structured Data -->
-    <div itemscope itemtype="https://schema.org/Review">
+    <div itemscope itemtype="">
         <!-- Fixed: Added itemReviewed (Critical Issue) -->
-        <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/Game">
-            <meta itemprop="name" content="Speed Stars Game Collection" />
+        <div itemprop="itemReviewed" itemscope >
+            <meta itemprop="name" content=" Game Collection" />
             <meta itemprop="applicationCategory" content="Game" />
-            <meta itemprop="url" content="https://speed-stars.net/" />
         </div>
 
         <!-- Fixed: Proper author structure (Non-Critical Issue) -->
-        <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+        <div itemprop="author" itemscope >
             <span itemprop="name">Alex Johnson</span>
         </div>
 
         <!-- Review Rating -->
-        <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+        <div itemprop="reviewRating" itemscope >
             <meta itemprop="ratingValue" content="5" />
             <meta itemprop="bestRating" content="5" />
             <meta itemprop="worstRating" content="1" />
@@ -35,24 +34,23 @@
     </div>
 
     <!-- Additional Test Review for Specific Game -->
-    <div itemscope itemtype="https://schema.org/Review">
-        <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/Game">
-            <meta itemprop="name" content="Speed Stars" />
+    <div itemscope itemtype="">
+        <div itemprop="itemReviewed" itemscope >
+            <meta itemprop="name" content="" />
             <meta itemprop="applicationCategory" content="Game" />
-            <meta itemprop="url" content="https://speed-stars.net/games/speed-stars" />
         </div>
 
-        <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+        <div itemprop="author" itemscope >
             <span itemprop="name">DashMasterFlex</span>
         </div>
 
-        <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+        <div itemprop="reviewRating" itemscope >
             <meta itemprop="ratingValue" content="5" />
             <meta itemprop="bestRating" content="5" />
             <meta itemprop="worstRating" content="1" />
         </div>
 
-        <span itemprop="reviewBody">Speed Stars is insanely fun! The controls are tricky at first, but so satisfying once you get the rhythm.</span>
+        <span itemprop="reviewBody"> is insanely fun! The controls are tricky at first, but so satisfying once you get the rhythm.</span>
         <meta itemprop="datePublished" content="2024-12-19" />
     </div>
 </body>

@@ -53,16 +53,7 @@ export default function HomeHero({ title, description, lang, t }: HomeHeroProps)
   // 获取speed-stars的评论数据（首页专用）
   useEffect(() => {
     const fetchSpeedStarsReviews = async () => {
-      try {
-        const response = await getGameDetails('speed-stars')
-        if (response?.data?.data?.reviews) {
-          setSpeedStarsReviews(response.data.data.reviews)
-        }
-      } catch (error) {
-        // 即使获取评论失败，也不影响页面其他功能
-        // 设置空数组，避免反复尝试
-        setSpeedStarsReviews([])
-      }
+      setSpeedStarsReviews([])
     }
     
     // 延迟执行，等待游戏数据加载完成

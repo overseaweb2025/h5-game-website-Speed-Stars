@@ -26,14 +26,14 @@ export async function generateMetadata({params }:PropMetadata): Promise<Metadata
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: "Free Online User - Speed Stars",
+      title: "Free Online User - ",
       description: "Play hundreds of free online User including action, puzzle, sports, and racing games. No downloads required, play instantly in your browser!",
       type: 'website',
       url: canonicalUrl,
     },
     twitter: {
       card: 'summary_large_image',
-      title: "Free Online User - Speed Stars",
+      title: "Free Online User - ",
       description: "Play hundreds of free online gaUsermes including action, puzzle, sports, and racing games. No downloads required, play instantly in your browser!",
     }
   }

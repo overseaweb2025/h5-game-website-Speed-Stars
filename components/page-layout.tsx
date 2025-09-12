@@ -7,8 +7,6 @@ import Testimonials from "@/components/testimonials"
 import FAQ from "@/components/faq"
 import CTA from "@/components/cta"
 import Footer from "@/components/footer"
-import SpeedStarsSection from "@/components/speed-stars-section"
-import GameplaySection from "@/components/gameplay-section"
 
 interface Game {
   id: string

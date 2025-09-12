@@ -26,7 +26,7 @@ export default async function OgImage() {
           padding: 32,
         }}
       >
-        <div style={{ fontSize: 64, fontWeight: "bold", marginBottom: 24 }}>Speed Stars</div>
+        <div style={{ fontSize: 64, fontWeight: "bold", marginBottom: 24 }}></div>
         <div style={{ fontSize: 36, textAlign: "center", maxWidth: "80%" }}>Exciting HTML5 Games for Everyone</div>
       </div>
     ),

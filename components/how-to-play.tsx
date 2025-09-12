@@ -37,7 +37,7 @@ export default function HowToPlay({ t }: HowToPlayProps = {}) {
             {t?.howToPlay?.howToPlay || "How to Play"}
           </h2>
           <p className="text-text/80 max-w-2xl mx-auto">
-            {t?.howToPlay?.gettingStartedDescription || "Getting started with Speed Stars is quick and easy - master these simple steps to become a champion"}
+            {t?.howToPlay?.gettingStartedDescription || "Getting started with  is quick and easy - master these simple steps to become a champion"}
           </p>
         </div>
 
@@ -46,7 +46,7 @@ export default function HowToPlay({ t }: HowToPlayProps = {}) {
             <div className="relative rounded-xl overflow-hidden shadow-xl">
               <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/speed-stars-unblock-p6VNjFOpqJrZ4kQ34bOBw8sOIzYxF7.webp"
-                alt={t?.howToPlay?.customizeYourRunner || "Speed Stars character customization screen showing outfit options and a colorful runner"}
+                alt={t?.howToPlay?.customizeYourRunner || " character customization screen showing outfit options and a colorful runner"}
                 width={600}
                 height={400}
                 className="w-full h-auto"

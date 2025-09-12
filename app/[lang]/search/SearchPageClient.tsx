@@ -221,7 +221,7 @@ export default function SearchPageClient({ initialQuery = "", t, lang }: SearchP
                   </p>
                   <div className="mt-2 md:mt-3">
                     <span className="text-xs text-purple-300 bg-purple-900/30 px-2 py-1 rounded">
-                      {t?.search?.example || "Example"}: "Speed Stars"
+                      {t?.search?.example || "Example"}: ""
                     </span>
                   </div>
                 </div>
@@ -320,7 +320,7 @@ export default function SearchPageClient({ initialQuery = "", t, lang }: SearchP
                   </p>
                   <div className="mt-2">
                     <span className="text-xs text-purple-300 bg-purple-900/30 px-2 py-1 rounded">
-                      {t?.search?.example || "例如"}: "Speed Stars"
+                      {t?.search?.example || "例如"}: ""
                     </span>
                   </div>
                 </div>

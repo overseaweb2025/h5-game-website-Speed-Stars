@@ -5,7 +5,7 @@ import { getDictionary } from "@/lib/lang/i18n"
 // 更新404页面的元数据
 
 export const metadata: Metadata = {
-  title: "Page Not Found | Speed Stars",
+  title: "Page Not Found | ",
   description: "Oops! The page you are looking for does not exist.",
 }
 

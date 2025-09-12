@@ -16,11 +16,10 @@ const inter = Inter({ subsets: ["latin"] })
 const getWebsiteStructuredData = () => {
   const domain = getCanonicalDomain()
   return {
-    "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Speed Stars",
+    name: "Free Game",
     url: domain,
-    description: "Speed Stars - Your ultimate destination for free online games. Discover hundreds of games including running, physics, puzzle, and action games. Play now!",
+    description: "Free Game - Your ultimate destination for free online games. Discover hundreds of games including running, physics, puzzle, and action games. Play now!",
     potentialAction: {
       "@type": "SearchAction",
       target: `${domain}/search?q={search_term_string}`,
@@ -28,7 +27,7 @@ const getWebsiteStructuredData = () => {
     },
     publisher: {
       "@type": "Organization",
-      name: "Speed Stars",
+      name: "Free Game",
       url: domain,
       logo: {
         "@type": "ImageObject",
@@ -49,21 +48,15 @@ const getWebsiteStructuredData = () => {
         addressCountry: "US",
       },
     },
-    sameAs: [
-      "https://facebook.com/speedstars",
-      "https://twitter.com/speedstars",
-      "https://instagram.com/speedstars",
-      "https://youtube.com/@speedstars",
-    ],
   }
 }
 
 const getGameStructuredData = () => {
   const domain = getCanonicalDomain()
   return {
-    "@context": "https://schema.org",
+    "@context": "",
     "@type": "VideoGame",
-    name: "Speed Stars Games",
+    name: "Free Games",
     description: "Free online games platform featuring physics, puzzle, action and adventure games",
     url: `${domain}/games`,
     genre: ["Sports", "Racing", "Physics"],
@@ -74,11 +67,10 @@ const getGameStructuredData = () => {
       "@type": "Offer",
       price: "0",
       priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
     },
     publisher: {
       "@type": "Organization",
-      name: "Speed Stars",
+      name: "Free Game",
       url: domain,
       logo: {
         "@type": "ImageObject",
@@ -108,11 +100,11 @@ const generateMetadata = (): Metadata => {
   const domain = getCanonicalDomain()
   return {
     metadataBase: new URL(domain),
-    title: "Speed Stars: Play Free Online Games!",
+    title: "Free Game: Play Free Online Games!",
     description:
-      "Speed Stars - Your ultimate destination for free online games. Discover hundreds of games including running, physics, puzzle, and action games. Play now!",
+      "Free Game - Your ultimate destination for free online games. Discover hundreds of games including running, physics, puzzle, and action games. Play now!",
     keywords:
-      "Speed Stars, free online games, browser games, HTML5 games, running games, physics games, puzzle games, action games, gaming platform",
+      "free game, free online games, browser games, HTML5 games, running games, physics games, puzzle games, action games, gaming platform",
     alternates: {
       canonical: domain,
       languages: {
@@ -128,17 +120,17 @@ const generateMetadata = (): Metadata => {
       }
     },
     openGraph: {
-      title: "Speed Stars: Play Free Online Games!",
+      title: ": Play Free Online Games!",
       description:
-        "Speed Stars - Your ultimate destination for free online games. Discover hundreds of games including running, physics, puzzle, and action games. Play now!",
+        " - Your ultimate destination for free online games. Discover hundreds of games including running, physics, puzzle, and action games. Play now!",
       url: domain,
-      siteName: "Speed Stars",
+      siteName: "",
       images: [
         {
           url: `${domain}/images/og-image.jpg`,
           width: 1200,
           height: 630,
-          alt: "Speed Stars - Free Online Games Platform",
+          alt: " - Free Online Games Platform",
         },
       ],
       locale: "en_US",
@@ -146,9 +138,9 @@ const generateMetadata = (): Metadata => {
     },
     twitter: {
       card: "summary_large_image",
-      title: "Speed Stars: Play Free Online Games!",
+      title: ": Play Free Online Games!",
       description:
-        "Speed Stars - Your ultimate destination for free online games. Discover hundreds of games including running, physics, puzzle, and action games. Play now!",
+        " - Your ultimate destination for free online games. Discover hundreds of games including running, physics, puzzle, and action games. Play now!",
       images: [`${domain}/images/twitter-image.jpg`],
     },
     robots: {
@@ -190,7 +182,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#ff006e" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Speed Stars" />
+        <meta name="apple-mobile-web-app-title" content="" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#ff006e" />

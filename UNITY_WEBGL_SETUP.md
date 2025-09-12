@@ -44,7 +44,7 @@ import GameErrorHandler from '@/components/GameErrorHandler'
 
 function GamePage() {
   return (
-    <GameErrorHandler gameName="Speed Stars">
+    <GameErrorHandler gameName="Free Game">
       {/* 你的游戏内容 */}
       <div id="unity-container">
         {/* Unity游戏容器 */}
@@ -66,7 +66,7 @@ function GamePage() {
     <div className="relative w-full h-screen">
       {!gameLoaded && (
         <GameLoader
-          gameName="Speed Stars"
+          gameName=""
           onLoad={() => setGameLoaded(true)}
           onError={(error) => console.error('Game load error:', error)}
         />

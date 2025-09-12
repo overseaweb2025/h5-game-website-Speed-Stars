@@ -18,14 +18,14 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     slug: "speed-stars-ultimate-guide",
-    title: "Speed Stars Ultimate Guide: From Beginner to Champion Runner! 🚀",
+    title: " Ultimate Guide: From Beginner to Champion Runner! 🚀",
     date: "May 28, 2025",
-    author: "Speed Stars Development Team",
-    excerpt: "Master Speed Stars with our comprehensive guide! Learn essential controls, advanced techniques, and pro strategies to dominate the competition in this exciting unblocked racing game.",
+    author: " Development Team",
+    excerpt: "Master  with our comprehensive guide! Learn essential controls, advanced techniques, and pro strategies to dominate the competition in this exciting unblocked racing game.",
     tags: ["guide", "tutorial", "gaming", "speed-stars", "strategy"],
     content: `
-      <h2>Welcome to the Ultimate Speed Stars Guide</h2>
-      <p>Speed Stars is more than just a running game – it's a physics-based challenge that requires timing, skill, and strategy. This comprehensive guide will help you master every aspect of the game.</p>
+      <h2>Welcome to the Ultimate  Guide</h2>
+      <p> is more than just a running game – it's a physics-based challenge that requires timing, skill, and strategy. This comprehensive guide will help you master every aspect of the game.</p>
       
       <h3>Basic Gameplay Mechanics</h3>
       <p>Understanding the core mechanics is crucial for success:</p>
@@ -68,16 +68,16 @@ export const blogPosts: BlogPost[] = [
         <li>Getting frustrated after failures instead of learning from them</li>
       </ul>
       
-      <p>Remember, mastering Speed Stars takes practice and patience. Each failed attempt is a learning opportunity that brings you closer to that perfect run!</p>
+      <p>Remember, mastering  takes practice and patience. Each failed attempt is a learning opportunity that brings you closer to that perfect run!</p>
     `,
     category: "Official Guides",
     comments: 47,
     readTime: "12 min read",
     featured: true,
     trending: true,
-    description: "Complete guide to mastering Speed Stars with pro tips, strategies, and techniques to achieve the highest scores.",
+    description: "Complete guide to mastering  with pro tips, strategies, and techniques to achieve the highest scores.",
     image: "/images/speed-stars-guide.jpg",
-    tags: ["speed stars", "guide", "tips", "strategy", "gaming"]
+    tags: ["free game", "guide", "tips", "strategy", "gaming"]
   },
   {
     slug: "mobile-gaming-revolution-2025",
@@ -100,8 +100,8 @@ export const blogPosts: BlogPost[] = [
       <h3>📊 Mobile Gaming Statistics 2025</h3>
       <p>Recent studies show that mobile gaming now accounts for over 60% of all gaming revenue globally. HTML5 games have seen a 300% increase in mobile traffic over the past year.</p>
 
-      <h3>🎮 The Speed Stars Mobile Experience</h3>
-      <p>Speed Stars exemplifies the perfect mobile HTML5 game - responsive design, touch-optimized controls, and engaging gameplay that works seamlessly across all devices.</p>
+      <h3>🎮 The  Mobile Experience</h3>
+      <p> exemplifies the perfect mobile HTML5 game - responsive design, touch-optimized controls, and engaging gameplay that works seamlessly across all devices.</p>
     `,
     category: "Industry News",
     comments: 23,

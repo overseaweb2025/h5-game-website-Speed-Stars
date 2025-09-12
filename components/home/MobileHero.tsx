@@ -139,7 +139,7 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
           {homeData ? (
             <img
               src={homeData.game?.cover}
-              alt={homeData.title || t?.hero?.speedStarUnblocked || "Speed Stars Game"}
+              alt={homeData.title || t?.hero?.speedStarUnblocked || " Game"}
               className="absolute top-0 left-0 w-full h-full object-cover"
               style={{
                 backgroundColor: '#000',

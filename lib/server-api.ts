@@ -88,17 +88,17 @@ export interface SEOMetadata {
 export function extractSEOFromHomeData(homeData: HomeGameData | null): SEOMetadata {
   if (!homeData?.data?.game) {
     return {
-      title: "Speed Stars - Racing Game",
-      description: "Play Speed Stars racing game online",
-      keywords: "speed stars, racing game, online game"
+      title: "Free Game",
+      description: "Play Free Game racing game online",
+      keywords: "free game, racing game, online game"
     }
   }
 
   const { page_title, page_description, page_keywords } = homeData.data.game
   
   return {
-    title: page_title || homeData.data.title || "Speed Stars - Racing Game",
-    description: page_description || homeData.data.description || "Play Speed Stars racing game online",
-    keywords: page_keywords || homeData.data.keywords || "speed stars, racing game, online game"
+    title: page_title || homeData.data.title || "Free Game",
+    description: page_description || homeData.data.description || "Play Free Game racing game online",
+    keywords: page_keywords || homeData.data.keywords || "free game, racing game, online game"
   }
 }

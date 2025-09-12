@@ -104,7 +104,7 @@
         "backToTop": "回到顶部",
         "notAffiliatedDisclaimer": "除非另有说明，游戏中心大厅不隶属于任何游戏开发商。",
         "address": "美国加利福尼亚州中央大道36号",
-        "email": "support@speed-stars.net",
+        "email": "",
         "phone": "+16070231235",
         "madeWithLove": "🎮 为全球玩家倾心打造",
         "privacyPriority": "🔒 您的隐私和安全是我们的首要任务",
@@ -163,9 +163,9 @@
         "customizeRunnerDetails": "用各种服装和颜色定制你的跑步者，让您在赛道上脱颖而出"
     },
     "games": {
-        "title": "免费在线游戏 - Speed Stars",
-        "description": "在 Speed Stars 畅玩海量免费在线游戏。从动感十足的冒险到烧脑的解谜，即刻找到您的下一款心爱游戏。",
-        "keywords": "免费在线游戏, 网页游戏, HTML5游戏, 动作游戏, 解谜游戏, 体育游戏, 赛车游戏, speed stars, 在线玩游戏",
+        "title": "免费在线游戏 - ",
+        "description": "在  畅玩海量免费在线游戏。从动感十足的冒险到烧脑的解谜，即刻找到您的下一款心爱游戏。",
+        "keywords": "免费在线游戏, 网页游戏, HTML5游戏, 动作游戏, 解谜游戏, 体育游戏, 赛车游戏, free game, 在线玩游戏",
         "gameCollection": "🎮 游戏合集",
         "html5Game": "HTML5 游戏",
         "playNow": "立即玩 →",
@@ -372,8 +372,8 @@
         "returnToHome": "返回主页"
     },
     "blog": {
-        "title": "Speed Stars 博客: 游戏新闻、技巧与更新 | 免费在线游戏",
-        "description": "在 Speed Stars 博客保持领先。获取最新的游戏新闻、专业技巧、策略指南和平台更新，以获得更佳的游戏体验。",
+        "title": " 博客: 游戏新闻、技巧与更新 | 免费在线游戏",
+        "description": "在  博客保持领先。获取最新的游戏新闻、专业技巧、策略指南和平台更新，以获得更佳的游戏体验。",
         "keywords": "免费在线游戏博客, 游戏新闻, 游戏技巧, 游戏策略, HTML5游戏, 未屏蔽的游戏, 免费游戏评论, 游戏更新, Speed Stars博客",
         "speedStarsBlog": "速度之星博客 | 游戏新闻、技巧与更新",
         "officialBlog": "速度之星官方博客",
@@ -445,7 +445,7 @@
         "question_technical-issues_1": "游戏运行缓慢或卡顿",
         "answer_technical-issues_1": "关闭其他浏览器标签和应用程序以释放内存。尝试使用不同的浏览器或将当前浏览器更新到最新版本。",
         "question_technical-issues_2": "我收到错误消息",
-        "answer_technical-issues_2": "截取错误消息的屏幕截图并联系我们的支持团队 support@speed-stars.net。包括有关您的浏览器和操作系统的详细信息。",
+        "answer_technical-issues_2": "截取错误消息的屏幕截图并联系我们的支持团队 。包括有关您的浏览器和操作系统的详细信息。",
         "question_technical-issues_3": "游戏中没有声音",
         "answer_technical-issues_3": "检查设备的音量设置，确保没有静音。有些浏览器需要用户交互后才能播放音频 - 尝试先点击游戏。",
         "question_device-compatibility_0": "我可以在手机上玩吗？",

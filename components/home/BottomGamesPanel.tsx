@@ -14,14 +14,14 @@ const defaultGames = [
   {
     id: 1,
     name: "speed-stars",
-    display_name: "Speed Stars",
+    display_name: "",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/speed-stars-game1.jpg-pdS6H7q96A7xUAYFjD69vZqEk1f6WG.jpeg",
     tag: "Hot"
   },
   {
     id: 2,
     name: "speed-stars-2", 
-    display_name: "Speed Stars 2",
+    display_name: " 2",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/speed-stars-2-150x150-DSEGhbCjX3YS7vlK1FBI3K4WWYd47z.png",
     tag: "New"
   },
