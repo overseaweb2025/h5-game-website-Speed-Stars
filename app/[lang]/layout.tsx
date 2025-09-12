@@ -8,6 +8,7 @@ import Providers from "@/components/providers"
 import ExternalScripts from "@/components/external-scripts"
 import NotificationBar from "@/components/notification-bar"
 import { getCanonicalDomain } from "@/lib/seo-utils"
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -213,6 +214,18 @@ export default function RootLayout({
             __html: JSON.stringify(getGameStructuredData()),
           }}
         />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-51B9X4KSSF"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-51B9X4KSSF');
+          `}
+        </Script>
       </head>
       <body className={inter.className}>
         <Providers>
