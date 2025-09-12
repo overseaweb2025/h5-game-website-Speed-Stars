@@ -3,37 +3,38 @@ import Footer from "@/components/footer"
 import type { Metadata } from "next"
 import BlogList from "@/components/blog/BlogList"
 import { getDictionary } from "@/lib/lang/i18n"
-import { Locale,localesArrary } from "@/lib/lang/dictionaraies"
+import { Locale, localesArrary } from "@/lib/lang/dictionaraies"
 import { getWebsite } from '@/app/api/website';
 import { websiteUtill } from "@/lib/website/websiteUtill"
+import { getGameHome } from "@/app/api/game"
 
 
 interface BlogPageProps {
-  params:{
-    lang:Locale
+  params: {
+    lang: Locale
   }
 }
 export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
   const domain = process.env.CANONICAL_DOMAIN; // 您的网站域名
   const { lang } = params;
 
-  const t = await getDictionary(lang as Locale);
-
-   // 使用 reduce 动态生成 languages 对象
+  // 使用 reduce 动态生成 languages 对象
   const alternateLanguages = localesArrary.reduce((acc, locale) => {
     // 确保 locale 和 domain 变量存在
     acc[locale] = `${domain}/${locale}/blog`;
     return acc;
   }, {} as Record<string, string>); // 加上类型断言以符合 TypeScript 要求
+  const res = await getGameHome(lang)
+  const homeData = res.data.data
 
 
   return {
-    title: t.blog.title,
-    description: t.blog.description,
-    keywords: t.blog.keywords,
+    title: homeData.title,
+    description: homeData?.description,
+    keywords: homeData?.keywords,
     alternates: {
       // Canonical URL 应该包含语言路径
-      canonical: `${domain}/${lang}/blog`, 
+      canonical: `${domain}/${lang}/blog`,
       // 可选：设置多语言链接
       languages: {
         ...alternateLanguages,
@@ -44,12 +45,12 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
 }
 
 
-export default async function BlogPage({params}: {params: Promise<{lang: string}>}) {
+export default async function BlogPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const t = await getDictionary(lang as Locale);
   const response = await getWebsite();
   const data = response.data.data;
-  const siteName = websiteUtill(data,'site-name')
+  const siteName = websiteUtill(data, 'site-name')
   return (
     <main className="bg-background">
       <Header t={t} lang={lang as Locale} />
@@ -82,7 +83,7 @@ export default async function BlogPage({params}: {params: Promise<{lang: string}
           {/* API Blog Posts with Pagination */}
           <BlogList t={t} lang={lang as Locale} />
 
-      
+
         </div>
       </section>
 
