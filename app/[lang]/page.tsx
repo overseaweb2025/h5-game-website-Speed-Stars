@@ -41,15 +41,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       alternates: {
         canonical: canonicalUrl,
         languages: {
-          en: "https://gameplaystop.com",
-          zh: "https://gameplaystop.com/zh",
-          ru: "https://gameplaystop.com/ru",
-          es: "https://gameplaystop.com/es",
-          hi: "https://gameplaystop.com/hi",
-          fr: "https://gameplaystop.com/fr",
-          ja: "https://gameplaystop.com/ja",
-          ko: "https://gameplaystop.com/ko",
-          "x-default": "https://gameplaystop.com"
+          en: domain,
+          zh: `${domain}/zh`,
+          ru: `${domain}/ru`,
+          es: `${domain}/es`,
+          hi: `${domain}/hi`,
+          fr: `${domain}/fr`,
+          ja: `${domain}/ja`,
+          ko: `${domain}/ko`,
+          "x-default": domain
         }
       },
       openGraph: {
