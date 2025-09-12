@@ -14,7 +14,6 @@ export async function generateMetadata({ params }: PropMetadata): Promise<Metada
   const { lang } = params; // 从 params 中解构 lang
   const canonicalUrl = `${process.env.CANONICAL_DOMAIN}/${lang}/games`
 
-  const t = await getDictionary(lang as Locale);
   const res = await getGameHome(lang)
   const homeData = res.data.data
   return {
@@ -47,6 +46,6 @@ export default async function GamesLayout({
 }) {
   const lang = params.lang as Locale;
   const t = await getDictionary(lang);
-  
+
   return <GamesLayoutClient t={t} lang={lang as Locale}>{children}</GamesLayoutClient>
 }
