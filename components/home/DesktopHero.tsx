@@ -33,7 +33,7 @@ export default function DesktopHero({
       {/* 桌面端显示标题 */}
       <p className="hidden lg:block text-5xl md:text-6xl lg:text-7xl text-text font-black mb-4 leading-tight text-center pop-in">
         <span className="gradient-text">{title || ''}</span>
-        <span className="gradient-text">{homeData?.title}</span>
+        <span className="gradient-text">{homeData?.title || 'Free Game'}</span>
       </p>
 
       {/* Game container with side panels - Desktop layout */}

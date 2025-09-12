@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
 
 
   return {
-    title: homeData.title,
+    title: homeData?.title || 'Free Game',
     description: homeData?.description,
     keywords: homeData?.keywords,
     alternates: {

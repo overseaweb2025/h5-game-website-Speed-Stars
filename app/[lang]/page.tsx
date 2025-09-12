@@ -29,12 +29,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
   const canonicalUrl = `${domain}/${lang}`
 
-  // console.log(canonicalUrl)
-  // Fetch home game data for SEO metadata
   const res = await getGameHome(lang)
   const homeData = res.data.data
   return {
-    title: homeData.title || 'Free Game',
+    title: homeData?.title || 'Free Game' || 'Free Game',
     description: homeData?.description || 'Free Game',
     keywords: homeData?.keywords || 'Free Game',
     alternates: {
@@ -52,14 +50,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       }
     },
     openGraph: {
-      title: homeData?.title,
+      title: homeData?.title || 'Free Game',
       description: homeData?.description,
       type: 'website',
       locale: lang,
     },
     twitter: {
       card: 'summary_large_image',
-      title: homeData?.title,
+      title: homeData?.title || 'Free Game',
       description: homeData?.description,
     }
   }

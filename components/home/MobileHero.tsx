@@ -38,7 +38,7 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
     // Check if homeData and game URL exist before opening
     if (homeData && homeData.game?.package?.url) {
       setModalGame({
-        title: homeData.title || heroData.title.main,
+        title: homeData?.title || 'Free Game' || heroData.title.main,
         url: homeData.game.package.url,
       });
       setIsGameModalOpen(true);
@@ -94,13 +94,13 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
                     textOverflow: 'ellipsis'
                   }}
                   onClick={() => {
-                    const title = homeData?.title || heroData.title.main
+                    const title = homeData?.title || 'Free Game' || heroData.title.main
                     setSelectedTitle(title)
                     setShowTitleDialog(true)
                   }}
-                  title={homeData?.title || heroData.title.main}
+                  title={homeData?.title || 'Free Game' || heroData.title.main}
                 >
-                  {homeData?.title || heroData.title.main}
+                  {homeData?.title || 'Free Game' || heroData.title.main}
                 </p>
                 <p className="text-xs text-gray-400 mt-1">
                   {t?.hero?.category || "分类名"}: {homeData?.game?.category || "Games"}
@@ -109,7 +109,7 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
               <Info 
                 className="w-4 h-4 text-gray-400 cursor-pointer hover:text-blue-400 transition-colors ml-2 flex-shrink-0"
                 onClick={() => {
-                  const title = homeData?.title || heroData.title.main
+                  const title = homeData?.title || 'Free Game' || heroData.title.main
                   setSelectedTitle(title)
                   setShowTitleDialog(true)
                 }}
@@ -139,7 +139,7 @@ export default function MobileHero({ homeData, t, lang }: MobileHeroProps) {
           {homeData ? (
             <img
               src={homeData.game?.cover}
-              alt={homeData.title || t?.hero?.speedStarUnblocked || " Game"}
+              alt={homeData?.title || 'Free Game' || t?.hero?.speedStarUnblocked || " Game"}
               className="absolute top-0 left-0 w-full h-full object-cover"
               style={{
                 backgroundColor: '#000',

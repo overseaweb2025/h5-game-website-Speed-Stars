@@ -17,21 +17,21 @@ export async function generateMetadata({ params }: PropMetadata): Promise<Metada
   const res = await getGameHome(lang)
   const homeData = res.data.data
   return {
-    title: homeData.title,
+    title: homeData?.title || 'Free Game',
     description: homeData?.description,
     keywords: homeData?.keywords,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: homeData?.title,
+      title: homeData?.title || 'Free Game',
       description: homeData?.description,
       type: 'website',
       url: canonicalUrl,
     },
     twitter: {
       card: 'summary_large_image',
-      title: homeData?.title,
+      title: homeData?.title || 'Free Game',
       description: homeData?.description,
     }
   }
