@@ -22,9 +22,9 @@ async function fetchHomeSEO(lang: string) {
     const json = await res.json();
     const d = json?.data ?? {};
     return {
-      title: d.title || FALLBACK.title,
-      description: d.description || FALLBACK.description,
-      keywords: d.keywords || FALLBACK.keywords,
+      title: d.title,
+      description: d.description,
+      keywords: d.keywords,
     };
   } catch {
     return FALLBACK;
@@ -52,9 +52,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
   const homeData = await fetchHomeSEO(lang);
   return {
-    title: homeData?.title || 'Free Game',
-    description: homeData?.description || 'Free Game',
-    keywords: homeData?.keywords || 'Free Game',
+    title: homeData?.title,
+    description: homeData?.description,
+    keywords: homeData?.keywords,
     alternates: {
       canonical: canonicalUrl,
       languages: {
