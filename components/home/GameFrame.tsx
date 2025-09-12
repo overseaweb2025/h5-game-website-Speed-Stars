@@ -22,9 +22,9 @@ export default function GameFrame({ homeData, iframeHeight, t }: GameFrameProps)
   useEffect(() => {
     if (homeData?.game) {
       initializeGame({
-        id: homeData.game.package.url || homeData.title || 'Free Game',
-        name: homeData.game.cover || homeData.title || 'Free Game',
-        displayName: homeData.title || ''
+        id: homeData.game.package.url || homeData?.title || 'Free Game' || 'Free Game',
+        name: homeData.game.cover || homeData?.title || 'Free Game' || 'Free Game',
+        displayName: homeData?.title || 'Free Game' || ''
       })
     }
   }, [homeData, initializeGame])
@@ -46,7 +46,7 @@ export default function GameFrame({ homeData, iframeHeight, t }: GameFrameProps)
         <iframe
           ref={setIframeRef}
           src={homeData?.game?.package?.url || heroData.gameIframeSrc}
-          title={homeData?.title || t?.hero?.speedStarUnblocked || " Game"}
+          title={homeData?.title || 'Free Game' || t?.hero?.speedStarUnblocked || " Game"}
           className="absolute top-0 left-0 w-full h-full border-0"
           style={{
             backgroundColor: '#000',
