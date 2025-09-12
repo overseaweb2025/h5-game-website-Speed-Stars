@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: SearchPageProps): Promise<Met
   const { lang } = await params;
   
   return {
-    title: `Search Games - Speed Stars`,
+    title: `Search Games - `,
     description: "Search and discover amazing games. Find your favorite games instantly with our powerful search engine.",
     keywords: "game search, find games, online games, browser games, search games",
   };

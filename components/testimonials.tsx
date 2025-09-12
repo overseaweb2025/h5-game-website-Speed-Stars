@@ -72,7 +72,7 @@ const CommentCard = ({ testimonial, t }: CommentCardProps) => (
         
     >
         <div itemProp="itemReviewed" itemScope >
-            <meta itemProp="name" content={testimonial.game || "Speed Stars Game Collection"} />
+            <meta itemProp="name" content={testimonial.game || " Game Collection"} />
             <meta itemProp="applicationCategory" content="Game" />
         </div>
 
@@ -131,7 +131,7 @@ const MoreCommentCard = ({ testimonial, t, indexOffset = 0 }: CommentCardProps &
         
     >
         <div itemProp="itemReviewed" itemScope >
-            <meta itemProp="name" content={testimonial.game || "Speed Stars Game Collection"} />
+            <meta itemProp="name" content={testimonial.game || " Game Collection"} />
             <meta itemProp="applicationCategory" content="Game" />
         </div>
 
@@ -188,8 +188,7 @@ export default function Testimonials({ gameSlug, reviews, t, isHomepage = false 
     const { toast } = useToast()
     const { data: session } = useSession()
 
-    // 当前游戏名，默认首页用 speed-stars
-    const currentGameName = gameSlug || "speed-stars"
+    const currentGameName = gameSlug || "Free Game"
 
     const [testimonials, setTestimonials] = useState<Testimonial[]>([])
 
@@ -352,7 +351,7 @@ export default function Testimonials({ gameSlug, reviews, t, isHomepage = false 
                                         
                                     >
                                         <div itemProp="itemReviewed" itemScope >
-                                            <meta itemProp="name" content={testimonial.game || "Speed Stars Game Collection"} />
+                                            <meta itemProp="name" content={testimonial.game || " Game Collection"} />
                                             <meta itemProp="applicationCategory" content="Game" />
                                         </div>
                                         {/* 这里是 testimonial card 的内容，与 CommentCard 类似但可能带有动画和特定的 hover 效果 */}
@@ -407,7 +406,7 @@ export default function Testimonials({ gameSlug, reviews, t, isHomepage = false 
                                         
                                     >
                                         <div itemProp="itemReviewed" itemScope >
-                                            <meta itemProp="name" content={testimonial.game || "Speed Stars Game Collection"} />
+                                            <meta itemProp="name" content={testimonial.game || " Game Collection"} />
                                             <meta itemProp="applicationCategory" content="Game" />
                                         </div>
                                         {/* 这里是 testimonial card 的内容，与 MoreCommentCard 类似但可能带有动画和特定的 hover 效果 */}

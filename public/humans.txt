@@ -1,5 +1,5 @@
 /* TEAM */
-Developer: Speed Stars Development Team
+Developer:  Development Team
 Contact: 
 Location: California, USA
 
@@ -12,11 +12,11 @@ Technologies: Next.js, TypeScript, Tailwind CSS, HTML5 Games
 
 /* THANKS */
 Game Developers: For creating amazing HTML5 games
-Community: Speed Stars players worldwide
+Community:  players worldwide
 Open Source: Next.js, React, and the amazing web development community
 
 /* GAMES */
-Speed Stars: Physics-based sprinting game
+: Physics-based sprinting game
 CRAZY CATTLE 3D: 3D puzzle adventure
 More games coming soon!
 

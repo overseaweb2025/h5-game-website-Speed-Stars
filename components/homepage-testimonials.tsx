@@ -56,7 +56,7 @@ export default function HomepageTestimonials() {
   const { data: session } = useSession()
 
   // 固定的游戏名
-  const gameSlug = "speed-stars"
+  const gameSlug = "Free Game"
 
   // 获取speed-stars游戏的评论数据
   useEffect(() => {
@@ -74,7 +74,7 @@ export default function HomepageTestimonials() {
             text: r.content || 'Great game!',
             email: r.email || '',
             likes: 0,
-            game: "Speed Stars",
+            game: "",
           }))
           setTestimonials(mappedReviews)
         } else {
@@ -89,7 +89,7 @@ export default function HomepageTestimonials() {
           //     text: "Amazing speed and thrilling gameplay! This game really gets my heart racing.",
           //     email: "player@example.com",
           //     likes: 12,
-          //     game: "Speed Stars",
+          //     game: "",
           //   },
           //   {
           //     name: "Racing Fan",
@@ -99,7 +99,7 @@ export default function HomepageTestimonials() {
           //     text: "Love the graphics and smooth controls. Perfect for quick gaming sessions!",
           //     email: "fan@example.com",
           //     likes: 8,
-          //     game: "Speed Stars",
+          //     game: "",
           //   }
           // ])
         }
@@ -114,7 +114,7 @@ export default function HomepageTestimonials() {
         //     text: "Amazing speed and thrilling gameplay! This game really gets my heart racing.",
         //     email: "player@example.com",
         //     likes: 12,
-        //     game: "Speed Stars",
+        //     game: "",
         //   },
         //   {
         //     name: "Racing Fan",
@@ -124,7 +124,7 @@ export default function HomepageTestimonials() {
         //     text: "Love the graphics and smooth controls. Perfect for quick gaming sessions!",
         //     email: "fan@example.com",
         //     likes: 8,
-        //     game: "Speed Stars",
+        //     game: "",
         //   }
         // ])
         setTestimonials([])
@@ -182,7 +182,7 @@ export default function HomepageTestimonials() {
         date: "Just now",
         avatar: session.user?.image || "/placeholder.svg?height=60&width=60",
         likes: 0,
-        game: "Speed Stars",
+        game: "",
         email: session.user?.email || "",
       }
       setTestimonials(prev => [submittedReview, ...prev])
@@ -235,7 +235,7 @@ export default function HomepageTestimonials() {
               <div className="col-span-1 text-center py-12">
                 <div className="text-6xl mb-4">🎮</div>
                 <h3 className="text-2xl font-bold text-white mb-2">No Reviews Yet</h3>
-                <p className="text-gray-300">Be the first to share your experience with Speed Stars!</p>
+                <p className="text-gray-300">Be the first to share your experience with !</p>
               </div>
             ) : (
               testimonials.map((testimonial, index) => (
@@ -292,7 +292,7 @@ export default function HomepageTestimonials() {
               <div className="text-center py-12">
                 <div className="text-6xl mb-4">🎮</div>
                 <h3 className="text-2xl font-bold text-white mb-2">No Reviews Yet</h3>
-                <p className="text-gray-300">Be the first to share your experience with Speed Stars!</p>
+                <p className="text-gray-300">Be the first to share your experience with !</p>
               </div>
             ) : (
               <>
@@ -445,7 +445,7 @@ export default function HomepageTestimonials() {
                           ? "Please sign in to leave a review"
                           : hasUserReviewed
                             ? "You have already reviewed this game"
-                            : "Tell us what you think about Speed Stars..."
+                            : "Tell us what you think about ..."
                       }
                       rows={4}
                       className="w-full text-base sm:text-base resize-none min-h-[100px] touch-manipulation"

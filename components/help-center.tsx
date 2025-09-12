@@ -27,7 +27,7 @@ const domain = getCanonicalDomain()
             {t?.helpCenter?.whyCantPlayH5Games || "Why Can't I Play H5 Games?"}
           </h2>
           <p className="text-xl text-text/80 max-w-3xl mx-auto">
-            {t?.helpCenter?.topReasonsAndSolutions || "Top Reasons & Speed Stars Unblock Solutions"}
+            {t?.helpCenter?.topReasonsAndSolutions || "Top Reasons &  Unblock Solutions"}
           </p>
         </div>
 
@@ -36,7 +36,7 @@ const domain = getCanonicalDomain()
             Discover why your <span className="font-bold text-primary">online H5 games</span> won't load and how to{" "}
             <span className="font-bold text-accent-3">unblock</span> them for{" "}
             <span className="font-bold text-secondary">free</span> using{" "}
-            <span className="font-bold text-primary">Speed Stars</span>' official tools at{" "}
+            <span className="font-bold text-primary"></span>' official tools at{" "}
             <Link
               href={domain}
               className="text-accent-3 font-bold hover:underline flex items-center inline-flex"
@@ -83,12 +83,12 @@ const domain = getCanonicalDomain()
             </div>
 
             <div>
-              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsOfficialFixes || "Speed Stars Official Fixes:"}:</h4>
+              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsOfficialFixes || " Official Fixes:"}:</h4>
               <ul className="space-y-3 pl-6">
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-secondary mr-2 flex-shrink-0 mt-1" />
                   <span>
-                    Use <span className="font-bold">Speed Stars-approved browsers</span>: Chrome 90+, Firefox 89+, Edge
+                    Use <span className="font-bold">-approved browsers</span>: Chrome 90+, Firefox 89+, Edge
                     90+
                   </span>
                 </li>
@@ -137,7 +137,7 @@ const domain = getCanonicalDomain()
             </div>
 
             <div>
-              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsSolutions || "Speed Stars Solutions:"}:</h4>
+              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsSolutions || " Solutions:"}:</h4>
               <ul className="space-y-3 pl-6">
                 <li className="flex items-start">
                   <Zap className="h-5 w-5 text-accent mr-2 flex-shrink-0 mt-1" />
@@ -155,7 +155,7 @@ const domain = getCanonicalDomain()
                 <li className="flex items-start">
                   <Zap className="h-5 w-5 text-accent mr-2 flex-shrink-0 mt-1" />
                   <span>
-                    Try <span className="font-bold">Speed Stars Proxy</span> – free online unblock service
+                    Try <span className="font-bold"> Proxy</span> – free online unblock service
                   </span>
                 </li>
               </ul>
@@ -190,7 +190,7 @@ const domain = getCanonicalDomain()
             </div>
 
             <div>
-              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsFixes || "Speed Stars Fixes:"}:</h4>
+              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsFixes || " Fixes:"}:</h4>
               <ul className="space-y-3 pl-6">
                 <li className="flex items-start">
                   <Cpu className="h-5 w-5 text-accent-4 mr-2 flex-shrink-0 mt-1" />
@@ -241,7 +241,7 @@ const domain = getCanonicalDomain()
             </div>
 
             <div>
-              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsProTips || "Speed Stars Pro Tips:"}:</h4>
+              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsProTips || " Pro Tips:"}:</h4>
               <ul className="space-y-3 pl-6">
                 <li className="flex items-start">
                   <Cpu className="h-5 w-5 text-accent-4 mr-2 flex-shrink-0 mt-1" />
@@ -264,7 +264,7 @@ const domain = getCanonicalDomain()
                 5
               </div>
               <h3 className="text-2xl font-black">
-                {t?.helpCenter?.hardwareLimits || "Hardware Limits | Speed Stars Certified"}
+                {t?.helpCenter?.hardwareLimits || "Hardware Limits |  Certified"}
               </h3>
             </div>
 
@@ -287,7 +287,7 @@ const domain = getCanonicalDomain()
             </div>
 
             <div>
-              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsSolutions || "Speed Stars Solutions:"}:</h4>
+              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsSolutions || " Solutions:"}:</h4>
               <ul className="space-y-3 pl-6">
                 <li className="flex items-start">
                   <Wrench className="h-5 w-5 text-accent-2 mr-2 flex-shrink-0 mt-1" />
@@ -347,9 +347,9 @@ const domain = getCanonicalDomain()
           </ul>
 
           <div className="bg-white p-4 rounded-xl border-2 border-accent-3">
-            <h4 className="text-xl font-bold mb-2 text-center text-accent-3">{t?.helpCenter?.officialSpeedStarsSupport || "Official Speed Stars Support:"}:</h4>
+            <h4 className="text-xl font-bold mb-2 text-center text-accent-3">{t?.helpCenter?.officialSpeedStarsSupport || "Official  Support:"}:</h4>
             <p className="text-center">
-              Submit diagnostics via JSON.stringify(window.performance.timing) to Speed Stars Team.
+              Submit diagnostics via JSON.stringify(window.performance.timing) to  Team.
             </p>
           </div>
         </div>

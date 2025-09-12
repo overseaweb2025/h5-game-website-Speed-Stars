@@ -96,7 +96,7 @@ export default function NotificationBar() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 w-full bg-black text-white text-center py-2 text-sm z-50 flex items-center justify-center gap-2">
-      <span>Speed Stars uses Google OAuth, GitHub OAuth, NextAuth sessions, Google AdSense, Plausible Analytics, localStorage for game data/language settings, Unity WebGL games, and cookies for authentication & preferences</span>
+      <span> uses Google OAuth, GitHub OAuth, NextAuth sessions, Google AdSense, Plausible Analytics, localStorage for game data/language settings, Unity WebGL games, and cookies for authentication & preferences</span>
       <button
         onClick={handleGetItClick}
         className="bg-white text-black px-3 py-1 rounded text-xs hover:bg-gray-200 transition-colors whitespace-nowrap"

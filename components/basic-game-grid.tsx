@@ -8,29 +8,6 @@ const BasicGameGrid = () => {
       {/* Game Cards Container - This is the main div box you requested */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         
-        {/* Game Card 1 - Speed Stars */}
-        <div className="bg-gray-800 rounded-lg overflow-hidden hover:scale-105 transition-transform cursor-pointer aspect-square">
-          <img 
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/speed-stars-game1.jpg-pdS6H7q96A7xUAYFjD69vZqEk1f6WG.jpeg"
-            alt="Speed Stars"
-            className="w-full h-full object-cover"
-          />
-          <div className="p-3">
-            <h4 className="text-white font-bold text-sm">Speed Stars</h4>
-          </div>
-        </div>
-        
-        {/* Game Card 2 - Speed Stars 2 */}
-        <div className="bg-gray-800 rounded-lg overflow-hidden hover:scale-105 transition-transform cursor-pointer aspect-square">
-          <img 
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/speed-stars-2-150x150-DSEGhbCjX3YS7vlK1FBI3K4WWYd47z.png"
-            alt="Speed Stars 2"
-            className="w-full h-full object-cover"
-          />
-          <div className="p-3">
-            <h4 className="text-white font-bold text-sm">Speed Stars 2</h4>
-          </div>
-        </div>
         
         {/* Game Card 3 - Crazy Cattle 3D */}
         <div className="bg-gray-800 rounded-lg overflow-hidden hover:scale-105 transition-transform cursor-pointer aspect-square">

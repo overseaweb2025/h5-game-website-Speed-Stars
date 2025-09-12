@@ -135,7 +135,7 @@ export class FallbackDataProvider {
       {
         id: 1,
         name: 'speed-stars',
-        display_name: 'Speed Stars',
+        display_name: '',
         thumbnail: '/images/fallback-game.jpg',
         category: 'racing',
         description: lang === 'zh' ? '极速赛车游戏' : 'High-speed racing game'
@@ -182,12 +182,12 @@ export class FallbackDataProvider {
    */
   static getFallbackHomeData(lang: Locale): any {
     return {
-      title: lang === 'zh' ? 'Speed Stars - 在线游戏平台' : 'Speed Stars - Online Gaming Platform',
+      title: lang === 'zh' ? ' - 在线游戏平台' : ' - Online Gaming Platform',
       description: lang === 'zh' ? '免费在线游戏平台，提供各种精彩游戏' : 'Free online gaming platform with exciting games',
       game: {
-        page_title: 'Speed Stars',
+        page_title: '',
         page_description: lang === 'zh' ? '最佳在线游戏体验' : 'Best online gaming experience',
-        page_keywords: lang === 'zh' ? '在线游戏,免费游戏,Speed Stars' : 'online games,free games,Speed Stars'
+        page_keywords: lang === 'zh' ? '在线游戏,免费游戏,' : 'online games,free games,'
       }
     }
   }
