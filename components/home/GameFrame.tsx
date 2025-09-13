@@ -58,7 +58,7 @@ export default function GameFrame({ homeData, iframeHeight, t }: GameFrameProps)
       ) : !homeData ? (
         <div className="w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mb-4"></div>
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mb-4 m-auto"></div>
             <h2 className="text-2xl font-black text-text mb-3">{t?.hero?.loadingGame || "Loading Game..."}</h2>
             <p className="text-text/80">{t?.hero?.pleaseWait || "Please wait while we load the game data"}</p>
           </div>

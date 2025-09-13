@@ -67,10 +67,14 @@ function parseAcceptLanguage(acceptLanguage: string): string | null {
 }
 
 export function middleware(request: NextRequest) {
-  // Check if there is any supported locale in the pathname
   const { pathname } = request.nextUrl;
-  
-  // Check if the pathname already includes a locale
+
+  // Rewrite root `/` to `/en` without redirecting the browser
+  if (pathname === "/") {
+    return NextResponse.rewrite(new URL("/en", request.url));
+  }
+
+  // Check if there is any supported locale in the pathname
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
@@ -78,23 +82,23 @@ export function middleware(request: NextRequest) {
   // 如果路径已包含语言代码，添加 ISR 缓存头
   if (pathnameHasLocale) {
     const response = NextResponse.next();
-    
+
     // 检查是否是需要 ISR 优化的页面
     if (isISROptimizedRoute(pathname)) {
       // 添加 ISR 缓存控制头
       Object.entries(ISR_CACHE_HEADERS).forEach(([key, value]) => {
         response.headers.set(key, value);
       });
-      
+
       // 添加语言信息到头部
       const currentLocale = extractLocaleFromPath(pathname);
       if (currentLocale) {
-        response.headers.set('X-Current-Language', currentLocale);
+        response.headers.set("X-Current-Language", currentLocale);
       }
-      
+
       console.log(`[ISR Middleware] Applied caching headers to ${pathname}`);
     }
-    
+
     return response;
   }
 
@@ -103,16 +107,16 @@ export function middleware(request: NextRequest) {
   request.nextUrl.pathname = `/${locale}${pathname}`;
   // e.g. incoming request is /products
   // The new URL is now /en/products
-  
+
   const response = NextResponse.redirect(request.nextUrl);
-  
+
   // 设置语言偏好 Cookie (有效期30天)
-  response.cookies.set('preferred-language', locale, {
+  response.cookies.set("preferred-language", locale, {
     maxAge: 30 * 24 * 60 * 60, // 30 天
-    path: '/',
-    sameSite: 'lax'
+    path: "/",
+    sameSite: "lax",
   });
-  
+
   return response;
 }
 
