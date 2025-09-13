@@ -143,7 +143,7 @@ const MobileLayout = ({ t, game, gameDetails, GameList, pageTitle }: MobileLayou
             {!homeDataLoading ? (
               <img
                 src={gameDetails?.cover || homeData?.data.game.cover}
-                alt={pageTitle || game?.display_name || game?.name || t?.hero?.speedStarUnblocked || " Game"}
+                alt={pageTitle || game?.display_name || game?.name || " Game"}
                 className="absolute top-0 left-0 w-full h-full object-cover"
                 style={{
                   backgroundColor: '#000',

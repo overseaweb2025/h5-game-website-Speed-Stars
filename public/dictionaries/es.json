@@ -49,7 +49,6 @@
         "featuredGames": "Juegos Destacados",
         "gameNumber": "Juego {index}",
         "imageFailedToLoad": "La imagen no se pudo cargar",
-        "speedStarUnblocked": "Speed Star desbloqueado",
         "runningGame": ": Juego de Carrera",
         "playOnlineForFree": "¡Juega Online Gratis!",
         "exploreGames": "Explorar Juegos",
@@ -84,7 +83,6 @@
     },
     "features": {
         "amazingFeatures": "Características Asombrosas",
-        "speedStarsDescription": " combina un diseño visual minimalista pero hermoso con un movimiento satisfactorio basado en la física",
         "physicsBasedMechanics": "Mecánicas Basadas en la Física",
         "physicsDescription": "Siente cada paso e inclinación con una física realista que impacta tu éxito",
         "playAnywhere": "Juega en Cualquier Lugar",
@@ -101,14 +99,8 @@
     "faq": {
         "frequentlyAskedQuestions": "Preguntas Frecuentes",
         "findAnswers": "Encuentra respuestas a preguntas comunes sobre ",
-        "whatIsSpeedStars": "¿Qué es ?",
-        "whatIsSpeedStarsAnswer": " es un juego de carrera basado en la física donde controlas a un corredor tocando alternativamente para simular los movimientos de los pies. Combina un juego de ritmo con divertidas físicas de ragdoll para una experiencia entretenida y desafiante.",
-        "isSpeedStarsFree": "¿Es  gratis?",
-        "isSpeedStarsFreeAnswer": "Sí,  es completamente gratis para jugar online. Puedes acceder a él desde cualquier dispositivo con un navegador web sin restricciones.",
         "whatDoesUnblockedMean": "¿Qué significa 'desbloqueado'?",
         "unblockedMeaningAnswer": "Desbloqueado significa que puedes jugar el juego en cualquier lugar, incluso en entornos donde los sitios web de juegos normalmente podrían estar restringidos.  Desbloqueado es accesible desde la escuela, el trabajo o cualquier otra ubicación.",
-        "speedStarsControls": "¿Cuáles son los controles de ?",
-        "speedStarsControlsAnswer": "Los controles básicos son: Flecha Izquierda para mover la pierna izquierda, Flecha Derecha para mover la pierna derecha, Flecha Arriba para inclinarse hacia adelante y Flecha Abajo para inclinarse hacia atrás. Dominar el ritmo de estos controles es clave para el éxito.",
         "canPlayOnMobile": "¿Puedo jugar  en dispositivos móviles?",
         "mobilePlayAnswer": "Sí,  está totalmente optimizado para jugar en móviles. En dispositivos con pantalla táctil, puedes tocar los lados izquierdo y derecho de la pantalla para controlar las piernas de tu corredor.",
         "howToImprove": "¿Cómo puedo mejorar mis tiempos en ?",
@@ -117,7 +109,6 @@
     "cta": {
         "readyToJoin": "¿Listo para unirte al Campeonato ?",
         "ctaDescription": "Experimenta la emoción de los sprints basados en la física en este juego online gratuito. Sin descargas, sin restricciones, ¡solo diversión instantánea! Desafía a tus amigos, representa a tu país y sube en las tablas de clasificación globales.",
-        "playSpeedStarsNow": "¡Juega  Ahora - Es Gratis!",
         "loadingGame": "Cargando juego..."
     },
     "howToPlay": {
@@ -509,8 +500,6 @@
         "categoryGamesTitle": "Juegos de {category} - Juegos Online Gratis",
         "categoryGamesDescription": "Juega juegos de {category} gratis online. Disfruta de nuestra colección de juegos de {category} sin necesidad de descargas.",
         "categoryGamesKeywords": "{category}, juegos, juegos online, juegos gratis, juegos de navegador, juegos de {category}",
-        "speedStarsTitle": "",
-        "speedStarsDescription": " - Tu destino definitivo para juegos online gratuitos. Descubre cientos de juegos que incluyen juegos de carrera, física, puzles y acción. ¡Juega ahora!",
         "speedStarsKeywords": ", juegos online gratis, juegos de navegador, juegos HTML5, juegos de carrera, juegos de física, juegos de puzles, juegos de acción, plataforma de juegos",
         "speedStarsOpenGraphTitle": ": ¡Juega Juegos Online Gratis!",
         "speedStarsOpenGraphDescription": " - Plataforma de Juegos Online Gratis",

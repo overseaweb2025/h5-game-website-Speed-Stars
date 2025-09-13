@@ -49,7 +49,6 @@
         "featuredGames": "Jeux en Vedette",
         "gameNumber": "Jeu {index}",
         "imageFailedToLoad": "Échec du chargement de l'image",
-        "speedStarUnblocked": "Speed Star débloqué",
         "runningGame": ": Jeu de course",
         "playOnlineForFree": "Jouez en ligne gratuitement !",
         "exploreGames": "Explorer les Jeux",
@@ -84,7 +83,6 @@
     },
     "features": {
         "amazingFeatures": "Fonctionnalités Incroyables",
-        "speedStarsDescription": " combine un design visuel minimaliste mais magnifique avec un mouvement satisfaisant basé sur la physique",
         "physicsBasedMechanics": "Mécaniques Basées sur la Physique",
         "physicsDescription": "Ressentez chaque pas et chaque inclinaison avec une physique réaliste qui impacte votre succès",
         "playAnywhere": "Jouez N'importe Où",
@@ -101,14 +99,8 @@
     "faq": {
         "frequentlyAskedQuestions": "Questions Fréquemment Posées",
         "findAnswers": "Trouvez des réponses aux questions courantes sur ",
-        "whatIsSpeedStars": "Qu'est-ce que  ?",
-        "whatIsSpeedStarsAnswer": " est un jeu de sprint basé sur la physique où vous contrôlez un coureur en tapant alternativement pour simuler les mouvements des pieds. Il combine un gameplay rythmique avec des physiques de ragdoll hilarantes pour une expérience divertissante et stimulante.",
-        "isSpeedStarsFree": "Est-ce que  est gratuit ?",
-        "isSpeedStarsFreeAnswer": "Oui,  est entièrement gratuit. Vous pouvez y accéder depuis n'importe quel appareil avec un navigateur web sans aucune restriction.",
         "whatDoesUnblockedMean": "Que signifie 'débloqué' ?",
         "unblockedMeaningAnswer": "Débloqué signifie que vous pouvez jouer au jeu n'importe où, même dans des environnements où les sites de jeux pourraient normalement être restreints.  Débloqué est accessible depuis l'école, le travail ou tout autre endroit.",
-        "speedStarsControls": "Quels sont les contrôles pour  ?",
-        "speedStarsControlsAnswer": "Les contrôles de base sont : Flèche gauche pour déplacer la jambe gauche, Flèche droite pour déplacer la jambe droite, Flèche haut pour se pencher en avant, et Flèche bas pour se pencher en arrière. Maîtriser le rythme de ces contrôles est la clé du succès.",
         "canPlayOnMobile": "Puis-je jouer à  sur des appareils mobiles ?",
         "mobilePlayAnswer": "Oui,  est entièrement optimisé pour le jeu mobile. Sur les appareils à écran tactile, vous pouvez toucher les côtés gauche et droit de l'écran pour contrôler les jambes de votre coureur.",
         "howToImprove": "Comment puis-je améliorer mes temps dans  ?",
@@ -117,7 +109,6 @@
     "cta": {
         "readyToJoin": "Prêt à rejoindre le Championnat  ?",
         "ctaDescription": "Découvrez le frisson du sprint basé sur la physique dans ce jeu en ligne gratuit. Pas de téléchargements, pas de restrictions - juste du plaisir instantané ! Défiez vos amis, représentez votre pays et grimpez dans les classements mondiaux.",
-        "playSpeedStarsNow": "Jouez à  Maintenant - C'est Gratuit !",
         "loadingGame": "Chargement du jeu..."
     },
     "howToPlay": {
@@ -509,8 +500,6 @@
         "categoryGamesTitle": "Jeux de {category} - Jeux en ligne gratuits",
         "categoryGamesDescription": "Jouez gratuitement à des jeux de {category} en ligne. Profitez de notre collection de jeux de {category} sans téléchargement requis.",
         "categoryGamesKeywords": "{category}, jeux, jeux en ligne, jeux gratuits, jeux par navigateur, jeux de {category}",
-        "speedStarsTitle": "",
-        "speedStarsDescription": " - Votre destination ultime pour les jeux en ligne gratuits. Découvrez des centaines de jeux, y compris des jeux de course, de physique, de puzzle et d'action. Jouez maintenant !",
         "speedStarsKeywords": ", jeux en ligne gratuits, jeux par navigateur, jeux HTML5, jeux de course, jeux de physique, jeux de puzzle, jeux d'action, plateforme de jeux",
         "speedStarsOpenGraphTitle": " : Jouez à des jeux en ligne gratuits !",
         "speedStarsOpenGraphDescription": " - Plateforme de jeux en ligne gratuits",
