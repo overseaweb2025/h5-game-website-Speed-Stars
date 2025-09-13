@@ -49,7 +49,6 @@
         "featuredGames": "Mga Tampok na Laro",
         "gameNumber": "Laro {index}",
         "imageFailedToLoad": "Hindi nag-load ang larawan",
-        "speedStarUnblocked": "Speed Star unblocked",
         "startGame": "Simulan ang Laro",
         "runningGame": ": Tumakbong Laro",
         "playOnlineForFree": "Maglaro Online nang Libre!",
@@ -85,7 +84,6 @@
     },
     "features": {
         "amazingFeatures": "Mga Kahanga-hangang Tampok",
-        "speedStarsDescription": "Pinagsasama ng  ang minimalistic ngunit magandang visual design sa nakakatuwang physics-based na paggalaw",
         "physicsBasedMechanics": "Physics-Based Mechanics",
         "physicsDescription": "Damhin ang bawat hakbang at sandalan sa makatotohanang pisika na nakakaapekto sa iyong tagumpay",
         "playAnywhere": "Maglaro Kahit Saan",
@@ -102,14 +100,8 @@
     "faq": {
         "frequentlyAskedQuestions": "Mga Madalas Itanong",
         "findAnswers": "Maghanap ng mga sagot sa mga karaniwang tanong tungkol sa ",
-        "whatIsSpeedStars": "Ano ang ?",
-        "whatIsSpeedStarsAnswer": "Ang  ay isang physics-based na sprinting game kung saan kinokontrol mo ang isang runner sa pamamagitan ng pag-tap nang salitan upang gayahin ang paggalaw ng paa. Pinagsasama nito ang rhythm gameplay sa nakakatuwang ragdoll physics para sa isang nakakaaliw at mapaghamong karanasan.",
-        "isSpeedStarsFree": "Libre ba ang  upang laruin?",
-        "isSpeedStarsFreeAnswer": "Oo, ang  ay ganap na libre upang laruin online. Maaari mo itong ma-access mula sa anumang device na may web browser nang walang anumang paghihigpit.",
         "whatDoesUnblockedMean": "Ano ang ibig sabihin ng 'unblocked'?",
         "unblockedMeaningAnswer": "Ang unblocked ay nangangahulugang maaari mong laruin ang laro kahit saan, kahit sa mga kapaligiran kung saan karaniwang pinaghihigpitan ang mga gaming website. Ang  Unblocked ay accessible mula sa paaralan, trabaho, o anumang iba pang lokasyon.",
-        "speedStarsControls": "Ano ang mga kontrol para sa ?",
-        "speedStarsControlsAnswer": "Ang mga pangunahing kontrol ay: Kaliwang Arrow upang igalaw ang kaliwang binti, Kanan Arrow upang igalaw ang kanang binti, Up Arrow upang sumandalan pasulong, at Down Arrow upang sumandalan paatras. Ang pagiging dalubhasa sa ritmo ng mga kontrol na ito ay susi sa tagumpay.",
         "canPlayOnMobile": "Maaari ko bang laruin ang  sa mga mobile device?",
         "mobilePlayAnswer": "Oo, ang  ay ganap na na-optimize para sa paglalaro sa mobile. Sa mga touchscreen device, maaari mong i-tap ang kaliwa at kanang bahagi ng screen upang kontrolin ang mga binti ng iyong runner.",
         "howToImprove": "Paano ko pagbubutihin ang aking mga oras sa ?",
@@ -118,7 +110,6 @@
     "cta": {
         "readyToJoin": "Handa ka na bang Sumali sa  Championship?",
         "ctaDescription": "Damhin ang kilig ng physics-based sprinting sa libreng online na larong ito. Walang pag-download, walang paghihigpit - instant fun lang! Hamunin ang mga kaibigan, katawanin ang iyong bansa, at umakyat sa global leaderboards.",
-        "playSpeedStarsNow": "Maglaro ng  Ngayon - Ito'y Libre!",
         "loadingGame": "Naglo-load ng Laro..."
     },
     "howToPlay": {
@@ -930,8 +921,6 @@
         "categoryGamesTitle": "{category} na mga Laro - Libreng Online na Laro",
         "categoryGamesDescription": "Maglaro ng libreng {category} na mga laro online. Tangkilikin ang aming koleksyon ng {category} na mga laro nang walang kinakailangang pag-download.",
         "categoryGamesKeywords": "{category}, mga laro, online na mga laro, libreng mga laro, mga laro ng browser, {category} na mga laro",
-        "speedStarsTitle": "",
-        "speedStarsDescription": " - Ang iyong ultimate destination para sa libreng online na mga laro. Tuklasin ang daan-daang laro kabilang ang pagtakbo, physics, puzzle, at mga laro ng aksyon. Maglaro na ngayon!",
         "speedStarsKeywords": ", libreng online na mga laro, mga laro ng browser, mga HTML5 na laro, mga laro ng pagtakbo, mga laro ng physics, mga laro ng puzzle, mga laro ng aksyon, gaming platform",
         "speedStarsOpenGraphTitle": ": Maglaro ng Libreng Online na Laro!",
         "speedStarsOpenGraphDescription": " - Libreng Online na Platform ng Laro",

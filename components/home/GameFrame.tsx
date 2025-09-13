@@ -46,7 +46,7 @@ export default function GameFrame({ homeData, iframeHeight, t }: GameFrameProps)
         <iframe
           ref={setIframeRef}
           src={homeData?.game?.package?.url || heroData.gameIframeSrc}
-          title={homeData?.title || 'Free Game' || t?.hero?.speedStarUnblocked || " Game"}
+          title={homeData?.title || 'Free Game' || " Game"}
           className="absolute top-0 left-0 w-full h-full border-0"
           style={{
             backgroundColor: '#000',

@@ -24,7 +24,7 @@ export default function GameplaySection({ t }: GameplaySectionProps = {}) {
             <div className="relative rounded-xl overflow-hidden shadow-xl">
               <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/speed-stars-256-WkiY3oyGGYwPUIiBOFmpVGgoN2Y4vu.webp"
-                alt={t?.hero?.speedStarUnblocked || " gameplay showing runners racing on a red track with time display"}
+                alt={" gameplay showing runners racing on a red track with time display"}
                 width={800}
                 height={450}
                 className="w-full h-auto"

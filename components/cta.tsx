@@ -60,7 +60,7 @@ export default function CTA({ t }: CTAProps = {}) {
               href="#"
               onClick={scrollToGame}
               className="bg-gradient-to-r from-primary to-accent-2 hover:from-accent-2 hover:to-primary text-white font-black py-4 px-10 rounded-full transition-all transform hover:scale-110 hover:rotate-3 shadow-cartoon-lg text-center inline-flex items-center justify-center min-w-[250px] text-xl border-4 border-white jello"
-              aria-label={isLoading ? (t?.cta?.loadingGame || "Loading game...") : (t?.cta?.playSpeedStarsNow || "Play  Now")}
+              aria-label={isLoading ? (t?.cta?.loadingGame || "Loading game...") : ("Play  Now")}
             >
               {isLoading ? (
                 <>
@@ -68,7 +68,7 @@ export default function CTA({ t }: CTAProps = {}) {
                   {t?.cta?.loadingGame || "Loading Game..."}
                 </>
               ) : (
-                {t?.cta?.playSpeedStarsNow || "Play  Now - It's Free!"}
+                "Play  Now - It's Free!"
               )}
             </Link>
           </div>
@@ -77,7 +77,7 @@ export default function CTA({ t }: CTAProps = {}) {
             <div className="relative h-[300px] w-full transform hover:scale-105 transition-transform">
               <Image
                 src="https://play-lh.googleusercontent.com/034GbR6y0xK4StG-uiYgc9bL2ZhiOA8ktcLjIUF0pNmMovpGwF8hXYBbd8zGG-TQCbxx=w526-h296-rw"
-                alt={t?.hero?.speedStarUnblocked || " game screenshot"}
+                alt={"game screenshot"}
                 fill
                 className="object-contain swing"
               />

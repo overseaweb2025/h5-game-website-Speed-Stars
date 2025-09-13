@@ -51,7 +51,6 @@
         "featuredGames": "Featured Games",
         "gameNumber": "Game {index}",
         "imageFailedToLoad": "Image failed to load",
-        "speedStarUnblocked": "Speed Star unblocked",
         "startGame": "Start Game",
         "runningGame": ": Running Game",
         "playOnlineForFree": "Play Online for Free!",
@@ -87,7 +86,6 @@
     },
     "features": {
         "amazingFeatures": "Amazing Features",
-        "speedStarsDescription": " combines minimalistic yet beautiful visual design with satisfying physics-based movement",
         "physicsBasedMechanics": "Physics-Based Mechanics",
         "physicsDescription": "Feel every step and lean with realistic physics that impact your success",
         "playAnywhere": "Play Anywhere",
@@ -104,14 +102,8 @@
     "faq": {
         "frequentlyAskedQuestions": "Frequently Asked Questions",
         "findAnswers": "Find answers to common questions about ",
-        "whatIsSpeedStars": "What is ?",
-        "whatIsSpeedStarsAnswer": " is a physics-based sprinting game where you control a runner by tapping alternately to simulate foot movements. It combines rhythm gameplay with hilarious ragdoll physics for an entertaining and challenging experience.",
-        "isSpeedStarsFree": "Is  free to play?",
-        "isSpeedStarsFreeAnswer": "Yes,  is completely free to play online. You can access it from any device with a web browser without any restrictions.",
         "whatDoesUnblockedMean": "What does 'unblocked' mean?",
         "unblockedMeaningAnswer": "Unblocked means you can play the game anywhere, even in environments where gaming websites might typically be restricted.  Unblocked is accessible from school, work, or any other location.",
-        "speedStarsControls": "What are the controls for ?",
-        "speedStarsControlsAnswer": "The basic controls are: Left Arrow to move the left leg, Right Arrow to move the right leg, Up Arrow to lean forward, and Down Arrow to lean backward. Mastering the rhythm of these controls is key to success.",
         "canPlayOnMobile": "Can I play  on mobile devices?",
         "mobilePlayAnswer": "Yes,  is fully optimized for mobile play. On touchscreen devices, you can tap the left and right sides of the screen to control your runner's legs.",
         "howToImprove": "How do I improve my times in ?",
@@ -120,7 +112,6 @@
     "cta": {
         "readyToJoin": "Ready to Join the  Championship?",
         "ctaDescription": "Experience the thrill of physics-based sprinting in this free online game. No downloads, no restrictions - just instant fun! Challenge friends, represent your country, and climb the global leaderboards.",
-        "playSpeedStarsNow": "Play  Now - It's Free!",
         "loadingGame": "Loading Game..."
     },
     "howToPlay": {
@@ -932,8 +923,6 @@
         "categoryGamesTitle": "{category} Games - Free Online Games",
         "categoryGamesDescription": "Play free {category} games online. Enjoy our collection of {category} games with no downloads required.",
         "categoryGamesKeywords": "{category}, games, online games, free games, browser games, {category} games",
-        "speedStarsTitle": "",
-        "speedStarsDescription": " - Your ultimate destination for free online games. Discover hundreds of games including running, physics, puzzle, and action games. Play now!",
         "speedStarsKeywords": ", free online games, browser games, HTML5 games, running games, physics games, puzzle games, action games, gaming platform",
         "speedStarsOpenGraphTitle": ": Play Free Online Games!",
         "speedStarsOpenGraphDescription": " - Free Online Games Platform",

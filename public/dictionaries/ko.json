@@ -51,7 +51,6 @@
         "featuredGames": "추천 게임",
         "gameNumber": "게임 {index}",
         "imageFailedToLoad": "이미지 불러오기 실패",
-        "speedStarUnblocked": "Speed Star 차단 해제됨",
         "startGame": "게임 시작",
         "runningGame": ": 게임 실행 중",
         "playOnlineForFree": "온라인에서 무료로 플레이하세요!",
@@ -87,7 +86,6 @@
     },
     "features": {
         "amazingFeatures": "놀라운 기능",
-        "speedStarsDescription": "Speed Stars는 미니멀하지만 아름다운 시각적 디자인과 만족스러운 물리 기반 움직임을 결합했습니다.",
         "physicsBasedMechanics": "물리 기반 메커니즘",
         "physicsDescription": "현실적인 물리학이 성공에 영향을 미치는 모든 발걸음과 기울임을 느껴보세요.",
         "playAnywhere": "어디서든 플레이",
@@ -104,14 +102,8 @@
     "faq": {
         "frequentlyAskedQuestions": "자주 묻는 질문",
         "findAnswers": "Speed Stars에 대한 일반적인 질문에 대한 답변을 찾아보세요.",
-        "whatIsSpeedStars": "Speed Stars는 무엇인가요?",
-        "whatIsSpeedStarsAnswer": "Speed Stars는 발 움직임을 시뮬레이션하기 위해 번갈아 탭하여 러너를 제어하는 물리 기반 스프린트 게임입니다. 리듬 게임플레이와 우스꽝스러운 래그돌 물리학이 결합되어 재미있고 도전적인 경험을 제공합니다.",
-        "isSpeedStarsFree": "Speed Stars는 무료로 플레이할 수 있나요?",
-        "isSpeedStarsFreeAnswer": "네, Speed Stars는 온라인에서 완전히 무료로 플레이할 수 있습니다. 어떤 장치에서든 웹 브라우저를 통해 제한 없이 접속할 수 있습니다.",
         "whatDoesUnblockedMean": "'차단 해제됨'은 무슨 의미인가요?",
         "unblockedMeaningAnswer": "'차단 해제됨'은 게임 웹사이트가 일반적으로 제한될 수 있는 환경에서도 어디서든 게임을 플레이할 수 있음을 의미합니다.  Unblocked는 학교, 직장 또는 기타 모든 장소에서 접근할 수 있습니다.",
-        "speedStarsControls": "Speed Stars의 컨트롤은 무엇인가요?",
-        "speedStarsControlsAnswer": "기본 컨트롤은 다음과 같습니다: 왼쪽 화살표는 왼쪽 다리 움직이기, 오른쪽 화살표는 오른쪽 다리 움직이기, 위쪽 화살표는 앞으로 기울이기, 아래쪽 화살표는 뒤로 기울이기입니다. 이 컨트롤들의 리듬을 마스터하는 것이 성공의 열쇠입니다.",
         "canPlayOnMobile": "모바일 장치에서 Speed Stars를 플레이할 수 있나요?",
         "mobilePlayAnswer": "네, Speed Stars는 모바일 플레이에 완벽하게 최적화되어 있습니다. 터치스크린 장치에서는 화면의 왼쪽과 오른쪽을 탭하여 러너의 다리를 제어할 수 있습니다.",
         "howToImprove": "Speed Stars에서 기록을 향상시키려면 어떻게 해야 하나요?",
@@ -120,7 +112,6 @@
     "cta": {
         "readyToJoin": " 챔피언십에 참여할 준비가 되셨나요?",
         "ctaDescription": "이 무료 온라인 게임에서 물리 기반 스프린트의 스릴을 경험하세요. 다운로드도, 제한도 없이 즉각적인 재미를 선사합니다! 친구에게 도전하고, 국가를 대표하며, 글로벌 순위표를 오르세요.",
-        "playSpeedStarsNow": "지금  플레이하기 - 무료입니다!",
         "loadingGame": "게임 불러오는 중..."
     },
     "howToPlay": {
@@ -931,8 +922,6 @@
         "categoryGamesTitle": "{category} 게임 - 무료 온라인 게임",
         "categoryGamesDescription": "무료 {category} 게임을 온라인으로 플레이하세요. 다운로드 없이 저희 {category} 게임 컬렉션을 즐기세요.",
         "categoryGamesKeywords": "{category}, 게임, 온라인 게임, 무료 게임, 브라우저 게임, {category} 게임",
-        "speedStarsTitle": "",
-        "speedStarsDescription": " - 무료 온라인 게임을 위한 궁극적인 목적지. 달리기, 물리, 퍼즐, 액션 게임 등 수백 가지 게임을 찾아보세요. 지금 플레이하세요!",
         "speedStarsKeywords": ", 무료 온라인 게임, 브라우저 게임, HTML5 게임, 달리기 게임, 물리 게임, 퍼즐 게임, 액션 게임, 게임 플랫폼",
         "speedStarsOpenGraphTitle": ": 무료 온라인 게임 플레이!",
         "speedStarsOpenGraphDescription": " - 무료 온라인 게임 플랫폼",

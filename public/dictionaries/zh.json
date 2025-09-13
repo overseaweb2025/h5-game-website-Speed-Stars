@@ -77,7 +77,6 @@
         "featuredGames": "特色游戏",
         "gameNumber": "游戏 {index}",
         "imageFailedToLoad": "图片加载失败",
-        "speedStarUnblocked": "速度之星已解锁",
         "startGame": "开始游戏",
         "runningGame": "：跑步游戏",
         "playOnlineForFree": "免费在线玩！",
@@ -113,7 +112,6 @@
     },
     "features": {
         "amazingFeatures": "惊人特色",
-        "speedStarsDescription": "《速度之星》将极简而精美的视觉设计与令人满意的物理驱动移动相结合",
         "physicsBasedMechanics": "基于物理的机制",
         "physicsDescription": "通过真实的物理效果感受每一步和倾斜，影响您的成功",
         "playAnywhere": "随时随地玩",
@@ -130,14 +128,8 @@
     "faq": {
         "frequentlyAskedQuestions": "常见问题",
         "findAnswers": "查找有关《速度之星》常见问题的答案",
-        "whatIsSpeedStars": "什么是《速度之星》？",
-        "whatIsSpeedStarsAnswer": "《速度之星》是一款基于物理的冲刺游戏，您通过交替点击来模拟脚部动作控制跑步者。它结合了节奏玩法和搞笑的布娃娃物理效果，带来娱乐性和挑战性的体验。",
-        "isSpeedStarsFree": "《速度之星》是免费游戏吗？",
-        "isSpeedStarsFreeAnswer": "是的，《速度之星》完全免费在线玩。您可以通过任何带有网页浏览器的设备访问它，没有任何限制。",
         "whatDoesUnblockedMean": "“无阻碍”是什么意思？",
         "unblockedMeaningAnswer": "无阻碍意味着您可以在任何地方玩游戏，即使在通常会限制游戏网站的环境中。《速度之星》无阻碍可在学校、工作或任何其他地方访问。",
-        "speedStarsControls": "《速度之星》的控制方式是什么？",
-        "speedStarsControlsAnswer": "基本控制是：左箭头控制左腿，右箭头控制右腿，上箭头向前倾斜，下箭头向后倾斜。掌握这些控制的节奏是成功的关键。",
         "canPlayOnMobile": "我可以在移动设备上玩《速度之星》吗？",
         "mobilePlayAnswer": "是的，《速度之星》已完全针对移动设备进行了优化。在触摸屏设备上，您可以点击屏幕的左右两侧来控制跑步者的腿。",
         "howToImprove": "我如何在《速度之星》中提高我的时间？",
@@ -146,7 +138,6 @@
     "cta": {
         "readyToJoin": "准备好加入速度之星锦标赛了吗？",
         "ctaDescription": "在这款免费在线游戏中体验基于物理的冲刺的刺激。无需下载，没有限制——只有即时乐趣！挑战朋友，代表您的国家，并登上全球排行榜。",
-        "playSpeedStarsNow": "立即玩《速度之星》——免费！",
         "loadingGame": "正在加载游戏..."
     },
     "howToPlay": {
@@ -859,8 +850,6 @@
         "categoryGamesTitle": "{category} 游戏 - 免费在线游戏",
         "categoryGamesDescription": "免费在线玩 {category} 游戏。享受我们的 {category} 游戏合集，无需下载。",
         "categoryGamesKeywords": "{category}, 游戏, 在线游戏, 免费游戏, 浏览器游戏, {category} 游戏",
-        "speedStarsTitle": "速度之星",
-        "speedStarsDescription": "速度之星 - 您免费在线游戏的终极目的地。发现数百款游戏，包括跑步、物理、益智和动作游戏。立即玩！",
         "speedStarsKeywords": "速度之星，免费在线游戏，浏览器游戏，HTML5 游戏，跑步游戏，物理游戏，益智游戏，动作游戏，游戏平台",
         "speedStarsOpenGraphTitle": "速度之星：免费在线玩游戏！",
         "speedStarsOpenGraphDescription": "速度之星 - 免费在线游戏平台",

@@ -51,7 +51,6 @@
         "featuredGames": "注目のゲーム",
         "gameNumber": "ゲーム {index}",
         "imageFailedToLoad": "画像の読み込みに失敗しました",
-        "speedStarUnblocked": "スピードスター アンブロック",
         "startGame": "ゲームを始める",
         "runningGame": ": ゲーム実行中",
         "playOnlineForFree": "無料でオンラインでプレイ！",
@@ -87,7 +86,6 @@
     },
     "features": {
         "amazingFeatures": "素晴らしい特徴",
-        "speedStarsDescription": "スピードスターは、ミニマリズムでありながら美しいビジュアルデザインと、満足のいく物理ベースの動きを組み合わせています",
         "physicsBasedMechanics": "物理ベースのメカニズム",
         "physicsDescription": "あなたの成功に影響を与えるリアルな物理学で、すべての一歩と傾きを感じてください",
         "playAnywhere": "どこでもプレイ",
@@ -104,14 +102,8 @@
     "faq": {
         "frequentlyAskedQuestions": "よくある質問",
         "findAnswers": "スピードスターに関する一般的な質問への回答を見つける",
-        "whatIsSpeedStars": "スピードスターとは何ですか？",
-        "whatIsSpeedStarsAnswer": "スピードスターは、交互にタップして足の動きをシミュレートするランナーを操作する、物理ベースのスプリントゲームです。リズムゲームプレイとコミカルなラグドール物理学を組み合わせて、面白くてやりがいのある体験を提供します。",
-        "isSpeedStarsFree": "スピードスターは無料でプレイできますか？",
-        "isSpeedStarsFreeAnswer": "はい、スピードスターは完全に無料でオンラインでプレイできます。制限なく、ウェブブラウザを備えたどのデバイスからでもアクセスできます。",
         "whatDoesUnblockedMean": "'アンブロック'とはどういう意味ですか？",
         "unblockedMeaningAnswer": "アンブロックとは、通常ゲームウェブサイトが制限される環境でも、どこでもゲームをプレイできることを意味します。スピードスター アンブロックは、学校、職場、または他の場所からアクセスできます。",
-        "speedStarsControls": "スピードスターの操作方法は何ですか？",
-        "speedStarsControlsAnswer": "基本的な操作は、左矢印で左足を動かし、右矢印で右足を動かし、上矢印で前傾し、下矢印で後傾します。これらの操作のリズムをマスターすることが成功の鍵です。",
         "canPlayOnMobile": "モバイルデバイスでスピードスターをプレイできますか？",
         "mobilePlayAnswer": "はい、スピードスターはモバイルプレイに完全に最適化されています。タッチスクリーンデバイスでは、画面の左右をタップしてランナーの足を制御できます。",
         "howToImprove": "スピードスターでタイムを改善するにはどうすればよいですか？",
@@ -120,7 +112,6 @@
     "cta": {
         "readyToJoin": "スピードスター選手権に参加する準備はできましたか？",
         "ctaDescription": "この無料オンラインゲームで、物理ベースのスプリントのスリルを体験してください。ダウンロード不要、制限なし - すぐに楽しめます！友達に挑戦し、あなたの国を代表し、グローバルリーダーボードを駆け上がりましょう。",
-        "playSpeedStarsNow": "今すぐスピードスターをプレイ - 無料です！",
         "loadingGame": "ゲームを読み込み中..."
     },
     "howToPlay": {
@@ -932,8 +923,6 @@
         "categoryGamesTitle": "{category}ゲーム - 無料オンラインゲーム",
         "categoryGamesDescription": "無料で{category}ゲームをオンラインでプレイ。ダウンロード不要で、私たちの{category}ゲームのコレクションをお楽しみください。",
         "categoryGamesKeywords": "{category}, ゲーム, オンラインゲーム, 無料ゲーム, ブラウザゲーム, {category}ゲーム",
-        "speedStarsTitle": "スピードスター",
-        "speedStarsDescription": "スピードスター - 無料オンラインゲームのための究極の目的地。ランニング、物理学、パズル、アクションゲームなど、何百ものゲームを発見。今すぐプレイ！",
         "speedStarsKeywords": "スピードスター, 無料オンラインゲーム, ブラウザゲーム, HTML5ゲーム, ランニングゲーム, 物理ゲーム, パズルゲーム, アクションゲーム, ゲームプラットフォーム",
         "speedStarsOpenGraphTitle": "スピードスター: 無料オンラインゲームをプレイ！",
         "speedStarsOpenGraphDescription": "スピードスター - 無料オンラインゲームプラットフォーム",
