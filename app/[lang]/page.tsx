@@ -18,6 +18,7 @@ async function fetchHomeSEO(lang: string) {
   const FALLBACK = { title: 'Free Game', description: 'Free Game', keywords: 'Free Game' };
   try {
     const res = await fetch(`${API_BASE_URL}/api/v1/index/show?lang=${lang}`, { next: { revalidate } });
+    console.log(res)
     const json = await res.json();
     const d = json?.data ?? {};
     return {
