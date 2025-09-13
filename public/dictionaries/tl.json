@@ -147,8 +147,6 @@
         "refresh": "I-refresh",
         "loadingGames": "Naglo-load ng mga laro...",
         "retry": "Subukang muli",
-        "speedStars": "",
-        "speedStars2": " 2",
         "crazyCattle3D": "Crazy Cattle 3D",
         "racingGame": "Laro ng Karera",
         "puzzleAdventure": "Pakikipagsapalaran sa Palaisipan",
@@ -187,24 +185,10 @@
         "codeLevelFailures": "Mga Pagkabigo sa Code-Level | Opisyal na Suporta sa Laro",
         "hardwareLimits": "Mga Limitasyon sa Hardware |  Certified",
         "freeH5GameUnblockGuide": "Libreng H5 Game Unblock Guide",
-        "officialSpeedStarsSupport": "Opisyal na Suporta ng :",
-        "causes": "Mga Sanhi:",
-        "speedStarsOfficialFixes": "Mga Opisyal na Pag-aayos ng :",
-        "speedStarsSolutions": "Mga Solusyon ng :",
-        "speedStarsFixes": "Mga Pag-aayos ng :",
-        "speedStarsProTips": "Mga Pro Tips ng :"
+        "causes": "Mga Sanhi:"
     },
-    "speedStarsSection": {
-        "aboutSpeedStars": "Tungkol sa ",
-        "raceRankReach": ": Karera, Ranggo, at Abutin ang Kampeon!",
-        "speedStarsUnblockedPlayFree": " Unblocked - Maglaro nang Libre Online",
-        "physicsBasedGameplay": "#Gameplay Batay sa Pisika",
-        "freeOnline": "#Libre Online",
-        "unblocked": "#Unblocked",
-        "competitive": "#Mapagkumpitensya"
-    },
+
     "gameplaySection": {
-        "speedStarsGameplay": "Gameplay ng ",
         "controlsAndMechanics": "Mga Kontrol at Mekanika",
         "controlGuide": "Gabay sa Kontrol:",
         "raceTypesAndChallenges": "Mga Uri ng Karera at Hamon",
@@ -230,7 +214,6 @@
         "clearAll": "I-clear Lahat"
     },
     "diagnostic": {
-        "speedStarsGameDiagnostic": " Game Diagnostic Tool",
         "questionNumber": "Tanong {number} ng {total}",
         "percentComplete": "% Kumpleto",
         "runAnotherDiagnostic": "Magpatakbo ng Iba pang Diagnostic",
@@ -338,7 +321,6 @@
         "title": " Blog: Balita, Tips at Updates | Libreng Online Games",
 "description": "Manatiling nangunguna sa  Blog. Kunin ang pinakabagong balita sa laro, mga pro tips, gabay sa diskarte, at mga update para sa mas mahusay na karanasan.",
 "keywords": "blog ng libreng online games, balita sa laro, tips sa paglalaro, diskarte sa laro, HTML5, unblocked na laro, pagsusuri sa laro, update, blog ng ",
-        "speedStarsBlog": " Blog | Game News, Tips & Updates",
         "officialBlog": "Opisyal na Blog ng ",
         "officialSource": "Ang iyong opisyal na source para sa balita ng , mga diskarte sa laro, at ang pinakabago sa unblocked gaming!",
         "trendingNow": "Trending Ngayon",
@@ -921,16 +903,10 @@
         "categoryGamesTitle": "{category} na mga Laro - Libreng Online na Laro",
         "categoryGamesDescription": "Maglaro ng libreng {category} na mga laro online. Tangkilikin ang aming koleksyon ng {category} na mga laro nang walang kinakailangang pag-download.",
         "categoryGamesKeywords": "{category}, mga laro, online na mga laro, libreng mga laro, mga laro ng browser, {category} na mga laro",
-        "speedStarsKeywords": ", libreng online na mga laro, mga laro ng browser, mga HTML5 na laro, mga laro ng pagtakbo, mga laro ng physics, mga laro ng puzzle, mga laro ng aksyon, gaming platform",
-        "speedStarsOpenGraphTitle": ": Maglaro ng Libreng Online na Laro!",
-        "speedStarsOpenGraphDescription": " - Libreng Online na Platform ng Laro",
-        "speedStarsApplicationName": " Games",
-        "speedStarsApplicationCategory": "Laro",
         "excitingHTML5Games": "Mga Kapanapanabik na HTML5 na Laro para sa Lahat"
     },
     "meta": {
-        "iconText": "S",
-        "speedStars": ""
+        "iconText": "S"
     },
     "search": {
         "results": "Mga Resulta ng Paghahanap",

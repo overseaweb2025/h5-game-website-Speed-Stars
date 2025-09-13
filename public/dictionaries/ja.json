@@ -129,7 +129,6 @@
     },
     "games": {
         "title": "無料オンラインゲーム - ",
-"description": "Speed Starsで膨大な無料オンラインゲームのコレクションをプレイしましょう。アクション満載の冒険から頭の体操になるパズルまで、次のお気に入りゲームがすぐに見つかります。",
 "keywords": "無料オンラインゲーム, ブラウザゲーム, HTML5ゲーム, アクションゲーム, パズルゲーム, スポーツゲーム, レースゲーム, , オンラインゲームをプレイ",
         "gameCollection": "🎮 ゲームコレクション",
         "html5Game": "HTML5ゲーム",
@@ -149,8 +148,6 @@
         "refresh": "更新",
         "loadingGames": "ゲームを読み込み中...",
         "retry": "再試行",
-        "speedStars": "スピードスター",
-        "speedStars2": "スピードスター2",
         "crazyCattle3D": "クレイジーキャトル3D",
         "racingGame": "レーシングゲーム",
         "puzzleAdventure": "パズルアドベンチャー",
@@ -189,24 +186,10 @@
         "codeLevelFailures": "コードレベルの失敗 | 公式ゲームサポート",
         "hardwareLimits": "ハードウェアの制限 | スピードスター認定",
         "freeH5GameUnblockGuide": "無料H5ゲーム アンブロックガイド",
-        "officialSpeedStarsSupport": "スピードスター 公式サポート:",
-        "causes": "原因:",
-        "speedStarsOfficialFixes": "スピードスター公式修正:",
-        "speedStarsSolutions": "スピードスターの解決策:",
-        "speedStarsFixes": "スピードスターの修正:",
-        "speedStarsProTips": "スピードスター プロのヒント:"
+        "causes": "原因:"
     },
-    "speedStarsSection": {
-        "aboutSpeedStars": "スピードスターについて",
-        "raceRankReach": "スピードスター: レースして、ランクを上げて、チャンピオンに到達！",
-        "speedStarsUnblockedPlayFree": "スピードスター アンブロック - 無料オンラインプレイ",
-        "physicsBasedGameplay": "#物理ベースのゲームプレイ",
-        "freeOnline": "#無料オンライン",
-        "unblocked": "#アンブロック",
-        "competitive": "#競争"
-    },
+
     "gameplaySection": {
-        "speedStarsGameplay": "スピードスター ゲームプレイ",
         "controlsAndMechanics": "操作とメカニズム",
         "controlGuide": "操作ガイド:",
         "raceTypesAndChallenges": "レースの種類とチャレンジ",
@@ -232,7 +215,6 @@
         "clearAll": "すべてクリア"
     },
     "diagnostic": {
-        "speedStarsGameDiagnostic": "スピードスター ゲーム診断ツール",
         "questionNumber": "質問 {number}/{total}",
         "percentComplete": "% 完了",
         "runAnotherDiagnostic": "別の診断を実行",
@@ -339,8 +321,6 @@
     "blog": {
         "title": " ブログ：ゲームニュース、ヒント、最新情報 | 無料ゲーム",
 "description": " ブログで一歩先を行きましょう。最新のゲームニュース、ヒント、戦略ガイド、最新情報を入手して、より良いゲーム体験を。",
-"keywords": "無料オンラインゲームブログ, ゲームニュース, ゲームのヒント, ゲーム戦略, HTML5ゲーム, ブロック解除されたゲーム, 無料ゲームレビュー, ゲームの最新情報, Speed Starsブログ",
-        "speedStarsBlog": "スピードスター ブログ | ゲームニュース、ヒント、更新情報",
         "officialBlog": "スピードスター 公式ブログ",
         "officialSource": "スピードスターのニュース、ゲーム戦略、アンブロックゲームの最新情報のための公式ソースです！",
         "trendingNow": "今トレンド",
@@ -923,16 +903,10 @@
         "categoryGamesTitle": "{category}ゲーム - 無料オンラインゲーム",
         "categoryGamesDescription": "無料で{category}ゲームをオンラインでプレイ。ダウンロード不要で、私たちの{category}ゲームのコレクションをお楽しみください。",
         "categoryGamesKeywords": "{category}, ゲーム, オンラインゲーム, 無料ゲーム, ブラウザゲーム, {category}ゲーム",
-        "speedStarsKeywords": "スピードスター, 無料オンラインゲーム, ブラウザゲーム, HTML5ゲーム, ランニングゲーム, 物理ゲーム, パズルゲーム, アクションゲーム, ゲームプラットフォーム",
-        "speedStarsOpenGraphTitle": "スピードスター: 無料オンラインゲームをプレイ！",
-        "speedStarsOpenGraphDescription": "スピードスター - 無料オンラインゲームプラットフォーム",
-        "speedStarsApplicationName": "スピードスターゲーム",
-        "speedStarsApplicationCategory": "ゲーム",
         "excitingHTML5Games": "みんなのためのエキサイティングなHTML5ゲーム"
     },
     "meta": {
-        "iconText": "S",
-        "speedStars": "スピードスター"
+        "iconText": "S"
     },
     "search": {
         "results": "検索結果",

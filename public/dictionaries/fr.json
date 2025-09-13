@@ -146,8 +146,6 @@
         "refresh": "Actualiser",
         "loadingGames": "Chargement des jeux...",
         "retry": "Réessayer",
-        "speedStars": "",
-        "speedStars2": " 2",
         "crazyCattle3D": "Crazy Cattle 3D",
         "racingGame": "Jeu de Course",
         "puzzleAdventure": "Aventure Puzzle",
@@ -186,24 +184,10 @@
         "codeLevelFailures": "Défaillances au niveau du code | Support officiel du jeu",
         "hardwareLimits": "Limites matérielles | Certifié ",
         "freeH5GameUnblockGuide": "Guide de déblocage de jeux H5 gratuit",
-        "officialSpeedStarsSupport": "Support officiel de  :",
-        "causes": "Causes :",
-        "speedStarsOfficialFixes": "Correctifs officiels de  :",
-        "speedStarsSolutions": "Solutions  :",
-        "speedStarsFixes": "Correctifs  :",
-        "speedStarsProTips": "Conseils de pro  :"
+        "causes": "Causes :"
     },
-    "speedStarsSection": {
-        "aboutSpeedStars": "À Propos de ",
-        "raceRankReach": " : Course, Classement et Atteignez le Champion !",
-        "speedStarsUnblockedPlayFree": " Débloqué - Jouez Gratuitement en Ligne",
-        "physicsBasedGameplay": "#Gameplay Basé sur la Physique",
-        "freeOnline": "#Gratuit en Ligne",
-        "unblocked": "#Débloqué",
-        "competitive": "#Compétitif"
-    },
+
     "gameplaySection": {
-        "speedStarsGameplay": "Gameplay de ",
         "controlsAndMechanics": "Contrôles et Mécaniques",
         "controlGuide": "Guide de Contrôle :",
         "raceTypesAndChallenges": "Types de Course et Défis",
@@ -229,7 +213,6 @@
         "clearAll": "Tout effacer"
     },
     "diagnostic": {
-        "speedStarsGameDiagnostic": "Outil de Diagnostic de Jeu ",
         "questionNumber": "Question {number} sur {total}",
         "percentComplete": "% Terminé",
         "runAnotherDiagnostic": "Exécuter un Autre Diagnostic",
@@ -329,7 +312,6 @@
         "title": "Blog  : Actualités, Astuces et Mises à Jour | Jeux Gratuits",
 "description": "Gardez une longueur d'avance avec le blog . Obtenez les dernières actualités, astuces de pro et guides de stratégie para une meilleure expérience.",
 "keywords": "blog de jeux en ligne gratuits, actualités des jeux, astuces de jeux, stratégies de jeu, jeux HTML5, jeux débloqués, revues de jeux gratuits, mises à jour, blog ",
-        "speedStarsBlog": "Blog  | Actualités, Astuces et Mises à jour des jeux",
         "officialBlog": "Blog Officiel ",
         "officialSource": "Votre source officielle pour les actualités de , les stratégies de jeu et les dernières nouveautés en matière de jeux débloqués !",
         "trendingNow": "Tendances Actuelles",
@@ -500,16 +482,10 @@
         "categoryGamesTitle": "Jeux de {category} - Jeux en ligne gratuits",
         "categoryGamesDescription": "Jouez gratuitement à des jeux de {category} en ligne. Profitez de notre collection de jeux de {category} sans téléchargement requis.",
         "categoryGamesKeywords": "{category}, jeux, jeux en ligne, jeux gratuits, jeux par navigateur, jeux de {category}",
-        "speedStarsKeywords": ", jeux en ligne gratuits, jeux par navigateur, jeux HTML5, jeux de course, jeux de physique, jeux de puzzle, jeux d'action, plateforme de jeux",
-        "speedStarsOpenGraphTitle": " : Jouez à des jeux en ligne gratuits !",
-        "speedStarsOpenGraphDescription": " - Plateforme de jeux en ligne gratuits",
-        "speedStarsApplicationName": "Jeux ",
-        "speedStarsApplicationCategory": "Jeu",
         "excitingHTML5Games": "Des jeux HTML5 passionnants pour tous"
     },
     "meta": {
-        "iconText": "S",
-        "speedStars": ""
+        "iconText": "S"
     },
     "user": {
         "title": "Profil du Joueur - Fusion Games",

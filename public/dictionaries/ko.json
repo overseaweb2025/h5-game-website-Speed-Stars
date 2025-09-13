@@ -101,12 +101,8 @@
     },
     "faq": {
         "frequentlyAskedQuestions": "자주 묻는 질문",
-        "findAnswers": "Speed Stars에 대한 일반적인 질문에 대한 답변을 찾아보세요.",
         "whatDoesUnblockedMean": "'차단 해제됨'은 무슨 의미인가요?",
         "unblockedMeaningAnswer": "'차단 해제됨'은 게임 웹사이트가 일반적으로 제한될 수 있는 환경에서도 어디서든 게임을 플레이할 수 있음을 의미합니다.  Unblocked는 학교, 직장 또는 기타 모든 장소에서 접근할 수 있습니다.",
-        "canPlayOnMobile": "모바일 장치에서 Speed Stars를 플레이할 수 있나요?",
-        "mobilePlayAnswer": "네, Speed Stars는 모바일 플레이에 완벽하게 최적화되어 있습니다. 터치스크린 장치에서는 화면의 왼쪽과 오른쪽을 탭하여 러너의 다리를 제어할 수 있습니다.",
-        "howToImprove": "Speed Stars에서 기록을 향상시키려면 어떻게 해야 하나요?",
         "improvementTipsAnswer": "연습이 핵심입니다! 리플레이 시스템을 사용하여 성과를 분석하고, 일관된 리듬을 유지하는 데 집중하며, 각 트랙에 대한 최적의 타이밍을 배우세요. 100미터 스프린트에 도전하기 전에 더 짧은 거리부터 시작하세요."
     },
     "cta": {
@@ -149,8 +145,6 @@
         "refresh": "새로고침",
         "loadingGames": "게임 불러오는 중...",
         "retry": "다시 시도",
-        "speedStars": "",
-        "speedStars2": " 2",
         "crazyCattle3D": "Crazy Cattle 3D",
         "racingGame": "레이싱 게임",
         "puzzleAdventure": "퍼즐 어드벤처",
@@ -189,24 +183,10 @@
         "codeLevelFailures": "코드 수준 오류 | 공식 게임 지원",
         "hardwareLimits": "하드웨어 한계 |  인증됨",
         "freeH5GameUnblockGuide": "무료 H5 게임 차단 해제 가이드",
-        "officialSpeedStarsSupport": "공식  지원:",
-        "causes": "원인:",
-        "speedStarsOfficialFixes": " 공식 해결책:",
-        "speedStarsSolutions": " 솔루션:",
-        "speedStarsFixes": " 수정사항:",
-        "speedStarsProTips": " 프로 팁:"
+        "causes": "원인:"
     },
-    "speedStarsSection": {
-        "aboutSpeedStars": " 소개",
-        "raceRankReach": ": 레이스, 순위, 그리고 챔피언에 도달하세요!",
-        "speedStarsUnblockedPlayFree": " 차단 해제 - 무료 온라인 플레이",
-        "physicsBasedGameplay": "#물리 기반 게임플레이",
-        "freeOnline": "#무료 온라인",
-        "unblocked": "#차단 해제됨",
-        "competitive": "#경쟁적"
-    },
+
     "gameplaySection": {
-        "speedStarsGameplay": " 게임플레이",
         "controlsAndMechanics": "컨트롤 및 메커니즘",
         "controlGuide": "컨트롤 가이드:",
         "raceTypesAndChallenges": "레이스 유형 및 도전 과제",
@@ -232,7 +212,6 @@
         "clearAll": "모두 지우기"
     },
     "diagnostic": {
-        "speedStarsGameDiagnostic": " 게임 진단 도구",
         "questionNumber": "질문 {number}/{total}",
         "percentComplete": "% 완료",
         "runAnotherDiagnostic": "다른 진단 실행",
@@ -340,7 +319,6 @@
         "title": "스피드 스타즈 블로그: 게임 뉴스, 팁 및 업데이트 | 무료 게임",
 "description": "스피드 스타즈 블로그와 함께 앞서가세요. 최신 게임 뉴스, 프로 팁, 전략 가이드 및 플랫폼 업데이트를 통해 더 나은 경험을 얻으세요。",
 "keywords": "무료 온라인 게임 블로그, 게임 뉴스, 게임 팁, 게임 전략, HTML5 게임, 차단되지 않은 게임, 무료 게임 리뷰, 게임 업데이트, 스피드 스타즈 블로그",
-        "speedStarsBlog": " 블로그 | 게임 소식, 팁 및 업데이트",
         "officialBlog": " 공식 블로그",
         "officialSource": " 소식, 게임 전략, 최신 차단 해제 게임에 대한 공식 정보원!",
         "trendingNow": "지금 인기",
@@ -922,16 +900,10 @@
         "categoryGamesTitle": "{category} 게임 - 무료 온라인 게임",
         "categoryGamesDescription": "무료 {category} 게임을 온라인으로 플레이하세요. 다운로드 없이 저희 {category} 게임 컬렉션을 즐기세요.",
         "categoryGamesKeywords": "{category}, 게임, 온라인 게임, 무료 게임, 브라우저 게임, {category} 게임",
-        "speedStarsKeywords": ", 무료 온라인 게임, 브라우저 게임, HTML5 게임, 달리기 게임, 물리 게임, 퍼즐 게임, 액션 게임, 게임 플랫폼",
-        "speedStarsOpenGraphTitle": ": 무료 온라인 게임 플레이!",
-        "speedStarsOpenGraphDescription": " - 무료 온라인 게임 플랫폼",
-        "speedStarsApplicationName": " 게임",
-        "speedStarsApplicationCategory": "게임",
         "excitingHTML5Games": "모두를 위한 흥미로운 HTML5 게임"
     },
     "meta": {
-        "iconText": "S",
-        "speedStars": ""
+        "iconText": "S"
     },
     "search": {
         "results": "검색 결과",

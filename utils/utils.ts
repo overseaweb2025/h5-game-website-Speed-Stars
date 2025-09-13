@@ -6,6 +6,14 @@ function replaceHeadingsWithP(html: string): string {
     .replace(/<\/h[1-6]>/gi, "</p>");
 }
 
+function downgradeHeadings(html: string): string {
+  return html.replace(/<h([1-6])(.*?)>(.*?)<\/h\1>/gi, (match, level, attrs, content) => {
+    const current = parseInt(level, 10);
+    const newLevel = current < 6 ? current + 1 : 6; // h6 不再降级
+    return `<h${newLevel}${attrs}>${content}</h${newLevel}>`;
+  });
+}
+
 function encodeWithDashSpaceReversible(str: string) {
   const withEscapedHyphen = str.replace(/-/g, "~h~");  // 先把原始连字符转义
   const withDash = withEscapedHyphen.trim().replace(/\s+/g, "-"); // 空白 -> -
@@ -26,5 +34,6 @@ function decodeWithDashSpaceReversible(str: string) {
 export {
   encodeWithDashSpaceReversible,
   decodeWithDashSpaceReversible,
-  replaceHeadingsWithP
+  replaceHeadingsWithP,
+  downgradeHeadings
 }

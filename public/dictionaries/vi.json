@@ -149,8 +149,6 @@
         "refresh": "Refresh",
         "loadingGames": "Loading games...",
         "retry": "Retry",
-        "speedStars": "",
-        "speedStars2": " 2",
         "crazyCattle3D": "Crazy Cattle 3D",
         "racingGame": "Racing Game",
         "puzzleAdventure": "Puzzle Adventure",
@@ -185,28 +183,14 @@
         "topReasonsAndSolutions": "Top Reasons &  Unblock Solutions",
         "browserCompatibility": "Browser Compatibility Issues | Unblock H5 Games",
         "networkErrors": "Network Errors (Most Common) | Free Unblock Tools",
-        "missingRuntimeFeatures": "Missing Runtime Features | Optimize Game Speed",
+        "missingRuntimeFeatures": "Missing Runtime Features | Optimize Game",
         "codeLevelFailures": "Code-Level Failures | Official Game Support",
         "hardwareLimits": "Hardware Limits |  Certified",
         "freeH5GameUnblockGuide": "Free H5 Game Unblock Guide",
-        "officialSpeedStarsSupport": "Official  Support:",
-        "causes": "Causes:",
-        "speedStarsOfficialFixes": " Official Fixes:",
-        "speedStarsSolutions": " Solutions:",
-        "speedStarsFixes": " Fixes:",
-        "speedStarsProTips": " Pro Tips:"
+        "causes": "Causes:"
     },
-    "speedStarsSection": {
-        "aboutSpeedStars": "About ",
-        "raceRankReach": ": Race, Rank, and Reach the Champion!",
-        "speedStarsUnblockedPlayFree": " Unblocked - Play Free Online",
-        "physicsBasedGameplay": "#Physics-Based Gameplay",
-        "freeOnline": "#Free Online",
-        "unblocked": "#Unblocked",
-        "competitive": "#Competitive"
-    },
+
     "gameplaySection": {
-        "speedStarsGameplay": " Gameplay",
         "controlsAndMechanics": "Controls & Mechanics",
         "controlGuide": "Control Guide:",
         "raceTypesAndChallenges": "Race Types & Challenges",
@@ -232,7 +216,6 @@
         "clearAll": "Clear All"
     },
     "diagnostic": {
-        "speedStarsGameDiagnostic": " Game Diagnostic Tool",
         "questionNumber": "Question {number} of {total}",
         "percentComplete": "% Complete",
         "runAnotherDiagnostic": "Run Another Diagnostic",
@@ -340,7 +323,6 @@
         "title": "Blog : Tin tức Game, Mẹo & Cập nhật | Game Miễn phí",
 "description": "Luôn đi đầu với Blog . Nhận tin tức game mới nhất, mẹo chuyên nghiệp, hướng dẫn chiến lược và cập nhật nền tảng để có trải nghiệm tốt hơn.",
 "keywords": "blog game online miễn phí, tin tức game, mẹo chơi game, chiến lược game, game HTML5, game không bị chặn, đánh giá game miễn phí, cập nhật game, blog ",
-        "speedStarsBlog": " Blog | Game News, Tips & Updates",
         "officialBlog": " Official Blog",
         "officialSource": "Your official source for  news, game strategies, and the latest in unblocked gaming!",
         "trendingNow": "Trending Now",
@@ -923,16 +905,10 @@
         "categoryGamesTitle": "{category} Games - Free Online Games",
         "categoryGamesDescription": "Play free {category} games online. Enjoy our collection of {category} games with no downloads required.",
         "categoryGamesKeywords": "{category}, games, online games, free games, browser games, {category} games",
-        "speedStarsKeywords": ", free online games, browser games, HTML5 games, running games, physics games, puzzle games, action games, gaming platform",
-        "speedStarsOpenGraphTitle": ": Play Free Online Games!",
-        "speedStarsOpenGraphDescription": " - Free Online Games Platform",
-        "speedStarsApplicationName": " Games",
-        "speedStarsApplicationCategory": "Game",
         "excitingHTML5Games": "Exciting HTML5 Games for Everyone"
     },
     "meta": {
-        "iconText": "S",
-        "speedStars": ""
+        "iconText": "S"
     },
     "search": {
         "results": "Search Results",

@@ -174,8 +174,6 @@
         "refresh": "Refresh",
         "loadingGames": "Loading games...",
         "retry": "Retry",
-        "speedStars": "",
-        "speedStars2": " 2",
         "crazyCattle3D": "Crazy Cattle 3D",
         "racingGame": "Racing Game",
         "puzzleAdventure": "Puzzle Adventure",
@@ -210,28 +208,14 @@
         "topReasonsAndSolutions": "Top Reasons &  Unblock Solutions",
         "browserCompatibility": "Browser Compatibility Issues | Unblock H5 Games",
         "networkErrors": "Network Errors (Most Common) | Free Unblock Tools",
-        "missingRuntimeFeatures": "Missing Runtime Features | Optimize Game Speed",
+        "missingRuntimeFeatures": "Missing Runtime Features | Optimize Game Performance",
         "codeLevelFailures": "Code-Level Failures | Official Game Support",
         "hardwareLimits": "Hardware Limits |  Certified",
         "freeH5GameUnblockGuide": "Free H5 Game Unblock Guide",
-        "officialSpeedStarsSupport": "Official  Support:",
-        "causes": "Causes:",
-        "speedStarsOfficialFixes": " Official Fixes:",
-        "speedStarsSolutions": " Solutions:",
-        "speedStarsFixes": " Fixes:",
-        "speedStarsProTips": " Pro Tips:"
+        "causes": "Causes:"
     },
-    "speedStarsSection": {
-        "aboutSpeedStars": "About ",
-        "raceRankReach": ": Race, Rank, and Reach the Champion!",
-        "speedStarsUnblockedPlayFree": " Unblocked - Play Free Online",
-        "physicsBasedGameplay": "#Physics-Based Gameplay",
-        "freeOnline": "#Free Online",
-        "unblocked": "#Unblocked",
-        "competitive": "#Competitive"
-    },
+
     "gameplaySection": {
-        "speedStarsGameplay": " Gameplay",
         "controlsAndMechanics": "Controls & Mechanics",
         "controlGuide": "Control Guide:",
         "raceTypesAndChallenges": "Race Types & Challenges",
@@ -257,7 +241,6 @@
         "clearAll": "Clear All"
     },
     "diagnostic": {
-        "speedStarsGameDiagnostic": " Game Diagnostic Tool",
         "questionNumber": "Question {number} of {total}",
         "percentComplete": "% Complete",
         "runAnotherDiagnostic": "Run Another Diagnostic",
@@ -365,7 +348,6 @@
         "title": " Blog: Game News, Tips & Updates | Free Online Games",
 "description": "Stay ahead with the  Blog. Get the latest game news, pro tips, strategy guides, and platform updates for a better gaming experience.",
 "keywords": "free online games blog, game news, gaming tips, game strategies, HTML5 games, unblocked games, free game reviews, game updates,  blog",
-        "speedStarsBlog": " Blog | Game News, Tips & Updates",
         "officialBlog": " Official Blog",
         "officialSource": "Your official source for  news, game strategies, and the latest in unblocked gaming!",
         "trendingNow": "Trending Now",
@@ -618,7 +600,6 @@
         "coreValuesDesc": "The principles that guide everything we do at GameHub Central",
         "safetyFirst": "Safety First",
         "safetyFirstDesc": "All games are thoroughly tested and safe for players of all ages",
-        "speedPerformance": "Speed & Performance",
         "speedPerformanceDesc": "Lightning-fast loading times and smooth gameplay experience",
         "globalAccess": "Global Access",
         "globalAccessDesc": "Available worldwide with no geographic restrictions",
@@ -931,16 +912,10 @@
         "categoryGamesTitle": "{category} Games - Free Online Games",
         "categoryGamesDescription": "Play free {category} games online. Enjoy our collection of {category} games with no downloads required.",
         "categoryGamesKeywords": "{category}, games, online games, free games, browser games, {category} games",
-        "speedStarsKeywords": ", free online games, browser games, HTML5 games, running games, physics games, puzzle games, action games, gaming platform",
-        "speedStarsOpenGraphTitle": ": Play Free Online Games!",
-        "speedStarsOpenGraphDescription": " - Free Online Games Platform",
-        "speedStarsApplicationName": " Games",
-        "speedStarsApplicationCategory": "Game",
         "excitingHTML5Games": "Exciting HTML5 Games for Everyone"
     },
     "meta": {
-        "iconText": "S",
-        "speedStars": ""
+        "iconText": "S"
     },
     "search": {
         "results": "Search Results",

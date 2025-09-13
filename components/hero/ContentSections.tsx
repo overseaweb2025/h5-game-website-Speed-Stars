@@ -1,4 +1,5 @@
 import { GameDetails, game } from "@/app/api/types/Get/game"
+import { downgradeHeadings } from "@/utils/utils"
 
 interface ContentSectionsProps {
   game?: game
@@ -36,7 +37,7 @@ const ContentSections = ({ game, gameDetails, homeData, isMobile = false }: Cont
                 <div 
                   className="prose prose-lg max-w-none text-text/80 leading-relaxed [&>h1]:text-text [&>h2]:text-text [&>h3]:text-text [&>h4]:text-text [&>h5]:text-text [&>h6]:text-text [&>p]:text-text/80 [&>ul]:text-text/80 [&>ol]:text-text/80 [&>li]:text-text/80 [&>a]:text-primary [&>a]:hover:text-primary/80 [&>strong]:text-text [&>b]:text-text"
                   dangerouslySetInnerHTML={{
-                    __html: homeData.data.page_content.About
+                    __html: downgradeHeadings(homeData.data.page_content.About)
                   }}
                 />
               </div>
