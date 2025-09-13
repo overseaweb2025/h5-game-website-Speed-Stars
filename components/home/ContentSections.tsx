@@ -1,5 +1,7 @@
 "use client"
 
+import { downgradeHeadings } from "@/utils/utils"
+
 interface ContentSectionsProps {
   homeData?: any
 }
@@ -31,7 +33,7 @@ export default function ContentSections({ homeData }: ContentSectionsProps) {
             <div 
               className={className}
               dangerouslySetInnerHTML={{
-                __html: homeData.page_content.About
+                __html: downgradeHeadings(homeData.page_content.About)
               }}
             />
           </div>

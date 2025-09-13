@@ -148,8 +148,6 @@
         "refresh": "Обновить",
         "loadingGames": "Загрузка игр...",
         "retry": "Повторить",
-        "speedStars": "",
-        "speedStars2": " 2",
         "crazyCattle3D": "Crazy Cattle 3D",
         "racingGame": "Гоночная игра",
         "puzzleAdventure": "Приключенческая головоломка",
@@ -188,24 +186,10 @@
         "codeLevelFailures": "Сбои на уровне кода | Официальная поддержка игры",
         "hardwareLimits": "Ограничения оборудования | Сертифицировано ",
         "freeH5GameUnblockGuide": "Руководство по разблокировке бесплатных H5-игр",
-        "officialSpeedStarsSupport": "Официальная поддержка :",
-        "causes": "Причины:",
-        "speedStarsOfficialFixes": "Официальные исправления :",
-        "speedStarsSolutions": "Решения :",
-        "speedStarsFixes": "Исправления :",
-        "speedStarsProTips": "Советы профессионалов :"
+        "causes": "Причины:"
     },
-    "speedStarsSection": {
-        "aboutSpeedStars": "О ",
-        "raceRankReach": ": гоняйте, занимайте места и станьте чемпионом!",
-        "speedStarsUnblockedPlayFree": " без блокировок - Играйте онлайн бесплатно",
-        "physicsBasedGameplay": "#Игровой процесс на основе физики",
-        "freeOnline": "#Бесплатно онлайн",
-        "unblocked": "#Без блокировок",
-        "competitive": "#Соревновательный"
-    },
+
     "gameplaySection": {
-        "speedStarsGameplay": "Игровой процесс ",
         "controlsAndMechanics": "Управление и механика",
         "controlGuide": "Руководство по управлению:",
         "raceTypesAndChallenges": "Типы гонок и испытания",
@@ -231,7 +215,6 @@
         "clearAll": "Очистить все"
     },
     "diagnostic": {
-        "speedStarsGameDiagnostic": "Инструмент диагностики игры ",
         "questionNumber": "Вопрос {number} из {total}",
         "percentComplete": "% завершено",
         "runAnotherDiagnostic": "Запустить другую диагностику",
@@ -340,7 +323,6 @@
         "title": "Блог : Новости игр, советы и обновления | Бесплатные игры",
 "description": "Будьте на шаг впереди с блогом . Получайте последние новости, профессиональные советы, руководства и обновления для лучшего опыта.",
 "keywords": "блог бесплатных онлайн-игр, новости игр, советы по играм, стратегии игр, игры HTML5, разблокированные игры, обзоры бесплатных игр, обновления игр, блог ",
-        "speedStarsBlog": "Блог  | Новости игр, советы и обновления",
         "officialBlog": "Официальный блог ",
         "officialSource": "Ваш официальный источник новостей, стратегий и последних новинок в мире игр без блокировок!",
         "trendingNow": "Сейчас в тренде",
@@ -922,16 +904,10 @@
         "categoryGamesTitle": "Игры в жанре {category} - Бесплатные онлайн-игры",
         "categoryGamesDescription": "Играйте в бесплатные игры в жанре {category} онлайн. Наслаждайтесь нашей коллекцией игр в жанре {category} без скачиваний.",
         "categoryGamesKeywords": "{category}, игры, онлайн-игры, бесплатные игры, браузерные игры, игры в жанре {category}",
-        "speedStarsKeywords": ", бесплатные онлайн-игры, браузерные игры, HTML5-игры, игры-бегалки, игры с физикой, игры-головоломки, экшен-игры, игровая платформа",
-        "speedStarsOpenGraphTitle": ": Играйте в бесплатные онлайн-игры!",
-        "speedStarsOpenGraphDescription": " - Платформа бесплатных онлайн-игр",
-        "speedStarsApplicationName": "Игры ",
-        "speedStarsApplicationCategory": "Игра",
         "excitingHTML5Games": "Захватывающие HTML5-игры для всех"
     },
     "meta": {
-        "iconText": "S",
-        "speedStars": ""
+        "iconText": "S"
     },
     "search": {
         "results": "Результаты поиска",

@@ -190,7 +190,7 @@ const domain = getCanonicalDomain()
             </div>
 
             <div>
-              <h4 className="text-xl font-bold mb-2 text-secondary">{t?.helpCenter?.speedStarsFixes || " Fixes:"}:</h4>
+              <h4 className="text-xl font-bold mb-2 text-secondary">{" Fixes:"}:</h4>
               <ul className="space-y-3 pl-6">
                 <li className="flex items-start">
                   <Cpu className="h-5 w-5 text-accent-4 mr-2 flex-shrink-0 mt-1" />

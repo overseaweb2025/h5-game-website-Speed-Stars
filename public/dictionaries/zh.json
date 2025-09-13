@@ -127,22 +127,22 @@
     },
     "faq": {
         "frequentlyAskedQuestions": "常见问题",
-        "findAnswers": "查找有关《速度之星》常见问题的答案",
+        "findAnswers": "查找有关《》常见问题的答案",
         "whatDoesUnblockedMean": "“无阻碍”是什么意思？",
-        "unblockedMeaningAnswer": "无阻碍意味着您可以在任何地方玩游戏，即使在通常会限制游戏网站的环境中。《速度之星》无阻碍可在学校、工作或任何其他地方访问。",
-        "canPlayOnMobile": "我可以在移动设备上玩《速度之星》吗？",
-        "mobilePlayAnswer": "是的，《速度之星》已完全针对移动设备进行了优化。在触摸屏设备上，您可以点击屏幕的左右两侧来控制跑步者的腿。",
-        "howToImprove": "我如何在《速度之星》中提高我的时间？",
+        "unblockedMeaningAnswer": "无阻碍意味着您可以在任何地方玩游戏，即使在通常会限制游戏网站的环境中。《》无阻碍可在学校、工作或任何其他地方访问。",
+        "canPlayOnMobile": "我可以在移动设备上玩《》吗？",
+        "mobilePlayAnswer": "是的，《》已完全针对移动设备进行了优化。在触摸屏设备上，您可以点击屏幕的左右两侧来控制跑步者的腿。",
+        "howToImprove": "我如何在《》中提高我的时间？",
         "improvementTipsAnswer": "练习是关键！使用回放系统分析您的表现，专注于保持一致的节奏，并学习每个赛道的最佳时机。先从较短的距离开始，然后再尝试100米冲刺。"
     },
     "cta": {
-        "readyToJoin": "准备好加入速度之星锦标赛了吗？",
+        "readyToJoin": "准备好加入锦标赛了吗？",
         "ctaDescription": "在这款免费在线游戏中体验基于物理的冲刺的刺激。无需下载，没有限制——只有即时乐趣！挑战朋友，代表您的国家，并登上全球排行榜。",
         "loadingGame": "正在加载游戏..."
     },
     "howToPlay": {
         "howToPlay": "玩法",
-        "gettingStartedDescription": "《速度之星》的入门快速而简单——掌握这些简单步骤即可成为冠军",
+        "gettingStartedDescription": "《》的入门快速而简单——掌握这些简单步骤即可成为冠军",
         "masterYourRhythm": "掌握你的节奏",
         "rhythmDescription": "交替点击以控制跑步者的腿并保持完美平衡",
         "noDownloadsRequired": "无需下载",
@@ -175,8 +175,6 @@
         "refresh": "刷新",
         "loadingGames": "正在加载游戏...",
         "retry": "重试",
-        "speedStars": "速度之星",
-        "speedStars2": "速度之星 2",
         "crazyCattle3D": "疯狂牛群 3D",
         "racingGame": "赛车游戏",
         "puzzleAdventure": "解谜冒险",
@@ -208,31 +206,17 @@
     },
     "helpCenter": {
         "whyCantPlayH5Games": "为什么我不能玩 H5 游戏？",
-        "topReasonsAndSolutions": "主要原因与《速度之星》解锁方案",
+        "topReasonsAndSolutions": "主要原因与《》解锁方案",
         "browserCompatibility": "浏览器兼容性问题 | 解锁 H5 游戏",
         "networkErrors": "网络错误（最常见）| 免费解锁工具",
         "missingRuntimeFeatures": "缺少运行时功能 | 优化游戏速度",
         "codeLevelFailures": "代码级故障 | 官方游戏支持",
-        "hardwareLimits": "硬件限制 | 速度之星认证",
+        "hardwareLimits": "硬件限制 | 认证",
         "freeH5GameUnblockGuide": "免费 H5 游戏解锁指南",
-        "officialSpeedStarsSupport": "《速度之星》官方支持：",
-        "causes": "原因：",
-        "speedStarsOfficialFixes": "《速度之星》官方修复：",
-        "speedStarsSolutions": "《速度之星》解决方案：",
-        "speedStarsFixes": "《速度之星》修复：",
-        "speedStarsProTips": "《速度之星》专业提示："
+        "causes": "原因："
     },
-    "speedStarsSection": {
-        "aboutSpeedStars": "关于《速度之星》",
-        "raceRankReach": "速度之星：竞赛、排名、问鼎冠军！",
-        "speedStarsUnblockedPlayFree": "速度之星无阻碍 - 免费在线玩",
-        "physicsBasedGameplay": "#物理基础玩法",
-        "freeOnline": "#免费在线",
-        "unblocked": "#无阻碍",
-        "competitive": "#竞技"
-    },
+
     "gameplaySection": {
-        "speedStarsGameplay": "速度之星游戏玩法",
         "controlsAndMechanics": "控制与机制",
         "controlGuide": "控制指南：",
         "raceTypesAndChallenges": "竞赛类型与挑战",
@@ -258,7 +242,6 @@
         "clearAll": "清除所有"
     },
     "diagnostic": {
-        "speedStarsGameDiagnostic": "速度之星游戏诊断工具",
         "questionNumber": "第 {number} 个问题，共 {total} 个",
         "percentComplete": "完成百分比",
         "runAnotherDiagnostic": "运行另一次诊断",
@@ -266,7 +249,7 @@
         "networkRestrictionDetected": "检测到网络限制",
         "performanceIssueDetected": "检测到性能问题",
         "memoryResourceIssue": "检测到内存或资源问题",
-        "setupShouldBeCompatible": "您的设置应与《速度之星》游戏兼容"
+        "setupShouldBeCompatible": "您的设置应与《》游戏兼容"
     },
     "cacheDebug": {
         "cacheDebug": "缓存调试",
@@ -355,7 +338,7 @@
         "getRecommendations": "获取专为您推荐的游戏"
     },
     "notFound": {
-        "pageNotFound": "页面未找到 | 速度之星",
+        "pageNotFound": "页面未找到 | ",
         "oopsPageNotExist": "哎呀！您要查找的页面不存在。",
         "404": "404",
         "pageNotFoundTitle": "页面未找到",
@@ -363,20 +346,19 @@
         "returnToHome": "返回主页"
     },
     "blog": {
-        "title": " 博客: 游戏新闻、技巧与更新 | 免费在线游戏",
-        "description": "在  博客保持领先。获取最新的游戏新闻、专业技巧、策略指南和平台更新，以获得更佳的游戏体验。",
-        "keywords": "免费在线游戏博客, 游戏新闻, 游戏技巧, 游戏策略, HTML5游戏, 未屏蔽的游戏, 免费游戏评论, 游戏更新, Speed Stars博客",
-        "speedStarsBlog": "速度之星博客 | 游戏新闻、技巧与更新",
-        "officialBlog": "速度之星官方博客",
-        "officialSource": "您的速度之星新闻、游戏策略和最新无阻碍游戏的官方来源！",
+        "title": " 游戏新闻、技巧与更新 | 免费在线游戏",
+        "description": "博客保持领先。获取最新的游戏新闻、专业技巧、策略指南和平台更新，以获得更佳的游戏体验。",
+        "keywords": "免费在线游戏博客, 游戏新闻, 游戏技巧, 游戏策略, HTML5游戏, 未屏蔽的游戏, 免费游戏评论, 游戏更新, 博客",
+        "officialBlog": "官方博客",
+        "officialSource": "您的新闻、游戏策略和最新无阻碍游戏的官方来源！",
         "trendingNow": "热门趋势",
         "featuredArticles": "特色文章",
         "latestArticles": "最新文章",
-        "stayUpdated": "关注《速度之星》官方新闻，保持更新！",
+        "stayUpdated": "关注官方新闻，保持更新！",
         "readMore": "阅读更多",
         "readFullArticle": "阅读全文",
         "subscribeNow": "立即订阅！",
-        "blogPostNotFound": "未找到博客文章 - 速度之星",
+        "blogPostNotFound": "未找到博客文章 - ",
         "requestedBlogPostNotFound": "找不到请求的博客文章或该文章不支持您的语言。",
         "backToBlog": "返回博客",
         "backToAllPosts": "返回所有文章",
@@ -850,16 +832,10 @@
         "categoryGamesTitle": "{category} 游戏 - 免费在线游戏",
         "categoryGamesDescription": "免费在线玩 {category} 游戏。享受我们的 {category} 游戏合集，无需下载。",
         "categoryGamesKeywords": "{category}, 游戏, 在线游戏, 免费游戏, 浏览器游戏, {category} 游戏",
-        "speedStarsKeywords": "速度之星，免费在线游戏，浏览器游戏，HTML5 游戏，跑步游戏，物理游戏，益智游戏，动作游戏，游戏平台",
-        "speedStarsOpenGraphTitle": "速度之星：免费在线玩游戏！",
-        "speedStarsOpenGraphDescription": "速度之星 - 免费在线游戏平台",
-        "speedStarsApplicationName": "速度之星游戏",
-        "speedStarsApplicationCategory": "游戏",
         "excitingHTML5Games": "激动人心的 HTML5 游戏，人人可玩"
     },
     "meta": {
-        "iconText": "S",
-        "speedStars": "速度之星"
+        "iconText": "S"
     },
     "search": {
         "results": "搜索结果",

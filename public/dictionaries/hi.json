@@ -149,8 +149,6 @@
         "refresh": "ताज़ा करें",
         "loadingGames": "खेल लोड हो रहे हैं...",
         "retry": "पुनः प्रयास करें",
-        "speedStars": "स्पीड स्टार्स",
-        "speedStars2": "स्पीड स्टार्स 2",
         "crazyCattle3D": "क्रेज़ी कैटल 3D",
         "racingGame": "रेसिंग गेम",
         "puzzleAdventure": "पहेली साहसिक",
@@ -189,24 +187,10 @@
         "codeLevelFailures": "कोड-स्तर की विफलताएँ | आधिकारिक खेल सहायता",
         "hardwareLimits": "हार्डवेयर सीमाएँ | स्पीड स्टार्स प्रमाणित",
         "freeH5GameUnblockGuide": "मुफ्त H5 खेल अनब्लॉक गाइड",
-        "officialSpeedStarsSupport": "आधिकारिक स्पीड स्टार्स सहायता:",
-        "causes": "कारण:",
-        "speedStarsOfficialFixes": "स्पीड स्टार्स आधिकारिक समाधान:",
-        "speedStarsSolutions": "स्पीड स्टार्स समाधान:",
-        "speedStarsFixes": "स्पीड स्टार्स समाधान:",
-        "speedStarsProTips": "स्पीड स्टार्स प्रो टिप्स:"
+        "causes": "कारण:"
     },
-    "speedStarsSection": {
-        "aboutSpeedStars": "स्पीड स्टार्स के बारे में",
-        "raceRankReach": "स्पीड स्टार्स: दौड़ें, रैंक करें, और चैंपियन तक पहुँचें!",
-        "speedStarsUnblockedPlayFree": "स्पीड स्टार्स अनब्लॉक्ड - मुफ्त ऑनलाइन खेलें",
-        "physicsBasedGameplay": "#भौतिकी-आधारित गेमप्ले",
-        "freeOnline": "#मुफ्त ऑनलाइन",
-        "unblocked": "#अनब्लॉक्ड",
-        "competitive": "#प्रतिस्पर्धी"
-    },
+
     "gameplaySection": {
-        "speedStarsGameplay": "स्पीड स्टार्स गेमप्ले",
         "controlsAndMechanics": "नियंत्रण और यांत्रिकी",
         "controlGuide": "नियंत्रण गाइड:",
         "raceTypesAndChallenges": "दौड़ के प्रकार और चुनौतियाँ",
@@ -232,7 +216,6 @@
         "clearAll": "सभी साफ़ करें"
     },
     "diagnostic": {
-        "speedStarsGameDiagnostic": "स्पीड स्टार्स गेम डायग्नोस्टिक टूल",
         "questionNumber": "प्रश्न {number} कुल {total}",
         "percentComplete": "% पूर्ण",
         "runAnotherDiagnostic": "एक और डायग्नोस्टिक चलाएँ",
@@ -340,7 +323,6 @@
         "title": "स्पीड स्टार्स ब्लॉग: गेम समाचार, टिप्स और अपडेट | मुफ़्त गेम्स",
         "description": "स्पीड स्टार्स ब्लॉग के साथ सबसे आगे रहें। बेहतर गेमिंग अनुभव के लिए नवीनतम समाचार, प्रो टिप्स, रणनीति गाइड और अपडेट प्राप्त करें।",
         "keywords": "मुफ़्त ऑनलाइन गेम्स ब्लॉग, गेम समाचार, गेमिंग टिप्स, गेम रणनीतियाँ, HTML5 गेम्स, अनब्लॉक गेम्स, मुफ़्त गेम समीक्षाएँ, गेम अपडेट, स्पीड स्टार्स ब्लॉग",
-        "speedStarsBlog": "स्पीड स्टार्स ब्लॉग | गेम समाचार, युक्तियाँ और अपडेट",
         "officialBlog": "स्पीड स्टार्स आधिकारिक ब्लॉग",
         "officialSource": "स्पीड स्टार्स समाचार, खेल रणनीतियों और अनब्लॉक्ड गेमिंग में नवीनतम के लिए आपका आधिकारिक स्रोत!",
         "trendingNow": "अभी ट्रेंडिंग",
@@ -923,16 +905,10 @@
         "categoryGamesTitle": "{category} खेल - मुफ्त ऑनलाइन खेल",
         "categoryGamesDescription": "मुफ्त {category} खेल ऑनलाइन खेलें। बिना किसी डाउनलोड के हमारे {category} खेलों के संग्रह का आनंद लें।",
         "categoryGamesKeywords": "{category}, खेल, ऑनलाइन खेल, मुफ्त खेल, ब्राउज़र खेल, {category} खेल",
-        "speedStarsKeywords": "स्पीड स्टार्स, मुफ्त ऑनलाइन खेल, ब्राउज़र खेल, HTML5 खेल, दौड़ने वाले खेल, भौतिकी खेल, पहेली खेल, एक्शन खेल, गेमिंग प्लेटफॉर्म",
-        "speedStarsOpenGraphTitle": "स्पीड स्टार्स: मुफ्त ऑनलाइन खेलें!",
-        "speedStarsOpenGraphDescription": "स्पीड स्टार्स - मुफ्त ऑनलाइन खेल प्लेटफॉर्म",
-        "speedStarsApplicationName": "स्पीड स्टार्स खेल",
-        "speedStarsApplicationCategory": "खेल",
         "excitingHTML5Games": "सभी के लिए रोमांचक HTML5 खेल"
     },
     "meta": {
-        "iconText": "S",
-        "speedStars": "स्पीड स्टार्स"
+        "iconText": "S"
     },
     "search": {
         "results": "खोज परिणाम",
