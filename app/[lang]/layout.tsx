@@ -173,9 +173,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/placeholder-logo.png" sizes="any" />
+        {/* <link rel="icon" href="/placeholder-logo.png" sizes="any" />
         <link rel="icon" href="/placeholder-logo.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/placeholder-logo.png" />
+        <link rel="apple-touch-icon" href="/placeholder-logo.png" /> */}
         <link rel="manifest" href="/manifest.json" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
