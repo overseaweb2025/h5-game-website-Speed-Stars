@@ -6,6 +6,7 @@ import { ChevronDown, Globe, Check } from "lucide-react"
 import { Locale } from "@/lib/lang/dictionaraies"
 import { getSupportedLocales, getLocaleDisplayName, getLocalizedPath, getLocaleFromPath } from "@/lib/lang/utils"
 import { LanguageStateManager } from "@/lib/language-state-manager"
+import Cookies from 'js-cookie';
 
 interface Language {
   code: Locale
@@ -20,24 +21,24 @@ interface LanguageSelectorProps {
   onLanguageChange?: () => void
 }
 
-export default function LanguageSelector({ 
-  className = "", 
+export default function LanguageSelector({
+  className = "",
   variant = "desktop",
   onLanguageChange
 }: LanguageSelectorProps) {
   const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
-  
+
   // 获取支持的语言列表
   const languages: Language[] = getSupportedLocales().map(locale => ({
     code: locale,
     ...getLocaleDisplayName(locale)
   }))
-  
+
   // 从当前路径获取语言
   const currentLocale = getLocaleFromPath(pathname)
-  const currentLanguage = languages.find(lang => lang.code === currentLocale) || languages[0]
+  const currentLanguage = languages.find(lang => lang.code === Cookies.get('preferred-language')) || languages[0]
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -59,7 +60,7 @@ export default function LanguageSelector({
     const handleScroll = () => {
       setIsOpen(false)
     }
-    
+
     if (isOpen) {
       return () => window.removeEventListener('scroll', handleScroll)
     }
@@ -67,19 +68,19 @@ export default function LanguageSelector({
 
   const handleLanguageChange = (language: Language) => {
     setIsOpen(false)
-    
+
     try {
       // 使用语言状态管理器设置语言（会自动处理 Cookie）
       LanguageStateManager.setCurrentLanguage(language.code)
-      
+
       // 获取语言切换的目标路径
       const newPath = LanguageStateManager.getLanguageSwitchPath(language.code, pathname)
-      
+
       // 使用 replace 而不是 push 避免历史记录堆积
       router.replace(newPath)
-      
+
       console.log(`[LanguageSelector] Switched to ${language.code}, path: ${newPath}`)
-      
+
       // 调用回调函数（用于关闭侧边栏等）
       if (onLanguageChange) {
         onLanguageChange()
@@ -106,10 +107,9 @@ export default function LanguageSelector({
           </div>
           <div className="flex items-center space-x-2">
             <span className="text-lg">{currentLanguage.flag}</span>
-            <ChevronDown 
-              className={`w-4 h-4 transition-transform duration-200 ${
-                isOpen ? 'rotate-180' : ''
-              }`} 
+            <ChevronDown
+              className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''
+                }`}
             />
           </div>
         </button>
@@ -147,18 +147,16 @@ export default function LanguageSelector({
           <button
             key={language.code}
             onClick={() => handleLanguageChange(language)}
-            className={`w-full flex items-center justify-between p-4 mb-3 rounded-xl transition-all duration-200 hover:scale-[1.02] hover:shadow-md border-2 ${
-              currentLanguage.code === language.code
+            className={`w-full flex items-center justify-between p-4 mb-3 rounded-xl transition-all duration-200 hover:scale-[1.02] hover:shadow-md border-2 ${currentLanguage.code === language.code
                 ? 'bg-accent/20 border-accent/30 shadow-lg'
                 : 'bg-gray-700/30 border-gray-600/30 hover:bg-accent/10 hover:border-accent/20'
-            }`}
+              }`}
           >
             <div className="flex items-center space-x-4">
               <span className="text-3xl">{language.flag}</span>
               <div className="flex flex-col items-start">
-                <span className={`text-lg font-semibold ${
-                  currentLanguage.code === language.code ? 'text-accent' : 'text-white'
-                }`}>
+                <span className={`text-lg font-semibold ${currentLanguage.code === language.code ? 'text-accent' : 'text-white'
+                  }`}>
                   {language.nativeName}
                 </span>
                 <span className="text-sm text-gray-400">{language.name}</span>
@@ -187,35 +185,34 @@ export default function LanguageSelector({
         <Globe className="w-3 h-3 xl:w-4 xl:h-4 text-purple-400 flex-shrink-0" />
         <span className="hidden sm:inline font-medium">{currentLanguage.nativeName}</span>
         <span className="text-lg">{currentLanguage.flag}</span>
-        <ChevronDown 
-          className={`w-3 h-3 xl:w-4 xl:h-4 transition-transform duration-200 flex-shrink-0 ${
-            isOpen ? 'rotate-180' : ''
-          }`} 
+        <ChevronDown
+          className={`w-3 h-3 xl:w-4 xl:h-4 transition-transform duration-200 flex-shrink-0 ${isOpen ? 'rotate-180' : ''
+            }`}
         />
       </button>
 
-{isOpen && (
-  <div className="absolute top-full right-0 mt-2 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-50 min-w-[140px] xl:min-w-[160px] max-h-64 overflow-y-auto">
-    {languages.map((language) => (
-      <button
-        key={language.code}
-        onClick={() => handleLanguageChange(language)}
-        className="flex items-center justify-between w-full px-3 xl:px-4 py-2 xl:py-3 text-left text-gray-300 hover:text-white hover:bg-gray-700/50 transition-all text-xs xl:text-sm"
-      >
-        <div className="flex items-center space-x-2">
-          <span className="text-base xl:text-lg">{language.flag}</span>
-          <div className="flex flex-col">
-            <span className="font-medium">{language.nativeName}</span>
-            <span className="text-xs text-gray-400">{language.name}</span>
-          </div>
-        </div>
-        {currentLanguage.code === language.code && (
-          <Check className="w-3 h-3 xl:w-4 xl:h-4 text-purple-400 flex-shrink-0" />
-        )}
-      </button>
-    ))}
-    {/* 添加自定义滚动条样式 */}
-    <style jsx>{`
+      {isOpen && (
+        <div className="absolute top-full right-0 mt-2 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-50 min-w-[140px] xl:min-w-[160px] max-h-64 overflow-y-auto">
+          {languages.map((language) => (
+            <button
+              key={language.code}
+              onClick={() => handleLanguageChange(language)}
+              className="flex items-center justify-between w-full px-3 xl:px-4 py-2 xl:py-3 text-left text-gray-300 hover:text-white hover:bg-gray-700/50 transition-all text-xs xl:text-sm"
+            >
+              <div className="flex items-center space-x-2">
+                <span className="text-base xl:text-lg">{language.flag}</span>
+                <div className="flex flex-col">
+                  <span className="font-medium">{language.nativeName}</span>
+                  <span className="text-xs text-gray-400">{language.name}</span>
+                </div>
+              </div>
+              {currentLanguage.code === language.code && (
+                <Check className="w-3 h-3 xl:w-4 xl:h-4 text-purple-400 flex-shrink-0" />
+              )}
+            </button>
+          ))}
+          {/* 添加自定义滚动条样式 */}
+          <style jsx>{`
       div::-webkit-scrollbar {
         width: 5px;
       }
@@ -227,8 +224,8 @@ export default function LanguageSelector({
         border-radius: 9999px; /* rounded-full */
       }
     `}</style>
-  </div>
-)}
+        </div>
+      )}
     </div>
   )
 }
