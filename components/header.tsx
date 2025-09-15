@@ -17,34 +17,37 @@ import { langSequence } from "@/lib/lang/utils"
 import { Locale, localesArrary } from "@/lib/lang/dictionaraies"
 import { useLangGameList } from "@/hooks/LangGamelist_value"
 import DataProvider from "./DataProvider"
+
+import Cookies from 'js-cookie';
+
 interface HeaderProps {
   onSidebarToggle?: () => void
   showSidebarToggle?: boolean
-  t?:any
+  t?: any
   lang: Locale;
 }
 
 
 export const revalidate = 20000;
 export async function generateStaticParams() {
-    const languages: Locale[] = localesArrary;
-    const params: { lang: Locale }[] = [];
+  const languages: Locale[] = localesArrary;
+  const params: { lang: Locale }[] = [];
 
-    // 为每种语言调用一次 API
-    for (const lang of languages) {
-          params.push({ lang });
-    }
+  // 为每种语言调用一次 API
+  for (const lang of languages) {
+    params.push({ lang });
+  }
 
-    return params;
+  return params;
 }
-export default function Header({ onSidebarToggle, showSidebarToggle = false ,t,lang}: HeaderProps) {
-  
-  
-  
+export default function Header({ onSidebarToggle, showSidebarToggle = false, t, lang }: HeaderProps) {
+
+
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false)
   const [hasShownLoginSuccess, setHasShownLoginSuccess] = useState(false)
-  const { websiteData} = useWebsiteData();
+  const { websiteData } = useWebsiteData();
   const { data: session, status } = useSession()
   const pathname = usePathname()
   // 获取 nav 的数据
@@ -106,7 +109,7 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t,l
           secondary: '#4ade80',
         },
       })
-      
+
       setHasShownLoginSuccess(true)
     }
   }, [session, status, hasShownLoginSuccess])
@@ -133,7 +136,7 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t,l
     const handleClickOutside = () => {
       setIsMoreMenuOpen(false)
     }
-    
+
     if (isMoreMenuOpen) {
       document.addEventListener('click', handleClickOutside)
       return () => document.removeEventListener('click', handleClickOutside)
@@ -145,7 +148,7 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t,l
     const handleScroll = () => {
       setIsMoreMenuOpen(false)
     }
-    
+
     if (isMoreMenuOpen) {
       return () => window.removeEventListener('scroll', handleScroll)
     }
@@ -153,33 +156,33 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t,l
 
 
   //navigation 首页top 顶部 导航栏信息
-  const MyComponent = ({ navItems }:{navItems:top_navigation[]}) => {
-  return (
-    <>
-       <Link
-         href={createLocalizedLink('/')}
-         className={getLinkClasses("/")}
-       >
-         {t?.header?.home || "Home"}
-       </Link>
-      {navItems.map((item,index) => ( // <--- 注意这里是 map
+  const MyComponent = ({ navItems }: { navItems: top_navigation[] }) => {
+    return (
+      <>
         <Link
-          href={createLocalizedLink(item.url)}
-          className={getLinkClasses("/" + item.text)}
-           key={index + item.url}
+          href={`/${Cookies.get('preferred-language')}`}
+          className={getLinkClasses("/")}
         >
-          {item.text}
+          {t?.header?.home || "Home"}
         </Link>
-      ))}
-   </>
-  );
-};
+        {navItems.map((item, index) => ( // <--- 注意这里是 map
+          <Link
+            href={`/${Cookies.get('preferred-language')}${item.url}`}
+            className={getLinkClasses("/" + item.text)}
+            key={index + item.url}
+          >
+            {item.text}
+          </Link>
+        ))}
+      </>
+    );
+  };
 
   return (
     <>
       {/* 数据提供者组件 - 统一管理全局数据获取 */}
       <DataProvider lang={lang} />
-      
+
       <header className="bg-gray-900/95 backdrop-blur-sm py-2 sm:py-3 sticky top-0 z-40 border-b border-gray-700 shadow-sm">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-full">
           <div className="flex justify-between items-center min-h-[52px] sm:min-h-[56px] w-full">
@@ -209,30 +212,29 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t,l
                   }}
                 >
                   <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 group-hover:text-accent transition-colors">
-                    <path xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" d="M19 4C19.5523 4 20 3.55229 20 3C20 2.44772 19.5523 2 19 2L3 2C2.44772 2 2 2.44772 2 3C2 3.55228 2.44772 4 3 4L19 4ZM20.47 7.95628L15.3568 11.152C14.7301 11.5437 14.7301 12.4564 15.3568 12.848L20.47 16.0438C21.136 16.4601 22 15.9812 22 15.1958V8.80427C22 8.01884 21.136 7.54 20.47 7.95628ZM11 13C11.5523 13 12 12.5523 12 12C12 11.4477 11.5523 11 11 11L3 11C2.44771 11 2 11.4477 2 12C2 12.5523 2.44771 13 3 13L11 13ZM20 21C20 21.5523 19.5523 22 19 22L3 22C2.44771 22 2 21.5523 2 21C2 20.4477 2.44771 20 3 20L19 20C19.5523 20 20 20.4477 20 21Z" fill="currentColor"/>
+                    <path xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" d="M19 4C19.5523 4 20 3.55229 20 3C20 2.44772 19.5523 2 19 2L3 2C2.44772 2 2 2.44772 2 3C2 3.55228 2.44772 4 3 4L19 4ZM20.47 7.95628L15.3568 11.152C14.7301 11.5437 14.7301 12.4564 15.3568 12.848L20.47 16.0438C21.136 16.4601 22 15.9812 22 15.1958V8.80427C22 8.01884 21.136 7.54 20.47 7.95628ZM11 13C11.5523 13 12 12.5523 12 12C12 11.4477 11.5523 11 11 11L3 11C2.44771 11 2 11.4477 2 12C2 12.5523 2.44771 13 3 13L11 13ZM20 21C20 21.5523 19.5523 22 19 22L3 22C2.44771 22 2 21.5523 2 21C2 20.4477 2.44771 20 3 20L19 20C19.5523 20 20 20.4477 20 21Z" fill="currentColor" />
                   </svg>
                 </button>
               )}
-              
+
               {/* Brand */}
               <Link href={createLocalizedLink('/')} className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0 mr-3 sm:mr-6">
-              <GameController className="h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 text-purple-400 drop-shadow-lg swing flex-shrink-0" />
-                <span className="text-sm sm:text-lg lg:text-xl xl:text-2xl font-black text-white whitespace-nowrap" style={{fontFamily: 'inherit'}}>
-                 {websiteData &&  websiteUtill(websiteData,'site-name')}
+                <GameController className="h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9 text-purple-400 drop-shadow-lg swing flex-shrink-0" />
+                <span className="text-sm sm:text-lg lg:text-xl xl:text-2xl font-black text-white whitespace-nowrap" style={{ fontFamily: 'inherit' }}>
+                  {websiteData && websiteUtill(websiteData, 'site-name')}
                 </span>
               </Link>
             </div>
 
             {/* Desktop Navigation - Adaptive */}
             <div className="hidden lg:flex items-center flex-1 justify-center max-w-4xl mx-2 space-x-4">
-              
+
               {/* Navigation Links */}
               <nav className="flex items-center space-x-2 xl:space-x-4">
-                {navState &&   <MyComponent navItems={langSequence(navState?.top_navigation, lang) || []} />
-}
-                
+                {navState && <MyComponent navItems={langSequence(navState?.top_navigation, lang) || []} />
+                }
               </nav>
-              
+
               {/* Search Box */}
               <div className="flex-1 max-w-md">
                 <SearchBox
@@ -242,7 +244,7 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t,l
                   t={t}
                 />
               </div>
-              
+
             </div>
 
             {/* Right Side - Language + Auth + Mobile Menu */}
@@ -251,7 +253,7 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t,l
               <div className="hidden lg:block">
                 <LanguageSelector variant="desktop" />
               </div>
-              
+
               {/* Desktop Auth */}
               <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
                 {status === "loading" ? (
@@ -314,8 +316,8 @@ export default function Header({ onSidebarToggle, showSidebarToggle = false ,t,l
       </header>
 
       {/* Mobile Sidebar */}
-      <MobileSidebar 
-        isOpen={isSidebarOpen} 
+      <MobileSidebar
+        isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
         scrollToSection={scrollToSection}
         t={t}
