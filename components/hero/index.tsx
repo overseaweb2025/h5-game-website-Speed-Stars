@@ -69,7 +69,7 @@ const hero = ({ t, game, gameDetails, GameList, pageTitle, lang, isPublishing }:
                         <Breadcrumebs t={t} gameDetails={gameDetails} />
 
                         {/* Desktop Title */}
-                        <p className="hidden lg:block text-5xl md:text-6xl lg:text-7xl text-text font-black mb-4 leading-tight text-center pop-in">
+                        <p className="hidden lg:block text-5xl md:text-6xl lg:text-5xl text-text font-black mb-4 leading-tight text-center pop-in">
                             {game ? (
                                 <span className="gradient-text">{game.display_name || game.name}</span>
                             ) : gameDetails ? (
