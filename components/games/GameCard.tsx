@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { GameCardProps } from "./types"
+import Cookie from "js-cookie"
 
 const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false, lang = 'en' }: GameCardProps) => {
 
@@ -119,7 +120,7 @@ const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false
       e.preventDefault()
       
       // 跳转到游戏详情页面
-      window.location.href = `/${lang}/game/${game?.name}`
+      window.location.href = `/${Cookie.get('preferred-language')}/game/${game?.name}`
     }
     // 非首页时使用默认的Link跳转逻辑（跳转到游戏内页）
   }
@@ -129,7 +130,7 @@ const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false
 
 const getHref = () => {
     // 统一跳转到游戏详情页面
-    return `/${lang}/game/${game?.name}`
+    return `/${Cookie.get('preferred-language')}/game/${game?.name}`
 }
 
   return (

@@ -10,7 +10,7 @@ interface TitleProps {
 
 const Title = ({ game, gameDetails, title, pageTitle }: TitleProps) => {
   return (
-    <h1 className="hidden lg:block text-5xl md:text-6xl lg:text-7xl text-text font-black mb-4 leading-tight text-center pop-in">
+    <h1 className="hidden lg:block text-5xl md:text-6xl lg:text-5xl text-text font-black mb-4 leading-tight text-center pop-in">
       {game ? (
         <span className="gradient-text">{game.display_name || game.name}</span>
       ) : gameDetails ? (
