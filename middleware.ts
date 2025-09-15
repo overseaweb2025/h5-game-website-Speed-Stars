@@ -101,19 +101,16 @@ export function middleware(request: NextRequest) {
   if (pathnameHasLocale) {
     const response = NextResponse.next();
 
-    // 如果 cookie preferred-language 没有值，则自动设置 cookie 为当前浏览器语言
-    if (!request.cookies.has('preferred-language')) {
-      const acceptLanguage = request.headers.get('accept-language');
-      if (acceptLanguage) {
-        const preferredLocale = parseAcceptLanguage(acceptLanguage);
-        if (preferredLocale) {
-          response.cookies.set("preferred-language", preferredLocale, {
-            maxAge: 30 * 24 * 60 * 60, // 30 天
-            path: "/",
-            sameSite: "lax",
-          });
-        }
-      }
+    // 同步 URL 中的语言到 Cookie
+    const currentLocale = extractLocaleFromPath(pathname);
+    const cookieLang = request.cookies.get('preferred-language')?.value;
+
+    if (currentLocale && currentLocale !== cookieLang) {
+      response.cookies.set("preferred-language", currentLocale, {
+        maxAge: 30 * 24 * 60 * 60, // 30 天
+        path: "/",
+        sameSite: "lax",
+      });
     }
     
     // 检查是否是需要 ISR 优化的页面
