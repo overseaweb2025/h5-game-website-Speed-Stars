@@ -26,19 +26,30 @@ export default function LanguageSelector({
   variant = "desktop",
   onLanguageChange
 }: LanguageSelectorProps) {
-  const [isOpen, setIsOpen] = useState(false)
-  const router = useRouter()
-  const pathname = usePathname()
-
-  // 获取支持的语言列表
   const languages: Language[] = getSupportedLocales().map(locale => ({
     code: locale,
     ...getLocaleDisplayName(locale)
   }))
+  const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
+  const [currentLanguage, setCurrentLanguage] = useState<Language>(() => {
+    const localeFromPath = getLocaleFromPath(pathname)
+    return languages.find(lang => lang.code === localeFromPath) || languages[0]
+  });
 
-  // 从当前路径获取语言
-  const currentLocale = getLocaleFromPath(pathname)
-  const currentLanguage = languages.find(lang => lang.code === Cookies.get('preferred-language')) || languages[0]
+  // 获取支持的语言列表
+
+ useEffect(() => {
+    // 这个 Hook 只会在客户端执行
+    const cookieLangCode = Cookies.get('preferred-language') as Locale;
+    if (cookieLangCode && cookieLangCode !== currentLanguage.code) {
+      const cookieLanguage = languages.find(lang => lang.code === cookieLangCode);
+      if (cookieLanguage) {
+        setCurrentLanguage(cookieLanguage);
+      }
+    }
+  }, [pathname]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
