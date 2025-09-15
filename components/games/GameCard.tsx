@@ -61,7 +61,7 @@ const GameCard = ({ game, className = "", size = 'medium', t, isHomepage = false
     
     switch (size) {
       case 'tiny':
-        const tinySize = Math.max(40, Math.floor(80 * scale)) // 最小40px
+        const tinySize = Math.max(50, Math.floor(140 * scale)) // 最小50px
         return {
           width: '100%',
           minWidth: `${tinySize}px`,
