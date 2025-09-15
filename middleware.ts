@@ -69,9 +69,27 @@ function parseAcceptLanguage(acceptLanguage: string): string | null {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Rewrite root `/` to `/en` without redirecting the browser
+  // Rewrite root `/` to the browser's language, ignoring cookies/params
   if (pathname === "/") {
-    return NextResponse.rewrite(new URL("/en", request.url));
+    let locale = defaultLocale;
+    const acceptLanguage = request.headers.get('accept-language');
+    if (acceptLanguage) {
+      const preferredLocale = parseAcceptLanguage(acceptLanguage);
+      if (preferredLocale) {
+        locale = preferredLocale;
+      }
+    }
+    
+    const response = NextResponse.rewrite(new URL(`/${locale}`, request.url));
+
+    // Set the language preference cookie to align with the browser's language
+    response.cookies.set("preferred-language", locale, {
+      maxAge: 30 * 24 * 60 * 60, // 30 days
+      path: "/",
+      sameSite: "lax",
+    });
+    
+    return response;
   }
 
   // Check if there is any supported locale in the pathname
@@ -83,6 +101,21 @@ export function middleware(request: NextRequest) {
   if (pathnameHasLocale) {
     const response = NextResponse.next();
 
+    // 如果 cookie preferred-language 没有值，则自动设置 cookie 为当前浏览器语言
+    if (!request.cookies.has('preferred-language')) {
+      const acceptLanguage = request.headers.get('accept-language');
+      if (acceptLanguage) {
+        const preferredLocale = parseAcceptLanguage(acceptLanguage);
+        if (preferredLocale) {
+          response.cookies.set("preferred-language", preferredLocale, {
+            maxAge: 30 * 24 * 60 * 60, // 30 天
+            path: "/",
+            sameSite: "lax",
+          });
+        }
+      }
+    }
+    
     // 检查是否是需要 ISR 优化的页面
     if (isISROptimizedRoute(pathname)) {
       // 添加 ISR 缓存控制头
