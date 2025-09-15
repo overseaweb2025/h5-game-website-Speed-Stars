@@ -44,6 +44,7 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
   return {
     title: `${post?.title}`,
     description: post?.description,
+    keywords: post?.keywords,
     alternates: {
       canonical: `${domain}/${lang}/blog/${slug}`,
       languages: {
