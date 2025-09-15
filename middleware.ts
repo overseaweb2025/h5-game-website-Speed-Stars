@@ -41,19 +41,6 @@ export function middleware(request: NextRequest) {
   // 获取最合适的语言
   const locale = getLocale(request);
 
-  // 处理根目录 '/'
-  if (pathname === "/") {
-    // 使用 REWRITE，保持 URL 简洁
-    const response = NextResponse.rewrite(new URL(`/${locale}`, request.url));
-    response.cookies.set("preferred-language", locale, {
-      maxAge: 30 * 24 * 60 * 60,
-      path: "/",
-      sameSite: "lax",
-    });
-    response.headers.set('Vary', 'Accept-Language, Cookie');
-    return response;
-  }
-
   // 处理其他所有路径 (e.g., /products)
   // 必须使用 REDIRECT，让语言成为 URL 的一部分
   const redirectUrl = new URL(`/${locale}${pathname}`, request.url);
