@@ -86,7 +86,7 @@ const createAxiosInstance = (): AxiosInstance => {
         if (config.baseURL === '/api/proxy') {
           const baseApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://www.xingnengyun.com'
           const configUrl = config.url || ''
-          
+          config.headers['X-Source-Origin'] = process.env.CANONICAL_DOMAIN || ''
           let originalUrl: string
           try {
             originalUrl = `${baseApiUrl}${configUrl}`
