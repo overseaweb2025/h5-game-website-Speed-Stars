@@ -26,6 +26,8 @@ const createAxiosInstance = (): AxiosInstance => {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
+      'X-Source-Origin': process.env.CANONICAL_DOMAIN,
+      'X-Text': 'textaaaaaaa'
     },
     withCredentials: false, // 关闭凭据发送以避免预检复杂化
     // 添加重试配置
@@ -86,7 +88,7 @@ const createAxiosInstance = (): AxiosInstance => {
         if (config.baseURL === '/api/proxy') {
           const baseApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://www.xingnengyun.com'
           const configUrl = config.url || ''
-          config.headers['X-Source-Origin'] = process.env.CANONICAL_DOMAIN || ''
+          config.headers['X-Source-Origin'] = process.env.CANONICAL_DOMAIN
           let originalUrl: string
           try {
             originalUrl = `${baseApiUrl}${configUrl}`
