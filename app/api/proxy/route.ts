@@ -29,6 +29,7 @@ export async function GET(request: NextRequest) {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'User-Agent': 'Mozilla/5.0 (compatible; NextJS-Proxy/1.0)',
+        'X-Source-Origin': process.env.CANONICAL_DOMAIN || '',
       },
     })
 
@@ -93,6 +94,7 @@ export async function POST(request: NextRequest) {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'User-Agent': 'Mozilla/5.0 (compatible; NextJS-Proxy/1.0)',
+      'X-Source-Origin': process.env.CANONICAL_DOMAIN || '',
     }
     
     // 传递认证头

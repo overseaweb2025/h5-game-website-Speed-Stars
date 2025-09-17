@@ -34,6 +34,7 @@ export async function fetchHomeGameData(): Promise<HomeGameData | null> {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'User-Agent': 'Mozilla/5.0 (compatible; NextJS-Server/1.0)',
+        'X-Source-Origin': process.env.CANONICAL_DOMAIN || '',
       },
       // Add timeout and cache control
       signal: AbortSignal.timeout(10000), // 10 second timeout
